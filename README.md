@@ -11,3 +11,20 @@ An app for managing a household.
   + Only an owner of the household may accept that an item is complete
   + Only an owner of the household may delete an item
 
+
+## TODO: 
+
+---
+
+### CURRENT
+##### Household has many 'members'
+  + Members are users
+
+### BACKLOG
+
+### DONE
+
+##### Create household model
+##### Attach devise to user model
+##### Create user model
+
