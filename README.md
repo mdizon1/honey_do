@@ -17,13 +17,16 @@ An app for managing a household.
 ---
 
 ### CURRENT
-##### Household has many 'members'
-  + Members are users
+##### Household has many 'items'
 
 ### BACKLOG
+##### Add indexes to households table
+##### Add indexes to todos table
 
 ### DONE
 
+##### Household has many 'members'
+  + Members are users
 ##### Create household model
 ##### Attach devise to user model
 ##### Create user model
