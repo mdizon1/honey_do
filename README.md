@@ -17,14 +17,18 @@ An app for managing a household.
 ---
 
 ### CURRENT
-##### Household has many 'items'
+##### Todo item can be asked whether it's complete
+##### Create and push project repo to github
 
 ### BACKLOG
+##### Todo item can be uncompleted
 ##### Add indexes to households table
 ##### Add indexes to todos table
 
 ### DONE
 
+##### Todo item can be completed
+##### Household has many 'items'
 ##### Household has many 'members'
   + Members are users
 ##### Create household model
