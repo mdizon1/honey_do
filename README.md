@@ -17,14 +17,20 @@ An app for managing a household.
 ---
 
 ### CURRENT
-##### Create and push project repo to github
 
 ### BACKLOG
+##### User can sign in
+##### User can create a household
+##### User can create a todo item for the household
+##### User can complete a todo item
+##### User can uncomplete a todo item
+##### User can add another user to the household
 ##### Add indexes to households table
 ##### Add indexes to todos table
 
 ### DONE
 
+##### Create and push project repo to github
 ##### Todo item can be asked whether it's complete
 ##### Todo item can be uncompleted
 ##### Todo item can be completed
