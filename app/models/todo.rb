@@ -5,19 +5,20 @@ class Todo < ActiveRecord::Base
 
   def complete!(completor)
     raise "A completor was not provided to complete! the todo" unless completor
-    self.completed_at = Time.now if  self.completed_at == nil
+    self.completed_at = Time.now if self.completed_at == nil
     self.completor = completor if self.completor == nil
+    save
   end
 
   def complete?
-    #IMPLEMENT ME!!!
-    if(self.completed_at != nil && self.completor != nil)
-      return true
-    end
+    return true if(self.completed_at != nil && self.completor != nil)
   end
 
   def uncomplete!
-    #IMPLEMENT ME
-    raise NotImplementedError
+    if complete?
+      self.completed_at = nil
+      self.completor = nil
+      save
+    end
   end
 end

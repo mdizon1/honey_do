@@ -70,5 +70,31 @@ describe Todo do
         end
       end
     end
+
+    describe "#uncomplete!" do
+      context "with a completed todo item" do
+        let(:completed_todo) { FactoryGirl.create(:completed_todo) }
+        it "should unset the completed_at timestamp" do
+          completed_todo.uncomplete!
+          completed_todo.completed_at.should be_blank
+        end
+
+        it "should unset the completor" do
+          completed_todo.uncomplete!
+          completed_todo.completor.should be_blank
+        end
+      end
+
+      context "with a non completed todo item" do
+        let(:todo) { FactoryGirl.create(:todo) }
+        it "should do nothing" do
+          before_timestamp = todo.completed_at
+          before_completor = todo.completor
+          todo.uncomplete!
+          todo.reload.completed_at.should == before_timestamp
+          todo.completor.should == before_completor
+        end
+      end
+    end
   end
 end
