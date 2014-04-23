@@ -32,6 +32,10 @@ describe Household do
           let(:todo_creator) { FactoryGirl.create(:user) }
           let(:description) { "foobar" }
 
+          before do
+            household.members << todo_creator
+          end
+
           it "should return the new todo item" do
             todo = household.create_todo(description, todo_creator)
             todo.should be_a Todo
@@ -62,10 +66,14 @@ describe Household do
           context "when the creator of the todo doesn't belong to the household" do
             let(:other_household) { FactoryGirl.create(:household) }
             before do
-              creator.households = [other_household]
+              todo_creator.households = [other_household]
             end
 
-            it "should raise an error"
+            it "should raise an error" do
+              expect {
+                household.create_todo(description, todo_creator)
+              }.to raise_error
+            end
           end
 
           context "with a nil description" do
@@ -86,6 +94,27 @@ describe Household do
             expect {
               household.create_todo(description, todo_creator)
             }.to raise_error
+          end
+        end
+      end
+    end
+
+    describe "#has_member?" do
+      context "with a household that has a member" do
+        let(:household) { FactoryGirl.create(:household) }
+        let(:membership) { FactoryGirl.create(:membership, :household => household)}
+
+        context "with a member of the household" do
+          let(:member) { membership.user }
+          it "should return true" do
+            household.has_member?(member).should be_true
+          end
+        end
+
+        context "with some other user" do
+          let(:non_member) { FactoryGirl.create(:user) }
+          it "should return false" do
+            household.has_member?(non_member).should be_false
           end
         end
       end
