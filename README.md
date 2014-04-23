@@ -31,6 +31,7 @@ An app for managing a household.
 ##### Household has many 'items'
 ##### Household has many 'members'
   + Members are users
+
 ##### Create household model
 ##### Attach devise to user model
 ##### Create user model
