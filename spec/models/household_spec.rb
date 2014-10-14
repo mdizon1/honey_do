@@ -30,36 +30,36 @@ describe Household do
         let(:household) { FactoryGirl.create(:household) } 
         context "with a valid creator" do
           let(:todo_creator) { FactoryGirl.create(:user) }
-          let(:description) { "foobar" }
+          let(:notes) { "foobar" }
 
           before do
             household.members << todo_creator
           end
 
           it "should return the new todo item" do
-            todo = household.create_todo(description, todo_creator)
+            todo = household.create_todo(notes, todo_creator)
             todo.should be_a Todo
           end
 
           it "should create a new Todo item" do
             expect {
-              household.create_todo(description, todo_creator)
+              household.create_todo(notes, todo_creator)
             }.to change(Todo, :count).by(1)
           end
 
           it "should add the todo item to the household" do
             expect {
-              household.create_todo(description, todo_creator)
+              household.create_todo(notes, todo_creator)
             }.to change(household.todos, :count).by(1)
           end
 
-          it "should save the description on the todo item" do
-            todo = household.create_todo(description, todo_creator)
-            todo.description.should == description
+          it "should save the notes on the todo item" do
+            todo = household.create_todo(notes, todo_creator)
+            todo.notes.should == notes
           end
 
           it "should store the creator of the todo item" do
-            todo = household.create_todo(description, todo_creator)
+            todo = household.create_todo(notes, todo_creator)
             todo.creator.should == todo_creator
           end
 
@@ -71,28 +71,28 @@ describe Household do
 
             it "should raise an error" do
               expect {
-                household.create_todo(description, todo_creator)
+                household.create_todo(notes, todo_creator)
               }.to raise_error
             end
           end
 
-          context "with a nil description" do
-            let(:description) { nil }
+          context "with a nil notes" do
+            let(:notes) { nil }
             it "should raise an error" do
               expect {
-                household.create_todo(description, todo_creator)
+                household.create_todo(notes, todo_creator)
               }.to raise_error
             end
           end
         end
 
         context "with a nil creator" do
-          let(:description) { 'foobar' }
+          let(:notes) { 'foobar' }
           let(:todo_creator) { nil }
 
           it "should raise an error" do
             expect {
-              household.create_todo(description, todo_creator)
+              household.create_todo(notes, todo_creator)
             }.to raise_error
           end
         end

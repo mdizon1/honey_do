@@ -3,11 +3,11 @@ class Household < ActiveRecord::Base
   has_many :members, :through => :memberships, :source => :user
   has_many :todos
 
-  def create_todo(description, creator)
-    raise ArgumentError, "No description provided" if description.blank?
+  def create_todo(notes, creator)
+    raise ArgumentError, "No notes provided" if notes.blank?
     raise ArgumentError, "No creator provided" unless creator
     raise ArgumentError, "Creator is not a member of this household" unless self.has_member?(creator)
-    Todo.create(:household => self, :description => description, :creator => creator)
+    Todo.create(:household => self, :notes => notes, :creator => creator)
   end
 
   def add_member(user)

@@ -1,0 +1,3 @@
+class ShoppingItem < Todo
+  
+end

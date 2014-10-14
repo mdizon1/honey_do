@@ -1,6 +1,7 @@
 FactoryGirl.define do
   factory :todo do
-    description { Faker::Lorem.sentence }
+    title { Faker::Lorem.sentence }
+    notes { Faker::Lorem.paragraph }
     association :household, :factory => :household
   end
 
