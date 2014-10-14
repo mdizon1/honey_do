@@ -4,6 +4,8 @@ ruby '2.1.0'
 gem 'rails', '4.0.2'
 
 
+gem 'autoprefixer-rails'
+gem 'bootstrap-sass'
 gem 'devise'
 #gem 'foreigner'
 gem 'haml'
