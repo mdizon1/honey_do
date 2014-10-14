@@ -20,12 +20,6 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### User can sign in
-  * install devise
-  * generate devise actions
-  * customize as needed
-  * put login/out actions in place
-
 ##### User can create a household
 ##### User can create a todo item for the household
 ##### User can complete a todo item
@@ -37,6 +31,12 @@ An app for managing a household.
 
 ### DONE
 
+##### User can sign in
+  * install devise
+  * generate devise actions
+  * put login/out actions in place
+
+##### Install twitter bootstrap
 ##### Create and push project repo to github
 ##### Todo item can be asked whether it's complete
 ##### Todo item can be uncompleted
