@@ -19,7 +19,13 @@ An app for managing a household.
 ### CURRENT
 
 ### BACKLOG
+
 ##### User can sign in
+  * install devise
+  * generate devise actions
+  * customize as needed
+  * put login/out actions in place
+
 ##### User can create a household
 ##### User can create a todo item for the household
 ##### User can complete a todo item
@@ -27,6 +33,7 @@ An app for managing a household.
 ##### User can add another user to the household
 ##### Add indexes to households table
 ##### Add indexes to todos table
+##### Switch to Thin server
 
 ### DONE
 
