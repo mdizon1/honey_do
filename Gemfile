@@ -15,8 +15,9 @@ gem 'pg'
 gem 'sass-rails'
 
 group :development do
-  #gem 'better_errors'
   gem 'awesome_print'
+  #gem 'better_errors'
+  gem 'debugger'
 end
 
 group :development, :test do
