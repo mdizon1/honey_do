@@ -20,7 +20,18 @@ An app for managing a household.
 
 ### BACKLOG
 
+##### Flesh out user model more
+  * Add name
+##### A user can be a household administrator
+  * Gets associated when they create a household
+  * Can add todo items
+  * Can invite other members
+  * Can turn other members into administrators
+  * Each household has a single head who has highest admin access
+##### Allow user to edit their profile
+##### Change user to has_one household
 ##### User can create a household
+##### When user logs in, if they have a household, goto the show view
 ##### User can create a todo item for the household
 ##### User can complete a todo item
 ##### User can uncomplete a todo item
