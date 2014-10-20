@@ -20,16 +20,17 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Flesh out user model more
-  * Add name
+##### Create unique index on is\_head\_admin for membership
+Ensure only 1 head admin per household
 ##### A user can be a household administrator
   * Gets associated when they create a household
   * Can add todo items
   * Can invite other members
   * Can turn other members into administrators
   * Each household has a single head who has highest admin access
+
 ##### Allow user to edit their profile
-##### Change user to has_one household
+##### Change user to has\_one household
 ##### User can create a household
 ##### When user logs in, if they have a household, goto the show view
 ##### User can create a todo item for the household
@@ -40,7 +41,10 @@ An app for managing a household.
 ##### Add indexes to todos table
 ##### Switch to Thin server
 
-### DONE
+### DONE 
+##### Validate only 1 head admin per household
+##### Flesh out user model more
+  * Add name
 
 ##### User can sign in
   * install devise
