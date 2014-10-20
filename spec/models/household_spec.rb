@@ -25,6 +25,37 @@ describe Household do
   end
 
   describe "instance methods" do
+    describe "#add_member!" do
+      let(:household) { FactoryGirl.create(:household) }
+      context "with a user" do
+        let(:user) { FactoryGirl.create(:user) }
+
+        it "should add the user as a member of the household" do
+          household.members.should_not be_include(user)
+          household.add_member!(user)
+          household.members.should be_include(user)
+        end
+
+        it "should create a membership" do
+          expect {
+            household.add_member!(user)
+          }.to change(Membership, :count).by(1)
+        end
+
+        context "when the user is already a member of the household" do
+          before do
+            FactoryGirl.create(:membership, :household => household, :user => user)
+          end
+
+          it "should not create a new membership" do
+            expect {
+              household.add_member!(user)
+            }.to raise_error
+          end
+        end
+      end
+    end
+
     describe "#create_todo" do
       context "with a persisted household" do
         let(:household) { FactoryGirl.create(:household) } 
@@ -117,6 +148,24 @@ describe Household do
             household.has_member?(non_member).should be_false
           end
         end
+      end
+    end
+
+    describe "#make_admin" do
+      context "with a new household" do
+        it "should set the user as an admin of the household"
+      end
+
+      context "with an existing household" do
+        context "when the household already has an admin" do
+          it "should not se the user as an admin of the household"
+        end
+      end
+    end
+
+    describe "#remove_member" do
+      context "with an existing member of the household" do
+        it "should remove a membership"
       end
     end
   end
