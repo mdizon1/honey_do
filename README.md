@@ -20,8 +20,6 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Create unique index on is\_head\_admin for membership
-Ensure only 1 head admin per household
 ##### A user can be a household administrator
   * Gets associated when they create a household
   * Can add todo items
@@ -42,6 +40,8 @@ Ensure only 1 head admin per household
 ##### Switch to Thin server
 
 ### DONE 
+##### Create unique index on is\_head\_admin for membership
+Ensure only 1 head admin per household
 ##### Validate only 1 head admin per household
 ##### Flesh out user model more
   * Add name
