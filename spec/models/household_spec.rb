@@ -56,6 +56,28 @@ describe Household do
       end
     end
 
+    describe "#admins" do
+      let(:household) { FactoryGirl.create(:household) }
+      context "with no admins" do
+        it "should return an empty set" do
+          household.admins.should be_empty
+        end
+      end
+      context "with a head admin" do
+        let!(:head_admin) { m = FactoryGirl.create(:household_head_admin, :household => household); m.user }
+        it "should return the head admin" do
+          household.admins.should == [head_admin]
+        end
+
+        context "with another normal admin" do
+          let!(:other_admin) { m = FactoryGirl.create(:membership, :household => household, :is_admin => true); m.user }
+          it "should return the admin and head admin" do
+            household.admins.should =~ [head_admin, other_admin]
+          end
+        end
+      end
+    end
+
     describe "#create_todo" do
       context "with a persisted household" do
         let(:household) { FactoryGirl.create(:household) } 

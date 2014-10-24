@@ -7,6 +7,10 @@ class Household < ActiveRecord::Base
     members << user
   end
 
+  def admins
+    memberships.includes(:user).where('memberships.is_admin IS TRUE OR memberships.is_head_admin IS TRUE').map(&:user)
+  end
+
   def make_admin(user)
     m = Membership.find(:household => self, :member => user)
     return false unless m
@@ -14,7 +18,7 @@ class Household < ActiveRecord::Base
     m.save
   end
 
-  def become_head_admin(user)
+  def make_head_admin(user)
     m = Membership.find(:household => self, :member => user)
     return false unless m
     m.is_head_admin = true
@@ -30,6 +34,10 @@ class Household < ActiveRecord::Base
 
   def has_member?(user)
     members.include?(user)
+  end
+
+  def head_admin
+    members.where(:is_head_admin => true).first.user
   end
 
   def remove_member(user)

@@ -6,4 +6,8 @@ class User < ActiveRecord::Base
 
   has_many :memberships, :foreign_key => :member_id
   has_many :households, :through => :memberships
+
+  def administrates?(household)
+    household.admins.include?(self)
+  end
 end

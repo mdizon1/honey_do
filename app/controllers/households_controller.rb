@@ -14,7 +14,8 @@ class HouseholdsController < ApplicationController
 
   def create
     @household = Household.create(household_params)
-    @household.members << current_user
+    @household.add_member!(current_user)
+    @household.make_head_admin(current_user)
     redirect_to household_path
   end
 
