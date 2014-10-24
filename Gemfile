@@ -5,6 +5,7 @@ gem 'rails', '4.0.2'
 
 
 gem 'autoprefixer-rails'
+gem 'cancan'
 gem 'bootstrap-sass'
 gem 'devise'
 #gem 'foreigner'
