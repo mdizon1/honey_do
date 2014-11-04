@@ -128,7 +128,7 @@ describe Household do
           context "when the creator of the todo doesn't belong to the household" do
             let(:other_household) { FactoryGirl.create(:household) }
             before do
-              todo_creator.households = [other_household]
+              todo_creator.household = other_household
             end
 
             it "should raise an error" do

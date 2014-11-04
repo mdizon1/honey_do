@@ -7,7 +7,7 @@ describe Todo do
         let(:todo) { FactoryGirl.create(:todo) }
 
         context "with a valid completor" do
-          let(:completor) { FactoryGirl.create(:user, :households => [todo.household]) }
+          let(:completor) { FactoryGirl.create(:user, :household => todo.household) }
           it "should mark the completed_at time of the todo" do
             todo.completed_at.should be_blank
             todo.complete!(completor)
@@ -22,7 +22,7 @@ describe Todo do
 
         context "when the todo is already completed" do
           let(:completed_todo) { FactoryGirl.create(:completed_todo) }
-          let(:other_completor) { FactoryGirl.create(:user, :households => [completed_todo.household]) }
+          let(:other_completor) { FactoryGirl.create(:user, :household => completed_todo.household) }
 
           it "should not change the completed_at date" do
             before_timestamp = completed_todo.completed_at

@@ -4,8 +4,8 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :memberships, :foreign_key => :member_id
-  has_many :households, :through => :memberships
+  has_one :membership, :foreign_key => :member_id
+  has_one :household, :through => :membership
 
   def administrates?(household)
     household.admins.include?(self)
