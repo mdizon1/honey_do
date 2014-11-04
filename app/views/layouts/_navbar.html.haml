@@ -1,0 +1,10 @@
+.navbar.navbar-default.navbar-fixed-top{:role => 'navigation'}
+  .navbar-header
+    %button.navbar-toggle{:type => 'button', :data => {:toggle => 'collapse', :target => '.navbar-responsive-collapse'}}
+      %span.icon-bar
+      %span.icon-bar
+      %span.icon-bar
+    = link_to 'Honey Do', root_url, :class => 'navbar-brand'
+  .navbar-collapse.collapse.navbar-responsive-collapse
+    %ul.nav.navbar-nav.navbar-right
+      = render 'layouts/session_controls'
