@@ -20,12 +20,10 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Change user to has\_one household
-##### Only a household admin may create todos
+##### Style what pages we have now
 ##### Household admin can invite other members
 ##### Household head admin can give admin status to other members
 ##### Allow user to edit their profile
-##### User can create a household
 ##### When user logs in, if they have a household, goto the show view
 ##### User can create a todo item for the household
 ##### User can complete a todo item
@@ -36,6 +34,10 @@ An app for managing a household.
 ##### Switch to Thin server
 
 ### DONE 
+##### Choose/use a bootstrap theme
+##### User can create a household
+##### Only a household admin may create todos
+##### Change user to has\_one household
 ##### A user can be a household administrator
   * Gets associated when they create a household
   * Each household has a single head who has highest admin access
