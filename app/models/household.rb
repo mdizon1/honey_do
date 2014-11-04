@@ -29,6 +29,7 @@ class Household < ActiveRecord::Base
     raise ArgumentError, "No notes provided" if notes.blank?
     raise ArgumentError, "No creator provided" unless creator
     raise ArgumentError, "Creator is not a member of this household" unless self.has_member?(creator)
+    raise ArgumentError, "Creator is not an administrator of the household" unless creator.administrates? self
     Todo.create(:household => self, :notes => notes, :creator => creator)
   end
 

@@ -83,11 +83,8 @@ describe Household do
         let(:household) { FactoryGirl.create(:household) } 
         context "with a valid creator" do
           let(:todo_creator) { FactoryGirl.create(:user) }
+          let!(:membership) { FactoryGirl.create(:membership, :household => household, :user => todo_creator, :is_admin => true) }
           let(:notes) { "foobar" }
-
-          before do
-            household.members << todo_creator
-          end
 
           it "should return the new todo item" do
             todo = household.create_todo(notes, todo_creator)
@@ -114,6 +111,18 @@ describe Household do
           it "should store the creator of the todo item" do
             todo = household.create_todo(notes, todo_creator)
             todo.creator.should == todo_creator
+          end
+
+          context "when the creator of the todo is not an administrator" do
+            before do
+              membership.update_column(:is_admin, false)
+            end
+
+            it "should raise an error" do
+              expect {
+                household.create_todo(notes, todo_creator)
+              }.to raise_error
+            end
           end
 
           context "when the creator of the todo doesn't belong to the household" do
