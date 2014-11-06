@@ -32,6 +32,7 @@ An app for managing a household.
 ##### Add indexes to households table
 ##### Add indexes to todos table
 ##### Switch to Thin server
+##### Craft welcome/landing page (logged out)
 
 ### DONE 
 ##### Choose/use a bootstrap theme
