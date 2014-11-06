@@ -28,7 +28,7 @@ class HouseholdsController < ApplicationController
   private
 
   def load_household
-    @household = current_user.households.first
+    @household = current_user.household
   end
 
   def household_params

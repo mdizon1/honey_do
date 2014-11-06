@@ -12,14 +12,14 @@ class Household < ActiveRecord::Base
   end
 
   def make_admin(user)
-    m = Membership.find(:household => self, :member => user)
+    m = Membership.find_by(:household_id => self.id, :member_id => user.id)
     return false unless m
     m.is_admin = true
     m.save
   end
 
   def make_head_admin(user)
-    m = Membership.find(:household => self, :member => user)
+    m = Membership.find_by(:household_id => self.id, :member_id => user.id)
     return false unless m
     m.is_head_admin = true
     m.save
