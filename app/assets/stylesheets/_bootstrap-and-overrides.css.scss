@@ -1,6 +1,9 @@
 // @import "bootstrap";
 @import "bootstrap-spacelab";
 
-.navbar %ul.navbar-right {
-  padding-right: 1em;
+.navbar ul.navbar-right {
+  margin-right: 1em;
+}
+.navbar-header a.navbar-brand {
+  margin-left: 0.5em;
 }
