@@ -29,6 +29,7 @@ class Ability
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
 
+    ############################## Household ##############################
     can :manage, Household do |household|
       user == household.head_admin ||
       user.administrates(household)
@@ -36,6 +37,17 @@ class Ability
 
     can :add_admin, Household do |household|
       user == household.head_admin
+    end
+
+    ############################## Todo ##############################
+    can :manage, Todo do |todo|
+      household = todo.household
+      can?(:manage, household)
+    end
+
+    can :complete, Todo do |todo|
+      household = todo.household
+      user.household == household
     end
   end
 end
