@@ -84,32 +84,33 @@ describe Household do
         context "with a valid creator" do
           let(:todo_creator) { FactoryGirl.create(:user) }
           let!(:membership) { FactoryGirl.create(:membership, :household => household, :user => todo_creator, :is_admin => true) }
+          let(:title) { 'bloo blar' }
           let(:notes) { "foobar" }
 
           it "should return the new todo item" do
-            todo = household.create_todo(notes, todo_creator)
+            todo = household.create_todo(title, notes, todo_creator)
             todo.should be_a Todo
           end
 
           it "should create a new Todo item" do
             expect {
-              household.create_todo(notes, todo_creator)
+              household.create_todo(title, notes, todo_creator)
             }.to change(Todo, :count).by(1)
           end
 
           it "should add the todo item to the household" do
             expect {
-              household.create_todo(notes, todo_creator)
+              household.create_todo(title, notes, todo_creator)
             }.to change(household.todos, :count).by(1)
           end
 
           it "should save the notes on the todo item" do
-            todo = household.create_todo(notes, todo_creator)
+            todo = household.create_todo(title, notes, todo_creator)
             todo.notes.should == notes
           end
 
           it "should store the creator of the todo item" do
-            todo = household.create_todo(notes, todo_creator)
+            todo = household.create_todo(title, notes, todo_creator)
             todo.creator.should == todo_creator
           end
 
@@ -120,7 +121,7 @@ describe Household do
 
             it "should raise an error" do
               expect {
-                household.create_todo(notes, todo_creator)
+                household.create_todo(title, notes, todo_creator)
               }.to raise_error
             end
           end
@@ -133,16 +134,25 @@ describe Household do
 
             it "should raise an error" do
               expect {
-                household.create_todo(notes, todo_creator)
+                household.create_todo(title, notes, todo_creator)
               }.to raise_error
             end
           end
 
           context "with a nil notes" do
             let(:notes) { nil }
+            it "should not raise an error" do
+              expect {
+                household.create_todo(title, notes, todo_creator)
+              }.not_to raise_error
+            end
+          end
+
+          context "with a blank title" do
+            let(:title) { '' }
             it "should raise an error" do
               expect {
-                household.create_todo(notes, todo_creator)
+                household.create_todo(title, notes, todo_creator)
               }.to raise_error
             end
           end
@@ -152,7 +162,7 @@ describe Household do
           let(:notes) { 'foobar' }
           let(:todo_creator) { nil }
 
-          it "should raise an error" do
+          it "should not raise an error" do
             expect {
               household.create_todo(notes, todo_creator)
             }.to raise_error

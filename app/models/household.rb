@@ -25,8 +25,8 @@ class Household < ActiveRecord::Base
     m.save
   end
 
-  def create_todo(notes, creator)
-    raise ArgumentError, "No notes provided" if notes.blank?
+  def create_todo(title, notes='', creator)
+    raise ArgumentError, "No title provided" if title.blank?
     raise ArgumentError, "No creator provided" unless creator
     raise ArgumentError, "Creator is not a member of this household" unless self.has_member?(creator)
     raise ArgumentError, "Creator is not an administrator of the household" unless creator.administrates? self
