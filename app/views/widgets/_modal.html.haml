@@ -1,0 +1,27 @@
+-# Partial to output a generic modal
+-# Meant to be rendered from ModalHelper#modal_helper
+-# Locals: 
+- ((defined? modal_id) ? nil : (raise ArgumentError, "modal_id not defined for modal partial"))
+- ((defined? title) ? nil : (raise ArgumentError, "title not defined for modal partial"))
+- ((defined? modal_content) ? nil : (raise ArgumentError, "modal_content not defined for modal partial"))
+- ((defined? focus_on) ? nil : focus_on = nil)
+
+
+= content_for :modals do
+  .modal.fade{:id => modal_id, :role => 'dialog'}
+    .modal-dialog.modal-sm
+      .modal-content
+        .modal-header
+          %button.close{:type=>'button', :data => {:dismiss => 'modal'}}
+            %span{'aria-hidden'=>'true'}
+              %i.fa.fa-close
+            %span.sr-only Close
+          %h4.modal-title= title
+        = modal_content
+
+- if focus_on 
+  - content_for :javascripts do
+    :javascript
+      $("#new-todo-modal").on("shown.bs.modal", function (e){
+        $("#{focus_on}").focus();
+      });

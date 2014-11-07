@@ -1,0 +1,13 @@
+-# Partial to show and edit a todo item (if permissions are met)
+-# Locals: todo - the todo item in question
+
+.todo.todo-show
+  .col-lg-4.col-md-4.col-sm-12
+    = todo.title
+  .col-lg-6.col-md-8.col-sm-12
+    = todo.notes
+  .col-lg-2.col-sm-12
+    .todo-controls
+      - if can?(:complete, todo)
+        = link_to '#', :class => 'btn btn-success' do
+          %i.fa.fa-check
