@@ -3,7 +3,6 @@
   %head
     %title Honey Do
     = stylesheet_link_tag    "application", media: "all"
-    = javascript_include_tag "application"
     = csrf_meta_tags
     %meta{:name => 'viewport', :content => 'width=devise-width, initial-scale=1'}
   %body
@@ -12,3 +11,8 @@
     %p.alert= alert
     .container
       = yield
+
+    = javascript_include_tag "application"
+
+    = yield :modals
+    = yield :javascripts
