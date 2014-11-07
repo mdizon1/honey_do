@@ -21,6 +21,7 @@ An app for managing a household.
 ### BACKLOG
 
 ##### Style what pages we have now
+##### Create proper route around todo creation: household/todos
 ##### Household admin can invite other members
 ##### Household head admin can give admin status to other members
 ##### Allow user to edit their profile
