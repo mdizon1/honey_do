@@ -1,6 +1,6 @@
 class HouseholdsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :load_household, :only => [:show, :edit, :update, :destroy]
+  before_filter :load_current_user_household, :only => [:show, :edit, :update, :destroy]
 
   def show
   end
@@ -26,10 +26,6 @@ class HouseholdsController < ApplicationController
   end
 
   private
-
-  def load_household
-    @household = current_user.household
-  end
 
   def household_params
     params.require(:household).permit(:name)
