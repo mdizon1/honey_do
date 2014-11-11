@@ -9,4 +9,9 @@ FactoryGirl.define do
     completed_at { Time.now - Random.rand(10).weeks }
     association :completor, :factory => :user
   end
+
+  factory :accepted_todo, :parent => :completed_todo do
+    accepted_at { self.completed_at + 1.day }
+    association :acceptor, :factory => :user
+  end
 end
