@@ -7,8 +7,7 @@
     %meta{:name => 'viewport', :content => 'width=devise-width, initial-scale=1'}
   %body
     = render 'layouts/navbar'
-    %p.notice= notice
-    %p.alert= alert
+    = render 'layouts/flash'
     .container
       = yield
 
