@@ -1,4 +1,4 @@
--# Partial to show and edit a todo item (if permissions are met)
+-# Partial to show a todo item (if permissions are met)
 -# Locals: todo - the todo item in question
 
 .todo.todo-show
@@ -9,5 +9,5 @@
   .col-lg-2.col-sm-12
     .todo-controls
       - if can?(:complete, todo)
-        = link_to '#', :class => 'btn btn-success' do
+        = link_to household_todo_complete_path(todo), :method => :put, :class => 'btn btn-success' do
           %i.fa.fa-check

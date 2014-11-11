@@ -1,25 +1,14 @@
 .jumbotron
   %h1 Welcome to the #{@household.name} household
 
-- @household.todos.each do |t|
+- @household.pending_todos.each do |t|
   .row
-    - if can? :manage, t
-      = render :partial => 'todos/edit', :locals => {:todo => t}
-    - else
-      = render :partial => 'todos/show', :locals => {:todo => t}
-= link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
-  Create Todo
-  %i.fa.fa-plus
+    = render :partial => 'todos/show', :locals => {:todo => t}
+- if can?(:manage, @household)
+  = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
+    Create Todo
+    %i.fa.fa-plus
 
-- modal_content = capture do
-  = form_for Todo.new, :role => 'form' do |f|
-    .modal-body
-      .form-group
-        = f.text_field :title, :placeholder => 'Title', :class => 'form-control'
-        = f.text_area :notes, :placeholder => 'Description (optional)', :class => 'form-control'
-    .modal-footer
-      %button.btn.btn-primary{:type => 'submit'}
-        %i.fa.fa-plus
-        Create Todo
-
-= modal_helper :modal_id => 'new-todo-modal', :title => 'Create a new Todo', :modal_content => modal_content, :focus_on => "#todo_title"
+  - modal_content = capture do
+    = render :partial => 'todos/new'
+  = modal_helper :modal_id => 'new-todo-modal', :title => 'Create a new Todo', :modal_content => modal_content, :focus_on => "#todo_title"

@@ -30,7 +30,7 @@ class Household < ActiveRecord::Base
     raise ArgumentError, "No creator provided" unless creator
     raise ArgumentError, "Creator is not a member of this household" unless self.has_member?(creator)
     raise ArgumentError, "Creator is not an administrator of the household" unless creator.administrates? self
-    Todo.create(:household => self, :notes => notes, :creator => creator)
+    Todo.create(:household => self, :title => title, :notes => notes, :creator => creator)
   end
 
   def has_member?(user)
@@ -38,7 +38,11 @@ class Household < ActiveRecord::Base
   end
 
   def head_admin
-    members.where(:is_head_admin => true).first.user
+    memberships.find_by(:is_head_admin => true).user
+  end
+
+  def pending_todos
+    todos.where(:completed_at => nil)
   end
 
   def remove_member(user)

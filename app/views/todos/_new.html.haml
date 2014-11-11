@@ -1,0 +1,11 @@
+= form_for Todo.new, :url => household_todos_path, :role => 'form' do |f|
+  .modal-body
+    .form-group
+      = f.text_field :title, :placeholder => 'Title', :class => 'form-control'
+      = f.text_area :notes, :placeholder => 'Description (optional)', :class => 'form-control'
+  .modal-footer
+    %button.btn.btn-primary{:type => 'submit'}
+      %i.fa.fa-plus
+      Create Todo
+
+
