@@ -20,14 +20,11 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Make todos orderable
 ##### Display user email in navbar when logged in
-##### Style what pages we have now
-##### Create proper route around todo creation: household/todos
+##### Make todos orderable
 ##### Household admin can invite other members
 ##### Household head admin can give admin status to other members
 ##### Allow user to edit their profile
-##### When user logs in, if they have a household, goto the show view
 ##### User can create a todo item for the household
 ##### User can complete a todo item
 ##### User can uncomplete a todo item
@@ -38,6 +35,9 @@ An app for managing a household.
 ##### Craft welcome/landing page (logged out)
 
 ### DONE 
+##### When user logs in, if they have a household, goto the show view
+##### Style what pages we have now
+##### Create proper route around todo creation: household/todos
 ##### Make todos acceptible
   * An admin of the household must accept a todo to remove it
   * Simply completing the todo makes it display crossed out
