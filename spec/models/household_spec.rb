@@ -104,6 +104,11 @@ describe Household do
             }.to change(household.todos, :count).by(1)
           end
 
+          it "should save the title on the todo item" do
+            todo = household.create_todo(title, notes, todo_creator)
+            todo.title.should == title
+          end
+
           it "should save the notes on the todo item" do
             todo = household.create_todo(title, notes, todo_creator)
             todo.notes.should == notes
