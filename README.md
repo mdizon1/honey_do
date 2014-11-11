@@ -20,23 +20,36 @@ An app for managing a household.
 
 ### BACKLOG
 
+##### House admin can uncomplete a todo
+##### Add shopping list tab
 ##### Display user email in navbar when logged in
-##### Make todos orderable
+##### Design 2nd pass
+  * Mobile first
+  * Make it responsive
+  * Todo management, shopping list management
+
 ##### Household admin can invite other members
 ##### Household head admin can give admin status to other members
+##### Backbonize todo list control
+##### Make todos orderable
 ##### Allow user to edit their profile
-##### User can create a todo item for the household
-##### User can complete a todo item
-##### User can uncomplete a todo item
+##### Show user name in navbar when logged in
 ##### User can add another user to the household
-##### Add indexes to households table
-##### Add indexes to todos table
 ##### Switch to Thin server
 ##### Craft welcome/landing page (logged out)
 
 ### DONE 
+##### Add indexes to households table
+##### Add indexes to todos table
+##### User can create a todo item for the household
+##### User can complete a todo item
 ##### When user logs in, if they have a household, goto the show view
-##### Style what pages we have now
+##### First wave of style
+  * Add bootstrap
+  * Install a bootstrap skin
+  * Bootstrapize the markup
+  * Make some crappy first pass on design
+
 ##### Create proper route around todo creation: household/todos
 ##### Make todos acceptible
   * An admin of the household must accept a todo to remove it
@@ -68,7 +81,7 @@ Ensure only 1 head admin per household
 ##### Todo item can be completed
 ##### Household has many 'items'
 ##### Household has many 'members'
-  + Members are users
+  * Members are users
 
 ##### Create household model
 ##### Attach devise to user model
