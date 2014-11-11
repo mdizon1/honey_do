@@ -31,6 +31,7 @@ class Todo < ActiveRecord::Base
     return true if(self.completed_at != nil && self.completor != nil)
     false
   end
+  alias_method :completed?, :complete?
 
   def uncomplete!
     if complete?

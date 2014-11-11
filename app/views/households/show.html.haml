@@ -1,7 +1,12 @@
 .jumbotron
   %h1 Welcome to the #{@household.name} household
 
-- @household.pending_todos.each do |t|
+- if can?(:manage, @household)
+  = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
+    Create Todo
+    %i.fa.fa-plus
+
+- @pending_todos.each do |t|
   .row
     = render :partial => 'todos/show', :locals => {:todo => t}
 - if can?(:manage, @household)
@@ -12,3 +17,7 @@
   - modal_content = capture do
     = render :partial => 'todos/new'
   = modal_helper :modal_id => 'new-todo-modal', :title => 'Create a new Todo', :modal_content => modal_content, :focus_on => "#todo_title"
+
+- @completed_todos.each do |t|
+  .row
+    = render :partial => 'todos/show', :locals => {:todo => t}

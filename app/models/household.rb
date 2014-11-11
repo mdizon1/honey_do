@@ -3,6 +3,10 @@ class Household < ActiveRecord::Base
   has_many :members, :through => :memberships, :source => :user
   has_many :todos
 
+  def accepted_todos
+    todos.where('accepted_at IS NOT NULL')
+  end
+
   def add_member!(user)
     members << user
   end
@@ -11,18 +15,8 @@ class Household < ActiveRecord::Base
     memberships.includes(:user).where('memberships.is_admin IS TRUE OR memberships.is_head_admin IS TRUE').map(&:user)
   end
 
-  def make_admin(user)
-    m = Membership.find_by(:household_id => self.id, :member_id => user.id)
-    return false unless m
-    m.is_admin = true
-    m.save
-  end
-
-  def make_head_admin(user)
-    m = Membership.find_by(:household_id => self.id, :member_id => user.id)
-    return false unless m
-    m.is_head_admin = true
-    m.save
+  def completed_todos
+    todos.where('completed_at IS NOT NULL').where(:accepted_at => nil)
   end
 
   def create_todo(title, notes='', creator)
@@ -39,6 +33,20 @@ class Household < ActiveRecord::Base
 
   def head_admin
     memberships.find_by(:is_head_admin => true).user
+  end
+
+  def make_admin(user)
+    m = Membership.find_by(:household_id => self.id, :member_id => user.id)
+    return false unless m
+    m.is_admin = true
+    m.save
+  end
+
+  def make_head_admin(user)
+    m = Membership.find_by(:household_id => self.id, :member_id => user.id)
+    return false unless m
+    m.is_head_admin = true
+    m.save
   end
 
   def pending_todos

@@ -2,12 +2,15 @@
 -# Locals: todo - the todo item in question
 
 .todo.todo-show
-  .col-lg-4.col-md-4.col-sm-12
-    = todo.title
+  .col-lg-4.col-md-4.col-sm-12 
+    %div{:class => (todo.completed? ? 'complete' : '')}= todo.title
   .col-lg-6.col-md-8.col-sm-12
-    = todo.notes
+    %div{:class => (todo.completed? ? 'complete' : '')}= todo.notes
   .col-lg-2.col-sm-12
     .todo-controls
       - if can?(:complete, todo)
         = link_to household_todo_complete_path(todo), :method => :put, :class => 'btn btn-success' do
           %i.fa.fa-check
+      - if can?(:accept, todo)
+        = link_to household_todo_accept_path(todo), :method => :put, :class => 'btn btn-danger' do
+          %i.fa.fa-ban

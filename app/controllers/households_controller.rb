@@ -3,6 +3,8 @@ class HouseholdsController < ApplicationController
   before_filter :load_current_user_household, :only => [:show, :edit, :update, :destroy]
 
   def show
+    @pending_todos = @household.pending_todos
+    @completed_todos = @household.completed_todos
   end
 
   def edit

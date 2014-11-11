@@ -6,6 +6,7 @@ HoneyDo::Application.routes.draw do
   resource :household, :except => :index do
     resources :todos do
       put :complete
+      put :accept
     end
   end
 
