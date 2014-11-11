@@ -41,7 +41,7 @@ class Ability
     ############################## Todo ##############################
     can :accept, Todo do |todo|
       household = todo.household
-      can(:edit, household) &&
+      can(:administrate, household) &&
         todo.completed? &&
         !todo.accepted?
     end

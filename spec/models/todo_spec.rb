@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Todo do
   context "instance methods" do
-    describe "accept!" do
+    describe "#accept!" do
       context "with a todo which is persisted" do
         let(:todo) { FactoryGirl.create(:todo) }
 
@@ -10,8 +10,6 @@ describe Todo do
           let!(:valid_acceptor) { 
             u = FactoryGirl.create(:user)
             m = FactoryGirl.create(:household_admin, :household => todo.household, :member_id => u.id)
-            #require 'debugger'
-            #debugger
             u
           }
 
@@ -88,7 +86,7 @@ describe Todo do
       end
     end
 
-    describe "accepted?" do
+    describe "#accepted?" do
       context "with a todo that is not completed nor accepted" do
         let(:todo) { FactoryGirl.create(:todo) }
         it "should return false" do
