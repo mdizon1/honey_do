@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141110054610) do
+ActiveRecord::Schema.define(version: 20141111012430) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(version: 20141110054610) do
     t.boolean  "is_head_admin", default: false
   end
 
-  add_index "memberships", ["household_id", "is_head_admin"], name: "index_memberships_on_household_id_and_is_head_admin", unique: true, using: :btree
   add_index "memberships", ["member_id", "household_id"], name: "index_memberships_on_member_id_and_household_id", unique: true, using: :btree
 
   create_table "todos", force: true do |t|
@@ -42,7 +41,7 @@ ActiveRecord::Schema.define(version: 20141110054610) do
     t.datetime "accepted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "notes"
+    t.text     "notes",        default: ""
     t.integer  "creator_id"
     t.string   "title",        default: ""
   end
