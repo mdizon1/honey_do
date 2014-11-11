@@ -20,10 +20,8 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Make todos acceptible
-  * An admin of the household must accept a todo to remove it
-  * Simply completing the todo makes it display crossed out
-
+##### Make todos orderable
+##### Display user email in navbar when logged in
 ##### Style what pages we have now
 ##### Create proper route around todo creation: household/todos
 ##### Household admin can invite other members
@@ -40,6 +38,10 @@ An app for managing a household.
 ##### Craft welcome/landing page (logged out)
 
 ### DONE 
+##### Make todos acceptible
+  * An admin of the household must accept a todo to remove it
+  * Simply completing the todo makes it display crossed out
+
 ##### Choose/use a bootstrap theme
 ##### User can create a household
 ##### Only a household admin may create todos
