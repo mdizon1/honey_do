@@ -11,6 +11,10 @@ An app for managing a household.
   + Only an owner of the household may accept that an item is complete
   + Only an owner of the household may delete an item
 
+### Premium features:
+  + Recurring tasks
+  + Scheduled tasks (with a due date)
+
 
 ## TODO: 
 
@@ -20,7 +24,6 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### House admin can uncomplete a todo
 ##### Add shopping list tab
 ##### Display user email in navbar when logged in
 ##### Design 2nd pass
@@ -40,6 +43,8 @@ An app for managing a household.
 ##### Craft welcome/landing page (logged out)
 
 ### DONE 
+##### House admin can uncomplete a todo
+##### Todo can be destroyed
 ##### Add indexes to households table
 ##### Add indexes to todos table
 ##### User can create a todo item for the household
