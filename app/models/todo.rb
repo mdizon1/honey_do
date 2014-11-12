@@ -33,10 +33,17 @@ class Todo < ActiveRecord::Base
   end
   alias_method :completed?, :complete?
 
+  def pending?
+    return true if(self.completed_at == nil && self.accepted_at == nil)
+    false
+  end
+
   def uncomplete!
     if complete?
       self.completed_at = nil
       self.completor = nil
+      self.accepted_at = nil
+      self.acceptor = nil
       save
     end
   end

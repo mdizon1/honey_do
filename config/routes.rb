@@ -7,6 +7,7 @@ HoneyDo::Application.routes.draw do
     resources :todos do
       put :complete
       put :accept
+      put :uncomplete
     end
   end
 

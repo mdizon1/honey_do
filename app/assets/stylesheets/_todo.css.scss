@@ -2,4 +2,9 @@
   div.complete {
     text-decoration: line-through;
   }
+  .todo-controls {
+    a.btn {
+      min-width: 40px;
+    }
+  }
 }

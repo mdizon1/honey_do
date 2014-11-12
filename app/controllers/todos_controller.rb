@@ -1,8 +1,8 @@
 class TodosController < ApplicationController
   before_filter :authenticate_user!
   before_filter :load_current_user_household, :except => [:new]
-  before_filter :load_todo, :only => [:accept, :complete]
-  before_filter :authorize_modify_todo, :only => [:accept, :complete]
+  before_filter :load_todo, :only => [:accept, :complete, :destroy, :uncomplete]
+  before_filter :authorize_modify_todo, :only => [:accept, :complete, :destroy, :uncomplete]
 
   def show
   end
@@ -26,6 +26,9 @@ class TodosController < ApplicationController
   end
 
   def destroy
+    @todo.destroy
+    flash[:notice] = 'Todo item has been removed'
+    redirect_to household_path
   end
 
   #TODO: (hah, meta) catch exceptions thrown by accept! and return appropriate flash
@@ -38,6 +41,12 @@ class TodosController < ApplicationController
   def complete
     @todo.complete!(current_user)
     flash[:notice] = 'Todo completed'
+    redirect_to household_path
+  end
+
+  def uncomplete
+    @todo.uncomplete!
+    flash[:notice] = 'The todo was pushed back to pending'
     redirect_to household_path
   end
 

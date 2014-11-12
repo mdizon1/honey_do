@@ -192,6 +192,23 @@ describe Todo do
         end
       end
 
+      context "with an accepted todo item" do
+        let(:accepted_todo) { FactoryGirl.create(:accepted_todo) }
+        it "should return the todo to a pending state" do
+          accepted_todo.pending?.should be_false
+          accepted_todo.uncomplete!
+          accepted_todo.pending?.should be_true
+        end
+
+        it "should set completed at and accepted at to be nil" do
+          accepted_todo.uncomplete!
+          accepted_todo.completed_at.should be_nil
+          accepted_todo.completor.should be_nil
+          accepted_todo.accepted_at.should be_nil
+          accepted_todo.acceptor.should be_nil
+        end
+      end
+
       context "with a non completed todo item" do
         let(:todo) { FactoryGirl.create(:todo) }
         it "should do nothing" do

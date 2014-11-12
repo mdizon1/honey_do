@@ -39,16 +39,10 @@ class Ability
     end
 
     ############################## Todo ##############################
-    can :accept, Todo do |todo|
-      household = todo.household
-      can(:administrate, household) &&
+    can [:accept, :uncomplete], Todo do |todo|
+      can(:edit, todo) &&
         todo.completed? &&
         !todo.accepted?
-    end
-
-    can :edit, Todo do |todo|
-      household = todo.household
-      can?(:administrate, household)
     end
 
     can :complete, Todo do |todo|
@@ -56,6 +50,20 @@ class Ability
       user.household == household &&
         !todo.completed? &&
         !todo.accepted?
+    end
+
+    can :destroy, Todo do |todo|
+      household = todo.household
+      user.household == household &&
+        !can(:accept, todo) &&
+        ( todo.creator == user ||
+          can?(:administrate, household)
+        )
+    end
+
+    can :edit, Todo do |todo|
+      household = todo.household
+      can?(:administrate, household)
     end
   end
 end

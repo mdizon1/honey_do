@@ -11,6 +11,12 @@
       - if can?(:complete, todo)
         = link_to household_todo_complete_path(todo), :method => :put, :class => 'btn btn-success' do
           %i.fa.fa-check
+      - if can?(:uncomplete, todo)
+        = link_to household_todo_uncomplete_path(todo), :method => :put, :class => 'btn btn-warning' do
+          %i.fa.fa-undo
+      - if can?(:destroy, todo)
+        = link_to household_todo_path(todo), :method => :delete, :class => 'btn btn-danger' do
+          %i.fa.fa-ban
       - if can?(:accept, todo)
         = link_to household_todo_accept_path(todo), :method => :put, :class => 'btn btn-danger' do
           %i.fa.fa-ban

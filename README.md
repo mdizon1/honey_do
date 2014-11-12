@@ -32,6 +32,7 @@ An app for managing a household.
 ##### Household head admin can give admin status to other members
 ##### Backbonize todo list control
 ##### Make todos orderable
+##### Add tooltips to todo controls
 ##### Allow user to edit their profile
 ##### Show user name in navbar when logged in
 ##### User can add another user to the household
