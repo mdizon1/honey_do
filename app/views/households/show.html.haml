@@ -1,26 +1,42 @@
 .jumbotron
   %h1 Welcome to the #{@household.name} household
 
-- if can?(:administrate, @household)
-  = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
-    Create Todo
-    %i.fa.fa-plus
+%ul.nav.nav-tabs{:role => 'tablist'}
+  %li.active{:role => 'presentation'} 
+    = link_to 'Todos', '#todos', :id => 'todos-tab', :data => {:toggle => 'tab'}, :role => 'tab'
+  %li{:role => 'presentation'}
+    = link_to 'Shopping', '#shopping', :id => 'shopping-tab', :data => {:toggle => 'tab'}, :role => 'tab'
 
-- @pending_todos.each do |t|
-  .row
-    = render :partial => 'todos/show', :locals => {:todo => t}
+.tab-content
+  #todos.tab-pane.fade.in.active{:role => 'tabpanel'}
+    - if can?(:administrate, @household)
+      = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
+        Create Todo
+        %i.fa.fa-plus
 
-- @completed_todos.each do |t|
-  .row
-    = render :partial => 'todos/show', :locals => {:todo => t}
+    - @pending_todos.each do |t|
+      .row
+        = render :partial => 'todos/show', :locals => {:todo => t}
+
+    - @completed_todos.each do |t|
+      .row
+        = render :partial => 'todos/show', :locals => {:todo => t}
 
 
-- if can?(:administrate, @household)
-  = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
-    Create Todo
-    %i.fa.fa-plus
+    - if can?(:administrate, @household)
+      = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
+        Create Todo
+        %i.fa.fa-plus
 
-  - modal_content = capture do
-    = render :partial => 'todos/new'
-  = modal_helper :modal_id => 'new-todo-modal', :title => 'Create a new Todo', :modal_content => modal_content, :focus_on => "#todo_title"
+      - modal_content = capture do
+        = render :partial => 'todos/new'
+      = modal_helper :modal_id => 'new-todo-modal', :title => 'Create a new Todo', :modal_content => modal_content, :focus_on => "#todo_title"
+
+
+  #shopping.tab-pane.fade{:role => 'tabpanel'}
+    - if can?(:administrate, @household)
+      = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
+        Create Todo
+        %i.fa.fa-plus
+
 
