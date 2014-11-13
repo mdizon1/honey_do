@@ -1,7 +1,8 @@
 class Household < ActiveRecord::Base
   has_many :memberships
   has_many :members, :through => :memberships, :source => :user
-  has_many :todos
+  has_many :todos, :class_name => 'Todo'
+  has_many :shopping_items, :class_name => 'ShoppingItem'
 
   def accepted_todos
     todos.where('accepted_at IS NOT NULL')
