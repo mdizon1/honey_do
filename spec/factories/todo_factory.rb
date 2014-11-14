@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :todo do
+  factory :todo, :class => Completable::Todo do
     title { Faker::Lorem.sentence }
     notes { Faker::Lorem.paragraph }
     association :household, :factory => :household

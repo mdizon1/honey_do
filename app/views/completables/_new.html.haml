@@ -1,8 +1,13 @@
-= form_for Todo.new, :url => household_todos_path, :role => 'form' do |f|
+-# Partial to display a form for creating new todo items
+-# Locals: type: String - the type of todo
+- ((defined? klass) ? nil : (klass = Completable::Todo) )
+
+= form_for klass.new, :url => household_todos_path, :role => 'form' do |f|
   .modal-body
     .form-group
       = f.text_field :title, :placeholder => 'Title', :class => 'form-control'
       = f.text_area :notes, :placeholder => 'Description (optional)', :class => 'form-control'
+      = f.hidden_field :type, :value => klass.to_s
   .modal-footer
     %button.btn.btn-primary{:type => 'submit'}
       %i.fa.fa-plus

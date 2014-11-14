@@ -22,6 +22,8 @@
 - if focus_on 
   - content_for :javascripts do
     :javascript
-      $("#new-todo-modal").on("shown.bs.modal", function (e){
-        $("#{focus_on}").focus();
+      $(document).ready(function (){
+        $("##{modal_id}").on("shown.bs.modal", function (e){
+          $("#{focus_on}").focus();
+        });
       });

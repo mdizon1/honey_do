@@ -89,13 +89,13 @@ describe Household do
 
           it "should return the new todo item" do
             todo = household.create_todo(title, notes, todo_creator)
-            todo.should be_a Todo
+            todo.should be_a Completable::Todo
           end
 
           it "should create a new Todo item" do
             expect {
               household.create_todo(title, notes, todo_creator)
-            }.to change(Todo, :count).by(1)
+            }.to change(Completable::Todo, :count).by(1)
           end
 
           it "should add the todo item to the household" do

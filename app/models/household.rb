@@ -1,8 +1,8 @@
 class Household < ActiveRecord::Base
   has_many :memberships
   has_many :members, :through => :memberships, :source => :user
-  has_many :todos, :class_name => 'Todo'
-  has_many :shopping_items, :class_name => 'ShoppingItem'
+  has_many :todos, :class_name => 'Completable::Todo'
+  has_many :shopping_items, :class_name => 'Completable::ShoppingItem'
 
   def accepted_todos
     todos.where('accepted_at IS NOT NULL')
@@ -16,6 +16,10 @@ class Household < ActiveRecord::Base
     memberships.includes(:user).where('memberships.is_admin IS TRUE OR memberships.is_head_admin IS TRUE').map(&:user)
   end
 
+  def completed_shopping_items
+    shopping_items.where('completed_at IS NOT NULL').where(:accepted_at => nil)
+  end
+
   def completed_todos
     todos.where('completed_at IS NOT NULL').where(:accepted_at => nil)
   end
@@ -25,7 +29,15 @@ class Household < ActiveRecord::Base
     raise ArgumentError, "No creator provided" unless creator
     raise ArgumentError, "Creator is not a member of this household" unless self.has_member?(creator)
     raise ArgumentError, "Creator is not an administrator of the household" unless creator.administrates? self
-    Todo.create(:household => self, :title => title, :notes => notes, :creator => creator)
+    Completable::Todo.create(:household => self, :title => title, :notes => notes, :creator => creator)
+  end
+
+  def create_shopping_item(title, notes='', creator)
+    raise ArgumentError, "No title provided" if title.blank?
+    raise ArgumentError, "No creator provided" unless creator
+    raise ArgumentError, "Creator is not a member of this household" unless self.has_member?(creator)
+    raise ArgumentError, "Creator is not an administrator of the household" unless creator.administrates? self
+    Completable::ShoppingItem.create(:household => self, :title => title, :notes => notes, :creator => creator)
   end
 
   def has_member?(user)
@@ -48,6 +60,10 @@ class Household < ActiveRecord::Base
     return false unless m
     m.is_head_admin = true
     m.save
+  end
+
+  def pending_shopping_items
+    shopping_items.where(:completed_at => nil)
   end
 
   def pending_todos

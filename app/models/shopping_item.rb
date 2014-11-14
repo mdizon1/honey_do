@@ -1,3 +1,0 @@
-class ShoppingItem < Todo
-  
-end

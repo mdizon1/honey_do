@@ -33,6 +33,7 @@ An app for managing a household.
 
 ##### Household admin can invite other members
 ##### Household head admin can give admin status to other members
+##### Install backbone rails
 ##### Backbonize todo list control
 ##### Make todos orderable
 ##### Add tooltips to todo controls

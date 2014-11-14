@@ -11,10 +11,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141112064932) do
+ActiveRecord::Schema.define(version: 20141114010349) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "completables", force: true do |t|
+    t.integer  "household_id"
+    t.integer  "completor_id"
+    t.datetime "completed_at"
+    t.integer  "acceptor_id"
+    t.datetime "accepted_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.text     "notes",        default: ""
+    t.integer  "creator_id"
+    t.string   "title",        default: ""
+    t.string   "type"
+  end
 
   create_table "households", force: true do |t|
     t.string   "name"
@@ -32,20 +46,6 @@ ActiveRecord::Schema.define(version: 20141112064932) do
   end
 
   add_index "memberships", ["member_id", "household_id"], name: "index_memberships_on_member_id_and_household_id", unique: true, using: :btree
-
-  create_table "todos", force: true do |t|
-    t.integer  "household_id"
-    t.integer  "completor_id"
-    t.datetime "completed_at"
-    t.integer  "acceptor_id"
-    t.datetime "accepted_at"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.text     "notes",        default: ""
-    t.integer  "creator_id"
-    t.string   "title",        default: ""
-    t.string   "type"
-  end
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

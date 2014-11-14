@@ -3,40 +3,51 @@
 
 %ul.nav.nav-tabs{:role => 'tablist'}
   %li.active{:role => 'presentation'} 
-    = link_to 'Todos', '#todos', :id => 'todos-tab', :data => {:toggle => 'tab'}, :role => 'tab'
+    = link_to 'Todo List', '#todos', :id => 'todos-tab', :data => {:toggle => 'tab'}, :role => 'tab'
   %li{:role => 'presentation'}
-    = link_to 'Shopping', '#shopping', :id => 'shopping-tab', :data => {:toggle => 'tab'}, :role => 'tab'
+    = link_to 'Shopping List', '#shopping', :id => 'shopping-tab', :data => {:toggle => 'tab'}, :role => 'tab'
 
 .tab-content
   #todos.tab-pane.fade.in.active{:role => 'tabpanel'}
     - if can?(:administrate, @household)
-      = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
-        Create Todo
-        %i.fa.fa-plus
+      .row
+        .col-lg-12
+          = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
+            Create Todo
+            %i.fa.fa-plus
 
     - @pending_todos.each do |t|
       .row
-        = render :partial => 'todos/show', :locals => {:todo => t}
+        = render :partial => 'completables/show', :locals => {:todo => t}
 
     - @completed_todos.each do |t|
       .row
-        = render :partial => 'todos/show', :locals => {:todo => t}
-
-
-    - if can?(:administrate, @household)
-      = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
-        Create Todo
-        %i.fa.fa-plus
-
-      - modal_content = capture do
-        = render :partial => 'todos/new'
-      = modal_helper :modal_id => 'new-todo-modal', :title => 'Create a new Todo', :modal_content => modal_content, :focus_on => "#todo_title"
+        = render :partial => 'completables/show', :locals => {:todo => t}
 
 
   #shopping.tab-pane.fade{:role => 'tabpanel'}
     - if can?(:administrate, @household)
-      = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
-        Create Todo
-        %i.fa.fa-plus
+      .row
+        .col-lg-12
+          = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-shopping-item-modal'} do
+            Add to shopping list
+            %i.fa.fa-plus
 
 
+    - @pending_shopping_items.each do |t|
+      .row
+        = render :partial => 'completables/show', :locals => {:todo => t}
+
+    - @completed_shopping_items.each do |t|
+      .row
+        = render :partial => 'completables/show', :locals => {:todo => t}
+
+
+- if can?(:administrate, @household)
+  - modal_content = capture do
+    = render :partial => 'completables/new'
+  = modal_helper :modal_id => 'new-todo-modal', :title => 'Create a new Todo', :modal_content => modal_content, :focus_on => "#completable_todo_title"
+
+  - modal_content = capture do
+    = render :partial => 'completables/new', :locals => {:klass => Completable::ShoppingItem}
+  = modal_helper :modal_id => 'new-shopping-item-modal', :title => 'Add to the shopping list', :modal_content => modal_content, :focus_on => "#completable_shopping_item_title"

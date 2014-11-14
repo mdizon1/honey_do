@@ -15,10 +15,12 @@ class TodosController < ApplicationController
 
   def create
     @household = current_user.household
-    new_todo = @household.create_todo(params[:todo][:title], params[:todo][:notes], current_user)
-    if new_todo.valid?
-      flash[:notice] = 'Todo created successfully.'
+    if params[:completable_todo]
+      new_todo = @household.create_todo(params[:completable_todo][:title], params[:completable_todo][:notes], current_user)
+    elsif params[:completable_shopping_item]
+      new_todo = @household.create_shopping_item(params[:completable_shopping_item][:title], params[:completable_shopping_item][:notes], current_user)
     end
+    flash[:notice] = "#{new_todo.type} created successfully." if new_todo.valid?
     redirect_to household_path
   end
 
@@ -60,7 +62,7 @@ class TodosController < ApplicationController
   end
 
   def load_todo
-    @todo = Todo.find(params[:id] || params[:todo_id])
+    @todo = Completable.find(params[:id] || params[:todo_id])
   end
 
   def todo_params

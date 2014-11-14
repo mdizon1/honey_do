@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Todo do
+describe Completable::Todo do
   context "instance methods" do
     describe "#accept!" do
       context "with a todo which is persisted" do

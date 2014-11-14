@@ -5,6 +5,8 @@ class HouseholdsController < ApplicationController
   def show
     @pending_todos = @household.pending_todos
     @completed_todos = @household.completed_todos
+    @pending_shopping_items = @household.pending_shopping_items
+    @completed_shopping_items = @household.completed_shopping_items
   end
 
   def edit
