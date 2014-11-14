@@ -24,7 +24,6 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Add shopping list tab
 ##### Display user email in navbar when logged in
 ##### Design 2nd pass
   * Mobile first
@@ -44,6 +43,7 @@ An app for managing a household.
 ##### Craft welcome/landing page (logged out)
 
 ### DONE 
+##### Add shopping list tab
 ##### House admin can uncomplete a todo
 ##### Todo can be destroyed
 ##### Add indexes to households table
