@@ -24,11 +24,6 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Design 2nd pass
-  * Mobile first
-  * Make it responsive
-  * Todo management, shopping list management
-
 ##### Household admin can invite other members
 ##### Household head admin can give admin status to other members
 ##### Install backbone rails
@@ -42,6 +37,11 @@ An app for managing a household.
 ##### Craft welcome/landing page (logged out)
 
 ### DONE 
+##### Design 2nd pass
+  * Mobile first
+  * Make it responsive
+  * Todo management, shopping list management
+
 ##### Display user email in navbar when logged in
 ##### Add shopping list tab
 ##### House admin can uncomplete a todo
