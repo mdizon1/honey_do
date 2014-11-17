@@ -1,0 +1,14 @@
+-# Partial to display a list of todo items.  Later this will contain all
+-# the parts needed for the backbone widget(s)
+-# Locals completables - The list of completables
+
+
+.col-lg-12
+  %table.todo-list.table.table-hover
+    %thead
+      %th
+      %th
+      %th.todo-controls-header
+    %tbody
+      - completables.each do |c|
+        = render :partial => 'completables/show', :locals => {:todo => c}

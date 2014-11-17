@@ -1,4 +1,4 @@
-.jumbotron
+.jumbotron.hidden-sm.hidden-xs
   %h1 Welcome to the #{@household.name} household
 
 %ul.nav.nav-tabs{:role => 'tablist'}
@@ -16,32 +16,19 @@
             Create Todo
             %i.fa.fa-plus
 
-    - @pending_todos.each do |t|
-      .row
-        = render :partial => 'completables/show', :locals => {:todo => t}
-
-    - @completed_todos.each do |t|
-      .row
-        = render :partial => 'completables/show', :locals => {:todo => t}
-
+    = render :partial => 'completables/list', :locals => {:completables => @pending_todos}
+    = render :partial => 'completables/list', :locals => {:completables => @completed_todos}
 
   #shopping.tab-pane.fade{:role => 'tabpanel'}
     - if can?(:administrate, @household)
       .row
         .col-lg-12
           = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-shopping-item-modal'} do
-            Add to shopping list
+            Add to Shopping List
             %i.fa.fa-plus
 
-
-    - @pending_shopping_items.each do |t|
-      .row
-        = render :partial => 'completables/show', :locals => {:todo => t}
-
-    - @completed_shopping_items.each do |t|
-      .row
-        = render :partial => 'completables/show', :locals => {:todo => t}
-
+    = render :partial => 'completables/list', :locals => {:completables => @pending_shopping_items}
+    = render :partial => 'completables/list', :locals => {:completables => @completed_shopping_items}
 
 - if can?(:administrate, @household)
   - modal_content = capture do

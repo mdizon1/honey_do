@@ -33,6 +33,10 @@ class Completable < ActiveRecord::Base
   end
   alias_method :completed?, :complete?
 
+  def friendly_name
+    'Completable'
+  end
+
   def pending?
     return true if(self.completed_at == nil && self.accepted_at == nil)
     false

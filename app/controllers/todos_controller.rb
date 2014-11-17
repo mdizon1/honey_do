@@ -20,7 +20,7 @@ class TodosController < ApplicationController
     elsif params[:completable_shopping_item]
       new_todo = @household.create_shopping_item(params[:completable_shopping_item][:title], params[:completable_shopping_item][:notes], current_user)
     end
-    flash[:notice] = "#{new_todo.type} created successfully." if new_todo.valid?
+    flash[:notice] = "#{new_todo.friendly_name} created successfully." if new_todo.valid?
     redirect_to household_path
   end
 

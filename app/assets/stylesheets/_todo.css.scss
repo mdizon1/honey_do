@@ -1,10 +1,35 @@
+// Default styles
+
 .todo-show {
   div.complete {
     text-decoration: line-through;
   }
   .todo-controls {
+    text-align: right;
     a.btn {
       min-width: 40px;
     }
   }
 }
+
+
+// Phone styles
+@media (max-width: $screen-xs-max) {
+  .todo-list .todo-controls-header {
+    width: 20%;
+  }
+
+  .todo-show {
+    font-size: 1.5em;
+  }
+}
+
+// Tablet styles
+@media (min-width: $screen-sm-min) and (max-width: $screen-sm-max) {
+  .todo-show {
+    font-size: 1.2em;
+  }
+}
+
+// Large styles
+
