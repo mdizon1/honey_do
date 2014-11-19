@@ -24,6 +24,13 @@ class HouseholdsController < ApplicationController
   end
 
   def update
+    @household.update_attributes(household_params)
+    if @household.save
+      flash[:notice] = 'Household updated successfully'
+    else
+      flash[:warning] = @household.errors.full_messages.to_s
+    end
+    redirect_to edit_household_settings_path
   end
 
   def destroy

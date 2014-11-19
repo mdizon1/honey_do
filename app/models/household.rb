@@ -48,6 +48,19 @@ class Household < ActiveRecord::Base
     memberships.find_by(:is_head_admin => true).user
   end
 
+  def invite_admin(email)
+    u = User.find_by_email(email)
+    if u
+      # TODO: send email to the user with the invite control
+      #   build out a notification system so we can
+      #   display some action item(s) when they log in
+      # For now, we'll just find the user and make that person an admin
+      make_admin(u)
+    else
+      raise NotImplementedError, 'This user does not exist, the onboarding process is coming soon!'
+    end
+  end
+
   def make_admin(user)
     m = Membership.find_by(:household_id => self.id, :member_id => user.id)
     return false unless m

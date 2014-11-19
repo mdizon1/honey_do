@@ -1,0 +1,28 @@
+.row
+  .col-lg-12
+    .well
+      = form_for @household, :class => 'form-horizontal' do |f|
+        %fieldset
+          %legend
+            %h2 Household Settings
+          = f.label :name, 'Name of household'
+          = f.text_field :name
+          %br
+          %hr
+          = f.submit :class => 'btn btn-primary'
+      %hr
+
+      %h3 Admins
+      - @household.admins.each do |a|
+        .row
+          .col-lg-6.col-xs-6
+            = a.email
+          .col-lg-6.col-xs-6
+            = link_to 'Promote Admin', '#', :class => 'btn btn-danger'
+            = link_to 'Remove Admin', '#', :class => 'btn btn-danger'
+      %br
+      = form_tag invite_admin_household_settings_path, :method => :post, :class => 'form-horizontal' do
+        = label_tag 'invite_email', 'Email of whom to invite'
+        = email_field_tag 'invite_email', '', :placeholder => 'myspouse@example.com'
+        %br
+        = submit_tag 'Invite admin', :class => 'btn btn-success'

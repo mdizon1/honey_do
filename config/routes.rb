@@ -4,6 +4,9 @@ HoneyDo::Application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   resource :household, :except => :index do
+    resource :settings, :only => [:edit, :update], :controller => 'households/settings' do
+      post :invite_admin
+    end
     resources :todos do
       put :complete
       put :accept

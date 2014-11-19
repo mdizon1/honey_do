@@ -25,8 +25,8 @@ describe Household do
   end
 
   describe "instance methods" do
+    let(:household) { FactoryGirl.create(:household) }
     describe "#add_member!" do
-      let(:household) { FactoryGirl.create(:household) }
       context "with a user" do
         let(:user) { FactoryGirl.create(:user) }
 
@@ -57,7 +57,6 @@ describe Household do
     end
 
     describe "#admins" do
-      let(:household) { FactoryGirl.create(:household) }
       context "with no admins" do
         it "should return an empty set" do
           household.admins.should be_empty
@@ -80,7 +79,6 @@ describe Household do
 
     describe "#create_todo" do
       context "with a persisted household" do
-        let(:household) { FactoryGirl.create(:household) } 
         context "with a valid creator" do
           let(:todo_creator) { FactoryGirl.create(:user) }
           let!(:membership) { FactoryGirl.create(:membership, :household => household, :user => todo_creator, :is_admin => true) }
@@ -178,7 +176,6 @@ describe Household do
 
     describe "#has_member?" do
       context "with a household that has a member" do
-        let(:household) { FactoryGirl.create(:household) }
         let(:membership) { FactoryGirl.create(:membership, :household => household)}
 
         context "with a member of the household" do
@@ -194,6 +191,23 @@ describe Household do
             household.has_member?(non_member).should be_false
           end
         end
+      end
+    end
+
+    describe "#invite_admin" do
+      context "with an existing user" do
+        let(:existing_user) { 
+          m = FactoryGirl.create(:membership, :household => household)
+          m.user
+        }
+
+        context "when the user is already an admin" do
+        end
+
+      end
+
+      context "with an email not in the system" do
+        let(:new_user) { 'nobody@nonexistent.com' }
       end
     end
 

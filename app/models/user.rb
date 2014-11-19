@@ -10,4 +10,8 @@ class User < ActiveRecord::Base
   def administrates?(household)
     household.admins.include?(self)
   end
+
+  def is_household_admin?
+    household.admins.include?(self)
+  end
 end

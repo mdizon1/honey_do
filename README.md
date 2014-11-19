@@ -26,6 +26,7 @@ An app for managing a household.
 
 ##### Household admin can invite other members
 ##### Household head admin can give admin status to other members
+##### Household 'make head admin' command must remove other head admin
 ##### Install backbone rails
 ##### Backbonize todo list control
 ##### Make todos orderable
