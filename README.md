@@ -24,20 +24,21 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Household admin can invite other members
-##### Household head admin can give admin status to other members
-##### Household 'make head admin' command must remove other head admin
 ##### Install backbone rails
 ##### Backbonize todo list control
 ##### Make todos orderable
+##### Household admin can invite other members
 ##### Add tooltips to todo controls
 ##### Allow user to edit their profile
 ##### Show user name in navbar when logged in
-##### User can add another user to the household
 ##### Switch to Thin server
 ##### Craft welcome/landing page (logged out)
+##### Household 'make head admin' command must remove other head admin
+##### User can have an avatar
+##### Admin can assign tasks to members
 
 ### DONE 
+##### Household head admin can give admin status to other members
 ##### Design 2nd pass
   * Mobile first
   * Make it responsive
