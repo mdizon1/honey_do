@@ -14,6 +14,7 @@ gem 'haml'
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'pg'
+gem 'rails-backbone'
 gem 'sass-rails'
 
 group :development do
