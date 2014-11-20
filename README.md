@@ -10,10 +10,14 @@ An app for managing a household.
   + Any family member may create items
   + Only an owner of the household may accept that an item is complete
   + Only an owner of the household may delete an item
+  + The household has a shopping list
 
 ### Premium features:
   + Recurring tasks
   + Scheduled tasks (with a due date)
+  + Analytics
+  + Scorekeeping
+  + Checking off on behalf of others
 
 
 ## TODO: 
@@ -24,13 +28,14 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Install backbone rails
+##### Install/setup backbone rails
 ##### Backbonize todo list control
 ##### Make todos orderable
 ##### Household admin can invite other members
 ##### Add tooltips to todo controls
 ##### Allow user to edit their profile
 ##### Show user name in navbar when logged in
+##### Todo items (and shopping items) can be tagged
 ##### Switch to Thin server
 ##### Craft welcome/landing page (logged out)
 ##### Household 'make head admin' command must remove other head admin
