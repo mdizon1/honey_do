@@ -12,3 +12,12 @@
     %tbody
       - completables.each do |c|
         = render :partial => 'completables/show', :locals => {:todo => c}
+
+#test-todo-container
+
+- content_for :javascripts do
+  :javascript
+    (function (){
+      var view;
+      view = new HoneyDo.Views.Todos.CompletableListView({container: '#test-todo-container'})
+    })();
