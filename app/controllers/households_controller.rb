@@ -4,9 +4,17 @@ class HouseholdsController < ApplicationController
 
   def show
     @pending_todos = @household.pending_todos
+    @pending_todos = @pending_todos.map{|t| t.to_backbone.merge({:permissions => t.permissions_for_user(current_user)})}
+
     @completed_todos = @household.completed_todos
+    @completed_todos = @completed_todos.map{|t| t.to_backbone.merge({:permissions => t.permissions_for_user(current_user)})}
+
     @pending_shopping_items = @household.pending_shopping_items
+    @pending_shopping_items = @pending_shopping_items.map{|t| t.to_backbone.merge({:permissions => t.permissions_for_user(current_user)})}
+
     @completed_shopping_items = @household.completed_shopping_items
+    @completed_shopping_items = @completed_shopping_items.map{|t| t.to_backbone.merge({:permissions => t.permissions_for_user(current_user)})}
+
   end
 
   def edit

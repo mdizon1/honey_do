@@ -8,21 +8,30 @@ HoneyDo.Views.Todos.CompletableListView = Backbone.View.extend({
   tagName: "div",
 
   initialize: function (options){
-    this.options = options;
-    this.el = $(options.container)[0];
-    // setup configuration
-    // initialize collections
-    // initialize pending list view
-    // initialize completed list view
-    // render self
-    this.render();
+    this._buildViewsForCollection();
+    this._setupViewOptions();
   },
 
-  destroy: function (){ },
+  //destroy: function (){},
 
   render: function (){
-    console.log("DEBUG: render being called on completable_list_view");
-  }
+    var self = this;
+    this.$el.html(this.template(this.view_options));
+    _.each(this.views, function (view){
+      view.render();
+      self.$el.find("tbody").append(view.$el);
+    });
+  },
 
   //private
+
+  _buildViewsForCollection: function (){
+    this.views = this.collection.map(function(item){
+      return new HoneyDo.Views.Todos.CompletableShowView({model: item});
+    });
+  },
+
+  _setupViewOptions: function (){
+    this.view_options = {};    // Nothing yet
+  }
 });

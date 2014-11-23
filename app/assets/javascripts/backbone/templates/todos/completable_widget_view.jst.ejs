@@ -1,0 +1,17 @@
+<div class="tab-content">
+  <div id="todos" class="tab-pane fade in active" role="tabpanel">
+    <% if(can_administrate_household) { %>
+      <div class="row">
+        <div class="col-lg-12">
+          <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#new-todo-modal">
+            Create Todo
+            <i class="fa fa-plus"></i>
+          </a>
+        </div>
+      </div>
+    <% } %>
+
+    <div class="pending-list-container"></div>
+    <div class="completed-list-container"></div>
+  </div>
+</div>

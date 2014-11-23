@@ -42,6 +42,27 @@ class Completable < ActiveRecord::Base
     false
   end
 
+  def permissions_for_user(user)
+    a = Ability.new(user)
+    {
+      :can_complete => a.can?(:complete, self),
+      :can_uncomplete => a.can?(:uncomplete, self),
+      :can_destroy => a.can?(:destroy, self),
+      :can_accept => a.can?(:accept, self),
+    }
+  end
+
+  #TODO: to improve this: step 1, move to a presenter/draper. step 2, move to 
+  #  serializer
+  def to_backbone
+    {
+      :id => id,
+      :title => title,
+      :notes => notes,
+      :is_completed => completed?
+    }
+  end
+
   def uncomplete!
     if complete?
       self.completed_at = nil

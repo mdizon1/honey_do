@@ -1,0 +1,34 @@
+<td>
+  <div class="todo-title <%= is_completed ? 'complete' : ''%>">
+    <%= title %>
+  </div>
+</td>
+<td>
+  <div class="todo-notes text-center <%= is_completed ? 'complete' : '' %>">
+    <%= notes %>
+  </div> 
+</td>
+<td>
+  <div class="todo-controls">
+    <% if(permissions.can_complete){ %>
+      <a href="#" class="btn btn-success" data-action="complete">
+        <i class="fa fa-check"></i>
+      </a>
+    <% } %>
+    <% if(permissions.can_uncomplete){ %>
+      <a href="#" class="btn btn-warning" data-action="uncomplete">
+        <i class="fa fa-undo"></i>
+      </a>
+    <% } %>
+    <% if(permissions.can_destroy){ %>
+      <a href="#" class="btn btn-danger" data-action="destroy">
+        <i class="fa fa-ban"></i>
+      </a>
+    <% } %>
+    <% if(permissions.can_accept){ %>
+      <a href="#" class="btn btn-danger" data-action="accept">
+        <i class="fa fa-ban"></i>
+      </a>
+    <% } %>
+  </div>
+</td>
