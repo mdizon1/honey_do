@@ -35,19 +35,39 @@ class TodosController < ApplicationController
 
   #TODO: (hah, meta) catch exceptions thrown by accept! and return appropriate flash
   def accept
-    @todo.accept!(current_user)
-    flash[:notice] = 'Todo item accepted and removed'
-    redirect_to household_path
+    success_message = 'Todo item accepted and removed'
+    respond_to do |format|
+      format.html do 
+        @todo.accept!(current_user)
+        flash[:notice] = success_message
+        redirect_to household_path
+      end
+
+      format.js do
+        @todo.accept!(current_user)
+        render :json => {:notice => success_message, :model => @todo.to_backbone}, :status => :ok
+      end
+    end
   end
 
   def complete
-    @todo.complete!(current_user)
-    flash[:notice] = 'Todo completed'
-    redirect_to household_path
+    success_message = 'Todo completed'
+    respond_to do |format|
+      format.html do
+        @todo.complete!(current_user)
+        flash[:notice] = success_message
+        redirect_to household_path
+      end
+
+      format.js do
+        @todo.complete!(current_user)
+        render :json => {:notice => success_message, :model => @todo.to_backbone(current_user)}, :status => :ok
+      end
+    end
   end
 
   def uncomplete
-    @todo.uncomplete!
+    #@todo.uncomplete!
     flash[:notice] = 'The todo was pushed back to pending'
     redirect_to household_path
   end

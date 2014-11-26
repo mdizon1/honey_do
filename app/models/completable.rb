@@ -52,15 +52,19 @@ class Completable < ActiveRecord::Base
     }
   end
 
-  #TODO: to improve this: step 1, move to a presenter/draper. step 2, move to 
-  #  serializer
-  def to_backbone
-    {
+  # TODO: to improve this: step 1, move to a presenter/draper. step 2, move to 
+  #   serializer
+  def to_backbone(user=nil)
+    attrs = {
       :id => id,
       :title => title,
       :notes => notes,
-      :is_completed => completed?
+      :is_pending => pending?,
+      :is_completed => completed?,
+      :completed_at => completed_at
     }
+    attrs[:permissions] = permissions_for_user(user) if user
+    attrs
   end
 
   def uncomplete!

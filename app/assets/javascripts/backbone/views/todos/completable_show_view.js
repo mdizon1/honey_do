@@ -2,7 +2,7 @@ HoneyDo.Views.Todos ? null : HoneyDo.Views.Todos = {};
 
 
 HoneyDo.Views.Todos.CompletableShowView = Backbone.View.extend({
-  template: JST["backbone/templates/todos/completable_show"],
+  template: JST["backbone/templates/todos/completable_show_view"],
 
   events: { 
     "click [data-action='complete']": "complete",
@@ -25,21 +25,27 @@ HoneyDo.Views.Todos.CompletableShowView = Backbone.View.extend({
 
   accept: function (e){
     e.preventDefault();
-    console.log("DEBUG: Accept todo");
+    this.model.accept();
   },
 
   complete: function (e){
+    var jqXHR, self;
+    self = this;
     e.preventDefault();
-    console.log("DEBUG: Complete todo");
+    jqXHR = this.model.complete();
+    jqXHR.done(function (data, textStatus, jqXHR){
+      //self.remove();
+    }).fail(function (){
+      // flash red
+    });
   },
 
   destroy_todo: function (e){
     e.preventDefault();
-    console.log("DEBUG: Destroy todo");
   },
 
   uncomplete: function (e){
     e.preventDefault();
-    console.log("DEBUG: Uncomplete todo");
+    this.model.uncomplete();
   }
 });
