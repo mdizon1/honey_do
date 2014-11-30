@@ -26,10 +26,11 @@ An app for managing a household.
 
 ### CURRENT
 
+##### Backbonize todo list control
+
 ### BACKLOG
 
-##### Install/setup backbone rails
-##### Backbonize todo list control
+##### REFACTOR: Use 1 collection instead of 2 in backbone for todos
 ##### Make todos orderable
 ##### Household admin can invite other members
 ##### Add tooltips to todo controls
@@ -43,6 +44,7 @@ An app for managing a household.
 ##### Admin can assign tasks to members
 
 ### DONE 
+##### Install/setup backbone rails
 ##### Household head admin can give admin status to other members
 ##### Design 2nd pass
   * Mobile first
