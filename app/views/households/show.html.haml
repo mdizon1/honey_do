@@ -63,16 +63,9 @@
   = modal_helper :modal_id => 'new-shopping-item-modal', :title => 'Add to the shopping list', :modal_content => modal_content, :focus_on => "#completable_shopping_item_title"
 
 
-
--# LEFT OFF~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
--# Building this out
--# Exploring how to structure the various parts.
--# Challenges: 
--#   + handling permissions
--#   + rendering modals
--#   + ...
 - content_for :javascripts do
   :javascript
+    var global_view
     (function (){
       var view;
       view = new HoneyDo.Views.Todos.CompletableWidgetView({
@@ -80,5 +73,6 @@
         can_administrate_household: #{can?(:administrate, @household)},
         pending_completables: #{@pending_todos.to_json},
         complete_completables: #{@completed_todos.to_json}
-      })
+      });
+      global_view = view;
     })();
