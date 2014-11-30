@@ -9,3 +9,11 @@ $screen-lg-min: 1200px;
 body {
   padding-top: $header-height+5px;
 }
+
+.flash {
+  &.flash-fixed {
+    position: fixed;
+    width: 90%;
+    margin: 0.2em 5% 0;
+  }
+}
