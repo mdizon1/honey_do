@@ -37,9 +37,17 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     var self = this;
 
     this.pending_collection.each(function (todo){
-      todo.on("todoCompleted", self._todoComplete.bind(self));
-      todo.on("todoUncompleted", self._todoUncomplete.bind(self));
+      self._attachListenerToTodo(todo);
     });
+
+    this.completed_collection.each(function (todo){
+      self._attachListenerToTodo(todo);
+    });
+  },
+
+  _attachListenerToTodo: function (todo){
+    todo.on("todoCompleted", this._todoComplete.bind(this));
+    todo.on("todoUncompleted", this._todoUncomplete.bind(this));
   },
 
   _initializeCollections: function (){
