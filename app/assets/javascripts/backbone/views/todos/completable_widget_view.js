@@ -48,6 +48,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   _attachListenerToTodo: function (todo){
     todo.on("todoCompleted", this._todoComplete.bind(this));
     todo.on("todoUncompleted", this._todoUncomplete.bind(this));
+    todo.on("todoAccepted", this._todoAccepted.bind(this));
   },
 
   _initializeCollections: function (){
@@ -85,6 +86,11 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
 
   _todoAccepted: function (evt){
     // Remove the todo from the completed collection
+  },
+
+  _todoAccept: function (evt){
+    this.completed_collection.remove(evt.model);
+    this.updateFlash({notice: evt.notice});
   },
 
   // Remove the todo from the pending collection and move it to the completed 

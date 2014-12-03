@@ -13,6 +13,7 @@ HoneyDo.Models.Todo = Backbone.Model.extend({
   },
 
   accept: function (){
+    var self = this;
     $.ajax({
       url: "/household/todos/" + this.id + "/accept",
       type: "PUT",
