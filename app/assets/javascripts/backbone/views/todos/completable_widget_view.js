@@ -11,6 +11,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     this.options = options;
     this._setupViewOptions();
     this._initializeCollections();
+    this._setupModals();
     this._initializeFlash();
     this._attachListeners();
     this.render();
@@ -22,8 +23,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     this.$el.html(this.template(this.view_options));
 
     this._initializeSubViews();
-    this._pending_view.render();
-    this._completed_view.render();
+    this._renderSubViews();
   },
 
   updateFlash: function (options){
@@ -37,15 +37,19 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     var self = this;
 
     this.pending_collection.each(function (todo){
-      self._attachListenerToTodo(todo);
+      self._attachListenersToTodo(todo);
     });
 
     this.completed_collection.each(function (todo){
-      self._attachListenerToTodo(todo);
+      self._attachListenersToTodo(todo);
+    });
+
+    this.pending_collection.on("add", function (model, collection, options){
+      self._attachListenersToTodo(model);
     });
   },
 
-  _attachListenerToTodo: function (todo){
+  _attachListenersToTodo: function (todo){
     todo.on("todoCompleted", this._todoComplete.bind(this));
     todo.on("todoUncompleted", this._todoUncomplete.bind(this));
     todo.on("todoAccepted", this._todoAccepted.bind(this));
@@ -80,21 +84,27 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     this._initializeCompletedView();
   },
 
+  _renderSubViews: function (){
+    this._pending_view.render();
+    this._completed_view.render();
+  },
+
+  _setupModals: function (){
+    this._new_todo_view = new HoneyDo.Views.Todos.TodoNewView({ 
+      klass: "Completable::Todo",
+      collection: this.pending_collection
+    });
+  },
+
   _setupViewOptions: function (){
     this.view_options = _.pick(this.options, "can_administrate_household");
   },
 
   _todoAccepted: function (evt){
-    // Remove the todo from the completed collection
-  },
-
-  _todoAccept: function (evt){
     this.completed_collection.remove(evt.model);
-    this.updateFlash({notice: evt.notice});
+    this.updateFlash({notice: "The todo was accepted and removed"});
   },
 
-  // Remove the todo from the pending collection and move it to the completed 
-  // collection
   _todoComplete: function (evt){
     this.completed_collection.add(evt.model);
     this.pending_collection.remove(evt.model);

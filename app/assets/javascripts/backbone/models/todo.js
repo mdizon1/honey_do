@@ -60,5 +60,5 @@ HoneyDo.Models.Todo = Backbone.Model.extend({
 
 HoneyDo.Collections.TodosCollection = Backbone.Collection.extend({
   model: HoneyDo.Models.Todo,
-  url: '/todos'
+  url: '/household/todos'
 });

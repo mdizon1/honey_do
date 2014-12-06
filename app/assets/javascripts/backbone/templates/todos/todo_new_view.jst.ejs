@@ -1,0 +1,31 @@
+<div id="new-todo-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button class="close" type="button" data-dismiss="modal">
+          <span aria-hidden="true">
+            <i class="fa fa-close"></i>
+          </span>
+          <span class="sr-only">Close</span>
+        </button>
+        <h4 class="modal-title">Creata a new Todo</h4>
+      </div>
+
+      <form role="form">
+        <div class="modal-body">
+          <div class="form-group">
+            <input type="text" class="form-control" name="new_todo_title" placeholder="Title">
+            <textarea class="form-control" name="new_todo_notes" placeholder="Description (optional)"></textarea>
+            <input type="hidden" value="<%=klass%>">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-primary" type="submit">
+            <i class="fa fa-plus"></i>
+            Create Todo
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

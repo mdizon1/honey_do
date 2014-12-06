@@ -15,13 +15,24 @@ class TodosController < ApplicationController
 
   def create
     @household = current_user.household
-    if params[:completable_todo]
-      new_todo = @household.create_todo(params[:completable_todo][:title], params[:completable_todo][:notes], current_user)
-    elsif params[:completable_shopping_item]
-      new_todo = @household.create_shopping_item(params[:completable_shopping_item][:title], params[:completable_shopping_item][:notes], current_user)
+    respond_to do |format|
+      format.html do
+        if params[:completable_todo]
+          new_todo = @household.create_todo(params[:completable_todo][:title], params[:completable_todo][:notes], current_user)
+        elsif params[:completable_shopping_item]
+          new_todo = @household.create_shopping_item(params[:completable_shopping_item][:title], params[:completable_shopping_item][:notes], current_user)
+        end
+        flash[:notice] = "#{new_todo.friendly_name} created successfully." if new_todo.valid?
+        redirect_to household_path
+      end
+
+      format.js do
+        if params[:todo]
+          new_todo = @household.create_todo(params[:todo][:title], params[:todo][:notes], current_user)
+          render :json => new_todo.to_backbone(current_user), :status => :ok
+        end
+      end
     end
-    flash[:notice] = "#{new_todo.friendly_name} created successfully." if new_todo.valid?
-    redirect_to household_path
   end
 
   def update
@@ -45,7 +56,7 @@ class TodosController < ApplicationController
 
       format.js do
         @todo.accept!(current_user)
-        render :json => {:notice => success_message, :model => @todo.to_backbone}, :status => :ok
+        render :json => {:notice => success_message, :model => @todo.to_backbone(current_user)}, :status => :ok
       end
     end
   end

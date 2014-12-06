@@ -53,7 +53,8 @@
     Going to put the shopping widget here..
 
 
-- if can?(:administrate, @household)
+-# Marked for deletion, need to remove that modal helper as well
+-#- if can?(:administrate, @household)
   - modal_content = capture do
     = render :partial => 'completables/new'
   = modal_helper :modal_id => 'new-todo-modal', :title => 'Create a new Todo', :modal_content => modal_content, :focus_on => "#completable_todo_title"
