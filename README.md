@@ -31,6 +31,9 @@ An app for managing a household.
 ### BACKLOG
 
 ##### REFACTOR: Use 1 collection instead of 2 in backbone for todos
+##### Handle error on todo creation
+##### Handle submit on enter when creating todo
+##### Handle close new todo modal with escape
 ##### Make todos orderable
 ##### Household admin can invite other members
 ##### Add tooltips to todo controls
