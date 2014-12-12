@@ -53,6 +53,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     todo.on("todoCompleted", this._todoComplete.bind(this));
     todo.on("todoUncompleted", this._todoUncomplete.bind(this));
     todo.on("todoAccepted", this._todoAccepted.bind(this));
+    todo.on("destroy", this._todoDestroyed.bind(this));
   },
 
   _initializeCollections: function (){
@@ -109,6 +110,10 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     this.completed_collection.add(evt.model);
     this.pending_collection.remove(evt.model);
     this.updateFlash({notice: evt.notice});
+  },
+
+  _todoDestroyed: function (evt){
+    this.updateFlash({notice: "The todo item was removed"});
   },
 
   _todoUncomplete: function (evt){

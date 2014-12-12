@@ -1,5 +1,6 @@
 HoneyDo.Models.Todo = Backbone.Model.extend({
-  paramRoot: 'todo',
+  paramRoot: "todo",
+  urlRoot: "/household/todos/",
 
   defaults: {
     title: null,

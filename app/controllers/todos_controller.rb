@@ -39,9 +39,18 @@ class TodosController < ApplicationController
   end
 
   def destroy
-    @todo.destroy
-    flash[:notice] = 'Todo item has been removed'
-    redirect_to household_path
+    respond_to do |format|
+      format.html do
+        @todo.destroy
+        flash[:notice] = 'Todo item has been removed'
+        redirect_to household_path
+      end
+
+      format.js do
+        @todo.destroy if can?(:destroy, @todo) #TODO: elaborate on this and use it on all actions
+        render :json => {:success => true}, :status => :ok # We don't care what the response is for now
+      end
+    end
   end
 
   #TODO: (hah, meta) catch exceptions thrown by accept! and return appropriate flash

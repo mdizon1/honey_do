@@ -34,7 +34,7 @@ HoneyDo.Views.Todos.CompletableShowView = Backbone.View.extend({
     e.preventDefault();
     jqXHR = this.model.complete();
     jqXHR.done(function (data, textStatus, jqXHR){
-      //self.remove();
+      // self.remove();
     }).fail(function (){
       // flash red
     });
@@ -42,6 +42,7 @@ HoneyDo.Views.Todos.CompletableShowView = Backbone.View.extend({
 
   destroy_todo: function (e){
     e.preventDefault();
+    this.model.destroy();
   },
 
   uncomplete: function (e){
