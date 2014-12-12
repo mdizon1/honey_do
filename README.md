@@ -30,8 +30,6 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Handle close new todo modal with escape
-##### Add tooltips to todo controls
 ##### REFACTOR: Use 1 collection instead of 2 in backbone for todos
 ##### Make todos orderable
 ##### Add additional validations on todocontroller for permission verification
@@ -40,6 +38,7 @@ An app for managing a household.
 ##### Household admin can invite other members
 ##### Allow user to edit their profile
 ##### Show user name in navbar when logged in
+##### Handle close new todo modal with escape
 ##### Todo items (and shopping items) can be tagged
 ##### Switch to Thin server
 ##### Craft welcome/landing page (logged out)
@@ -48,6 +47,7 @@ An app for managing a household.
 ##### Admin can assign tasks to members
 
 ### DONE 
+##### Add tooltips to todo controls
 ##### Install/setup backbone rails
 ##### Household head admin can give admin status to other members
 ##### Design 2nd pass

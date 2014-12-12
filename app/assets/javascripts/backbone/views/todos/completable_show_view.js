@@ -19,9 +19,14 @@ HoneyDo.Views.Todos.CompletableShowView = Backbone.View.extend({
 
   render: function (){
     this.$el.html(this.template(this.model.attributes));
+    this._activateTooltips();
   },
 
   //private
+
+  _activateTooltips: function (){
+    this.$el.find('[data-toggle="tooltip"]').tooltip();
+  },
 
   accept: function (e){
     e.preventDefault();

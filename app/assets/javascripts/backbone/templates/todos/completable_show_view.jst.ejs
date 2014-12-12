@@ -11,22 +11,22 @@
 <td>
   <div class="todo-controls">
     <% if(permissions.can_complete){ %>
-      <a href="#" class="btn btn-success" data-action="complete">
+      <a href="#" class="btn btn-success" data-action="complete" data-toggle="tooltip" data-placement="left" title="Complete this todo">
         <i class="fa fa-check"></i>
       </a>
     <% } %>
     <% if(permissions.can_uncomplete){ %>
-      <a href="#" class="btn btn-warning" data-action="uncomplete">
+      <a href="#" class="btn btn-warning" data-action="uncomplete" data-toggle="tooltip" data-placement="left" title="Uncomplete this todo">
         <i class="fa fa-undo"></i>
       </a>
     <% } %>
     <% if(permissions.can_destroy){ %>
-      <a href="#" class="btn btn-danger" data-action="destroy">
+      <a href="#" class="btn btn-danger" data-action="destroy" data-toggle="tooltip" data-placement="left" title="Delete this todo">
         <i class="fa fa-ban"></i>
       </a>
     <% } %>
     <% if(permissions.can_accept){ %>
-      <a href="#" class="btn btn-danger" data-action="accept">
+      <a href="#" class="btn btn-danger" data-action="accept" data-toggle="tooltip" data-placement="left" title="Accept this todo">
         <i class="fa fa-ban"></i>
       </a>
     <% } %>
