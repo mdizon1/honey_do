@@ -26,10 +26,9 @@ An app for managing a household.
 
 ### CURRENT
 
-##### Backbonize todo list control
-
 ### BACKLOG
 
+##### REFACTOR: Add state machine to todos
 ##### REFACTOR: Use 1 collection instead of 2 in backbone for todos
 ##### Make todos orderable
 ##### Add additional validations on todocontroller for permission verification
@@ -47,6 +46,8 @@ An app for managing a household.
 ##### Admin can assign tasks to members
 
 ### DONE 
+
+##### Backbonize todo list control
 ##### Add tooltips to todo controls
 ##### Install/setup backbone rails
 ##### Household head admin can give admin status to other members
