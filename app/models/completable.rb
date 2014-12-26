@@ -4,42 +4,18 @@ class Completable < ActiveRecord::Base
   belongs_to :completor, :foreign_key => :completor_id, :class_name => "User"
   belongs_to :acceptor, :foreign_key => :acceptor_id, :class_name => "User"
 
-  def accept!(acceptor)
-    raise ArgumentError, "An acceptor was not provided to accept! the todo" unless acceptor
-    raise SecurityError, "The acceptor is not valid" unless acceptor.administrates?(self.household)
-    if !self.complete? || self.accepted?
-      raise "This todo may not be accepted"
-    end
-    self.accepted_at = Time.now if self.accepted_at == nil
-    self.acceptor = acceptor if self.acceptor == nil
-    save!
-  end
+  state_machine :state, :initial => :active do
+    after_transition :on => :complete, :do => [:rec_complete_event, :rec_completor]
+    after_transition :on => :accept, :do => [:rec_accept_event, :rec_acceptor]
+    after_transition :completed => :active, :do => [:rec_uncomplete_event, :clear_completed_timestamps]
 
-  def accepted?
-    return true if(self.accepted_at != nil && self.acceptor != nil)
-    false
+    event(:complete) { transition :active => :completed }
+    event(:uncomplete) { transition :completed => :active }
+    event(:accept) { transition :completed => :accepted }
   end
-
-  def complete!(completor)
-    raise ArgumentError, "A completor was not provided to complete! the todo" unless completor
-    self.completed_at = Time.now if self.completed_at == nil
-    self.completor = completor if self.completor == nil
-    save!
-  end
-
-  def complete?
-    return true if(self.completed_at != nil && self.completor != nil)
-    false
-  end
-  alias_method :completed?, :complete?
 
   def friendly_name
     'Completable'
-  end
-
-  def pending?
-    return true if(self.completed_at == nil && self.accepted_at == nil)
-    false
   end
 
   def permissions_for_user(user)
@@ -59,7 +35,7 @@ class Completable < ActiveRecord::Base
       :id => id,
       :title => title,
       :notes => notes,
-      :is_pending => pending?,
+      :is_active => active?,
       :is_completed => completed?,
       :completed_at => completed_at
     }
@@ -67,13 +43,42 @@ class Completable < ActiveRecord::Base
     attrs
   end
 
-  def uncomplete!
-    if complete?
-      self.completed_at = nil
-      self.completor = nil
-      self.accepted_at = nil
-      self.acceptor = nil
-      save
-    end
+  private
+
+  def clear_completed_timestamps
+    self.completed_at = nil
+    self.accepted_at = nil
+    save
+  end
+
+  def rec_accept_event(transition)
+    self.accepted_at = Time.now
+    # TODO: CREATE EVENT HERE --------------
+    save
+  end
+
+  def rec_acceptor(transition)
+    self.acceptor = transition.args.first
+    raise ArgumentError unless self.acceptor
+    save
+  end
+
+  def rec_complete_event(transition)
+    self.completed_at = Time.now
+    # TODO: CREATE EVENT HERE ~~~~~~~~~~~~~~~~
+    save
+  end
+
+  def rec_completor(transition)
+    self.completor = transition.args.first
+    raise ArgumentError unless self.completor
+    save
+  end
+
+  def rec_uncomplete_event
+    self.completor = nil
+    clear_completed_timestamps
+    # TODO: CREATE EVENT HERE ~~~~~~~~~~~~~~~
+    save
   end
 end
