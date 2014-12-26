@@ -75,11 +75,11 @@ class Household < ActiveRecord::Base
     m.save
   end
 
-  def pending_shopping_items
+  def active_shopping_items
     shopping_items.where(:completed_at => nil)
   end
 
-  def pending_todos
+  def active_todos
     todos.where(:completed_at => nil)
   end
 

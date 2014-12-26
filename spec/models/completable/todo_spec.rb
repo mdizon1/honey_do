@@ -50,8 +50,6 @@ describe Completable::Todo do
             end
 
             it "should not raise an error" do
-              #require 'debugger'
-              #debugger
               expect {
                 todo.accept! valid_acceptor
               }.not_to raise_error
@@ -64,7 +62,7 @@ describe Completable::Todo do
 
             it "should set the acceptor_id on the todo" do
               todo.accept! valid_acceptor
-              todo.acceptor.should == valid_acceptor
+              todo.reload.acceptor.should == valid_acceptor
             end
           end
         end
@@ -131,17 +129,10 @@ describe Completable::Todo do
           let(:completed_todo) { FactoryGirl.create(:completed_todo) }
           let(:other_completor) { FactoryGirl.create(:user, :household => completed_todo.household) }
 
-          it "should not change the completed_at date" do
-            before_timestamp = completed_todo.completed_at
-            completed_todo.complete!(other_completor)
-            completed_todo.completed_at.should == before_timestamp
-          end
-
-          it "should not change the completor" do
-            before_completor = completed_todo.completor
-            completed_todo.complete!(other_completor)
-            completed_todo.completor.should == before_completor
-            completed_todo.completor.should_not == other_completor
+          it "should raise an invalid transition exception" do
+            expect {
+              completed_todo.complete!(other_completor)
+            }.to raise_error(StateMachine::InvalidTransition)
           end
         end
 
@@ -162,22 +153,6 @@ describe Completable::Todo do
       end
     end
 
-    describe "#complete?" do
-      context "with a completed todo item" do
-        let(:completed_todo) { FactoryGirl.create(:completed_todo) }
-        it "should return true" do
-          completed_todo.complete?.should be_true
-        end
-      end
-
-      context "with a non completed todo item" do
-        let(:todo) { FactoryGirl.create(:todo) }
-        it "should return false" do
-          todo.complete?.should be_false
-        end
-      end
-    end
-
     describe "#uncomplete!" do
       context "with a completed todo item" do
         let(:completed_todo) { FactoryGirl.create(:completed_todo) }
@@ -192,31 +167,14 @@ describe Completable::Todo do
         end
       end
 
-      context "with an accepted todo item" do
-        let(:accepted_todo) { FactoryGirl.create(:accepted_todo) }
-        it "should return the todo to a pending state" do
-          accepted_todo.pending?.should be_false
-          accepted_todo.uncomplete!
-          accepted_todo.pending?.should be_true
-        end
-
-        it "should set completed at and accepted at to be nil" do
-          accepted_todo.uncomplete!
-          accepted_todo.completed_at.should be_nil
-          accepted_todo.completor.should be_nil
-          accepted_todo.accepted_at.should be_nil
-          accepted_todo.acceptor.should be_nil
-        end
-      end
-
       context "with a non completed todo item" do
         let(:todo) { FactoryGirl.create(:todo) }
-        it "should do nothing" do
+        it "should raise an invalid transition error" do
           before_timestamp = todo.completed_at
           before_completor = todo.completor
-          todo.uncomplete!
-          todo.reload.completed_at.should == before_timestamp
-          todo.completor.should == before_completor
+          expect {
+            todo.uncomplete!
+          }.to raise_error(StateMachine::InvalidTransition)
         end
       end
     end

@@ -36,7 +36,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   _attachListeners: function (){
     var self = this;
 
-    this.pending_collection.each(function (todo){
+    this.active_collection.each(function (todo){
       self._attachListenersToTodo(todo);
     });
 
@@ -44,7 +44,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
       self._attachListenersToTodo(todo);
     });
 
-    this.pending_collection.on("add", function (model, collection, options){
+    this.active_collection.on("add", function (model, collection, options){
       self._attachListenersToTodo(model);
     });
   },
@@ -57,7 +57,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   },
 
   _initializeCollections: function (){
-    this.pending_collection = new HoneyDo.Collections.TodosCollection(this.options.pending_completables);
+    this.active_collection = new HoneyDo.Collections.TodosCollection(this.options.active_completables);
     this.completed_collection = new HoneyDo.Collections.TodosCollection(this.options.complete_completables); 
   },
 
@@ -73,9 +73,9 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   },
 
   _initializePendingView: function (){
-    this._pending_view = new HoneyDo.Views.Todos.CompletableListView({
-      el: this.$el.find(".pending-list-container"),
-      collection: this.pending_collection
+    this._active_view = new HoneyDo.Views.Todos.CompletableListView({
+      el: this.$el.find(".active-list-container"),
+      collection: this.active_collection
     });
   },
 
@@ -86,14 +86,14 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   },
 
   _renderSubViews: function (){
-    this._pending_view.render();
+    this._active_view.render();
     this._completed_view.render();
   },
 
   _setupModals: function (){
     this._new_todo_view = new HoneyDo.Views.Todos.TodoNewView({ 
       klass: "Completable::Todo",
-      collection: this.pending_collection
+      collection: this.active_collection
     });
   },
 
@@ -108,7 +108,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
 
   _todoComplete: function (evt){
     this.completed_collection.add(evt.model);
-    this.pending_collection.remove(evt.model);
+    this.active_collection.remove(evt.model);
     this.updateFlash({notice: evt.notice});
   },
 
@@ -117,7 +117,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   },
 
   _todoUncomplete: function (evt){
-    this.pending_collection.add(evt.model);
+    this.active_collection.add(evt.model);
     this.completed_collection.remove(evt.model);
     this.updateFlash({notice: evt.notice});
   }

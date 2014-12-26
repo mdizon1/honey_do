@@ -16,7 +16,7 @@
             Create Todo
             %i.fa.fa-plus
 
-    -#= render :partial => 'completables/list', :locals => {:completables => @pending_todos}
+    -#= render :partial => 'completables/list', :locals => {:completables => @active_todos}
     -#= render :partial => 'completables/list', :locals => {:completables => @completed_todos}
 
   #shopping.tab-pane.fade{:role => 'tabpanel'}
@@ -27,7 +27,7 @@
             Add to Shopping List
             %i.fa.fa-plus
 
-    -#= render :partial => 'completables/list', :locals => {:completables => @pending_shopping_items}
+    -#= render :partial => 'completables/list', :locals => {:completables => @active_shopping_items}
     -#= render :partial => 'completables/list', :locals => {:completables => @completed_shopping_items}
 
 -#%ul.nav.nav-tabs{:role => 'tablist'}
@@ -72,7 +72,7 @@
       view = new HoneyDo.Views.Todos.CompletableWidgetView({
         el: $('#test-todo-container'),
         can_administrate_household: #{can?(:administrate, @household)},
-        pending_completables: #{@pending_todos.to_json},
+        active_completables: #{@active_todos.to_json},
         complete_completables: #{@completed_todos.to_json}
       });
       global_view = view;
