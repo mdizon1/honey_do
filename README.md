@@ -29,6 +29,7 @@ An app for managing a household.
 ### BACKLOG
 
 ##### REFACTOR: Add state machine to todos
+##### Create an event system and track events on todo transitions
 ##### REFACTOR: Use 1 collection instead of 2 in backbone for todos
 ##### Make todos orderable
 ##### Add additional validations on todocontroller for permission verification
