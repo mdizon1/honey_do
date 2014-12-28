@@ -28,7 +28,6 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### REFACTOR: Add state machine to todos
 ##### Create an event system and track events on todo transitions
 ##### REFACTOR: Use 1 collection instead of 2 in backbone for todos
 ##### Make todos orderable
@@ -48,6 +47,7 @@ An app for managing a household.
 
 ### DONE 
 
+##### REFACTOR: Add state machine to todos
 ##### Backbonize todo list control
 ##### Add tooltips to todo controls
 ##### Install/setup backbone rails
