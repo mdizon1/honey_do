@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(version: 20141222235114) do
     t.string   "ip_address"
     t.string   "description"
     t.string   "type"
+    t.integer  "target_id"
+    t.string   "target_type"
     t.integer  "actor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
