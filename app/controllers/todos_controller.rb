@@ -90,13 +90,13 @@ class TodosController < ApplicationController
     success_message = 'The todo was pushed back to pending'
     respond_to do |format|
       format.html do
-        @todo.uncomplete!
+        @todo.uncomplete!(:uncompleted_by => current_user)
         flash[:notice] = success_message
         redirect_to household_path
       end
 
       format.js do
-        @todo.uncomplete!
+        @todo.uncomplete!(:uncompleted_by => current_user)
         render :json => {:notice => success_message, :model => @todo.to_backbone(current_user)}, :status => :ok
       end
     end

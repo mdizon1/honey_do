@@ -91,9 +91,13 @@ class Completable < ActiveRecord::Base
   end
 
   def rec_uncomplete_event
+    transition_options = transition.args.first
+
     self.completor = nil
     clear_completed_timestamps
-    # TODO: CREATE EVENT HERE ~~~~~~~~~~~~~~~
+    Event::TodoUncompleted.create(
+      :target => self,
+      :actor => transition_options[:uncompleted_by])
     save
   end
 end
