@@ -58,13 +58,13 @@ class TodosController < ApplicationController
     success_message = 'Todo item accepted and removed'
     respond_to do |format|
       format.html do 
-        @todo.accept!(current_user)
+        @todo.accept!(:accepted_by => current_user)
         flash[:notice] = success_message
         redirect_to household_path
       end
 
       format.js do
-        @todo.accept!(current_user)
+        @todo.accept!(:accepted_by => current_user)
         render :json => {:notice => success_message, :model => @todo.to_backbone(current_user)}, :status => :ok
       end
     end
@@ -74,13 +74,13 @@ class TodosController < ApplicationController
     success_message = 'Todo completed'
     respond_to do |format|
       format.html do
-        @todo.complete!(current_user)
+        @todo.complete!(:completed_by => current_user)
         flash[:notice] = success_message
         redirect_to household_path
       end
 
       format.js do
-        @todo.complete!(current_user)
+        @todo.complete!(:completed_by => current_user)
         render :json => {:notice => success_message, :model => @todo.to_backbone(current_user)}, :status => :ok
       end
     end

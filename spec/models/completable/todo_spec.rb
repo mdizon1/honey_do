@@ -16,7 +16,7 @@ describe Completable::Todo do
           context "when the todo is not completed" do
             it "should raise an error" do
               expect {
-                todo.accept! valid_acceptor
+                todo.accept! :accepted_by => valid_acceptor
               }.to raise_error
             end
           end
@@ -34,7 +34,7 @@ describe Completable::Todo do
 
             it "should raise an error" do
               expect {
-                todo.accept! valid_acceptor
+                todo.accept! :accepted_by => valid_acceptor
               }.to raise_error
             end
           end
@@ -46,22 +46,22 @@ describe Completable::Todo do
             }
 
             before do
-              todo.complete! completor
+              todo.complete! :completed_by => completor
             end
 
             it "should not raise an error" do
               expect {
-                todo.accept! valid_acceptor
+                todo.accept! :accepted_by => valid_acceptor
               }.not_to raise_error
             end
 
             it "should set accepted_at on the todo" do
-              todo.accept! valid_acceptor
+              todo.accept! :accepted_by => valid_acceptor
               todo.accepted_at.should_not be_nil
             end
 
             it "should set the acceptor_id on the todo" do
-              todo.accept! valid_acceptor
+              todo.accept! :accepted_by => valid_acceptor
               todo.reload.acceptor.should == valid_acceptor
             end
           end
@@ -115,12 +115,12 @@ describe Completable::Todo do
           let(:completor) { FactoryGirl.create(:user, :household => todo.household) }
           it "should mark the completed_at time of the todo" do
             todo.completed_at.should be_blank
-            todo.complete!(completor)
+            todo.complete!(:completed_by => completor)
             todo.completed_at.should_not be_blank
           end
 
           it "should store the completor of the todo item" do
-            todo.complete!(completor)
+            todo.complete!(:completed_by => completor)
             todo.completor.should == completor
           end
         end
@@ -131,7 +131,7 @@ describe Completable::Todo do
 
           it "should raise an invalid transition exception" do
             expect {
-              completed_todo.complete!(other_completor)
+              completed_todo.complete!(:completed_by => other_completor)
             }.to raise_error(StateMachine::InvalidTransition)
           end
         end

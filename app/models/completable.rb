@@ -4,6 +4,9 @@ class Completable < ActiveRecord::Base
   belongs_to :completor, :foreign_key => :completor_id, :class_name => "User"
   belongs_to :acceptor, :foreign_key => :acceptor_id, :class_name => "User"
 
+  has_many :completed_events, :as => :target, :class_name => 'Event::TodoCompleted'
+  has_many :accepted_events, :as => :target, :class_name => 'Event::TodoAccepted'
+
   state_machine :state, :initial => :active do
     after_transition :on => :complete, :do => [:rec_complete_event, :rec_completor]
     after_transition :on => :accept, :do => [:rec_accept_event, :rec_acceptor]
@@ -52,25 +55,37 @@ class Completable < ActiveRecord::Base
   end
 
   def rec_accept_event(transition)
+    transition_options = transition.args.first
+
     self.accepted_at = Time.now
-    # TODO: CREATE EVENT HERE --------------
+    Event::TodoAccepted.create(
+      :target => self, 
+      :actor  => transition_options[:accepted_by])
     save
   end
 
   def rec_acceptor(transition)
-    self.acceptor = transition.args.first
+    transition_options = transition.args.first
+
+    self.acceptor = transition_options[:accepted_by]
     raise ArgumentError unless self.acceptor
     save
   end
 
   def rec_complete_event(transition)
+    transition_options = transition.args.first
+
     self.completed_at = Time.now
-    # TODO: CREATE EVENT HERE ~~~~~~~~~~~~~~~~
+    Event::TodoCompleted.create(
+      :target => self,
+      :actor => transition_options[:completed_by])
     save
   end
 
   def rec_completor(transition)
-    self.completor = transition.args.first
+    transition_options = transition.args.first
+
+    self.completor = transition_options[:completed_by]
     raise ArgumentError unless self.completor
     save
   end
