@@ -5,7 +5,7 @@ class Household < ActiveRecord::Base
   has_many :shopping_items, :class_name => 'Completable::ShoppingItem'
 
   def accepted_todos
-    todos.where('accepted_at IS NOT NULL')
+    todos.with_state 'accepted'
   end
 
   def add_member!(user)
@@ -17,11 +17,11 @@ class Household < ActiveRecord::Base
   end
 
   def completed_shopping_items
-    shopping_items.where('completed_at IS NOT NULL').where(:accepted_at => nil)
+    shopping_items.with_state 'completed'
   end
 
   def completed_todos
-    todos.where('completed_at IS NOT NULL').where(:accepted_at => nil)
+    todos.with_state 'completed'
   end
 
   def create_todo(title, notes='', creator)
@@ -76,11 +76,11 @@ class Household < ActiveRecord::Base
   end
 
   def active_shopping_items
-    shopping_items.where(:completed_at => nil)
+    shopping_items.with_states %w(active completed)
   end
 
   def active_todos
-    todos.where(:completed_at => nil)
+    todos.with_states %w(active completed)
   end
 
   def remove_member(user)
