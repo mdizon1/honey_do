@@ -28,7 +28,6 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Create an event system and track events on todo transitions
 ##### REFACTOR: Use 1 collection instead of 2 in backbone for todos
 ##### Make todos orderable
 ##### Add additional validations on todocontroller for permission verification
@@ -36,6 +35,8 @@ An app for managing a household.
 ##### Handle submit on enter when creating todo
 ##### Household admin can invite other members
 ##### Allow user to edit their profile
+##### User can hide completed todos
+##### Completed todos hidden by default except for admins
 ##### Show user name in navbar when logged in
 ##### Handle close new todo modal with escape
 ##### Todo items (and shopping items) can be tagged
@@ -47,6 +48,7 @@ An app for managing a household.
 
 ### DONE 
 
+##### Create an event system and track events on todo transitions
 ##### REFACTOR: Add state machine to todos
 ##### Backbonize todo list control
 ##### Add tooltips to todo controls
