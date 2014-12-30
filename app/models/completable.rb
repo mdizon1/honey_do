@@ -90,7 +90,7 @@ class Completable < ActiveRecord::Base
     save
   end
 
-  def rec_uncomplete_event
+  def rec_uncomplete_event(transition)
     transition_options = transition.args.first
 
     self.completor = nil
