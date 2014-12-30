@@ -1,45 +1,6 @@
 .jumbotron.hidden-sm.hidden-xs
   %h1 Welcome to the #{@household.name} household
 
--#%ul.nav.nav-tabs{:role => 'tablist'}
-  %li.active{:role => 'presentation'} 
-    = link_to 'Todo List', '#todos', :id => 'todos-tab', :data => {:toggle => 'tab'}, :role => 'tab'
-  %li{:role => 'presentation'}
-    = link_to 'Shopping List', '#shopping', :id => 'shopping-tab', :data => {:toggle => 'tab'}, :role => 'tab'
-
--#.tab-content
-  #todos.tab-pane.fade.in.active{:role => 'tabpanel'}
-    - if can?(:administrate, @household)
-      .row
-        .col-lg-12
-          = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-todo-modal'} do
-            Create Todo
-            %i.fa.fa-plus
-
-    -#= render :partial => 'completables/list', :locals => {:completables => @active_todos}
-    -#= render :partial => 'completables/list', :locals => {:completables => @completed_todos}
-
-  #shopping.tab-pane.fade{:role => 'tabpanel'}
-    - if can?(:administrate, @household)
-      .row
-        .col-lg-12
-          = link_to '#', :class => 'btn btn-primary', :data => {:toggle => 'modal', :target => '#new-shopping-item-modal'} do
-            Add to Shopping List
-            %i.fa.fa-plus
-
-    -#= render :partial => 'completables/list', :locals => {:completables => @active_shopping_items}
-    -#= render :partial => 'completables/list', :locals => {:completables => @completed_shopping_items}
-
--#%ul.nav.nav-tabs{:role => 'tablist'}
-  %li.active{:role => 'presentation'} 
-    = link_to 'Todo List', '#todos', :id => 'todos-tab', :data => {:toggle => 'tab'}, :role => 'tab'
-  %li{:role => 'presentation'}
-    = link_to 'Shopping List', '#shopping', :id => 'shopping-tab', :data => {:toggle => 'tab'}, :role => 'tab'
-
-
-
-
-
 %ul.nav.nav-tabs{:role => 'tablist'}
   %li.active{:role => 'presentation'} 
     = link_to 'Todo List', '#todos', :id => 'todos-tab', :data => {:toggle => 'tab'}, :role => 'tab'
@@ -51,18 +12,6 @@
     #test-todo-container
   #shopping.tab-pane.fade{:role => 'tabpanel'}
     Going to put the shopping widget here..
-
-
--# Marked for deletion, need to remove that modal helper as well
--#- if can?(:administrate, @household)
-  - modal_content = capture do
-    = render :partial => 'completables/new'
-  = modal_helper :modal_id => 'new-todo-modal', :title => 'Create a new Todo', :modal_content => modal_content, :focus_on => "#completable_todo_title"
-
-  - modal_content = capture do
-    = render :partial => 'completables/new', :locals => {:klass => Completable::ShoppingItem}
-  = modal_helper :modal_id => 'new-shopping-item-modal', :title => 'Add to the shopping list', :modal_content => modal_content, :focus_on => "#completable_shopping_item_title"
-
 
 - content_for :javascripts do
   :javascript
