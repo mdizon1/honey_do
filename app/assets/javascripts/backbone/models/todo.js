@@ -36,7 +36,7 @@ HoneyDo.Models.Todo = Backbone.Model.extend({
       dataType: 'json',
       complete: function (jqXHR, textStatus){ },
       success: function (data, textStatus, jqXHR){
-        self.set(data.model) // update the attributes of the model
+        self.set(data.model); // update the attributes of the model
         self.trigger("todoCompleted", {notice: data.notice, model: self});
       },
       error: function (jqXHR, textStatus, errorThrown){ },
@@ -51,7 +51,7 @@ HoneyDo.Models.Todo = Backbone.Model.extend({
       dataType: 'json',
       complete: function (jqXHR, textStatus){ },
       success: function (data, textStatus, jqXHR){ 
-        self.set(data.model) // update the attributes of the model
+        self.set(data.model); // update the attributes of the model
         self.trigger("todoUncompleted", {notice: data.notice, model: self});
       },
       error: function (jqXHR, textStatus, errorThrown){ },
@@ -61,5 +61,17 @@ HoneyDo.Models.Todo = Backbone.Model.extend({
 
 HoneyDo.Collections.TodosCollection = Backbone.Collection.extend({
   model: HoneyDo.Models.Todo,
-  url: '/household/todos'
+  url: '/household/todos',
+
+  getActive: function (){
+    return this.filter(function (model){
+      return model.get("state") === "active";
+    });
+  },
+
+  getCompleted: function (){
+    return this.filter(function (model){
+      return model.get("state") === "completed";
+    });
+  }
 });

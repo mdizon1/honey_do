@@ -36,15 +36,11 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   _attachListeners: function (){
     var self = this;
 
-    this.active_collection.each(function (todo){
+    this.collection.each(function (todo){
       self._attachListenersToTodo(todo);
     });
 
-    this.completed_collection.each(function (todo){
-      self._attachListenersToTodo(todo);
-    });
-
-    this.active_collection.on("add", function (model, collection, options){
+    this.collection.on("add", function (model, collection, options){
       self._attachListenersToTodo(model);
     });
   },
@@ -57,14 +53,14 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   },
 
   _initializeCollections: function (){
-    this.active_collection = new HoneyDo.Collections.TodosCollection(this.options.active_completables);
-    this.completed_collection = new HoneyDo.Collections.TodosCollection(this.options.complete_completables); 
+    this.collection = new HoneyDo.Collections.TodosCollection(this.options.todos);
   },
 
   _initializeCompletedView: function (){
     this._completed_view = new HoneyDo.Views.Todos.CompletableListView({
       el: this.$el.find(".completed-list-container"),
-      collection: this.completed_collection
+      collection: this.collection,
+      show_state: "completed"
     });
   },
 
@@ -72,16 +68,17 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     this.flash = new HoneyDo.Views.Flash();
   },
 
-  _initializePendingView: function (){
+  _initializeActiveView: function (){
     this._active_view = new HoneyDo.Views.Todos.CompletableListView({
       el: this.$el.find(".active-list-container"),
-      collection: this.active_collection
+      collection: this.collection,
+      show_state: "active"
     });
   },
 
   _initializeSubViews: function (){
     // Note: Might want to destroy sub views here if this was being rendered again.
-    this._initializePendingView();
+    this._initializeActiveView();
     this._initializeCompletedView();
   },
 
@@ -93,7 +90,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   _setupModals: function (){
     this._new_todo_view = new HoneyDo.Views.Todos.TodoNewView({ 
       klass: "Completable::Todo",
-      collection: this.active_collection
+      collection: this.collection
     });
   },
 
@@ -102,13 +99,12 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   },
 
   _todoAccepted: function (evt){
-    this.completed_collection.remove(evt.model);
+    this.collection.remove(evt.model);
     this.updateFlash({notice: "The todo was accepted and removed"});
   },
 
   _todoComplete: function (evt){
-    this.completed_collection.add(evt.model);
-    this.active_collection.remove(evt.model);
+    this._renderSubViews();
     this.updateFlash({notice: evt.notice});
   },
 
@@ -117,8 +113,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   },
 
   _todoUncomplete: function (evt){
-    this.active_collection.add(evt.model);
-    this.completed_collection.remove(evt.model);
+    this._renderSubViews();
     this.updateFlash({notice: evt.notice});
   }
 });

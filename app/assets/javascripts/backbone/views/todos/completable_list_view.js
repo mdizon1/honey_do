@@ -8,7 +8,8 @@ HoneyDo.Views.Todos.CompletableListView = Backbone.View.extend({
   tagName: "div",
 
   initialize: function (options){
-    //this._buildViewsForCollection();
+    this._validateOptions(options);
+    this.show_state = options.show_state;
     this._setupViewOptions();
     this._bindListeners();
   },
@@ -31,7 +32,7 @@ HoneyDo.Views.Todos.CompletableListView = Backbone.View.extend({
 
   _buildViewsForCollection: function (){
     this._clearViews();
-    this.views = this.collection.map(function(item){
+    this.views = _.map(this._getListFromCollection(), function (item){
       return new HoneyDo.Views.Todos.CompletableShowView({model: item});
     });
   },
@@ -44,7 +45,26 @@ HoneyDo.Views.Todos.CompletableListView = Backbone.View.extend({
     });
   },
 
+  _getListFromCollection: function (){
+    switch(this.show_state){
+      case 'completed':
+        return this.collection.getCompleted();
+        break;
+      case 'active':
+        return this.collection.getActive();
+        break;
+      default:
+        throw new Error("should never get here");
+    }
+  },
+
   _setupViewOptions: function (){
     this.view_options = {};    // Nothing yet
+  },
+
+  _validateOptions: function (options){
+    if(!options.show_state) { 
+      throw new Error("No show state provided to CompletableListView view");
+    }
   }
 });

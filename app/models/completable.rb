@@ -38,6 +38,7 @@ class Completable < ActiveRecord::Base
       :id => id,
       :title => title,
       :notes => notes,
+      :state => state,
       :is_active => active?,
       :is_completed => completed?,
       :completed_at => completed_at
@@ -91,7 +92,7 @@ class Completable < ActiveRecord::Base
   end
 
   def rec_uncomplete_event(transition)
-    transition_options = transition.args.first
+    transition_options = transition.args.first || {}
 
     self.completor = nil
     clear_completed_timestamps

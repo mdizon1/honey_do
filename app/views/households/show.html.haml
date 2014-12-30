@@ -13,6 +13,7 @@
   #shopping.tab-pane.fade{:role => 'tabpanel'}
     Going to put the shopping widget here..
 
+-# TODO: wrap the javascript in an onload of the page or use $
 - content_for :javascripts do
   :javascript
     var global_view
@@ -21,8 +22,7 @@
       view = new HoneyDo.Views.Todos.CompletableWidgetView({
         el: $('#test-todo-container'),
         can_administrate_household: #{can?(:administrate, @household)},
-        active_completables: #{@active_todos.to_json},
-        complete_completables: #{@completed_todos.to_json}
+        todos: #{@todos.to_json}
       });
       global_view = view;
     })();
