@@ -22,6 +22,7 @@ HoneyDo.Views.Todos.CompletableListView = Backbone.View.extend({
       view.render();
       self.$el.find("tbody").append(view.$el);
     });
+    this._initializeSortable();
   },
 
   //private
@@ -56,6 +57,38 @@ HoneyDo.Views.Todos.CompletableListView = Backbone.View.extend({
       default:
         throw new Error("should never get here");
     }
+  },
+
+  _initializeSortable: function (){
+    var self = this;
+    if(this.show_state !== "active") { return null; }
+
+    this.$el.find("tbody").sortable({
+      axis: "y",
+      containment: this.$el.find(".todo-list-wrap"),
+      cursor: "move",
+      distance: 5,
+      handle: ".todo-reorder",
+      helper: this._fixDraggableDisplay,
+      revert: 400,
+
+      // events
+      deactivate: function (evt, ui){
+        // Resort the collection based on positions in the list
+        ui.item.trigger("shuffle", ui.item.index());
+      }
+    });
+  },
+
+  _fixDraggableDisplay: function (e, tr){
+    var $originals = tr.children();
+    var $helper = tr.clone();
+    $helper.children().each(function(index)
+    {
+      // Set helper cell sizes to match the original sizes
+      $(this).width($originals.eq(index).width());
+    });
+    return $helper;
   },
 
   _setupViewOptions: function (){

@@ -10,7 +10,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   initialize: function (options){
     this.options = options;
     this._setupViewOptions();
-    this._initializeCollections();
+    this._initializeCollection();
     this._setupModals();
     this._initializeFlash();
     this._attachListeners();
@@ -52,8 +52,9 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     todo.on("destroy", this._todoDestroyed.bind(this));
   },
 
-  _initializeCollections: function (){
+  _initializeCollection: function (){
     this.collection = new HoneyDo.Collections.TodosCollection(this.options.todos);
+    this.collection.comparator = "position";
   },
 
   _initializeCompletedView: function (){
@@ -115,5 +116,5 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   _todoUncomplete: function (evt){
     this._renderSubViews();
     this.updateFlash({notice: evt.notice});
-  }
+  },
 });

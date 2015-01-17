@@ -1,7 +1,7 @@
 class TodosController < ApplicationController
   before_filter :authenticate_user!
   before_filter :load_current_user_household, :except => [:new]
-  before_filter :load_todo, :only => [:accept, :complete, :destroy, :uncomplete]
+  before_filter :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete]
   before_filter :authorize_modify_todo, :only => [:accept, :complete, :destroy, :uncomplete]
 
   def show
@@ -36,6 +36,13 @@ class TodosController < ApplicationController
   end
 
   def update
+    respond_to do |format|
+      format.js do
+        return render :status => 400 unless @todo
+        @todo.update_attributes(sanitized_todo_params)
+        render :json => @todo.to_backbone(current_user), :status => :ok
+      end
+    end
   end
 
   def destroy
@@ -112,10 +119,16 @@ class TodosController < ApplicationController
   end
 
   def load_todo
-    @todo = Completable.find(params[:id] || params[:todo_id])
+    @todo = Completable.find(params[:id] || 
+                             params[:todo_id] || 
+                             params[:todo][:id])
   end
 
   def todo_params
-    params.require(:todo).permit(:title, :notes)
+    params.require(:todo).permit(:title, :notes, :position)
+  end
+
+  def sanitized_todo_params
+    todo_params.merge :position => (params[:todo][:position]+1) # jquery row positions are 0 indexed
   end
 end
