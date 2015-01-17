@@ -7,6 +7,8 @@ class Completable < ActiveRecord::Base
   has_many :completed_events, :as => :target, :class_name => 'Event::TodoCompleted'
   has_many :accepted_events, :as => :target, :class_name => 'Event::TodoAccepted'
 
+  acts_as_list :scope => :household
+
   state_machine :state, :initial => :active do
     after_transition :on => :complete, :do => [:rec_complete_event, :rec_completor]
     after_transition :on => :accept, :do => [:rec_accept_event, :rec_acceptor]
@@ -35,11 +37,12 @@ class Completable < ActiveRecord::Base
   #   serializer
   def to_backbone(user=nil)
     attrs = {
-      :id => id,
-      :title => title,
-      :notes => notes,
-      :state => state,
-      :is_active => active?,
+      :id           => id,
+      :position     => position,
+      :title        => title,
+      :notes        => notes,
+      :state        => state,
+      :is_active    => active?,
       :is_completed => completed?,
       :completed_at => completed_at
     }

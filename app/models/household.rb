@@ -1,8 +1,8 @@
 class Household < ActiveRecord::Base
   has_many :memberships
   has_many :members, :through => :memberships, :source => :user
-  has_many :todos, :class_name => 'Completable::Todo', :dependent => :destroy
-  has_many :shopping_items, :class_name => 'Completable::ShoppingItem', :dependent => :destroy
+  has_many :todos, -> { order('position ASC') }, :class_name => 'Completable::Todo', :dependent => :destroy
+  has_many :shopping_items, -> { order('position ASC') }, :class_name => 'Completable::ShoppingItem', :dependent => :destroy
 
   def accepted_todos
     todos.with_state 'accepted'
