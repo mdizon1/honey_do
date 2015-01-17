@@ -28,8 +28,8 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### REFACTOR: Use 1 collection instead of 2 in backbone for todos
 ##### Make todos orderable
+##### Update backbone
 ##### Add additional validations on todocontroller for permission verification
 ##### Handle error on todo creation
 ##### Handle submit on enter when creating todo
@@ -48,6 +48,7 @@ An app for managing a household.
 
 ### DONE 
 
+##### REFACTOR: Use 1 collection instead of 2 in backbone for todos
 ##### Create an event system and track events on todo transitions
 ##### REFACTOR: Add state machine to todos
 ##### Backbonize todo list control
