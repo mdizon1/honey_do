@@ -41,7 +41,9 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     });
 
     this.collection.on("add", function (model, collection, options){
-      self._attachListenersToTodo(model);
+      //console.log("DEBUG: we got an add event on the collection!");
+      //console.log("DEBUG: the new model is --->", model);
+      //self._attachListenersToTodo(model);
     });
   },
 
@@ -54,7 +56,14 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
 
   _initializeCollection: function (){
     this.collection = new HoneyDo.Collections.TodosCollection(this.options.todos);
-    this.collection.comparator = "position";
+    //this.collection.comparator = "position"; // This doesn't work anymore??
+    this.collection.comparator = function (val_a, val_b) { 
+      if(val_a.get("position") < val_b.get("position")) {
+        return -1;
+      }else{
+        return 1;
+      }
+    };
   },
 
   _initializeCompletedView: function (){

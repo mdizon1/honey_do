@@ -29,9 +29,11 @@ An app for managing a household.
 ### BACKLOG
 
 ##### Update backbone
+  * BUG: creating a new todo doesn't add it to the list
 ##### Create shopping list and add to shopping tab
 ##### Todo items (and shopping items) can be tagged
 ##### Todo list can be filtered by tag
+##### Todo items should go to the front of the list when added
 ##### Add additional validations on todocontroller for permission verification
 ##### User can have an avatar (MARTY)
 ##### Handle submit on enter when creating todo
