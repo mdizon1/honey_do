@@ -28,26 +28,28 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Make todos orderable
 ##### Update backbone
+##### Create shopping list and add to shopping tab
+##### Todo items (and shopping items) can be tagged
+##### Todo list can be filtered by tag
 ##### Add additional validations on todocontroller for permission verification
-##### Handle error on todo creation
+##### User can have an avatar (MARTY)
 ##### Handle submit on enter when creating todo
+##### Handle close new todo modal with escape
+##### Handle error on todo creation
+##### Household 'make head admin' command must remove other head admin
 ##### Household admin can invite other members
 ##### Allow user to edit their profile
 ##### User can hide completed todos
 ##### Completed todos hidden by default except for admins
 ##### Show user name in navbar when logged in
-##### Handle close new todo modal with escape
-##### Todo items (and shopping items) can be tagged
 ##### Switch to Thin server
 ##### Craft welcome/landing page (logged out)
-##### Household 'make head admin' command must remove other head admin
-##### User can have an avatar
 ##### Admin can assign tasks to members
 
 ### DONE 
 
+##### Make todos orderable
 ##### REFACTOR: Use 1 collection instead of 2 in backbone for todos
 ##### Create an event system and track events on todo transitions
 ##### REFACTOR: Add state machine to todos
