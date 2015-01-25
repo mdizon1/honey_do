@@ -28,8 +28,6 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Update backbone
-  * BUG: creating a new todo doesn't add it to the list
 ##### Create shopping list and add to shopping tab
 ##### Todo items (and shopping items) can be tagged
 ##### Todo list can be filtered by tag
@@ -50,6 +48,9 @@ An app for managing a household.
 ##### Admin can assign tasks to members
 
 ### DONE 
+
+##### Update backbone
+  * BUG: creating a new todo doesn't add it to the list
 
 ##### Make todos orderable
 ##### REFACTOR: Use 1 collection instead of 2 in backbone for todos
