@@ -9,20 +9,30 @@
 
 .tab-content
   #todos.tab-pane.fade.in.active{:role => 'tabpanel'}
-    #test-todo-container
+    #todo-container
   #shopping.tab-pane.fade{:role => 'tabpanel'}
     Going to put the shopping widget here..
+    #shopping-container
 
 -# TODO: wrap the javascript in an onload of the page or use $
 - content_for :javascripts do
   :javascript
     var global_view
     (function (){
-      var view;
-      view = new HoneyDo.Views.Todos.CompletableWidgetView({
-        el: $('#test-todo-container'),
+      var todo_view, shopping_view;
+      todo_view = new HoneyDo.Views.Todos.CompletableWidgetView({
+        el: $("#todo-container"),
         can_administrate_household: #{can?(:administrate, @household)},
-        todos: #{@todos.to_json}
+        todos: #{@todos.to_json},
+        klass: "Completable::Todo",
+        title: "Todo"
       });
-      global_view = view;
+
+      shopping_view = new HoneyDo.Views.Todos.CompletableWidgetView({
+        el: $("#shopping-container"),
+        can_administrate_household: #{can?(:administrate, @household)},
+        todos: #{@shopping_list.to_json},
+        klass: "Completable::ShoppingItem",
+        title: "Shopping item"
+      });
     })();

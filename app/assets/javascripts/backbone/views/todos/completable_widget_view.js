@@ -3,7 +3,9 @@ HoneyDo.Views.Todos ? null : HoneyDo.Views.Todos = {};
 HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   template: JST["backbone/templates/todos/completable_widget_view"],
 
-  events: { },
+  events: { 
+    "click [data-summon-modal]": "openModal"
+  },
 
   tagName: "div",
 
@@ -18,6 +20,10 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   },
 
   //destroy: function (){ },
+
+  openModal: function (evt){
+    this._new_todo_view.getModal().modal("toggle");
+  },
 
   render: function (){
     this.$el.html(this.template(this.view_options));
@@ -41,9 +47,7 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     });
 
     this.collection.on("add", function (model, collection, options){
-      //console.log("DEBUG: we got an add event on the collection!");
-      //console.log("DEBUG: the new model is --->", model);
-      //self._attachListenersToTodo(model);
+      self._attachListenersToTodo(model);
     });
   },
 
@@ -99,13 +103,15 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
 
   _setupModals: function (){
     this._new_todo_view = new HoneyDo.Views.Todos.TodoNewView({ 
-      klass: "Completable::Todo",
+      //klass: "Completable::Todo",
+      klass: this.options.klass,
+      title: this.options.title,
       collection: this.collection
     });
   },
 
   _setupViewOptions: function (){
-    this.view_options = _.pick(this.options, "can_administrate_household");
+    this.view_options = _.pick(this.options, "can_administrate_household", "title");
   },
 
   _todoAccepted: function (evt){

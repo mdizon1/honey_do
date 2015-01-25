@@ -8,6 +8,14 @@ class Household < ActiveRecord::Base
     todos.with_state 'accepted'
   end
 
+  def active_shopping_items
+    shopping_items.with_states %w(active completed)
+  end
+
+  def active_todos
+    todos.with_states %w(active completed)
+  end
+
   def add_member!(user)
     members << user
   end
@@ -24,20 +32,15 @@ class Household < ActiveRecord::Base
     todos.with_state 'completed'
   end
 
-  def create_todo(title, notes='', creator)
+  def create_todo(title, creator, options={})
     raise ArgumentError, "No title provided" if title.blank?
     raise ArgumentError, "No creator provided" unless creator
     raise ArgumentError, "Creator is not a member of this household" unless self.has_member?(creator)
     raise ArgumentError, "Creator is not an administrator of the household" unless creator.administrates? self
-    Completable::Todo.create(:household => self, :title => title, :notes => notes, :creator => creator)
-  end
-
-  def create_shopping_item(title, notes='', creator)
-    raise ArgumentError, "No title provided" if title.blank?
-    raise ArgumentError, "No creator provided" unless creator
-    raise ArgumentError, "Creator is not a member of this household" unless self.has_member?(creator)
-    raise ArgumentError, "Creator is not an administrator of the household" unless creator.administrates? self
-    Completable::ShoppingItem.create(:household => self, :title => title, :notes => notes, :creator => creator)
+    new_todo = Completable::Todo.new(:household => self, :title => title, :notes => options[:notes], :creator => creator)
+    new_todo.type = options[:klass] || 'Completable::Todo'
+    new_todo.save!
+    new_todo
   end
 
   def has_member?(user)
@@ -73,14 +76,6 @@ class Household < ActiveRecord::Base
     return false unless m
     m.is_head_admin = true
     m.save
-  end
-
-  def active_shopping_items
-    shopping_items.with_states %w(active completed)
-  end
-
-  def active_todos
-    todos.with_states %w(active completed)
   end
 
   def remove_member(user)

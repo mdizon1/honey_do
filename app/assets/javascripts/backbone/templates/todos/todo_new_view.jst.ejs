@@ -1,4 +1,4 @@
-<div id="new-todo-modal" class="modal fade" role="dialog">
+<div class="modal fade new-todo-modal" role="dialog">
   <div class="modal-dialog modal-sm">
     <div class="modal-content">
       <div class="modal-header">
@@ -8,7 +8,7 @@
           </span>
           <span class="sr-only">Close</span>
         </button>
-        <h4 class="modal-title">Creata a new Todo</h4>
+        <h4 class="modal-title">Create a new <%= title %></h4>
       </div>
 
       <form role="form">
@@ -16,13 +16,13 @@
           <div class="form-group">
             <input type="text" class="form-control" name="new_todo_title" placeholder="Title">
             <textarea class="form-control" name="new_todo_notes" placeholder="Description (optional)"></textarea>
-            <input type="hidden" value="<%=klass%>">
+            <input type="hidden" name="new_todo_klass" value="<%=klass%>">
           </div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-primary" type="submit">
             <i class="fa fa-plus"></i>
-            Create Todo
+            Create <%= title %> 
           </button>
         </div>
       </form>

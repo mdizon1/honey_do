@@ -4,6 +4,7 @@ class HouseholdsController < ApplicationController
 
   def show
     @todos = @household.active_todos.map{|t| t.to_backbone(current_user) }
+    @shopping_list = @household.active_shopping_items.map{|t| t.to_backbone(current_user) }
 
     #@active_todos = @household.active_todos
     #@active_todos = @active_todos.map{|t| t.to_backbone(current_user) }

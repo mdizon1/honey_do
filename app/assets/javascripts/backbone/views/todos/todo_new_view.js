@@ -16,13 +16,17 @@ HoneyDo.Views.Todos.TodoNewView = Backbone.View.extend({
   },
 
   render: function (){
-    this.$el.html(this.template({klass: this.klass}));
+    this.$el.html(this.template({klass: this.klass, title: this.options.title}));
     $('body').append(this.$el);
   },
 
   attachListeners: function (){
     // clear fields when modal is hidden
-    this.$el.find(".modal").on("hidden.bs.modal", this._clearModalFields.bind(this));
+    this.getModal().on("hidden.bs.modal", this._clearModalFields.bind(this));
+  },
+
+  getModal: function (){
+    return this.$el.find(".modal")
   },
 
   submitForm: function (evt){
@@ -47,7 +51,8 @@ HoneyDo.Views.Todos.TodoNewView = Backbone.View.extend({
   _getValuesFromFields: function (){
     return {
       title: this.$el.find("[name='new_todo_title']").val(),
-      notes: this.$el.find("[name='new_todo_notes']").val()
+      notes: this.$el.find("[name='new_todo_notes']").val(),
+      klass: this.$el.find("[name='new_todo_klass']").val()
     }
   },
 });
