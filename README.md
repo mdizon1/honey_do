@@ -28,7 +28,6 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Create shopping list and add to shopping tab
 ##### Todo items (and shopping items) can be tagged
 ##### Todo list can be filtered by tag
 ##### Todo items should go to the front of the list when added
@@ -49,6 +48,7 @@ An app for managing a household.
 
 ### DONE 
 
+##### Create shopping list and add to shopping tab
 ##### Update backbone
   * BUG: creating a new todo doesn't add it to the list
 
