@@ -3,7 +3,8 @@ class Completable < ActiveRecord::Base
   belongs_to :creator, :foreign_key => :creator_id, :class_name => "User"
   belongs_to :completor, :foreign_key => :completor_id, :class_name => "User"
   belongs_to :acceptor, :foreign_key => :acceptor_id, :class_name => "User"
-
+  has_many :tags, :as => :taggable, :dependent => :destroy
+  has_many :tag_titles, :through => :tags
   has_many :completed_events, :as => :target, :class_name => 'Event::TodoCompleted'
   has_many :accepted_events, :as => :target, :class_name => 'Event::TodoAccepted'
 
