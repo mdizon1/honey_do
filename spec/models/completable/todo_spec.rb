@@ -1,7 +1,37 @@
 require 'spec_helper'
 
 describe Completable::Todo do
-  context "instance methods" do
+  describe "relationships" do
+    describe "tagging" do
+      context "with a todo" do
+        let(:todo) { FactoryGirl.create(:todo) }
+        
+        context "that has no tags" do
+          it "should return an empty set when asking for tags" do
+            todo.tags.should be_empty
+          end
+
+          it "should return an empty set when asking for tag_joins" do
+            todo.tag_titles.should be_empty
+          end
+        end
+
+        context "that has a tag" do
+          let!(:tag) { FactoryGirl.create(:tag, :taggable => todo) }
+          let!(:tag_title) { tag.tag_title }
+
+          it "should return the tag when requesting tags" do
+            todo.tags.should == [tag]
+          end
+
+          it "should return the tag_join when querying for tag joins" do
+            todo.tag_titles.should == [tag_title]
+          end
+        end
+      end
+    end
+  end
+  describe "instance methods" do
     describe "#accept!" do
       context "with a todo which is persisted" do
         let(:todo) { FactoryGirl.create(:todo) }
