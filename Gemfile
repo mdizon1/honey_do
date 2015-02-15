@@ -32,7 +32,8 @@ group :development, :test do
 end
 
 group :test do
-  gem 'shoulda-matchers'
+  gem 'shoulda-matchers', :require => false # :require => false seems to be needed for spork
+  gem 'spork-rails'
 end
 
 #group :asses do

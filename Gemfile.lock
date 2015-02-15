@@ -134,6 +134,10 @@ GEM
       sprockets-rails (~> 2.0.0)
     shoulda-matchers (2.7.0)
       activesupport (>= 3.0.0)
+    spork (1.0.0rc4)
+    spork-rails (4.0.0)
+      rails (>= 3.0.0, < 5)
+      spork (>= 1.0rc0)
     sprockets (2.10.1)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -179,4 +183,5 @@ DEPENDENCIES
   rspec-rails
   sass-rails
   shoulda-matchers
+  spork-rails
   state_machine
