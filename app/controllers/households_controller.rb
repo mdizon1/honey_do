@@ -5,18 +5,6 @@ class HouseholdsController < ApplicationController
   def show
     @todos = @household.active_todos.map{|t| t.to_backbone(current_user) }
     @shopping_list = @household.active_shopping_items.map{|t| t.to_backbone(current_user) }
-
-    #@active_todos = @household.active_todos
-    #@active_todos = @active_todos.map{|t| t.to_backbone(current_user) }
-
-    #@completed_todos = @household.completed_todos
-    #@completed_todos = @completed_todos.map{|t| t.to_backbone(current_user) }
-
-    #@active_shopping_items = @household.active_shopping_items
-    #@active_shopping_items = @active_shopping_items.map{|t| t.to_backbone(current_user)}
-
-    #@completed_shopping_items = @household.completed_shopping_items
-    #@completed_shopping_items = @completed_shopping_items.map{|t| t.to_backbone(current_user) }
   end
 
   def edit

@@ -33,7 +33,6 @@ class TodosController < ApplicationController
 
       format.js do
         if params[:todo]
-          #new_todo = @household.create_todo(params[:todo][:title], params[:todo][:notes], current_user)
           new_todo = @household.create_todo(params[:todo][:title], current_user, {
             :notes => params[:todo][:notes], 
             :klass => params[:todo][:klass]
