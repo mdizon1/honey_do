@@ -35,6 +35,7 @@ class TodosController < ApplicationController
         if params[:todo]
           new_todo = @household.create_todo(params[:todo][:title], current_user, {
             :notes => params[:todo][:notes], 
+            :tags  => params[:todo][:tags],
             :klass => params[:todo][:klass]
           })
           render :json => new_todo.to_backbone(current_user), :status => :ok

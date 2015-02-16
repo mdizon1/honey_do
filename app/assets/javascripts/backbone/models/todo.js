@@ -5,6 +5,7 @@ HoneyDo.Models.Todo = Backbone.Model.extend({
   defaults: {
     title: null,
     notes: null,
+    tags: '',
     permissions: {
       can_complete: false,
       can_uncomplete: false,

@@ -84,6 +84,7 @@ describe Household do
           let!(:membership) { FactoryGirl.create(:membership, :household => household, :user => todo_creator, :is_admin => true) }
           let(:title) { 'bloo blar' }
           let(:notes) { "foobar" }
+          let(:tags) { 'tag1, tag2, tag3' }
 
           it "should return the new todo item" do
             todo = household.create_todo(title, todo_creator, :notes => notes)
@@ -115,6 +116,11 @@ describe Household do
           it "should store the creator of the todo item" do
             todo = household.create_todo(title, todo_creator, :notes => notes)
             todo.creator.should == todo_creator
+          end
+
+          it "should attach tags to the new todo item" do
+            todo = household.create_todo(title, todo_creator, :notes => notes, :tags => tags)
+            todo.tag_titles.map(&:title).should =~ %w(tag1 tag2 tag3)
           end
 
           context "when the creator of the todo is not an administrator" do

@@ -208,5 +208,195 @@ describe Completable::Todo do
         end
       end
     end
+
+    describe "#tag_with" do
+      context "with a todo" do
+        let(:todo) { FactoryGirl.create(:todo) }
+
+        context "that has no tags" do
+          let(:new_tag_string) { "foo" }
+          it "should complete successfully" do
+            expect {
+              todo.tag_with(new_tag_string)
+            }.not_to raise_error
+          end
+
+          it "should create a new TagTitle" do
+            expect {
+              todo.tag_with(new_tag_string)
+            }.to change(TagTitle, :count).by(1)
+          end
+
+          it "should return a non empty list" do
+            todo.tag_with(new_tag_string).should_not be_empty
+          end
+
+          it "should include the new tag in the list" do
+            todo.tag_with(new_tag_string).map(&:title).should be_include new_tag_string
+            todo.reload.tag_titles.map(&:title).should be_include new_tag_string
+          end
+
+          context "with an empty string" do
+            it "should not create any TagTitles" do
+              expect {
+                todo.tag_with('')
+              }.not_to change(TagTitle, :count)
+            end
+
+            it "should not create any tags" do
+              expect {
+                todo.tag_with('')
+              }.not_to change(Tag, :count)
+            end
+
+            it "should return successfully" do
+              expect {
+                todo.tag_with('')
+              }.not_to raise_error
+            end
+          end
+
+          context "when adding multiple tags" do
+            let(:multiple_new_tags) { "foo, bar,baz" }
+            
+            it "should create 3 new tags" do
+              expect {
+                todo.tag_with(multiple_new_tags)
+              }.to change(TagTitle, :count).by(3)
+            end
+
+            it "should return a list of 3 tags" do
+              todo.tag_with(multiple_new_tags).size.should == 3
+            end
+
+            it "should include each of the tags in the new tag title list" do
+              todo.tag_with(multiple_new_tags)
+              todo.reload.tag_titles.map(&:title).should include('foo')
+              todo.tag_titles.map(&:title).should include('bar')
+              todo.tag_titles.map(&:title).should include('baz')
+            end
+          end
+        end
+
+        context "with an existing tag" do
+          let!(:existing_tag) { FactoryGirl.create(:tag, :taggable => todo) }
+          let(:existing_tag_title) { existing_tag.tag_title }
+          let(:existing_tag_name) { existing_tag_title.title }
+
+          context "with an empty string" do
+            it "should destroy a Tag" do
+              expect {
+                todo.tag_with('')
+              }.to change(Tag, :count).by(-1)
+            end
+
+            it "should not remove any TagTitles" do
+              expect {
+                todo.tag_with('')
+              }.not_to change(TagTitle, :count)
+            end
+
+            it "should return an empty array" do
+              todo.tag_with('').should be_empty
+            end
+          end
+
+          context "when adding a new tag" do
+            let(:new_tag_string) { "bar" }
+
+            it "should complete successfully" do
+              expect {
+                todo.tag_with(new_tag_string)
+              }.not_to raise_error
+            end
+
+            it "should create a new TagTitle" do
+              expect {
+                todo.tag_with(new_tag_string)
+              }.to change(TagTitle, :count).by(1)
+            end
+
+            it "should remove the existing tag" do
+              todo.tag_with(new_tag_string)
+              todo.reload.tag_titles.should_not be_include(existing_tag_title)
+            end
+
+            it "should return 1 tag titles" do
+              todo.tag_with(new_tag_string).size.should == 1
+            end
+
+            it "should include the new tag in the list" do
+              todo.tag_with(new_tag_string).map(&:title).should be_include new_tag_string
+              todo.reload.tag_titles.map(&:title).should be_include new_tag_string
+            end
+          end
+
+          context "when attempting to add the existing tag" do
+            it "should complete successfully" do
+              expect {
+                todo.tag_with(existing_tag_name)
+              }.not_to raise_error
+            end
+
+            it "should not create a new Tag" do
+              expect {
+                todo.tag_with(existing_tag_name)
+              }.not_to change(Tag, :count)
+            end
+
+            it "should not create a new TagTitle" do
+              expect {
+                todo.tag_with(existing_tag_name)
+              }.not_to change(TagTitle, :count)
+            end
+
+            context "within multiple tag inputs" do
+              let(:new_tag_string) { " foo, bar; #{existing_tag_name}" }
+
+              it "should create 2 Tags" do
+                expect {
+                  todo.tag_with(new_tag_string)
+                }.to change(Tag, :count).by(2)
+              end
+
+              it "should create 2 TagTitles" do
+                expect {
+                  todo.tag_with(new_tag_string)
+                }.to change(TagTitle, :count).by(2)
+              end
+
+              it "should attach the correct tags to the completable" do
+                todo.tag_with(new_tag_string)
+                todo.reload.tag_titles.map(&:title).should =~ ['foo', 'bar', existing_tag_name]
+              end
+            end
+          end
+
+          context "when adding tags not including the existing tag" do
+            let(:new_tag_string) { "foo, bar; baz" }
+
+            it "should return a list of 3 items" do
+              todo.tag_with(new_tag_string).size.should == 3
+            end
+
+            it "should return a list of TagTitles containing all the input values" do
+              todo.tag_with(new_tag_string).map(&:title).should =~ ['foo', 'bar', 'baz']
+            end
+
+            it "should create 3 Tags and remove 1" do
+              expect {
+                todo.tag_with(new_tag_string)
+              }.to change(Tag, :count).by(2)
+            end
+
+            it "should create 3 TagTitles" do
+              expect {
+                todo.tag_with(new_tag_string)
+              }.to change(TagTitle, :count).by(3)
+            end
+          end
+        end
+      end
+    end
   end
 end

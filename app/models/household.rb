@@ -38,6 +38,7 @@ class Household < ActiveRecord::Base
     raise ArgumentError, "Creator is not a member of this household" unless self.has_member?(creator)
     raise ArgumentError, "Creator is not an administrator of the household" unless creator.administrates? self
     new_todo = Completable::Todo.new(:household => self, :title => title, :notes => options[:notes], :creator => creator)
+    new_todo.tag_with(options[:tags]) if options[:tags]
     new_todo.type = options[:klass] || 'Completable::Todo'
     new_todo.save!
     new_todo

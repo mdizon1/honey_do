@@ -29,6 +29,7 @@ An app for managing a household.
 ### BACKLOG
 
 ##### Add interface for tagging todo items
+##### install and set up guard-spork
 ##### Todo list can be filtered by tag
 ##### Todo items should go to the front of the list when added
 ##### Tags can have icons or avatars (not sure which yet)

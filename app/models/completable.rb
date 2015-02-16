@@ -31,8 +31,31 @@ class Completable < ActiveRecord::Base
       :can_uncomplete => a.can?(:uncomplete, self),
       :can_destroy => a.can?(:destroy, self),
       :can_accept => a.can?(:accept, self),
+      :can_tag => a.can?(:tag, self)
     }
   end
+
+  # Accept a string of tags separated by either commas or semicolons
+  # Find or create tags from each and attach to this completable
+  def tag_with(tag_string)
+    found_or_created_tag_titles = []
+    tag_string.split(/[,;]/).each do |new_tag|
+      found_or_created_tag_titles << TagTitle.find_or_create_by(:title => new_tag.strip)
+    end
+
+    tag_titles_to_remove = tag_titles - found_or_created_tag_titles
+    tag_titles_to_add = found_or_created_tag_titles - tag_titles
+
+    tag_titles_to_remove.each do |tt|
+      tag_titles.destroy(tt)
+    end
+    tag_titles_to_add.each do |tt|
+      tag_titles << tt
+    end
+    tag_titles
+  end
+
+
 
   # TODO: to improve this: step 1, move to a presenter/draper. step 2, move to 
   #   serializer
@@ -43,6 +66,7 @@ class Completable < ActiveRecord::Base
       :title        => title,
       :notes        => notes,
       :state        => state,
+      :tags         => tag_titles.map(&:title).join(', '),
       :is_active    => active?,
       :is_completed => completed?,
       :completed_at => completed_at

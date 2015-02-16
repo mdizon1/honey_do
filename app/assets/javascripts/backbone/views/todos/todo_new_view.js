@@ -42,6 +42,7 @@ HoneyDo.Views.Todos.TodoNewView = Backbone.View.extend({
   _clearModalFields: function (){
     this.$el.find("[name='new_todo_title']").val("");
     this.$el.find("[name='new_todo_notes']").val("");
+    this.$el.find("[name='new_todo_tags']" ).val("");
   },
 
   _closeModal: function (){
@@ -52,6 +53,7 @@ HoneyDo.Views.Todos.TodoNewView = Backbone.View.extend({
     return {
       title: this.$el.find("[name='new_todo_title']").val(),
       notes: this.$el.find("[name='new_todo_notes']").val(),
+      tags:  this.$el.find("[name='new_todo_tags']" ).val(),
       klass: this.$el.find("[name='new_todo_klass']").val()
     }
   },
