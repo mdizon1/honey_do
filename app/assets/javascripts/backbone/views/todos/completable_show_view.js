@@ -1,6 +1,5 @@
 HoneyDo.Views.Todos ? null : HoneyDo.Views.Todos = {};
 
-
 HoneyDo.Views.Todos.CompletableShowView = Backbone.View.extend({
   template: JST["backbone/templates/todos/completable_show_view"],
 
@@ -27,7 +26,7 @@ HoneyDo.Views.Todos.CompletableShowView = Backbone.View.extend({
   },
 
   render: function (){
-    this.$el.html(this.template(this.model.attributes));
+    this.$el.html(this.template(this._setupViewOptions()));
     this._activateTooltips();
   },
 
@@ -58,6 +57,22 @@ HoneyDo.Views.Todos.CompletableShowView = Backbone.View.extend({
     this.model.on("change", function (){ 
       self.highlight(); 
     });
+  },
+
+  _presentedTags: function (){
+    if(!this.model.get("tags")) { return []; }
+    output = null;
+    output = this.model.get("tags").split(/[,;]/);
+    return _.map(output, function (tag) {
+        return tag.trim();
+      });
+  },
+
+  _setupViewOptions: function (){
+    var output;
+    output = _.clone(this.model.attributes);
+    output["tags"] = this._presentedTags();
+    return output;
   },
 
   _unbindListeners: function (){

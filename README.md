@@ -29,6 +29,7 @@ An app for managing a household.
 ### BACKLOG
 
 ##### Create UI for displaying tags
+##### Create UI for choosing colors for tags (premium feature?)
 ##### Todo list can be filtered by tag
 ##### Todo items should go to the front of the list when added
 ##### Tags can have icons or avatars (not sure which yet)
@@ -38,6 +39,7 @@ An app for managing a household.
 ##### Handle submit on enter when creating todo
 ##### Handle close new todo modal with escape
 ##### Handle error on todo creation
+##### Take picture of item to add to todo (or any uploaded image)
 ##### Household 'make head admin' command must remove other head admin
 ##### Household admin can invite other members
 ##### Allow user to edit their profile

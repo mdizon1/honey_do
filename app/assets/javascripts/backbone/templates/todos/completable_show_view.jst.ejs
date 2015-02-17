@@ -7,6 +7,17 @@
   <div class="todo-title <%= is_completed ? 'complete' : ''%>">
     <%= title %>
   </div>
+  <div class="todo-labels">
+    <% for(tag_idx in tags) { %>
+      <% var label = tags[tag_idx]; %>
+      <span class="label label-info">
+        <%= label %>
+      </span>
+      <% if(tag_idx < (tags.length-1)) { %>
+        &nbsp;
+      <% } %>
+    <% } %>
+  </div>
 </td>
 <td>
   <div class="todo-notes text-center <%= is_completed ? 'complete' : '' %>">
