@@ -28,9 +28,8 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Create UI for displaying tags
-##### Create UI for choosing colors for tags (premium feature?)
 ##### Todo list can be filtered by tag
+##### Create UI for choosing colors for tags (premium feature?)
 ##### Todo items should go to the front of the list when added
 ##### Tags can have icons or avatars (not sure which yet)
 ##### Create seed list of built in tags
@@ -52,6 +51,7 @@ An app for managing a household.
 
 ### DONE 
 
+##### Create UI for displaying tags
 ##### Install and set up guard-spork
 ##### Add interface for tagging todo items
 ##### Todo items (and shopping items) can be tagged

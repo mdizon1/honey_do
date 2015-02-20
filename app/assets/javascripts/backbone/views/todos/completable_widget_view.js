@@ -4,7 +4,8 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
   template: JST["backbone/templates/todos/completable_widget_view"],
 
   events: { 
-    "click [data-summon-modal]": "openModal"
+    "click [data-summon-modal]": "openModal",
+    "keyup [data-filter-todo]": "_filter"
   },
 
   tagName: "div",
@@ -56,6 +57,12 @@ HoneyDo.Views.Todos.CompletableWidgetView = Backbone.View.extend({
     todo.on("todoUncompleted", this._todoUncomplete.bind(this));
     todo.on("todoAccepted", this._todoAccepted.bind(this));
     todo.on("destroy", this._todoDestroyed.bind(this));
+  },
+
+  _filter: function (evt){
+    var field_value = $(evt.target).val();
+    this._active_view.filter(field_value);
+    this._completed_view.filter(field_value);
   },
 
   _initializeCollection: function (){

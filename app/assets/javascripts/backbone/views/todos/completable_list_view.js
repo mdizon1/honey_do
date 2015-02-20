@@ -14,6 +14,24 @@ HoneyDo.Views.Todos.CompletableListView = Backbone.View.extend({
     this._bindListeners();
   },
 
+  filter: function (filter_value){
+    var filter_regex;
+    if(!filter_value || _.isEmpty(filter_value)) {
+      this._filter = null;
+    }else{
+      // TODO: Candidate for refactor here. the function could be moved into the model
+      filter_regex = new RegExp("("+filter_value + "|,\\s*"+filter_value + ")");
+      this._filter = function (curr_model){
+        return(
+          filter_regex.exec(curr_model.get("title")) ||
+            filter_regex.exec(curr_model.get("tags")) ||
+            filter_regex.exec(curr_model.get("notes"))
+        );
+      };
+    }
+    this.render();
+  },
+
   render: function (){
     var self = this;
     this.$el.html(this.template(this.view_options));
@@ -47,16 +65,13 @@ HoneyDo.Views.Todos.CompletableListView = Backbone.View.extend({
   },
 
   _getListFromCollection: function (){
-    switch(this.show_state){
-      case 'completed':
-        return this.collection.getCompleted();
-        break;
-      case 'active':
-        return this.collection.getActive();
-        break;
-      default:
-        throw new Error("should never get here");
-    }
+    var self = this;
+    return this.collection.filter(function (curr_model) {
+      var filter_value = (self._filter ? self._filter(curr_model) : true);
+       
+      return filter_value && 
+        curr_model.get("state") === self.show_state;
+    });
   },
 
   _initializeSortable: function (){

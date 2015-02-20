@@ -1,5 +1,9 @@
 // Default styles
 
+.todos-widget-container {
+  padding-top: 20px;
+}
+
 .todo-show {
   transition: background-color 2s;
   &.highlight {
@@ -23,6 +27,14 @@
     padding-left: 25%;
     text-align: center;
     font-size: 0.52em;
+  }
+}
+.todo-search-widget {
+  position: relative;
+  i.fa.fa-search {
+    position: absolute;
+    top: 12px;
+    right: 10px;
   }
 }
 
