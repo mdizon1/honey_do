@@ -28,19 +28,19 @@ An app for managing a household.
 
 ### BACKLOG
 
-##### Todo list can be filtered by tag
-##### Create UI for choosing colors for tags (premium feature?)
+##### Deploy to heroku
 ##### Todo items should go to the front of the list when added
 ##### Tags can have icons or avatars (not sure which yet)
 ##### Create seed list of built in tags
+##### Handle submit on enter when creating todo
 ##### Add additional validations on todocontroller for permission verification
 ##### User can have an avatar (MARTY)
-##### Handle submit on enter when creating todo
 ##### Handle close new todo modal with escape
 ##### Handle error on todo creation
 ##### Take picture of item to add to todo (or any uploaded image)
 ##### Household 'make head admin' command must remove other head admin
 ##### Household admin can invite other members
+##### Create UI for choosing colors for tags (premium feature?)
 ##### Allow user to edit their profile
 ##### User can hide completed todos
 ##### Completed todos hidden by default except for admins
@@ -51,6 +51,7 @@ An app for managing a household.
 
 ### DONE 
 
+##### Todo list can be filtered by tag
 ##### Create UI for displaying tags
 ##### Install and set up guard-spork
 ##### Add interface for tagging todo items
