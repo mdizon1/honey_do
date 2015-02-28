@@ -22,7 +22,7 @@ gem 'sass-rails'
 group :development do
   gem 'awesome_print'
   #gem 'better_errors'
-  gem 'debugger'
+  gem 'byebug'
 end
 
 group :development, :test do
