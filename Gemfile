@@ -17,7 +17,6 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'pg'
 gem 'rails-backbone'
-gem 'sass-rails'
 
 group :development do
   gem 'awesome_print'
@@ -38,9 +37,11 @@ group :test do
   gem 'spork-rails'
 end
 
-#group :asses do
-#  gem 'therubyracer', :platforms => :ruby
-#end
+group :assets do
+  gem 'therubyracer'
+  gem 'sass-rails'
+  gem 'uglifier'
+end
 
 group :production do
   gem 'rails_12factor' #required for heroku assets
