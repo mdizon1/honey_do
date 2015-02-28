@@ -35,6 +35,7 @@ An app for managing a household.
 ##### Todo items should go to the front of the list when added
 ##### Tags can have icons or avatars (not sure which yet)
 ##### Create seed list of built in tags
+##### Add foreign key constraints
 ##### Handle submit on enter when creating todo
 ##### Add additional validations on todocontroller for permission verification
 ##### User can have an avatar (MARTY)
