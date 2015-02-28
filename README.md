@@ -15,6 +15,7 @@ An app for managing a household.
 ### Premium features:
   + Recurring tasks
   + Scheduled tasks (with a due date)
+  + Meal plans
   + Analytics
   + Scorekeeping
   + Checking off on behalf of others
