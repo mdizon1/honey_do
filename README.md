@@ -30,6 +30,8 @@ An app for managing a household.
 ### BACKLOG
 
 ##### Deploy to heroku
+##### Iron out the signup flow
+##### Craft welcome/landing page (logged out)
 ##### Todo items should go to the front of the list when added
 ##### Tags can have icons or avatars (not sure which yet)
 ##### Create seed list of built in tags
@@ -47,7 +49,6 @@ An app for managing a household.
 ##### Completed todos hidden by default except for admins
 ##### Show user name in navbar when logged in
 ##### Switch to Thin server
-##### Craft welcome/landing page (logged out)
 ##### Admin can assign tasks to members
 
 ### DONE 
