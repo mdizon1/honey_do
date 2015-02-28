@@ -7,6 +7,6 @@
     = link_to 'Honey Do', root_url, :class => 'navbar-brand'
   .navbar-collapse.collapse.navbar-responsive-collapse
     %ul.nav.navbar-nav.navbar-right
-      - if signed_in? && current_user.is_household_admin?
+      - if signed_in? && current_user.household && current_user.is_household_admin?
         %li= link_to 'Household Settings', edit_household_settings_path
       = render 'layouts/session_controls'
