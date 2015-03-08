@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    aasm (4.1.0)
     actionmailer (4.2.0)
       actionpack (= 4.2.0)
       actionview (= 4.2.0)
@@ -240,7 +241,6 @@ GEM
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
-    state_machine (1.2.0)
     therubyracer (0.12.1)
       libv8 (~> 3.16.14.0)
       ref
@@ -261,6 +261,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  aasm
   acts_as_list
   autoprefixer-rails
   awesome_print
@@ -285,6 +286,5 @@ DEPENDENCIES
   sass-rails
   shoulda-matchers
   spork-rails
-  state_machine
   therubyracer
   uglifier
