@@ -8,16 +8,23 @@ class Completable < ActiveRecord::Base
   has_many :completed_events, :as => :target, :class_name => 'Event::TodoCompleted'
   has_many :accepted_events, :as => :target, :class_name => 'Event::TodoAccepted'
 
+  include AASM
   acts_as_list :scope => :household
 
-  state_machine :state, :initial => :active do
-    after_transition :on => :complete, :do => [:rec_complete_event, :rec_completor]
-    after_transition :on => :accept, :do => [:rec_accept_event, :rec_acceptor]
-    after_transition :completed => :active, :do => [:rec_uncomplete_event, :clear_completed_timestamps]
+  aasm do
+    state :active, :initial => true
+    state :completed
+    state :accepted
 
-    event(:complete) { transition :active => :completed }
-    event(:uncomplete) { transition :completed => :active }
-    event(:accept) { transition :completed => :accepted }
+    event :complete do
+      transitions :from => :active, :to => :completed, :after => [:rec_complete_event, :rec_completor] 
+    end
+    event :uncomplete do
+      transitions :from => :completed, :to => :active, :after => [:rec_uncomplete_event, :clear_completed_timestamps]
+    end
+    event :accept do
+      transitions :from => :completed, :to => :accepted, :after => [:rec_accept_event, :rec_acceptor]
+    end
   end
 
   def friendly_name
@@ -83,9 +90,7 @@ class Completable < ActiveRecord::Base
     save
   end
 
-  def rec_accept_event(transition)
-    transition_options = transition.args.first
-
+  def rec_accept_event(transition_options)
     self.accepted_at = Time.now
     Event::TodoAccepted.create(
       :target => self, 
@@ -93,17 +98,13 @@ class Completable < ActiveRecord::Base
     save
   end
 
-  def rec_acceptor(transition)
-    transition_options = transition.args.first
-
+  def rec_acceptor(transition_options)
     self.acceptor = transition_options[:accepted_by]
     raise ArgumentError unless self.acceptor
     save
   end
 
-  def rec_complete_event(transition)
-    transition_options = transition.args.first
-
+  def rec_complete_event(transition_options = {})
     self.completed_at = Time.now
     Event::TodoCompleted.create(
       :target => self,
@@ -111,17 +112,13 @@ class Completable < ActiveRecord::Base
     save
   end
 
-  def rec_completor(transition)
-    transition_options = transition.args.first
-
+  def rec_completor(transition_options = {})
     self.completor = transition_options[:completed_by]
     raise ArgumentError unless self.completor
     save
   end
 
-  def rec_uncomplete_event(transition)
-    transition_options = transition.args.first || {}
-
+  def rec_uncomplete_event(transition_options = {})
     self.completor = nil
     clear_completed_timestamps
     Event::TodoUncompleted.create(

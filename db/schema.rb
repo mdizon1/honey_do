@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202060152) do
+ActiveRecord::Schema.define(version: 20150309062037) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "completables", force: true do |t|
+  create_table "completables", force: :cascade do |t|
     t.integer  "household_id"
     t.integer  "completor_id"
     t.datetime "completed_at"
@@ -24,32 +24,32 @@ ActiveRecord::Schema.define(version: 20150202060152) do
     t.datetime "accepted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "notes",        default: ""
+    t.text     "notes",                    default: ""
     t.integer  "creator_id"
-    t.string   "title",        default: ""
-    t.string   "type"
-    t.string   "state"
+    t.string   "title",        limit: 255, default: ""
+    t.string   "type",         limit: 255
+    t.string   "aasm_state",   limit: 255
     t.integer  "position"
   end
 
-  create_table "events", force: true do |t|
-    t.string   "ip_address"
-    t.string   "description"
-    t.string   "type"
+  create_table "events", force: :cascade do |t|
+    t.string   "ip_address",  limit: 255
+    t.string   "description", limit: 255
+    t.string   "type",        limit: 255
     t.integer  "target_id"
-    t.string   "target_type"
+    t.string   "target_type", limit: 255
     t.integer  "actor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "households", force: true do |t|
-    t.string   "name"
+  create_table "households", force: :cascade do |t|
+    t.string   "name",       limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "memberships", force: true do |t|
+  create_table "memberships", force: :cascade do |t|
     t.integer  "member_id"
     t.integer  "household_id"
     t.datetime "created_at"
@@ -60,35 +60,35 @@ ActiveRecord::Schema.define(version: 20150202060152) do
 
   add_index "memberships", ["member_id", "household_id"], name: "index_memberships_on_member_id_and_household_id", unique: true, using: :btree
 
-  create_table "tag_titles", force: true do |t|
-    t.string   "title"
+  create_table "tag_titles", force: :cascade do |t|
+    t.string   "title",      limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "tags", force: true do |t|
-    t.string   "taggable_type"
+  create_table "tags", force: :cascade do |t|
+    t.string   "taggable_type", limit: 255
     t.integer  "taggable_id"
     t.integer  "tag_title_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  create_table "users", force: true do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
+  create_table "users", force: :cascade do |t|
+    t.string   "email",                  limit: 255, default: "", null: false
+    t.string   "encrypted_password",     limit: 255, default: "", null: false
+    t.string   "reset_password_token",   limit: 255
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",                      default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
+    t.string   "current_sign_in_ip",     limit: 255
+    t.string   "last_sign_in_ip",        limit: 255
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "first_name",             default: ""
-    t.string   "last_name",              default: ""
+    t.string   "first_name",             limit: 255, default: ""
+    t.string   "last_name",              limit: 255, default: ""
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

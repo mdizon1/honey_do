@@ -187,14 +187,14 @@ describe Household do
         context "with a member of the household" do
           let(:member) { membership.user }
           it "should return true" do
-            household.has_member?(member).should be_true
+            household.has_member?(member).should be_truthy
           end
         end
 
         context "with some other user" do
           let(:non_member) { FactoryGirl.create(:user) }
           it "should return false" do
-            household.has_member?(non_member).should be_false
+            household.has_member?(non_member).should be_falsey
           end
         end
       end

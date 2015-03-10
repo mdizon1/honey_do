@@ -118,21 +118,21 @@ describe Completable::Todo do
       context "with a todo that is not completed nor accepted" do
         let(:todo) { FactoryGirl.create(:todo) }
         it "should return false" do
-          todo.accepted?.should be_false
+          todo.accepted?.should be_falsey
         end
       end
 
       context "with a todo that is only completed" do
         let(:completed_todo) { FactoryGirl.create(:completed_todo) }
         it "should return false" do
-          completed_todo.accepted?.should be_false
+          completed_todo.accepted?.should be_falsey
         end
       end
 
       context "with a todo that is accepted" do
         let(:accepted_todo) { FactoryGirl.create(:accepted_todo) }
         it "should return true" do
-          accepted_todo.accepted?.should be_true
+          accepted_todo.accepted?.should be_truthy
         end
       end
     end
@@ -162,7 +162,7 @@ describe Completable::Todo do
           it "should raise an invalid transition exception" do
             expect {
               completed_todo.complete!(:completed_by => other_completor)
-            }.to raise_error(StateMachine::InvalidTransition)
+            }.to raise_error(AASM::InvalidTransition)
           end
         end
 
@@ -204,7 +204,7 @@ describe Completable::Todo do
           before_completor = todo.completor
           expect {
             todo.uncomplete!
-          }.to raise_error(StateMachine::InvalidTransition)
+          }.to raise_error(AASM::InvalidTransition)
         end
       end
     end

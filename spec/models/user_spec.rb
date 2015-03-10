@@ -33,7 +33,7 @@ describe User do
           let(:membership) { FactoryGirl.create(:membership, :household => household, :user => user) }
 
           it "should return false" do
-            user.administrates?(household).should be_false
+            user.administrates?(household).should be_falsey
           end
           context "when the user is an admin of the household" do
             before do
@@ -41,7 +41,7 @@ describe User do
             end
 
             it "should return true" do
-              user.administrates?(household).should be_true
+              user.administrates?(household).should be_truthy
             end
           end
         end
