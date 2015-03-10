@@ -30,10 +30,11 @@ An app for managing a household.
 ### BACKLOG
 
 ##### Deploy to heroku
+##### change accept todo icon
 ##### Iron out the signup flow
 ##### Craft welcome/landing page (logged out)
 ##### Todo items should go to the front of the list when added
-##### Tags can have icons or avatars (not sure which yet)
+##### Tags can have icons or avatars (not sure which yet, probably both)
 ##### Create seed list of built in tags
 ##### Add foreign key constraints
 ##### Handle submit on enter when creating todo
