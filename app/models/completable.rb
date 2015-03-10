@@ -72,7 +72,7 @@ class Completable < ActiveRecord::Base
       :position     => position,
       :title        => title,
       :notes        => notes,
-      :state        => state,
+      :state        => aasm_state,
       :tags         => tag_titles.map(&:title).join(', '),
       :is_active    => active?,
       :is_completed => completed?,

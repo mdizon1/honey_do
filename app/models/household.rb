@@ -5,15 +5,15 @@ class Household < ActiveRecord::Base
   has_many :shopping_items, -> { order('position ASC') }, :class_name => 'Completable::ShoppingItem', :dependent => :destroy
 
   def accepted_todos
-    todos.with_state 'accepted'
+    todos.where(:aasm_state => 'accepted')
   end
 
   def active_shopping_items
-    shopping_items.with_states %w(active completed)
+    shopping_items.where(:aasm_state => %w(active completed))
   end
 
   def active_todos
-    todos.with_states %w(active completed)
+    todos.where(:aasm_state => %w(active completed))
   end
 
   def add_member!(user)
@@ -25,11 +25,11 @@ class Household < ActiveRecord::Base
   end
 
   def completed_shopping_items
-    shopping_items.with_state 'completed'
+    shopping_items.where(:aasm_state => 'completed')
   end
 
   def completed_todos
-    todos.with_state 'completed'
+    todos.where(:aasm_state => 'completed')
   end
 
   def create_todo(title, creator, options={})
