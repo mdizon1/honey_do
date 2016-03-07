@@ -40,10 +40,6 @@ group :test do
   gem 'spork-rails'
 end
 
-#NOTE: assets doesn't work in rails 4
-#group :assets do
-#end
-
 group :production do
   gem 'rails_12factor' #required for heroku assets
 end

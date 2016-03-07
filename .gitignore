@@ -20,3 +20,6 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore javascript assets (for webpack)
+/app/assets/javascripts
