@@ -3,12 +3,12 @@
   "description": "A to-do list for the family",
   "version": "1.0.0",
   "devDependencies": {
-    "webpack": "~1.4.13",
+    "chunk-manifest-webpack-plugin": "~0.0.1",
+    "exports-loader": "~0.6.2",
     "expose-loader": "~0.6.0",
     "imports-loader": "~0.6.3",
-    "exports-loader": "~0.6.2",
-    "lodash": "~2.4.1",
-    "chunk-manifest-webpack-plugin": "~0.0.1"
+    "webpack": "^1.12",
+    "webpack-dev-server": "^1.14.1"
   },
   "dependencies": {}
 }
