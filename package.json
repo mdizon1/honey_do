@@ -10,5 +10,9 @@
     "webpack": "^1.12",
     "webpack-dev-server": "^1.14.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "jquery": "^2.2.1",
+    "path": "^0.12.7",
+    "underscore": "^1.8.3"
+  }
 }
