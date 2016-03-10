@@ -43,7 +43,15 @@ config.module = {
     {
       test: /\.scss$/,
       loaders: ["style", "css", "sass"]
-    }
+    },
+    {
+      test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: "url?limit=10000"
+    },
+    {
+      test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+      loader: 'file'
+    },
   ]
 };
 config.sassLoader = {
@@ -51,7 +59,6 @@ config.sassLoader = {
 };
 
 console.log("DEBUG: the path for sassloader is..... ----------> ", config.sassLoader.includePaths);
-
 
 config.plugins = [
   // we need this plugin to teach webpack how to find module entry points for bower files,
@@ -62,6 +69,7 @@ config.plugins = [
   new webpack.ProvidePlugin({
     $: 'jquery',
     jQuery: 'jquery',
+    bootstrap: 'bootstrap'
   })
 ];
   

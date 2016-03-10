@@ -1,9 +1,9 @@
-//@import "bootstrap_and_overrides";
+@import "bootstrap_overrides";
 //@import "font-awesome";
 //@import "jquery-ui/draggable";
 //@import "jquery-ui/sortable";
 //
 //// application styles
-//@import "colors";
-//@import "layout";
+@import "colors";
+@import "layout";
 //@import "todo";

@@ -1,4 +1,5 @@
 require('expose?$!expose?jQuery!jquery'); // adds $ to window so we can jquery in global scope
+require('bootstrap-loader');
 
 // DEV_NOTE: This works.  I can move some of this off to the loaders section of 
 // configuration which allows me to omit the !style!css!sass bit

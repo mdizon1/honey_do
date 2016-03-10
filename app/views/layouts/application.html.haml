@@ -2,9 +2,8 @@
 %html
   %head
     %title Honey Do
-    = stylesheet_link_tag    "application", media: "all"
     = csrf_meta_tags
-    %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1'}
+    %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, user-scalable=no'}
 
     - if Rails.env.development?
       %script{:src => "http://localhost:8080/webpack-dev-server.js"}
