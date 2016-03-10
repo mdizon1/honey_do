@@ -38,6 +38,20 @@ config.resolve = {
   // modulesDirectories: [ 'node_modules', 'bower_components' ], // not using Bower
 };
 
+config.module = {
+  loaders: [
+    {
+      test: /\.scss$/,
+      loaders: ["style", "css", "sass"]
+    }
+  ]
+};
+config.sassLoader = {
+  includePaths: [path.resolve(__dirname, "../", "../", "./app", "./assets", "./stylesheets")]
+};
+
+console.log("DEBUG: the path for sassloader is..... ----------> ", config.sassLoader.includePaths);
+
 
 config.plugins = [
   // we need this plugin to teach webpack how to find module entry points for bower files,

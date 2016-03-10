@@ -1,9 +1,9 @@
 var webpack = require('webpack');
-var _ = require('underscore');
+var _ = require('lodash');
 var devServerPort = '8080';
 var config = require('./main.config.js');
 
-config = _.extend(config, {
+config = _.merge(config, {
   debug: true,
   displayErrorDetails: true,
   outputPathinfo: true,
