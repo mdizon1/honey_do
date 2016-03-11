@@ -19,3 +19,18 @@ console.log(foo);
 
 foo = _.map(foo, (v => v/2));
 console.log(foo);
+
+
+
+
+
+
+import React from 'react';
+import ReactDOM from 'react-dom';
+import HoneyDo from './components/HoneyDo.jsx';
+
+var honey_do_container = $('#honey-do');
+if(honey_do_container.length == 1){
+  ReactDOM.render(<HoneyDo />, document.getElementById('honey-do'));
+}
+
