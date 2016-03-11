@@ -4,14 +4,12 @@ require('bootstrap-loader');
 // DEV_NOTE: This works.  I can move some of this off to the loaders section of 
 // configuration which allows me to omit the !style!css!sass bit
 //var css = require("!style!css!sass!./../../assets/stylesheets/foo.scss");
-require("./../../assets/stylesheets/application.scss");
+require("./../stylesheets/application.scss");
  
 var _ = require('lodash');
 _.times(5, function(i) {
   console.log(i);
 });
-
-
 
 // DEV_NOTE: to prove that babel install is working ?
 //  the => syntax seems to work
