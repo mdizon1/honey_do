@@ -40,6 +40,11 @@ config.resolve = {
 
 config.module = {
   loaders: [
+    { 
+      test: /\.js$/, 
+      exclude: /node_modules/, 
+      loader: "babel-loader"
+    },
     {
       test: /\.scss$/,
       loaders: ["style", "css", "sass"]
@@ -57,8 +62,6 @@ config.module = {
 config.sassLoader = {
   includePaths: [path.resolve(__dirname, "../", "../", "./app", "./assets", "./stylesheets")]
 };
-
-console.log("DEBUG: the path for sassloader is..... ----------> ", config.sassLoader.includePaths);
 
 config.plugins = [
   // we need this plugin to teach webpack how to find module entry points for bower files,
