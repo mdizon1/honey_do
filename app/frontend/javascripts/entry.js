@@ -11,26 +11,56 @@ _.times(5, function(i) {
   console.log(i);
 });
 
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+//                      TEST INITS
+// Just some stuff to ensure that things are installed and working properly
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 // DEV_NOTE: to prove that babel install is working ?
 //  the => syntax seems to work
-var foo = [1,2,3,4,5,6];
+var foo = [1,2,3,4,5];
 foo = foo.map(v => v*2);
 console.log(foo);
 
 foo = _.map(foo, (v => v/2));
 console.log(foo);
 
+//                        END TEST INITS
+// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 
 
-
+// The real stuff starts here
 
 import React from 'react';
 import ReactDOM from 'react-dom';
 import HoneyDo from './components/HoneyDo.jsx';
+
+import { createStore } from 'redux';
+import honeyDoReducer from './reducers/HoneyDoReducer';
+
+let store = createStore(honeyDoReducer, {});
 
 var honey_do_container = $('#honey-do');
 if(honey_do_container.length == 1){
   ReactDOM.render(<HoneyDo />, document.getElementById('honey-do'));
 }
 
+
+
+
+// Below is a little playground ensuring that the redux stuff works
+import { init, completeTodo } from './actions/HoneyDoActions';
+
+console.log("DEBUG: let's play around with the redux a bit...store state =========>" );
+console.log(store.getState());
+
+let unsubscribe = store.subscribe(() => {
+  console.log("new state upon state change --------> ", store.getState());
+});
+
+store.dispatch(init());
+store.dispatch(completeTodo(1));
+
+debugger;
+
+unsubscribe();
