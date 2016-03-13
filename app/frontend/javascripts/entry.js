@@ -69,6 +69,4 @@ let unsubscribe = store.subscribe(() => {
 store.dispatch(init());
 store.dispatch(completeTodo(1));
 
-debugger;
-
 unsubscribe();
