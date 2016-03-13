@@ -23,3 +23,6 @@
 
 # Ignore javascript assets (for webpack)
 /app/assets/javascripts
+
+# Ignore database yml
+/config/database.yml
