@@ -8,31 +8,6 @@ require("./../stylesheets/application.scss");
 
 require('./setup/initTapEventPlugin');
  
-var _ = require('lodash');
-_.times(5, function(i) {
-  console.log(i);
-});
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//                      TEST INITS
-// Just some stuff to ensure that things are installed and working properly
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// DEV_NOTE: to prove that babel install is working ?
-//  the => syntax seems to work
-var foo = [1,2,3,4,5];
-foo = foo.map(v => v*2);
-console.log(foo);
-
-foo = _.map(foo, (v => v/2));
-console.log(foo);
-
-//                        END TEST INITS
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-// The real stuff starts here
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import HoneyDo from './components/HoneyDo.jsx';
@@ -47,6 +22,10 @@ if(honey_do_container.length == 1){
   ReactDOM.render(<HoneyDo />, document.getElementById('honey-do'));
 }
 
+
+// Just some dev debug javascripts to ensure 
+// libs are loaded and working correctly
+require('./setup/test');
 
 
 // Below is a little playground ensuring that the redux stuff works
@@ -63,3 +42,4 @@ store.dispatch(init());
 store.dispatch(completeTodo(1));
 
 unsubscribe();
+
