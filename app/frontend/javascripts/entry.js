@@ -5,6 +5,15 @@ require('bootstrap-loader');
 // configuration which allows me to omit the !style!css!sass bit
 //var css = require("!style!css!sass!./../../assets/stylesheets/foo.scss");
 require("./../stylesheets/application.scss");
+
+import injectTapEventPlugin from 'react-tap-event-plugin';
+
+// Needed for onTouchTap
+// Can go away when react 1.0 release
+// Check this repo:
+// https://github.com/zilverline/react-tap-event-plugin
+injectTapEventPlugin();
+
  
 var _ = require('lodash');
 _.times(5, function(i) {
@@ -44,7 +53,6 @@ var honey_do_container = $('#honey-do');
 if(honey_do_container.length == 1){
   ReactDOM.render(<HoneyDo />, document.getElementById('honey-do'));
 }
-
 
 
 
