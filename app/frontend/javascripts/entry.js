@@ -6,14 +6,7 @@ require('bootstrap-loader');
 //var css = require("!style!css!sass!./../../assets/stylesheets/foo.scss");
 require("./../stylesheets/application.scss");
 
-import injectTapEventPlugin from 'react-tap-event-plugin';
-
-// Needed for onTouchTap
-// Can go away when react 1.0 release
-// Check this repo:
-// https://github.com/zilverline/react-tap-event-plugin
-injectTapEventPlugin();
-
+require('./setup/initTapEventPlugin');
  
 var _ = require('lodash');
 _.times(5, function(i) {
