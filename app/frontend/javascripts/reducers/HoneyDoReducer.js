@@ -4,28 +4,8 @@
 // For now I'll build all reducers into this file and later split as necessary
 
 
-// import { .. actions .. } from './../actions/HoneyDoActions'
-
 // define any constants i'll need here, e.g. for UI state
 // like current view or whatever
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// LEFT OFF ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//   Build this reducer. It seems to be the core of redux, 
-//   My near term goal is to get a very skeletal implementation of redux in 
-//   place which includes action, reducer, store that just has a single state
-//   that can be referenced from the react front end. 
-//   This doesn't appear to be something that can be built incrementally.
-//   Redux is a composition of those three bits and they all have to be present
-//
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 import { INITIALIZE, COMPLETE_TODO } from './../actions/HoneyDoActions'
 import {List, Map} from 'immutable';
@@ -33,7 +13,15 @@ import {List, Map} from 'immutable';
 const emptyState = Map({
   uiState: Map({}),
   dataState: Map({
+    shoppingItems: List([]),
     todos: List([])
+  }),
+  identityState: Map({
+    authToken: null,
+    userName: null,
+    userId: null,
+    householdId: null,
+    householdName: null
   })
 });
 
@@ -42,9 +30,14 @@ function honeyDoReducer(state, action) {
     case INITIALIZE:
       console.log("DEBUG: reducer got initialize action");
       return emptyState;
+
     case COMPLETE_TODO:
       console.log("DEBUG: reducer got complete todo action");
       return emptyState.set('dataState', Map({todos: List(['foo'])}));
+
+    case SYNC_TODOS:
+      console.log("DEBUG: reducer got sync todo action");
+
     default:
       return state;
   }
