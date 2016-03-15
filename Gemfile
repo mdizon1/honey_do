@@ -34,6 +34,8 @@ group :development, :test do
   gem 'faker'
   gem 'guard'
   gem 'guard-spork'
+  gem 'pry'
+  gem 'pry-rails'
   gem 'rspec-rails'
 end
 
