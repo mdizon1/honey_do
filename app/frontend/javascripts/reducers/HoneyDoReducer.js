@@ -7,7 +7,7 @@
 // define any constants i'll need here, e.g. for UI state
 // like current view or whatever
 
-import { INITIALIZE, COMPLETE_TODO } from './../actions/HoneyDoActions'
+import { INITIALIZE, COMPLETE_TODO, SYNC_TODOS } from './../actions/HoneyDoActions'
 import {List, Map} from 'immutable';
 
 const emptyState = Map({

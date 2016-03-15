@@ -1,5 +1,5 @@
 import React from 'react';
-import RaisedButton from 'material-ui/lib/raised-button';
+//import RaisedButton from 'material-ui/lib/raised-button';
 
 export default class HoneyDo extends React.Component {
   componentWillMount() {
@@ -20,7 +20,6 @@ export default class HoneyDo extends React.Component {
         <h2>
           Hello woarld~!
         </h2>
-        <RaisedButton label="Test button for materials" />
       </div>
     )
   }
