@@ -1,16 +1,13 @@
 namespace :dev do
   desc "Reset db with bare dev seed data"
   task :reset => :environment do
+    task_sequence = %w(db:reset db:drop db:create db:migrate db:test:prepare)
     
-    puts "\tLOG: SEED: dropping db"
-    Rake::Task['db:drop'].invoke
-    puts "\tLOG: SEED: creating db"
-    Rake::Task['db:create'].invoke
-    puts "\tLOG: SEED: migrating db"
-    Rake::Task['db:migrate'].invoke
-    Rake::Task['db:test:prepare'].invoke
-    puts "\tLOG: SEED: seeding db"
-    Rake::Task['dev:seed'].invoke
+    task_sequence.each do |task_name|
+      puts "\tLOG: DEV:RESET: #{task_name}"
+      Rake::Task[task_name].reenable
+      Rake::Task[task_name].invoke
+    end
   end
  
   desc "Seed the db with dummy data that I can use to test dev stuff"
@@ -78,6 +75,5 @@ namespace :dev do
     ##################################################
     ############## END INIT TODOS ###################
     ##################################################
-
   end
 end
