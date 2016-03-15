@@ -24,27 +24,27 @@ ActiveRecord::Schema.define(version: 20160315220029) do
     t.datetime "accepted_at"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.text     "notes",                    default: ""
+    t.text     "notes",        default: ""
     t.integer  "creator_id"
-    t.string   "title",        limit: 255, default: ""
-    t.string   "type",         limit: 255
-    t.string   "aasm_state",   limit: 255
+    t.string   "title",        default: ""
+    t.string   "type"
+    t.string   "aasm_state"
     t.integer  "position"
   end
 
   create_table "events", force: :cascade do |t|
-    t.string   "ip_address",  limit: 255
-    t.string   "description", limit: 255
-    t.string   "type",        limit: 255
+    t.string   "ip_address"
+    t.string   "description"
+    t.string   "type"
     t.integer  "target_id"
-    t.string   "target_type", limit: 255
+    t.string   "target_type"
     t.integer  "actor_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "households", force: :cascade do |t|
-    t.string   "name",       limit: 255
+    t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -61,13 +61,13 @@ ActiveRecord::Schema.define(version: 20160315220029) do
   add_index "memberships", ["member_id", "household_id"], name: "index_memberships_on_member_id_and_household_id", unique: true, using: :btree
 
   create_table "tag_titles", force: :cascade do |t|
-    t.string   "title",      limit: 255
+    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "tags", force: :cascade do |t|
-    t.string   "taggable_type", limit: 255
+    t.string   "taggable_type"
     t.integer  "taggable_id"
     t.integer  "tag_title_id"
     t.datetime "created_at"
@@ -75,21 +75,21 @@ ActiveRecord::Schema.define(version: 20160315220029) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  limit: 255, default: "", null: false
-    t.string   "encrypted_password",     limit: 255, default: "", null: false
-    t.string   "reset_password_token",   limit: 255
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",                      default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,  null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip",     limit: 255
-    t.string   "last_sign_in_ip",        limit: 255
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "first_name",             limit: 255, default: ""
-    t.string   "last_name",              limit: 255, default: ""
-    t.string   "authentication_token",               default: ""
+    t.string   "first_name",             default: ""
+    t.string   "last_name",              default: ""
+    t.string   "authentication_token",   default: ""
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

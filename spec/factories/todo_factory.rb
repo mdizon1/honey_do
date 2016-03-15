@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :todo, :class => Completable::Todo do
-    title { Faker::Lorem.sentence }
-    notes { Faker::Lorem.paragraph }
+    title { Faker::Company.bs }
+    notes { Faker::Hacker.phrases.sample }
     aasm_state 'active'
     association :household, :factory => :household
   end
