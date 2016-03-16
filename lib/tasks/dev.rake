@@ -71,6 +71,11 @@ namespace :dev do
       t = FactoryGirl.create :accepted_todo, :household => household, :completor => user, :acceptor => house_head_admin
       puts "\tLOG: SEED: accepted todo added -> #{t.title}"
     end
+
+    (rand(10) + 3).times do |itor|
+      t = FactoryGirl.create :shopping_item, :household => household
+      puts "\tLOG: SEED: shopping item added -> #{t.title}"
+    end
     
     ##################################################
     ############## END INIT TODOS ###################
