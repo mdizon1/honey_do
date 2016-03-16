@@ -13,24 +13,24 @@ import { INITIALIZE, COMPLETE_TODO, SYNC_TODOS,
 import * as Immutable from 'immutable';
 import {List, Map} from 'immutable';
 
-const emptyState = Map({
-  uiState: Map({
+const emptyState = Immutable.fromJS({
+  uiState: {
     isSyncing: false
-  }),
-  dataState: Map({
-    shoppingItems: List([]),
-    todos: List([])
-  }),
-  identityState: Map({
+  },
+  dataState: {
+    shoppingItems: [],
+    todos: []
+  },
+  identityState: {
     authToken: null,
     userName: null,
     userId: null,
     householdId: null,
     householdName: null
-  }),
-  configState: Map({
+  },
+  configState: {
     apiEndpoint: null
-  })
+  }
 });
 
 function uiSyncingOn(state){
