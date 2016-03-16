@@ -4,23 +4,34 @@ import TodoTabs from './TodoTabs'
 import VisibleTodoList from './../containers/VisibleTodoList'
 // import NewTodoButton from './NewTodoButton'
 
-import { init } from './../actions/HoneyDoActions';
+import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure } from './../actions/HoneyDoActions';
 // import RaisedButton from 'material-ui/lib/raised-button';
 
 export default class HoneyDo extends React.Component {
   componentWillMount() {
     // setup the initial empty store
-    this.props.store.dispatch(init(
-      this.props.identity 
-    ));
+    this.initAppConfig();
+    this.initialTodoLoad();
+  }
 
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // IN PROGRESS: ~~~~~~~~~~~~~~~~~~~~~~
-    //   call the server to get the initial data for the store
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  initAppConfig() {
+    this.props.store.dispatch(init({
+      identity: this.props.identity,
+      config: this.props.config
+    }));
+  }
+
+  initialTodoLoad() {
+    this.props.store.dispatch(syncTodosRequest());
+    $.ajax(this.props.config.apiEndpoint, {
+      type: 'GET',
+      data: {authentication_token: this.props.identity.authToken}
+    }).done((data, textStatus, jqXHR) => {
+      this.props.store.dispatch(syncTodosRequestSuccess(data));
+    }).fail((jqXHR, textStatus, errorThrown) => {
+      // TODO: Implement
+      //this.props.store.dispatch(syncTodosRequestFailure(jqXHR, textStatus));
+    });
   }
 
   render() {

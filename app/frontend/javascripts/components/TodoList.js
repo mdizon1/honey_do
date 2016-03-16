@@ -13,7 +13,7 @@ const TodoList = ({todos}) => (
 TodoList.propTypes = {
   todos: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.number.isRequired,
-    completed: PropTypes.bool.isRequired,
+    isCompleted: PropTypes.bool.isRequired,
     title: PropTypes.string.isRequired,
     notes: PropTypes.string.isRequired
   }).isRequired)

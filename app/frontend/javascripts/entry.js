@@ -1,6 +1,7 @@
 require('expose?$!expose?jQuery!jquery'); // adds $ to window so we can jquery in global scope
 require('jquery-ujs');
 require('bootstrap-loader');
+var _ = require('lodash');
 
 // DEV_NOTE: This works.  I can move some of this off to the loaders section of 
 // configuration which allows me to omit the !style!css!sass bit
@@ -22,10 +23,17 @@ var store = createStore(honeyDoReducer, {});
 var honey_do_container = $('#honey-do');
 if(honey_do_container.length == 1){
   let honey_do_options = honey_do_container.data();
+  let honey_do_config = {apiEndpoint: honey_do_options.apiEndpoint};
+  let honey_do_identity = _.clone(honey_do_options);
+  delete honey_do_identity.apiEndpoint;
+//  console.log("DEBUG: options ----> ", honey_do_options);
+//  console.log("DEBUG: identity options ----> ", honey_do_identity);
+//  console.log("DEBUG: config options ----> ", honey_do_config);
   ReactDOM.render( 
     <Provider store={store}>
       <HoneyDo 
-        identity={honey_do_options}
+        identity={honey_do_identity}
+        config={honey_do_config}
         store={store}
         />
     </Provider>,
@@ -35,7 +43,7 @@ if(honey_do_container.length == 1){
 
 // Just some dev debug javascripts to ensure 
 // libs are loaded and working correctly
-require('./setup/test');
+// require('./setup/test');
 
 
 // Below is a little playground ensuring that the redux stuff works

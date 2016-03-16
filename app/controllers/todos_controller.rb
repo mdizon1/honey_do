@@ -4,6 +4,14 @@ class TodosController < ApplicationController
   before_filter :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete]
   before_filter :authorize_modify_todo, :only => [:accept, :complete, :destroy, :uncomplete]
 
+  def index
+    # TODO: (ha ha ha...) this must be heavily optimized, mapping over the 
+    # todos to get permissions per item will be costly
+    @todos = @household.todos.decorate.map{|td| td.to_json(current_user) }
+    @shopping_items = @household.shopping_items.decorate.map{|si| si.to_json(current_user) }
+    render :json => {:todos => @todos, :shoppingItems => @shopping_items}, :status => :ok
+  end
+
   def show
   end
 

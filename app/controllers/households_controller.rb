@@ -3,8 +3,6 @@ class HouseholdsController < ApplicationController
   before_filter :load_current_user_household, :only => [:show, :edit, :update, :destroy]
 
   def show
-    @todos = @household.active_todos.map{|t| t.to_backbone(current_user) }
-    @shopping_list = @household.active_shopping_items.map{|t| t.to_backbone(current_user) }
   end
 
   def edit
