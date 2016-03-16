@@ -29,7 +29,13 @@ function honeyDoReducer(state, action) {
   switch (action.type) {
     case INITIALIZE:
       console.log("DEBUG: reducer got initialize action");
-      return emptyState;
+      return emptyState.set('identityState', {
+        authToken: action.data.authToken,
+        userName: action.data.userFirstName,
+        userId: action.data.userId,
+        householdId: action.data.householdId,
+        householdName: action.data.householdName
+      });
 
     case COMPLETE_TODO:
       console.log("DEBUG: reducer got complete todo action");

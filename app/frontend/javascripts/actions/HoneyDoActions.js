@@ -2,10 +2,11 @@ export const INITIALIZE = 'INITIALIZE'
 export const COMPLETE_TODO = 'COMPLETE_TODO'
 export const SYNC_TODOS = 'SYNC_TODOS'
 
-export function init() {
+export function init(identityData) {
   return {
     type: INITIALIZE,
-    description: 'Initialize the application/store to a default state'
+    description: 'Initialize the application/store to a default state',
+    data: identityData
   }
 }
 
@@ -22,5 +23,13 @@ export function syncTodos(todoData) {
     type: SYNC_TODOS,
     description: 'Make todo data in store match the passed in data',
     data: todoData
+  }
+}
+
+export function syncIdentityState(identityData) {
+  return {
+    type: SYNC_TODOS,
+    description: 'Update only the identity data of the app',
+    data: identityData
   }
 }
