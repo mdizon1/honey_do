@@ -62,26 +62,6 @@ class Completable < ActiveRecord::Base
     tag_titles
   end
 
-
-
-  # TODO: to improve this: step 1, move to a presenter/draper. step 2, move to 
-  #   serializer
-  def to_backbone(user=nil)
-    attrs = {
-      :id           => id,
-      :position     => position,
-      :title        => title,
-      :notes        => notes,
-      :state        => aasm_state,
-      :tags         => tag_titles.map(&:title).join(', '),
-      :is_active    => active?,
-      :is_completed => completed?,
-      :completed_at => completed_at
-    }
-    attrs[:permissions] = permissions_for_user(user) if user
-    attrs
-  end
-
   private
 
   def clear_completed_timestamps
