@@ -1,8 +1,14 @@
 export const INITIALIZE = 'INITIALIZE'
 export const COMPLETE_TODO = 'COMPLETE_TODO'
+export const SWITCH_TAB = 'SWITCH_TAB'
 export const SYNC_TODOS_REQUEST = 'SYNC_TODOS_REQUEST'
 export const SYNC_TODOS_SUCCESS = 'SYNC_TODOS_SUCCESS'
 export const SYNC_TODOS_FAILURE = 'SYNC_TODOS_FAILURE'
+
+export const UiTabs = {
+  SHOW_TODOS: 'SHOW_TODOS',
+  SHOW_SHOPPING_LIST: 'SHOW_SHOPPING_LIST',
+}
 
 export function init(options) {
   return {
@@ -17,6 +23,14 @@ export function completeTodo(id) {
     type: COMPLETE_TODO,
     description: 'Complete the todo item given by id',
     id: id
+  }
+}
+
+export function switchTab(tab) {
+  return {
+    type: SWITCH_TAB,
+    description: 'Change the current tab view',
+    tab
   }
 }
 
@@ -44,3 +58,4 @@ export function syncTodosRequestFailure(json, error){
     receivedAt: Date.now()
   }
 }
+

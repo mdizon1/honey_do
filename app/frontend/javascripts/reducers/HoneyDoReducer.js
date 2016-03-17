@@ -6,7 +6,9 @@
 // define any constants i'll need here, e.g. for UI state
 // like current view or whatever
 
-import { INITIALIZE, COMPLETE_TODO, SYNC_TODOS,
+import { INITIALIZE, COMPLETE_TODO, 
+  SWITCH_TAB,
+  SYNC_TODOS,
   SYNC_TODOS_REQUEST,
   SYNC_TODOS_SUCCESS,
   SYNC_TODOS_FAILURE } from './../actions/HoneyDoActions'
@@ -15,6 +17,7 @@ import {List, Map} from 'immutable';
 
 const emptyState = Immutable.fromJS({
   uiState: {
+    currentTab: 'SHOW_TODOS',
     isSyncing: false
   },
   dataState: {
@@ -53,6 +56,10 @@ function honeyDoReducer(state, action) {
     case COMPLETE_TODO:
       console.log("DEBUG: reducer got complete todo action");
       return emptyState.set('dataState', Map({todos: List(['foo'])}));
+
+    case SWITCH_TAB:
+      console.log("DEBUG: reducer got a switch tab action");
+      return state.set('uiState', state.get('uiState').set('currentTab', action.tab));
 
     case SYNC_TODOS_REQUEST:
       console.log("DEBUG: reducer got sync todo request action");
