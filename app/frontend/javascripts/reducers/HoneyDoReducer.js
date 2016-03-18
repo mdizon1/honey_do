@@ -11,7 +11,9 @@ import { INITIALIZE, COMPLETE_TODO,
   SYNC_TODOS,
   SYNC_TODOS_REQUEST,
   SYNC_TODOS_SUCCESS,
-  SYNC_TODOS_FAILURE } from './../actions/HoneyDoActions'
+  SYNC_TODOS_FAILURE,
+  UiTabs} from './../actions/HoneyDoActions'
+
 import * as Immutable from 'immutable';
 import {List, Map} from 'immutable';
 
@@ -46,23 +48,31 @@ function uiSyncingOff(state){
 
 function honeyDoReducer(state, action) {
   var temp_state;
+  console.log("DEBUG: ~~~~~~~~~~~~~~~~~~~~~~~~ REDUCER CALLED ~~~~~~~~~~~~~~~~~~~~~~~~~~");
+  console.log("DEBUG: type ------------> ", action.type);
+
   switch (action.type) {
     case INITIALIZE:
-      console.log("DEBUG: reducer got initialize action");
       return emptyState
         .set('identityState', action.data.identity)
         .set('configState', action.data.config);
 
     case COMPLETE_TODO:
-      console.log("DEBUG: reducer got complete todo action");
-      return emptyState.set('dataState', Map({todos: List(['foo'])}));
+      // IN PROGRESS: make this do the right thing..
+      let todo_state = state.get('dataState').get('todos').toJS()
+      let todo = _.find(todo_state, (currTodo) => {
+        return(currTodo.id == action.id);
+      });
+
+
+      return state
+
 
     case SWITCH_TAB:
-      console.log("DEBUG: reducer got a switch tab action");
+      if(!_.includes(UiTabs, action.tab)){ return state; } // ensure the tab given (action.tab) is one of UiTabs
       return state.set('uiState', state.get('uiState').set('currentTab', action.tab));
 
     case SYNC_TODOS_REQUEST:
-      console.log("DEBUG: reducer got sync todo request action");
       return uiSyncingOn(state);
 
     case SYNC_TODOS_SUCCESS:
@@ -75,7 +85,6 @@ function honeyDoReducer(state, action) {
       return uiSyncingOff(state);
 
     case SYNC_TODOS:
-      console.log("DEBUG: reducer got sync todo action");
 
     default:
       return state;

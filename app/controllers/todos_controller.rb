@@ -2,7 +2,7 @@ class TodosController < ApplicationController
   before_filter :authenticate_user!
   before_filter :load_current_user_household, :except => [:new]
   before_filter :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete]
-  before_filter :authorize_modify_todo, :only => [:accept, :complete, :destroy, :uncomplete]
+  before_filter :authorize_modify_todo, :only => [:accept, :destroy, :uncomplete]
 
   def index
     # TODO: (ha ha ha...) this must be heavily optimized, mapping over the 
@@ -88,21 +88,17 @@ class TodosController < ApplicationController
       end
 
       format.js do
-        @todo.accept!(:accepted_by => current_user)
-        render :json => {:notice => success_message, :model => @todo.to_backbone(current_user)}, :status => :ok
+        #@todo.accept!(:accepted_by => current_user)
+        # TODO: change the structure of the response here to something more consistent.  Shouldn't be :model => xxx, but something more along the best practices for an api.
+        render :json => {:notice => success_message, :model => @todo.decorate.to_json(current_user)}, :status => :ok
       end
     end
   end
 
   def complete
     success_message = 'Todo completed'
+    binding.pry
     respond_to do |format|
-      format.html do
-        @todo.complete!(:completed_by => current_user)
-        flash[:notice] = success_message
-        redirect_to household_path
-      end
-
       format.js do
         @todo.complete!(:completed_by => current_user)
         render :json => {:notice => success_message, :model => @todo.to_backbone(current_user)}, :status => :ok

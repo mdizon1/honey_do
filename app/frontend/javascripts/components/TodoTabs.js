@@ -24,11 +24,15 @@ const TodoTabs = function (props) {
     >
       <Tab label="Todo list" value="SHOW_TODOS">
         <div>
-          <VisibleTodoList />
+          <VisibleTodoList 
+            apiEndpoint={props.appConfig.apiEndpoint}
+            authToken={props.identityConfig.authToken}
+          />
         </div>
       </Tab>
       <Tab label="Shopping list" value="SHOW_SHOPPING_LIST">
         <div>
+          Nothing here yet
         </div>
       </Tab>
     </Tabs>

@@ -1,0 +1,16 @@
+// Clearly this isn't a great organization of the stylesheets, 
+// however I'm not sure what a good organization would be at this point
+// I'm planning to just start building and some patterns shoudl emerge later
+// that will let me reorganize this.
+
+// One possibility would be to create a stylesheet for each component and have
+// the tree mirror the component tree
+
+.honey-do-todo-list {
+  ul {
+    padding: 0;
+    li {
+      list-style-type:none;
+    }
+  }
+}
