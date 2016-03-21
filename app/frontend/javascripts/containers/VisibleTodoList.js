@@ -6,9 +6,9 @@ import { completeTodoRequest, completeTodoSuccess, completeTodoFailure,
 
 const mapStateToProps = (state) => {
   var todos = state.get('dataState').get('todos').toJS();
-  return {
-    todos: Object.keys(todos).map(key => todos[key])
-  }
+  todos = Object.keys(todos).map(key => todos[key]) // convert todos into array
+  todos = _.sortBy(todos, (val) => { return val.position })
+  return { todos: todos }
 }
 
 const completeTodo = (id, dispatch, ownProps) => {
