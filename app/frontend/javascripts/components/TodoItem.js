@@ -16,6 +16,12 @@ const TodoItem = ({todo, onTodoClicked}) => (
     primaryText={todo.title}
     secondaryText={todo.notes}
     leftCheckbox={renderCheckbox(todo, onTodoClicked)}
+    nestedItems={[
+      <ListItem
+        key={"todo_notes_"+todo.id}
+        primaryText={todo.notes}
+      />,
+    ]}
   />
 )
 
