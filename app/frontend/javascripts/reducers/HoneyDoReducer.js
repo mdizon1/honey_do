@@ -6,13 +6,18 @@
 // define any constants i'll need here, e.g. for UI state
 // like current view or whatever
 
-import { INITIALIZE, COMPLETE_TODO, 
+import { INITIALIZE, 
+  COMPLETE_TODO_REQUEST, 
+  COMPLETE_TODO_SUCCESS, 
+  COMPLETE_TODO_FAILURE, 
   SWITCH_TAB,
-  SYNC_TODOS,
   SYNC_TODOS_REQUEST,
   SYNC_TODOS_SUCCESS,
   SYNC_TODOS_FAILURE,
-  UiTabs} from './../actions/HoneyDoActions'
+  UNCOMPLETE_TODO_REQUEST, 
+  UNCOMPLETE_TODO_SUCCESS, 
+  UNCOMPLETE_TODO_FAILURE,
+  UiTabs } from './../actions/HoneyDoActions'
 
 import * as Immutable from 'immutable';
 import {List, Map} from 'immutable';
@@ -23,8 +28,8 @@ const emptyState = Immutable.fromJS({
     isSyncing: false
   },
   dataState: {
-    shoppingItems: [],
-    todos: []
+    shoppingItems: {},
+    todos: {} 
   },
   identityState: {
     authToken: null,
@@ -38,12 +43,21 @@ const emptyState = Immutable.fromJS({
   }
 });
 
-function uiSyncingOn(state){
+const uiSyncingOn = (state) => {
   return state.set('uiState', state.get('uiState').set('isSyncing', true));
 }
 
-function uiSyncingOff(state){
+const uiSyncingOff = (state) => {
   return state.set('uiState', state.get('uiState').set('isSyncing', false));
+}
+
+const setTodoCompletedState = (state, id, todoState) => {
+  let todo = state.getIn(['dataState', 'todos', id.toString()]);
+  return state.setIn(['dataState', 'todos', id.toString()], todo.set('isCompleted', todoState));
+}
+
+const setTodoState = (state, id, todoState) => {
+  return state.setIn(['dataState', 'todos', id.toString()], Immutable.fromJS(todoState));
 }
 
 function honeyDoReducer(state, action) {
@@ -57,16 +71,14 @@ function honeyDoReducer(state, action) {
         .set('identityState', action.data.identity)
         .set('configState', action.data.config);
 
-    case COMPLETE_TODO:
-      // IN PROGRESS: make this do the right thing..
-      let todo_state = state.get('dataState').get('todos').toJS()
-      let todo = _.find(todo_state, (currTodo) => {
-        return(currTodo.id == action.id);
-      });
+    case COMPLETE_TODO_REQUEST:
+      return setTodoCompletedState(state, action.id, true);
 
+    case COMPLETE_TODO_SUCCESS:
+      return setTodoState(state, action.id, action.data);
 
-      return state
-
+    case COMPLETE_TODO_FAILURE:
+      return setTodoCompletedState(state, action.id, false);
 
     case SWITCH_TAB:
       if(!_.includes(UiTabs, action.tab)){ return state; } // ensure the tab given (action.tab) is one of UiTabs
@@ -84,7 +96,14 @@ function honeyDoReducer(state, action) {
     case SYNC_TODOS_FAILURE:
       return uiSyncingOff(state);
 
-    case SYNC_TODOS:
+    case UNCOMPLETE_TODO_REQUEST:
+      return setTodoCompletedState(state, action.id, false);
+
+    case UNCOMPLETE_TODO_SUCCESS:
+      return setTodoState(state, action.id, action.data);
+
+    case UNCOMPLETE_TODO_FAILURE:
+      return setTodoCompletedState(state, action.id, true);
 
     default:
       return state;

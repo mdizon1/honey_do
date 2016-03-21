@@ -4,7 +4,10 @@ import Checkbox from 'material-ui/lib/checkbox';
 
 function renderCheckbox(todo, handleClick){
   return (
-    <Checkbox onCheck={() => handleClick(todo.id)}/>
+    <Checkbox 
+      checked={todo.isCompleted}
+      onCheck={() => handleClick(todo.id, todo.isCompleted)}
+    />
   )
 }
 

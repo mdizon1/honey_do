@@ -2,24 +2,7 @@ import React, { PropTypes } from 'react'
 import List from 'material-ui/lib/lists/list';
 import TodoItem from './TodoItem'
 
-// const TodoList = ({todos}) => (
-//   <div className='honey-do-todo-list'>
-//     <ul>
-//       {todos.map(todo => 
-//         <li key={"todo_item_" + todo.id}>
-//           <TodoItem 
-//             key={"todo_" + todo.id}
-//             todo={todo}
-//           />
-//         </li>
-//       )}
-//     </ul>
-//   </div>
-// )
-//
-
 function renderTodo(todo, handleClick){
-  console.log("DEBUG: rendering a single todo...");
   return (
     <li key={"todo_item_" + todo.id}>
       <TodoItem 

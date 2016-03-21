@@ -1,14 +1,16 @@
 class TodosController < ApplicationController
+  # TODO: ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  #   Add a filter to verify that the request includes an authentication 
+  #   token which matches the users current one
   before_filter :authenticate_user!
   before_filter :load_current_user_household, :except => [:new]
   before_filter :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete]
-  before_filter :authorize_modify_todo, :only => [:accept, :destroy, :uncomplete]
 
   def index
     # TODO: (ha ha ha...) this must be heavily optimized, mapping over the 
     # todos to get permissions per item will be costly
-    @todos = @household.todos.decorate.map{|td| td.to_json(current_user) }
-    @shopping_items = @household.shopping_items.decorate.map{|si| si.to_json(current_user) }
+    @todos = @household.todos.decorate.map{|td| [td.id, td.to_json(current_user)] }.to_h
+    @shopping_items = @household.shopping_items.decorate.map{|si| [si.id, si.to_json(current_user)] }.to_h
     render :json => {:todos => @todos, :shoppingItems => @shopping_items}, :status => :ok
   end
 
@@ -77,68 +79,58 @@ class TodosController < ApplicationController
     end
   end
 
-  #TODO: (hah, meta) catch exceptions thrown by accept! and return appropriate flash
   def accept
-    success_message = 'Todo item accepted and removed'
-    respond_to do |format|
-      format.html do 
-        @todo.accept!(:accepted_by => current_user)
-        flash[:notice] = success_message
-        redirect_to household_path
-      end
-
-      format.js do
-        #@todo.accept!(:accepted_by => current_user)
-        # TODO: change the structure of the response here to something more consistent.  Shouldn't be :model => xxx, but something more along the best practices for an api.
-        render :json => {:notice => success_message, :model => @todo.decorate.to_json(current_user)}, :status => :ok
-      end
+    return unauthorized_response unles can?(:accept, @todo)
+    begin
+      @todo.accept!(:accepted_by => current_user)
+      status = :ok
+    rescue
+      status = 500
     end
+    render_todo_to_json(status)
   end
 
   def complete
-    success_message = 'Todo completed'
-    binding.pry
-    respond_to do |format|
-      format.js do
-        @todo.complete!(:completed_by => current_user)
-        render :json => {:notice => success_message, :model => @todo.to_backbone(current_user)}, :status => :ok
-      end
+    return unauthorized_response unless can?(:complete, @todo)
+    begin
+      @todo.complete!(:completed_by => current_user)
+      status = :ok
+    rescue
+      status = 500
     end
+    render_todo_to_json(status)
   end
 
   def uncomplete
-    success_message = 'The todo was pushed back to pending'
-    respond_to do |format|
-      format.html do
-        @todo.uncomplete!(:uncompleted_by => current_user)
-        flash[:notice] = success_message
-        redirect_to household_path
-      end
-
-      format.js do
-        @todo.uncomplete!(:uncompleted_by => current_user)
-        render :json => {:notice => success_message, :model => @todo.to_backbone(current_user)}, :status => :ok
-      end
+    return unauthorized_response unless can?(:uncomplete, @todo)
+    begin
+      @todo.uncomplete!(:uncompleted_by => current_user)
+      status = :ok
+    rescue
+      status = 500
     end
+    render_todo_to_json(status)
   end
 
   private
 
-  def authorize_modify_todo
-    unless can?(:edit, @todo)
-      flash[:alert] = 'You are not authorized to modify that item'
-      return redirect_to root_url
-    end
+  def unauthorized_response(message=nil)
+    render :json => {:message => message}, :status => 403
   end
 
   def load_todo
     @todo = Completable.find(params[:id] || 
                              params[:todo_id] || 
                              params[:todo][:id])
+                       .decorate
   end
 
   def todo_params
     params.require(:todo).permit(:title, :notes, :position)
+  end
+
+  def render_todo_to_json(status)
+    render :json => @todo.to_json(current_user), :status => status
   end
 
   def sanitized_todo_params

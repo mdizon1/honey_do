@@ -72,7 +72,6 @@ export default class HoneyDo extends React.Component {
       return this.renderLoading();
     }
 
-    console.log("DEBUG: ok, what is current configState?? ----> ", this.state.store.configState);
     return (
       <div className="honey-do-app-wrap">
         <TodoTabs 
