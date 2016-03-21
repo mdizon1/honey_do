@@ -23,16 +23,15 @@ var store = createStore(honeyDoReducer, {});
 var honey_do_container = $('#honey-do');
 if(honey_do_container.length == 1){
   let honey_do_options = honey_do_container.data();
-  let honey_do_config = {apiEndpoint: honey_do_options.apiEndpoint};
   let honey_do_identity = _.clone(honey_do_options);
   delete honey_do_identity.apiEndpoint;
+  let honey_do_config = {apiEndpoint: honey_do_options.apiEndpoint, identityConfig: honey_do_identity};
 //  console.log("DEBUG: options ----> ", honey_do_options);
 //  console.log("DEBUG: identity options ----> ", honey_do_identity);
 //  console.log("DEBUG: config options ----> ", honey_do_config);
   ReactDOM.render( 
     <Provider store={store}>
       <HoneyDo 
-        identity={honey_do_identity}
         config={honey_do_config}
         store={store}
         />

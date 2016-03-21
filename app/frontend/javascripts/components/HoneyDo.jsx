@@ -22,7 +22,6 @@ export default class HoneyDo extends React.Component {
 
   initAppConfig() {
     this.props.store.dispatch(init({
-      identity: this.props.identity,
       config: this.props.config
     }));
   }
@@ -31,7 +30,7 @@ export default class HoneyDo extends React.Component {
     this.props.store.dispatch(syncTodosRequest());
     $.ajax(this.props.config.apiEndpoint, {
       type: 'GET',
-      data: {authentication_token: this.props.identity.authToken}
+      data: {authentication_token: this.props.config.identityConfig.authToken}
     }).done((data, textStatus, jqXHR) => {
       this.props.store.dispatch(syncTodosRequestSuccess(data));
     }).fail((jqXHR, textStatus, errorThrown) => {
@@ -78,7 +77,6 @@ export default class HoneyDo extends React.Component {
           onChangeTab={this.handleChangeTab.bind(this)}
           currentTab={this.state.store.uiState.currentTab}
           appConfig={this.state.store.configState}
-          identityConfig ={this.state.store.identityState}
         />
       </div>
     )

@@ -26,7 +26,7 @@ const TodoTabs = function (props) {
         <div>
           <VisibleTodoList 
             apiEndpoint={props.appConfig.apiEndpoint}
-            authToken={props.identityConfig.authToken}
+            authToken={props.appConfig.identityConfig.authToken}
           />
         </div>
       </Tab>

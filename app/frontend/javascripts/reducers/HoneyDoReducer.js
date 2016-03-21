@@ -31,15 +31,15 @@ const emptyState = Immutable.fromJS({
     shoppingItems: {},
     todos: {} 
   },
-  identityState: {
-    authToken: null,
-    userName: null,
-    userId: null,
-    householdId: null,
-    householdName: null
-  },
   configState: {
-    apiEndpoint: null
+    apiEndpoint: null,
+    identityState: {
+      authToken: null,
+      userName: null,
+      userId: null,
+      householdId: null,
+      householdName: null
+    },
   }
 });
 
@@ -68,7 +68,6 @@ function honeyDoReducer(state, action) {
   switch (action.type) {
     case INITIALIZE:
       return emptyState
-        .set('identityState', action.data.identity)
         .set('configState', action.data.config);
 
     case COMPLETE_TODO_REQUEST:
