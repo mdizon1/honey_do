@@ -39,24 +39,7 @@ if(honey_do_container.length == 1){
   document.getElementById('honey-do'));
 }
 
-
 // Just some dev debug javascripts to ensure 
 // libs are loaded and working correctly
 // require('./setup/test');
 
-
-// Below is a little playground ensuring that the redux stuff works
-// import { init, completeTodo } from './actions/HoneyDoActions';
-// 
-// console.log("DEBUG: let's play around with the redux a bit...store state =========>" );
-// console.log(store.getState());
-// 
-// let unsubscribe = store.subscribe(() => {
-//   console.log("new state upon state change --------> ", store.getState());
-// });
-// 
-// store.dispatch(init());
-// store.dispatch(completeTodo(1));
-// 
-// unsubscribe();
-// 
