@@ -31,6 +31,323 @@ describe Completable::Todo do
       end
     end
   end
+
+  describe "permissions" do
+    describe "accept" do
+      context "with an active todo" do
+        let(:todo) { FactoryGirl.build(:todo) }
+        let(:acceptor) { m = FactoryGirl.create(:household_admin); m.user }
+        it "should not be allowed" do
+          a = Ability.new(acceptor)
+          expect(a.can?(:accept, todo)).to eq false
+        end
+      end
+
+      context "with a completed todo" do
+        let(:completed_todo) { FactoryGirl.build(:completed_todo) }
+        context "with a member of the household" do
+          let(:acceptor) { m = FactoryGirl.create(:membership); m.user }
+
+          it "should not be allowed" do
+            a = Ability.new(acceptor)
+            expect(a.can?(:accept, completed_todo)).to eq false
+          end
+        end
+
+        context "with a household admin of the household" do
+          let(:acceptor) { m = FactoryGirl.create(:household_admin, :household => completed_todo.household); m.user }
+          it "should be allowed" do
+            a = Ability.new(acceptor)
+            expect(a.can?(:accept, completed_todo)).to eq true
+          end
+        end
+
+        context "with the head admin of the household" do
+          let(:acceptor) { m = FactoryGirl.create(:household_head_admin, :household => completed_todo.household); m.user}
+          it "should be allowed" do
+            a = Ability.new(acceptor)
+            expect(a.can?(:accept, completed_todo)).to eq true
+          end
+        end
+
+        context "with a household admin of another household" do
+          let(:acceptor) { m = FactoryGirl.create(:household_admin); m.user }
+          it "should be allowed" do
+            a = Ability.new(acceptor)
+            expect(a.can?(:accept, completed_todo)).to eq false
+          end
+        end
+      end
+
+      context "with an accepted todo" do
+        let(:accepted_todo) { FactoryGirl.build(:accepted_todo) }
+        let(:acceptor) { m = FactoryGirl.create(:household_admin, :household => accepted_todo.household); m.user } 
+        it "should not be allowed" do
+          a = Ability.new(acceptor)
+          expect(a.can?(:accept, accepted_todo)).to eq false
+        end
+      end
+    end
+
+    describe "complete" do
+      context "with an active todo" do
+        let(:todo) { FactoryGirl.create(:todo) }
+        let(:completor_from_house) { u = FactoryGirl.build(:user); u.household = todo.household; u; }
+        let(:completor_not_from_house) { u = FactoryGirl.build(:user) }
+
+        context "when the user is a member of the household" do
+          it "should be allowed" do
+            a = Ability.new(completor_from_house)
+            expect(a.can?(:complete, todo)).to eq true
+          end
+        end
+
+        context "when the user is not a member of the household" do
+          it "should not be allowed" do
+            a = Ability.new(completor_not_from_house)
+            expect(a.can?(:complete, todo)).to eq false
+          end
+        end
+      end
+
+      context "with a completed todo" do
+        let(:todo) { FactoryGirl.create(:completed_todo) }
+        let(:completor) { u = FactoryGirl.build(:user); u.household = todo.household; u; }
+
+        it "should not be allowed" do
+          a = Ability.new(completor)
+          expect(a.can?(:complete, todo)).to eq false
+        end
+      end
+
+      context "with an accepted todo" do
+        let(:todo) { FactoryGirl.create(:accepted_todo) }
+        let(:completor) { u = FactoryGirl.build(:user); u.household = todo.household; u; }
+        
+        it "should not be allowed" do
+          a = Ability.new(completor)
+          expect(a.can?(:complete, todo)).to eq false
+        end
+      end
+    end
+
+    describe "uncomplete" do
+      context "with an active todo" do
+        let(:todo) { FactoryGirl.build(:todo) }
+
+        context "with a member of the household" do
+          let(:uncompletor) { m = FactoryGirl.create(:membership, :household => todo.household); m.user }
+
+          it "should not be allowed" do
+            a = Ability.new(uncompletor)
+            expect(a.can?(:uncomplete, todo)).to eq false
+          end
+        end
+
+        context "with an admin of the household" do
+          let(:uncompletor) { m = FactoryGirl.create(:household_admin, :household => todo.household); m.user }
+          it "should not be allowed" do
+            a = Ability.new(uncompletor)
+            expect(a.can?(:uncomplete, todo)).to eq false
+          end
+        end
+      end
+
+      context "with a completed todo" do
+        let(:completed_todo) { FactoryGirl.create(:completed_todo) }
+
+        context "with a user who is not a member of the household" do
+          let(:attempting_uncompletor) { FactoryGirl.build(:user) }
+
+          it "should not be allowed" do
+            a = Ability.new(attempting_uncompletor)
+            expect(a.can?(:uncomplete, completed_todo)).to eq false
+          end
+        end
+
+        context "with a user who is a member of the household" do
+          let(:attempting_uncompletor) { m = FactoryGirl.create(:membership, :household => completed_todo.household); m.user }
+
+          it "should not be allowed" do
+            a = Ability.new(attempting_uncompletor)
+            expect(a.can?(:uncomplete, completed_todo)).to eq false
+          end
+        end
+
+        context "with the user who completed the todo" do
+          let(:completor) { completed_todo.completor }
+          let!(:membership) { FactoryGirl.create(:membership, :user => completor, :household => completed_todo.household) }
+
+          it "should be allowed" do
+            a = Ability.new(completor)
+            expect(a.can?(:uncomplete, completed_todo)).to eq true
+          end
+        end
+
+        context "with an admin of the household" do
+          let(:attempting_uncompletor) { m = FactoryGirl.create(:household_admin, :household => completed_todo.household); m.user }
+
+          it "should be allowed" do
+            a = Ability.new(attempting_uncompletor)
+            expect(a.can?(:uncomplete, completed_todo)).to eq true
+          end
+        end
+      end
+
+      context "with an accepted todo" do
+        let(:accepted_todo) { FactoryGirl.create(:accepted_todo) }
+
+        context "with a member of the household" do
+          let(:household_member) { m = FactoryGirl.create(:membership, :household => accepted_todo.household); m.user }
+
+          it "should not be allowed" do
+            a = Ability.new(household_member)
+            expect(a.can?(:uncomplete, accepted_todo)).to eq false
+          end
+        end
+
+        context "with an admin of the household" do
+          let(:household_member) { m = FactoryGirl.create(:household_admin, :household => accepted_todo.household); m.user }
+
+          it "should not be allowed" do
+            a = Ability.new(household_member)
+            expect(a.can?(:uncomplete, accepted_todo)).to eq false
+          end
+        end
+      end
+    end
+
+    describe "destroy" do
+      let(:household) { FactoryGirl.create(:household) }
+      let(:active_todo) { FactoryGirl.build(:todo, :household => household) }
+      let(:completed_todo) { FactoryGirl.build(:completed_todo, :household => household) }
+      let(:accepted_todo) { FactoryGirl.build(:accepted_todo, :household => household) }
+
+      context "with a non member of the household" do
+        let(:non_member) { FactoryGirl.create(:user) }
+        let(:ability) { Ability.new(non_member) }
+
+        context "with an active todo" do
+          it "should not be allowed" do
+            expect(ability.can?(:destroy, active_todo)).to eq false
+          end
+        end
+
+        context "with a completed todo" do
+          it "should not be allowed" do
+            expect(ability.can?(:destroy, completed_todo)).to eq false
+          end
+        end
+
+        context "with an accepted todo" do
+          it "should not be allowed" do
+            expect(ability.can?(:destroy, accepted_todo)).to eq false
+          end
+        end
+      end
+
+      context "with a member of the household" do
+        let(:household_member) { m = FactoryGirl.create(:membership, :household => household); m.user }
+        let(:ability) { Ability.new(household_member) }
+
+        context "with an active todo" do
+          it "should not be allowed" do
+            expect(ability.can?(:destroy, active_todo)).to eq false
+          end
+        end
+
+        context "with a completed todo" do
+          it "should not be allowed" do
+            expect(ability.can?(:destroy, completed_todo)).to eq false
+          end
+        end
+
+        context "with an accepted todo" do
+          it "should not be allowed" do
+            expect(ability.can?(:destroy, accepted_todo)).to eq false
+          end
+        end
+      end
+
+      context "with a household admin" do
+        let(:household_admin) { m = FactoryGirl.create(:household_admin, :household => household); m.user }
+        let(:ability) { Ability.new(household_admin) }
+
+        context "with an active todo" do
+          it "should be allowed" do
+            expect(ability.can?(:destroy, active_todo)).to eq true
+          end
+        end
+
+        context "with a completed todo" do
+          it "should be allowed" do
+            expect(ability.can?(:destroy, completed_todo)).to eq true
+          end
+        end
+
+        context "with an accepted todo" do
+          it "should be allowed" do
+            expect(ability.can?(:destroy, accepted_todo)).to eq true
+          end
+        end
+      end
+
+      context "with the creator of the todo" do
+        let(:todo_creator) { m = FactoryGirl.create(:membership, :household => household); m.user }
+        let(:ability) { Ability.new(todo_creator) }
+        before do
+          active_todo.creator_id = todo_creator.id
+          completed_todo.creator_id = todo_creator.id
+          accepted_todo.creator_id = todo_creator.id
+        end
+
+        context "with an active todo" do
+          it "should be allowed" do
+            expect(ability.can?(:destroy, active_todo)).to eq true
+          end
+        end
+
+        context "with a completed todo" do
+          it "should be allowed" do
+            expect(ability.can?(:destroy, completed_todo)).to eq true
+          end
+        end
+
+        context "with an accepted todo" do
+          it "should not be allowed" do
+            expect(ability.can?(:destroy, accepted_todo)).to eq false
+          end
+        end
+      end
+
+      context "with the household head admin" do
+        let(:household_head_admin) { m = FactoryGirl.create(:household_head_admin, :household => household); m.user }
+        let(:ability) { Ability.new(household_head_admin) }
+
+        context "with an active todo" do
+          it "should be allowed" do
+            expect(ability.can?(:destroy, active_todo)).to eq true
+          end
+        end
+
+        context "with a completed todo" do
+          it "should be allowed" do
+            expect(ability.can?(:destroy, completed_todo)).to eq true
+          end
+        end
+
+        context "with an accepted todo" do
+          it "should be allowed" do
+            expect(ability.can?(:destroy, accepted_todo)).to eq true
+          end
+        end
+      end
+    end
+
+    describe "edit" do
+    end
+  end
+
   describe "instance methods" do
     describe "#accept!" do
       context "with a todo which is persisted" do
