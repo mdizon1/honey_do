@@ -26,20 +26,10 @@ export default class HoneyDo extends React.Component {
   }
 
   initialTodoLoad() {
-    this.props.store.dispatch(syncTodosRequest());
-    $.ajax(this.props.config.apiEndpoint, {
-      type: 'GET',
-      data: {authentication_token: this.props.config.identityConfig.authToken}
-    }).done((data, textStatus, jqXHR) => {
-      this.props.store.dispatch(syncTodosRequestSuccess(data));
-    }).fail((jqXHR, textStatus, errorThrown) => {
-      // TODO: Implement
-      //this.props.store.dispatch(syncTodosRequestFailure(jqXHR, textStatus));
-    });
+    this.syncTodos();
   }
 
   handleChangeTab(tabVal){
-//    debugger;
     this.props.store.dispatch(switchTab(tabVal));
   }
 
@@ -54,7 +44,19 @@ export default class HoneyDo extends React.Component {
 
   onStateChange(){
     this.setState({store: this.props.store.getState().toJS()});
-    console.log("DEBUG: state was changed.. current tab? ---> ", this.state.store.uiState.currentTab);
+  }
+
+  syncTodos() {
+    this.props.store.dispatch(syncTodosRequest());
+    $.ajax(this.props.config.apiEndpoint, {
+      type: 'GET',
+      data: {authentication_token: this.props.config.identityConfig.authToken}
+    }).done((data, textStatus, jqXHR) => {
+      this.props.store.dispatch(syncTodosRequestSuccess(data));
+    }).fail((jqXHR, textStatus, errorThrown) => {
+      // TODO: Implement
+      //this.props.store.dispatch(syncTodosRequestFailure(jqXHR, textStatus));
+    });
   }
 
   renderLoading() {
@@ -77,6 +79,7 @@ export default class HoneyDo extends React.Component {
           onChangeTab={this.handleChangeTab.bind(this)}
           currentTab={this.state.store.uiState.currentTab}
           appConfig={this.state.store.configState}
+          onSync={this.syncTodos.bind(this)}
         />
       </div>
     )

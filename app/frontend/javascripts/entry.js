@@ -39,7 +39,5 @@ if(honey_do_container.length == 1){
   document.getElementById('honey-do'));
 }
 
-// Just some dev debug javascripts to ensure 
-// libs are loaded and working correctly
+// Just some dev debug javascripts to ensure libs are loaded and working correctly
 // require('./setup/test');
-

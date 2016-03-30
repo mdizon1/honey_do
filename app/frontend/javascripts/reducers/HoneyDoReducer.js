@@ -88,6 +88,18 @@ function honeyDoReducer(state, action) {
       temp_item.position = action.newPosition;
       return setTodoState(state, temp_item.id, temp_item);
 
+    case TODO_REORDER_SUCCESS:
+    case TODO_REORDER_FAILURE:
+      // TODO: Ok, some refactoring is in order here later.
+      // Right now these do nothing, although error should spit out an error
+      // message.
+      // Eventually, these should use either react-thunk or react-promise and
+      // after these actions complete, there is a trigger to sync.
+      // For now, we'll just let this do nothing and sync immediately after
+      // we get a success or failure back.
+      return state;
+
+
     case UNCOMPLETE_TODO_REQUEST:
       return setTodoCompletedState(state, action.id, false);
 

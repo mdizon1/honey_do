@@ -16,6 +16,7 @@ const TodoTabs = function (props) {
             store={props.store}
             apiEndpoint={props.appConfig.apiEndpoint}
             authToken={props.appConfig.identityConfig.authToken}
+            onSync={props.onSync}
           />
         </div>
       </Tab>

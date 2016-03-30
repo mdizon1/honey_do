@@ -55,13 +55,9 @@ class TodosController < ApplicationController
   end
 
   def update
-    respond_to do |format|
-      format.js do
-        return render :status => 400 unless @todo
-        @todo.update_attributes(sanitized_todo_params)
-        render :json => @todo.to_backbone(current_user), :status => :ok
-      end
-    end
+    return render :status => 400 unless @todo 
+    return render :status => 500 unless @todo.update_attributes(todo_params)
+    render :json => @todo.to_json(current_user), :status => :ok
   end
 
   def destroy
@@ -131,9 +127,5 @@ class TodosController < ApplicationController
 
   def render_todo_to_json(status)
     render :json => @todo.to_json(current_user), :status => status
-  end
-
-  def sanitized_todo_params
-    todo_params.merge :position => (params[:todo][:position]+1) # jquery row positions are 0 indexed
   end
 end

@@ -7,19 +7,8 @@ import flow from 'lodash/flow'
 import ListItem from 'material-ui/lib/lists/list-item';
 import Checkbox from 'material-ui/lib/checkbox';
 
-
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// LEFT OFF ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-//   Drag and drop is working
-//   Need to build/handle the ajax call
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-// ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
 const todoSource = {
   beginDrag(props, monitor) {
-    console.log("DEBUG: Drag source drag begins");
     return {
       id: props.todo.id,
       position: props.todo.position
@@ -29,10 +18,8 @@ const todoSource = {
   endDrag(props, monitor) {
     const item = monitor.getItem();
     const dropResult = monitor.getDropResult();
-    console.log("DEBUG: Drag source drag ends");
     if(dropResult) {
       props.onTodoDropped(item.id, dropResult.position)
-      // something something...
     }
   }
 };
@@ -84,8 +71,6 @@ const todoTarget = {
   },
 
   drop(props, monitor) {
-    // the props here are from the dropTarget
-    console.log("DEBUG: Todo was dropped, here we need to get the correct arguments to tell who was dropped and where...");
     return {
       id: props.todo.id,
       position: props.todo.position,
@@ -113,7 +98,6 @@ class TodoItem extends Component {
     const { todo, onTodoClicked, isDragging, connectDragSource, connectDropTarget } = this.props;
 
     if(this.props.isOver){
-      console.log("DEBUG: isOver is happening");
     }
 
     if(this.props.isDragging){

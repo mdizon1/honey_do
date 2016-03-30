@@ -10,8 +10,8 @@ export const UNCOMPLETE_TODO_REQUEST = 'UNCOMPLETE_TODO_REQUEST'
 export const UNCOMPLETE_TODO_SUCCESS = 'UNCOMPLETE_TODO_SUCCESS'
 export const UNCOMPLETE_TODO_FAILURE = 'UNCOMPLETE_TODO_FAILURE'
 export const TODO_REORDER_REQUEST = 'TODO_REORDER_REQUEST'
-export const TODO_REORDER_SUCCESS = 'TODO_REORDER_REQUEST'
-export const TODO_REORDER_FAILURE = 'TODO_REORDER_REQUEST'
+export const TODO_REORDER_SUCCESS = 'TODO_REORDER_SUCCESS'
+export const TODO_REORDER_FAILURE = 'TODO_REORDER_FAILURE'
 
 export const UiTabs = {
   SHOW_TODOS: 'SHOW_TODOS',
@@ -89,6 +89,22 @@ export function todoReorderRequest(id, newPosition) {
     description: 'Todo was dragged and dropped into a new position',
     id: id,
     newPosition: newPosition
+  }
+}
+
+export function todoReorderSuccess(id, json) {
+  return {
+    type: TODO_REORDER_SUCCESS,
+    description: 'Server acknowledges a todo reorder successfully',
+    data: json
+  }
+}
+
+export function todoReorderFailure(id, json) {
+  return {
+    type: TODO_REORDER_FAILURE,
+    description: 'Todo was dragged and dropped into a new position',
+    data: json
   }
 }
 
