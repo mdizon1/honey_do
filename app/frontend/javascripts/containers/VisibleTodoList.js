@@ -1,3 +1,9 @@
+// TODO: Marked for deletion.
+//   Previously this was the container component for TodoList and we had the nice
+//   pattern going of container component wrapping pure functional component.
+//   However, this wasn't compatible with react drag n drop so this got removed
+//   and TodoList got a lot uglier.  I'll keep this around a bit for reference
+//   because I want to use this pattern wherever possible.
 import { connect } from 'react-redux'
 import TodoList from '../components/TodoList'
 import { completeTodoRequest, completeTodoSuccess, completeTodoFailure,

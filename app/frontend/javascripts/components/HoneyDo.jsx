@@ -1,5 +1,4 @@
 import React from 'react'
-import TodoList from './TodoList'
 import TodoTabs from './TodoTabs'
 import { Map } from 'immutable'
 // import NewTodoButton from './NewTodoButton'
@@ -74,6 +73,7 @@ export default class HoneyDo extends React.Component {
     return (
       <div className="honey-do-app-wrap">
         <TodoTabs 
+          store={this.props.store}
           onChangeTab={this.handleChangeTab.bind(this)}
           currentTab={this.state.store.uiState.currentTab}
           appConfig={this.state.store.configState}

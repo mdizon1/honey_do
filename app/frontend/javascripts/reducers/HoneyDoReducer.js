@@ -14,6 +14,9 @@ import { INITIALIZE,
   SYNC_TODOS_REQUEST,
   SYNC_TODOS_SUCCESS,
   SYNC_TODOS_FAILURE,
+  TODO_REORDER_REQUEST,
+  TODO_REORDER_SUCCESS,
+  TODO_REORDER_FAILURE,
   UNCOMPLETE_TODO_REQUEST, 
   UNCOMPLETE_TODO_SUCCESS, 
   UNCOMPLETE_TODO_FAILURE,
@@ -43,25 +46,10 @@ const emptyState = Immutable.fromJS({
   }
 });
 
-const uiSyncingOn = (state) => {
-  return state.set('uiState', state.get('uiState').set('isSyncing', true));
-}
-
-const uiSyncingOff = (state) => {
-  return state.set('uiState', state.get('uiState').set('isSyncing', false));
-}
-
-const setTodoCompletedState = (state, id, todoState) => {
-  let todo = state.getIn(['dataState', 'todos', id.toString()]);
-  return state.setIn(['dataState', 'todos', id.toString()], todo.set('isCompleted', todoState));
-}
-
-const setTodoState = (state, id, todoState) => {
-  return state.setIn(['dataState', 'todos', id.toString()], Immutable.fromJS(todoState));
-}
-
 function honeyDoReducer(state, action) {
   var temp_state;
+  var temp_item;
+
   console.log("DEBUG: ~~~~~~~~~~~~~~~~~~~~~~~~ REDUCER CALLED ~~~~~~~~~~~~~~~~~~~~~~~~~~");
   console.log("DEBUG: type ------------> ", action.type);
 
@@ -95,6 +83,11 @@ function honeyDoReducer(state, action) {
     case SYNC_TODOS_FAILURE:
       return uiSyncingOff(state);
 
+    case TODO_REORDER_REQUEST:
+      temp_item = state.getIn(['dataState', 'todos', action.id.toString()]).toJS();
+      temp_item.position = action.newPosition;
+      return setTodoState(state, temp_item.id, temp_item);
+
     case UNCOMPLETE_TODO_REQUEST:
       return setTodoCompletedState(state, action.id, false);
 
@@ -107,6 +100,24 @@ function honeyDoReducer(state, action) {
     default:
       return state;
   }
+}
+
+// Privates, might want to rename them with leading _ for readability
+const uiSyncingOn = (state) => {
+  return state.set('uiState', state.get('uiState').set('isSyncing', true));
+}
+
+const uiSyncingOff = (state) => {
+  return state.set('uiState', state.get('uiState').set('isSyncing', false));
+}
+
+const setTodoCompletedState = (state, id, todoState) => {
+  let todo = state.getIn(['dataState', 'todos', id.toString()]);
+  return state.setIn(['dataState', 'todos', id.toString()], todo.set('isCompleted', todoState));
+}
+
+const setTodoState = (state, id, todoState) => {
+  return state.setIn(['dataState', 'todos', id.toString()], Immutable.fromJS(todoState));
 }
 
 export default honeyDoReducer

@@ -9,6 +9,9 @@ export const SYNC_TODOS_FAILURE = 'SYNC_TODOS_FAILURE'
 export const UNCOMPLETE_TODO_REQUEST = 'UNCOMPLETE_TODO_REQUEST'
 export const UNCOMPLETE_TODO_SUCCESS = 'UNCOMPLETE_TODO_SUCCESS'
 export const UNCOMPLETE_TODO_FAILURE = 'UNCOMPLETE_TODO_FAILURE'
+export const TODO_REORDER_REQUEST = 'TODO_REORDER_REQUEST'
+export const TODO_REORDER_SUCCESS = 'TODO_REORDER_REQUEST'
+export const TODO_REORDER_FAILURE = 'TODO_REORDER_REQUEST'
 
 export const UiTabs = {
   SHOW_TODOS: 'SHOW_TODOS',
@@ -77,6 +80,15 @@ export function syncTodosRequestFailure(json, error){
     description: 'Got a failure response from the server while attempting to sync todos',
     data: json,
     receivedAt: Date.now()
+  }
+}
+
+export function todoReorderRequest(id, newPosition) {
+  return {
+    type: TODO_REORDER_REQUEST,
+    description: 'Todo was dragged and dropped into a new position',
+    id: id,
+    newPosition: newPosition
   }
 }
 
