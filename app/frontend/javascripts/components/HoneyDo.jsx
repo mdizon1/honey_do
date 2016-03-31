@@ -1,10 +1,8 @@
 import React from 'react'
 import TodoTabs from './TodoTabs'
 import { Map } from 'immutable'
-// import NewTodoButton from './NewTodoButton'
 
 import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab } from './../actions/HoneyDoActions';
-// import RaisedButton from 'material-ui/lib/raised-button';
 
 export default class HoneyDo extends React.Component {
   componentWillMount() {
