@@ -11,6 +11,7 @@ HoneyDo::Application.routes.draw do
       put :complete
       put :accept
       put :uncomplete
+      put :reorder
     end
   end
 

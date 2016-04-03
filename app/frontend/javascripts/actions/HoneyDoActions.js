@@ -83,12 +83,11 @@ export function syncTodosRequestFailure(json, error){
   }
 }
 
-export function todoReorderRequest(id, newPosition) {
+export function todoReorderRequest(todosList) {
   return {
     type: TODO_REORDER_REQUEST,
     description: 'Todo was dragged and dropped into a new position',
-    id: id,
-    newPosition: newPosition
+    todosList: todosList 
   }
 }
 

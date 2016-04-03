@@ -4,7 +4,7 @@ class TodosController < ApplicationController
   #   token which matches the users current one
   before_filter :authenticate_user!
   before_filter :load_current_user_household, :except => [:new]
-  before_filter :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete]
+  before_filter :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete, :reorder]
 
   def index
     # TODO: (ha ha ha...) this must be heavily optimized, mapping over the 
@@ -90,6 +90,19 @@ class TodosController < ApplicationController
     return unauthorized_response unless can?(:complete, @todo)
     begin
       @todo.complete!(:completed_by => current_user)
+      status = :ok
+    rescue
+      status = 500
+    end
+    render_todo_to_json(status)
+  end
+
+  def reorder
+    return unauthorized_response unless can?(:reorder, @todo)
+    begin
+      params[:positions_jumped].to_i.abs.times do |itor|
+        (params[:positions_jumped].to_i > 0) ? @todo.move_lower : @todo.move_higher
+      end
       status = :ok
     rescue
       status = 500

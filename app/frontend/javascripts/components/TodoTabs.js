@@ -3,7 +3,6 @@ import Tabs from 'material-ui/lib/tabs/tabs'
 import Tab from 'material-ui/lib/tabs/tab'
 import TodoList from './TodoList'
 
-
 const TodoTabs = function (props) {
   return (
     <Tabs

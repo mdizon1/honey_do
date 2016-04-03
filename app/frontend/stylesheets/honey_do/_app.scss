@@ -14,3 +14,10 @@
     }
   }
 }
+
+.todo-item {
+  &.todo-item-drag-placeholder {
+    opacity: 0.2;
+    border: 1px dashed black;
+  }
+}

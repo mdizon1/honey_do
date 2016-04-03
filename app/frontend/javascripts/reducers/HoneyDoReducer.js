@@ -3,9 +3,6 @@
 // Doing that up front will be confusing as I'm just getting started on redux
 // For now I'll build all reducers into this file and later split as necessary
 
-// define any constants i'll need here, e.g. for UI state
-// like current view or whatever
-
 import { INITIALIZE, 
   COMPLETE_TODO_REQUEST, 
   COMPLETE_TODO_SUCCESS, 
@@ -28,7 +25,8 @@ import {List, Map} from 'immutable';
 const emptyState = Immutable.fromJS({
   uiState: {
     currentTab: 'SHOW_TODOS',
-    isSyncing: false
+    isSyncing: false,
+    isShuffling: false
   },
   dataState: {
     shoppingItems: {},
@@ -49,6 +47,7 @@ const emptyState = Immutable.fromJS({
 function honeyDoReducer(state, action) {
   var temp_state;
   var temp_item;
+  var temp_data;
 
   console.log("DEBUG: ~~~~~~~~~~~~~~~~~~~~~~~~ REDUCER CALLED ~~~~~~~~~~~~~~~~~~~~~~~~~~");
   console.log("DEBUG: type ------------> ", action.type);
@@ -78,15 +77,14 @@ function honeyDoReducer(state, action) {
       temp_state = uiSyncingOff(state);
       // TODO: This is actually doing a retrieve right now, I should refactor
       // the code to reflect this fact accordingly
-      return temp_state.set('dataState', Immutable.fromJS(action.data));
+      temp_data = action.data;
+      return temp_state.set('dataState', Immutable.fromJS(temp_data));
 
     case SYNC_TODOS_FAILURE:
       return uiSyncingOff(state);
 
     case TODO_REORDER_REQUEST:
-      temp_item = state.getIn(['dataState', 'todos', action.id.toString()]).toJS();
-      temp_item.position = action.newPosition;
-      return setTodoState(state, temp_item.id, temp_item);
+      return reorderTodos(state, action.todosList);
 
     case TODO_REORDER_SUCCESS:
     case TODO_REORDER_FAILURE:
@@ -98,7 +96,6 @@ function honeyDoReducer(state, action) {
       // For now, we'll just let this do nothing and sync immediately after
       // we get a success or failure back.
       return state;
-
 
     case UNCOMPLETE_TODO_REQUEST:
       return setTodoCompletedState(state, action.id, false);
@@ -115,12 +112,12 @@ function honeyDoReducer(state, action) {
 }
 
 // Privates, might want to rename them with leading _ for readability
-const uiSyncingOn = (state) => {
-  return state.set('uiState', state.get('uiState').set('isSyncing', true));
-}
 
-const uiSyncingOff = (state) => {
-  return state.set('uiState', state.get('uiState').set('isSyncing', false));
+const reorderTodos = (state, todosList) => {
+  _.forEach(todosList, (curr, index) => {
+    state = state.setIn(['dataState', 'todos', curr.id.toString(), 'position'], index);
+  });
+  return state;
 }
 
 const setTodoCompletedState = (state, id, todoState) => {
@@ -130,6 +127,14 @@ const setTodoCompletedState = (state, id, todoState) => {
 
 const setTodoState = (state, id, todoState) => {
   return state.setIn(['dataState', 'todos', id.toString()], Immutable.fromJS(todoState));
+}
+
+const uiSyncingOn = (state) => {
+  return state.set('uiState', state.get('uiState').set('isSyncing', true));
+}
+
+const uiSyncingOff = (state) => {
+  return state.set('uiState', state.get('uiState').set('isSyncing', false));
 }
 
 export default honeyDoReducer

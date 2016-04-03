@@ -11,28 +11,35 @@ const todoSource = {
   beginDrag(props, monitor) {
     return {
       id: props.todo.id,
-      position: props.todo.position
+      index: props.todo.index,
+      position: props.todo.position,
+      startIndex: props.todo.index
     };
   },
 
   endDrag(props, monitor) {
     const item = monitor.getItem();
-    const dropResult = monitor.getDropResult();
-    if(dropResult) {
-      props.onTodoDropped(item.id, dropResult.position)
+    const drop_result = monitor.getDropResult();
+    const positions_jumped = monitor.getItem().index - monitor.getItem().startIndex;
+    if(drop_result) {
+      props.onTodoDropped(item.id, positions_jumped)
     }
-  }
+  },
 };
 
 const todoTarget = {
   hover(props, monitor, component) {
-    const dragIndex = monitor.getItem().index;
-    const hoverIndex = props.index;
+    let dragged = monitor.getItem();
+
+    const dragIndex = dragged.index;
+    const hoverIndex = props.todo.index;
+
+    if((!dragIndex && dragIndex != 0) || (!hoverIndex && hoverIndex != 0)) { 
+      throw new Error("No draggable or target index found during drag operation");
+    }
 
     // Don't replace items with themselves
-    if (dragIndex === hoverIndex) {
-      return;
-    }
+    if (dragIndex === hoverIndex) { return; }
 
     // Determine rectangle on screen
     const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
@@ -51,28 +58,23 @@ const todoTarget = {
     // When dragging upwards, only move when the cursor is above 50%
 
     // Dragging downwards
-    if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-      return;
-    }
+    if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) { return; }
 
     // Dragging upwards
-    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-      return;
-    }
-
-    // Time to actually perform the action
-    //props.moveCard(dragIndex, hoverIndex);
+    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) { return; }
 
     // Note: we're mutating the monitor item here!
     // Generally it's better to avoid mutations,
     // but it's good here for the sake of performance
     // to avoid expensive index searches.
-    monitor.getItem().index = hoverIndex;
+    dragged.index = hoverIndex;
+    props.onTodoReorder(dragged.id, hoverIndex);
   },
 
   drop(props, monitor) {
     return {
       id: props.todo.id,
+      index: props.todo.index,
       position: props.todo.position,
     }
   }
@@ -87,6 +89,39 @@ const renderCheckbox = (todo, handleClick) => {
   )
 }
 
+const renderDraggingPlaceholder = (props) => {
+  const { todo, onTodoClicked, connectDragSource, connectDropTarget } = props;
+  return connectDropTarget(connectDragSource(
+    <div className="todo-item todo-item-drag-placeholder">
+      <ListItem
+        primaryText={todo.title}
+        secondaryText={todo.notes}
+        leftCheckbox={renderCheckbox(todo, onTodoClicked)}
+      />
+    </div>
+  ));
+}
+
+const renderDropPlaceholder = (props) => {
+  const { todo, onTodoClicked, connectDragSource, connectDropTarget } = props;
+
+  return connectDropTarget(connectDragSource(
+    <div className="todo-item">
+      <ListItem
+        primaryText={todo.title}
+        secondaryText={todo.notes}
+        leftCheckbox={renderCheckbox(todo, onTodoClicked)}
+        nestedItems={[
+          <ListItem
+            key={"todo_notes_"+todo.id}
+            primaryText={todo.notes}
+          />,
+        ]}
+      />
+    </div>
+  ));
+}
+
 class TodoItem extends Component {
 // TODO: add propTypes back in .. ?
 //  static propTypes = {
@@ -95,18 +130,18 @@ class TodoItem extends Component {
 //  }
 
   render() {
-    const { todo, onTodoClicked, isDragging, connectDragSource, connectDropTarget } = this.props;
+    const { todo, onTodoClicked, connectDragSource, connectDropTarget, isDragging, isOver } = this.props;
 
-    if(this.props.isOver){
+    if(isDragging) {
+      return renderDraggingPlaceholder(this.props);
     }
 
-    if(this.props.isDragging){
-      return connectDragSource(
-        <div> Placeholder </div>
-      )
+    if(isOver) {
+      return renderDropPlaceholder(this.props);
     }
+
     return connectDropTarget(connectDragSource(
-      <div>
+      <div className="todo-item">
         <ListItem
           primaryText={todo.title}
           secondaryText={todo.notes}
@@ -120,6 +155,7 @@ class TodoItem extends Component {
         />
       </div>
     ));
+    
   }
 }
 
@@ -147,6 +183,4 @@ export default flow(
 //  isDragging: monitor.isDragging()
 //}))
 // export default class TodoItem extends Component { ....
-
-
 

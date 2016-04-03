@@ -28,15 +28,6 @@ class Ability
         !todo.accepted?
     end
 
-    can :uncomplete, Completable do |todo|
-      household = todo.household
-      user.household == household &&
-        !todo.accepted? && 
-        todo.completed? &&
-        (todo.completor_id == user.id || can?(:edit, todo))
-      
-    end
-
     can :destroy, Completable do |todo|
       household = todo.household
       user.household == household &&
@@ -50,5 +41,18 @@ class Ability
       todo.creator_id == user.id || 
         can?(:administrate, household)
     end
+
+    can :reorder, Completable do |todo|
+      can?(:complete, todo) || can?(:uncomplete, todo)
+    end
+
+    can :uncomplete, Completable do |todo|
+      household = todo.household
+      user.household == household &&
+        !todo.accepted? && 
+        todo.completed? &&
+        (todo.completor_id == user.id || can?(:edit, todo))
+    end
+
   end
 end

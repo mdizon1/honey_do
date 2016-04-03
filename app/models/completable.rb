@@ -9,7 +9,6 @@ class Completable < ActiveRecord::Base
   has_many :accepted_events, :as => :target, :class_name => 'Event::TodoAccepted'
 
   include AASM
-  acts_as_list :scope => :household
 
   aasm do
     state :active, :initial => true

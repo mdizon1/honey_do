@@ -43,6 +43,8 @@ const getTodosFromStore = (store) => {
   let todos =  store.getState().getIn(["dataState","todos"]).toJS();
   todos = Object.keys(todos).map(key => todos[key]); // convert todos into array
   todos = _.sortBy(todos, (val) => { return val.position });
+  _.forEach(todos, (curr, index) => { curr.index = index; });
+  
   return todos;
 }
 
@@ -59,7 +61,11 @@ class TodoList extends Component {
   }
 
   onStateChange(){
-    this.setState({todos: getTodosFromStore(this.props.store)});
+    let new_todo_state = getTodosFromStore(this.props.store);
+
+    if(!_.isEqual(this.state.todos, new_todo_state)){
+      this.setState({ todos: new_todo_state});
+    }
   }
 
   handleTodoClicked(id, isChecked){
@@ -72,31 +78,68 @@ class TodoList extends Component {
     }
   }
 
-  handleTodoDropped(droppedId, newPosition){
+  handleTodoDropped(droppedId, positionsJumped){
     var self, dispatch;
 
     self = this;
     dispatch = this.props.store.dispatch;
-    let temp_todo = this.props.store.getState().getIn(['dataState', 'todos', droppedId.toString()]).toJS();
-    temp_todo.position = newPosition;
 
-    dispatch(todoReorderRequest(droppedId, newPosition));
+    let temp_todo = this.props.store.getState().getIn(['dataState', 'todos', droppedId.toString()]).toJS();
+
+    dispatch(todoReorderRequest(this.state.todos));
     $.ajax({
       type: "PUT",
-      url: this.props.apiEndpoint + '/' + temp_todo.id,
+      url: this.props.apiEndpoint + '/' + temp_todo.id + '/reorder',
       data: { 
         authentication_token: this.props.authToken,
-        todo: temp_todo 
+        todo: temp_todo,
+        positions_jumped: positionsJumped
       }
     })
       .done((data, textStatus, jqXHR) => {
-        dispatch(todoReorderSuccess(temp_todo.id, data));
-        this.props.onSync();
+        dispatch(todoReorderSuccess(temp_todo.id, positionsJumped));
       })
       .fail((jqXHR, textStatus, errorThrown) => {
         dispatch(todoReorderFailure(temp_todo.id, jqXHR));
+      })
+      .always((data_jqXHR, textStatus, jqXHR_errorThrown) => {
         this.props.onSync();
       });
+  }
+
+  handleTodoReorder(id, newIndex) {
+    let local_todo_state = this.state.todos;
+    let todo = _.find(local_todo_state, (curr) => { return curr.id == id; });
+    let prev_index = todo.index;
+
+    // change it's index
+    todo.index = newIndex;
+
+    // update other indices
+    _.forEach(local_todo_state, (curr, index) => {
+      if(curr.id == id) { return; }
+      // moving down
+      if(newIndex >= prev_index) {
+        if(curr.index >= newIndex) { return curr.index-=1; }
+      }
+      // moving up
+      if(newIndex <= prev_index) {
+        if(curr.index >= newIndex) { return curr.index+=1; }
+      }
+    });
+
+    // reorder by index
+
+    local_todo_state = _.sortBy(local_todo_state, (curr) => {
+      return curr.index;
+    });
+
+    // renumber indices
+    _.forEach(local_todo_state, (curr, index) => {
+      curr.index = index;
+    });
+
+    this.setState({todos: local_todo_state});
   }
 
   render() {
@@ -113,24 +156,23 @@ class TodoList extends Component {
     return (
       <List className='honey-do-todo-list'>
         <ul>
-          {this.state.todos.map(function (todo){ return renderTodo(todo, self.handleTodoClicked.bind(self), self.handleTodoDropped.bind(self)) })}
+          {this.state.todos.map(function (todo){ 
+            return (
+              <li key={"todo_item_" + todo.id}>
+                <TodoItem 
+                  key={"todo_"+todo.id}
+                  todo={todo}
+                  onTodoClicked={self.handleTodoClicked.bind(self)}
+                  onTodoDropped={self.handleTodoDropped.bind(self)}
+                  onTodoReorder={self.handleTodoReorder.bind(self)}
+                />
+              </li>
+            )
+          })}
         </ul>
       </List>
     )
   }
-}
-
-const renderTodo = (todo, handleClick, handleDrop) => {
-  return (
-    <li key={"todo_item_" + todo.id}>
-      <TodoItem 
-        key={"todo_"+todo.id}
-        todo={todo}
-        onTodoClicked={handleClick}
-        onTodoDropped={handleDrop}
-      />
-    </li>
-  )
 }
 
 export default DragDropContext(HTML5Backend)(TodoList)

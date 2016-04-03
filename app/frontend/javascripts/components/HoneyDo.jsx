@@ -4,11 +4,19 @@ import { Map } from 'immutable'
 
 import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab } from './../actions/HoneyDoActions';
 
+const getConfigState = (store) => {
+  return store.getState().get('configState');
+}
+const getCurrentTab = (store) => {
+  return store.getState().getIn(['uiState', 'currentTab'])
+}
+
 export default class HoneyDo extends React.Component {
   componentWillMount() {
     this.initAppConfig();
     this.initialTodoLoad();
     this.setState({
+      isReady: false,
       unsubscribe: this.props.store.subscribe(this.onStateChange.bind(this))
     });
   }
@@ -32,8 +40,7 @@ export default class HoneyDo extends React.Component {
   }
 
   isComponentReady(){
-    if(this.state.store) { return true; }
-    return false;
+    return this.state.isReady;
   }
 
   isLoading(){
@@ -41,7 +48,8 @@ export default class HoneyDo extends React.Component {
   }
 
   onStateChange(){
-    this.setState({store: this.props.store.getState().toJS()});
+    if(this.state.isReady) { return; }
+    this.setState({ isReady: true });
   }
 
   syncTodos() {
@@ -75,8 +83,8 @@ export default class HoneyDo extends React.Component {
         <TodoTabs 
           store={this.props.store}
           onChangeTab={this.handleChangeTab.bind(this)}
-          currentTab={this.state.store.uiState.currentTab}
-          appConfig={this.state.store.configState}
+          currentTab={getCurrentTab(this.props.store)}
+          appConfig={getConfigState(this.props.store)}
           onSync={this.syncTodos.bind(this)}
         />
       </div>
