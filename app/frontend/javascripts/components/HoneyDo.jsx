@@ -48,8 +48,16 @@ export default class HoneyDo extends React.Component {
   }
 
   onStateChange(){
-    if(this.state.isReady) { return; }
-    this.setState({ isReady: true });
+    let new_state = {};
+
+    if(!this.state.isReady) { 
+      new_state.isReady = true;
+      new_state.configState = getConfigState(this.props.store);
+    }
+
+    let curr_tab = getCurrentTab(this.props.store);
+    if(!this.state.currentTab == curr_tab){ new_state.currentTab = curr_tab }
+    this.setState(new_state);
   }
 
   syncTodos() {
@@ -82,9 +90,9 @@ export default class HoneyDo extends React.Component {
       <div className="honey-do-app-wrap">
         <TodoTabs 
           store={this.props.store}
+          currentTab={this.state.currentTab}
+          appConfig={this.state.configState}
           onChangeTab={this.handleChangeTab.bind(this)}
-          currentTab={getCurrentTab(this.props.store)}
-          appConfig={getConfigState(this.props.store)}
           onSync={this.syncTodos.bind(this)}
         />
       </div>
