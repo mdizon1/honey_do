@@ -1,14 +1,15 @@
 import React, { Component, PropTypes } from 'react'
-import List from 'material-ui/lib/lists/list';
+import List from 'material-ui/lib/lists/list'
 import TodoItem from './TodoItem'
+import TodoDragLayer from './TodoDragLayer'
+import { DragDropContext } from 'react-dnd';
+import { default as TouchBackend } from 'react-dnd-touch-backend';
+
 import { completeTodoRequest, completeTodoSuccess, completeTodoFailure,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure 
   } from '../actions/HoneyDoActions'
 
-import { DragDropContext } from 'react-dnd';
-// import HTML5Backend from 'react-dnd-html5-backend';
-import { default as TouchBackend } from 'react-dnd-touch-backend';
 
 const completeTodo = (id, dispatch, ownProps) => {
   dispatch(completeTodoRequest(id)) 
@@ -155,23 +156,26 @@ class TodoList extends Component {
     }
 
     return (
-      <List className='honey-do-todo-list'>
-        <ul>
-          {this.state.todos.map(function (todo){ 
-            return (
-              <li key={"todo_item_" + todo.id}>
-                <TodoItem 
-                  key={"todo_"+todo.id}
-                  todo={todo}
-                  onTodoClicked={self.handleTodoClicked.bind(self)}
-                  onTodoDropped={self.handleTodoDropped.bind(self)}
-                  onTodoReorder={self.handleTodoReorder.bind(self)}
-                />
-              </li>
-            )
-          })}
-        </ul>
-      </List>
+      <div>
+        <TodoDragLayer />
+        <List className='honey-do-todo-list'>
+          <ul>
+            {this.state.todos.map(function (todo){ 
+              return (
+                <li key={"todo_item_" + todo.id}>
+                  <TodoItem 
+                    key={"todo_"+todo.id}
+                    todo={todo}
+                    onTodoClicked={self.handleTodoClicked.bind(self)}
+                    onTodoDropped={self.handleTodoDropped.bind(self)}
+                    onTodoReorder={self.handleTodoReorder.bind(self)}
+                  />
+                </li>
+              )
+            })}
+          </ul>
+        </List>
+      </div>
     )
   }
 }
