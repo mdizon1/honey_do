@@ -7,7 +7,8 @@ import { completeTodoRequest, completeTodoSuccess, completeTodoFailure,
   } from '../actions/HoneyDoActions'
 
 import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+// import HTML5Backend from 'react-dnd-html5-backend';
+import { default as TouchBackend } from 'react-dnd-touch-backend';
 
 const completeTodo = (id, dispatch, ownProps) => {
   dispatch(completeTodoRequest(id)) 
@@ -175,4 +176,4 @@ class TodoList extends Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(TodoList)
+export default DragDropContext(TouchBackend({enableMouseEvents: true}))(TodoList)
