@@ -1,13 +1,14 @@
 import React, { Component, PropTypes } from 'react'
 import List from 'material-ui/lib/lists/list'
 import TodoItem from './TodoItem'
+import { DragDropContext } from 'react-dnd';
+import HTML5Backend from 'react-dnd-html5-backend';
+
 import { completeTodoRequest, completeTodoSuccess, completeTodoFailure,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure 
   } from '../actions/HoneyDoActions'
 
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 
 const completeTodo = (id, dispatch, ownProps) => {
   dispatch(completeTodoRequest(id)) 
