@@ -40,8 +40,8 @@ const uncompleteTodo = (id, dispatch, ownProps) => {
     });
 }
 
-const getTodosFromStore = (store) => {
-  let todos =  store.getState().getIn(["dataState","todos"]).toJS();
+const getTodosFromStore = (store, dataStatePath) => {
+  let todos =  store.getState().getIn(dataStatePath).toJS();
   todos = Object.keys(todos).map(key => todos[key]); // convert todos into array
   todos = _.sortBy(todos, (val) => { return val.position });
   _.forEach(todos, (curr, index) => { curr.index = index; });
@@ -53,7 +53,8 @@ class TodoListMouse extends Component {
   componentWillMount() {
     this.setState({
       unsubscribe: this.props.store.subscribe(this.onStateChange.bind(this)),
-      todos: getTodosFromStore(this.props.store)
+      dataStatePath: this.props.dataStatePath,
+      todos: getTodosFromStore(this.props.store, this.props.dataStatePath)
     });
   }
 
@@ -136,7 +137,7 @@ class TodoListMouse extends Component {
   }
 
   onStateChange(){
-    let new_todo_state = getTodosFromStore(this.props.store);
+    let new_todo_state = getTodosFromStore(this.props.store, this.state.dataStatePath);
 
     if(!_.isEqual(this.state.todos, new_todo_state)){
       this.setState({ todos: new_todo_state});

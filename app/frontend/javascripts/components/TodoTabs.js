@@ -4,12 +4,12 @@ import Tab from 'material-ui/lib/tabs/tab'
 import TodoListMouse from './TodoListMouse'
 import TodoListTouch from './TodoListTouch'
 
-const renderTodoTabs = (props) => {
-  console.log("DEBUG: rendering the TodoList, are we doing it with touch or not?? ----> ", props.isTouch);
+const renderTodoTabs = (props, type) => {
   if(props.isTouch) { 
     return (
       <TodoListTouch
         store={props.store}
+        dataStatePath={['dataState', type]}
         apiEndpoint={props.appConfig.apiEndpoint}
         authToken={props.appConfig.identity.authToken}
         onSync={props.onSync}
@@ -19,6 +19,7 @@ const renderTodoTabs = (props) => {
     return (
       <TodoListMouse
         store={props.store}
+        dataStatePath={['dataState', type]}
         apiEndpoint={props.appConfig.apiEndpoint}
         authToken={props.appConfig.identity.authToken}
         onSync={props.onSync}
@@ -35,12 +36,12 @@ const TodoTabs = function (props) {
     >
       <Tab label="Todo list" value="SHOW_TODOS">
         <div>
-          { renderTodoTabs(props) }
+          { renderTodoTabs(props, 'todos') }
         </div>
       </Tab>
       <Tab label="Shopping list" value="SHOW_SHOPPING_LIST">
         <div>
-          Nothing here yet
+          { renderTodoTabs(props, 'shoppingItems') }
         </div>
       </Tab>
     </Tabs>
