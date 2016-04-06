@@ -1,9 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import TodoList from './TodoList'
 import TodoItem from './TodoItem'
-import TodoDragLayer from './TodoDragLayer'
 import { DragDropContext } from 'react-dnd';
-import { default as TouchBackend } from 'react-dnd-touch-backend';
+import HTML5Backend from 'react-dnd-html5-backend';
 
 import { completeTodoRequest, completeTodoSuccess, completeTodoFailure,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
@@ -50,7 +49,7 @@ const getTodosFromStore = (store) => {
   return todos;
 }
 
-class TodoListTouch extends Component {
+class TodoListMouse extends Component {
   componentWillMount() {
     this.setState({
       unsubscribe: this.props.store.subscribe(this.onStateChange.bind(this)),
@@ -147,7 +146,6 @@ class TodoListTouch extends Component {
   render() {
     return (
       <div>
-        <TodoDragLayer />
         <TodoList 
           todos={this.state.todos}
           onTodoClicked={this.handleTodoClicked.bind(this)}
@@ -159,4 +157,4 @@ class TodoListTouch extends Component {
   }
 }
 
-export default DragDropContext(TouchBackend({enableMouseEvents: false}))(TodoListTouch)
+export default DragDropContext(HTML5Backend)(TodoListMouse)

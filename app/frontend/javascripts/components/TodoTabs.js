@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react'
 import Tabs from 'material-ui/lib/tabs/tabs'
 import Tab from 'material-ui/lib/tabs/tab'
-import TodoList from './TodoList'
+import TodoListMouse from './TodoListMouse'
 import TodoListTouch from './TodoListTouch'
 
 const renderTodoTabs = (props) => {
@@ -17,7 +17,7 @@ const renderTodoTabs = (props) => {
     );
   } else {
     return (
-      <TodoList 
+      <TodoListMouse
         store={props.store}
         apiEndpoint={props.appConfig.apiEndpoint}
         authToken={props.appConfig.identity.authToken}
