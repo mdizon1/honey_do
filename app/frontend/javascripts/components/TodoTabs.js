@@ -1,31 +1,19 @@
 import React, { PropTypes } from 'react'
 import Tabs from 'material-ui/lib/tabs/tabs'
 import Tab from 'material-ui/lib/tabs/tab'
-import TodoListMouse from './TodoListMouse'
-import TodoListTouch from './TodoListTouch'
+import TodoListWrap from './TodoListWrap'
 
-const renderTodoTabs = (props, type) => {
-  if(props.isTouch) { 
-    return (
-      <TodoListTouch
-        store={props.store}
-        dataStatePath={['dataState', type]}
-        apiEndpoint={props.appConfig.apiEndpoint}
-        authToken={props.appConfig.identity.authToken}
-        onSync={props.onSync}
-      />
-    );
-  } else {
-    return (
-      <TodoListMouse
-        store={props.store}
-        dataStatePath={['dataState', type]}
-        apiEndpoint={props.appConfig.apiEndpoint}
-        authToken={props.appConfig.identity.authToken}
-        onSync={props.onSync}
-      />
-    );
-  }
+const renderTabContent = (props, type) => {
+  return (
+    <TodoListWrap
+      store={props.store}
+      type={type}
+      isTouch={props.isTouch}
+      apiEndpoint={props.appConfig.apiEndpoint}
+      authToken={props.appConfig.identity.authToken}
+      onSync={props.onSync}
+    />
+  );
 }
 
 const TodoTabs = function (props) {
@@ -36,12 +24,12 @@ const TodoTabs = function (props) {
     >
       <Tab label="Todo list" value="SHOW_TODOS">
         <div>
-          { renderTodoTabs(props, 'todos') }
+          { renderTabContent(props, 'todos') }
         </div>
       </Tab>
       <Tab label="Shopping list" value="SHOW_SHOPPING_LIST">
         <div>
-          { renderTodoTabs(props, 'shoppingItems') }
+          { renderTabContent(props, 'shoppingItems') }
         </div>
       </Tab>
     </Tabs>
