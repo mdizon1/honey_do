@@ -3,6 +3,7 @@ class TodosController < ApplicationController
   #   Add a filter to verify that the request includes an authentication 
   #   token which matches the users current one
   before_filter :authenticate_user!
+  before_filter :verify_auth_token
   before_filter :load_current_user_household, :except => [:new]
   before_filter :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete, :reorder]
 
