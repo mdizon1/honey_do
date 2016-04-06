@@ -2,6 +2,30 @@ import React, { PropTypes } from 'react'
 import Tabs from 'material-ui/lib/tabs/tabs'
 import Tab from 'material-ui/lib/tabs/tab'
 import TodoList from './TodoList'
+import TodoListTouch from './TodoListTouch'
+
+const renderTodoTabs = (props) => {
+  console.log("DEBUG: rendering the TodoList, are we doing it with touch or not?? ----> ", props.isTouch);
+  if(props.isTouch) { 
+    return (
+      <TodoListTouch
+        store={props.store}
+        apiEndpoint={props.appConfig.apiEndpoint}
+        authToken={props.appConfig.identity.authToken}
+        onSync={props.onSync}
+      />
+    );
+  } else {
+    return (
+      <TodoList 
+        store={props.store}
+        apiEndpoint={props.appConfig.apiEndpoint}
+        authToken={props.appConfig.identity.authToken}
+        onSync={props.onSync}
+      />
+    );
+  }
+}
 
 const TodoTabs = function (props) {
   return (
@@ -11,12 +35,7 @@ const TodoTabs = function (props) {
     >
       <Tab label="Todo list" value="SHOW_TODOS">
         <div>
-          <TodoList 
-            store={props.store}
-            apiEndpoint={props.appConfig.apiEndpoint}
-            authToken={props.appConfig.identity.authToken}
-            onSync={props.onSync}
-          />
+          { renderTodoTabs(props) }
         </div>
       </Tab>
       <Tab label="Shopping list" value="SHOW_SHOPPING_LIST">

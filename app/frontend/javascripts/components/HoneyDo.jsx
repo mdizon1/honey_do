@@ -17,6 +17,7 @@ export default class HoneyDo extends React.Component {
     this.initialTodoLoad();
     this.setState({
       isReady: false,
+      'interface': this.props.store.getState().get('configState')['interface'],
       unsubscribe: this.props.store.subscribe(this.onStateChange.bind(this))
     });
   }
@@ -37,6 +38,10 @@ export default class HoneyDo extends React.Component {
 
   handleChangeTab(tabVal){
     this.props.store.dispatch(switchTab(tabVal));
+  }
+
+  interfaceIsTouch() {
+    return (this.state['interface'] == 'touch' ? true : false);
   }
 
   isComponentReady(){
@@ -94,6 +99,7 @@ export default class HoneyDo extends React.Component {
           appConfig={this.state.configState}
           onChangeTab={this.handleChangeTab.bind(this)}
           onSync={this.syncTodos.bind(this)}
+          isTouch={this.interfaceIsTouch()}
         />
       </div>
     )

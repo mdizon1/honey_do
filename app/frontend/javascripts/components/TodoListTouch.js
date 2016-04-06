@@ -1,13 +1,15 @@
 import React, { Component, PropTypes } from 'react'
 import List from 'material-ui/lib/lists/list'
 import TodoItem from './TodoItem'
+import TodoDragLayer from './TodoDragLayer'
+import { DragDropContext } from 'react-dnd';
+import { default as TouchBackend } from 'react-dnd-touch-backend';
+
 import { completeTodoRequest, completeTodoSuccess, completeTodoFailure,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure 
   } from '../actions/HoneyDoActions'
 
-import { DragDropContext } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
 
 const completeTodo = (id, dispatch, ownProps) => {
   dispatch(completeTodoRequest(id)) 
@@ -48,7 +50,7 @@ const getTodosFromStore = (store) => {
   return todos;
 }
 
-class TodoList extends Component {
+class TodoListTouch extends Component {
   componentWillMount() {
     this.setState({
       unsubscribe: this.props.store.subscribe(this.onStateChange.bind(this)),
@@ -155,6 +157,7 @@ class TodoList extends Component {
 
     return (
       <div>
+        <TodoDragLayer />
         <List className='honey-do-todo-list'>
           <ul>
             {this.state.todos.map(function (todo){ 
@@ -177,4 +180,4 @@ class TodoList extends Component {
   }
 }
 
-export default DragDropContext(HTML5Backend)(TodoList)
+export default DragDropContext(TouchBackend({enableMouseEvents: false}))(TodoListTouch)
