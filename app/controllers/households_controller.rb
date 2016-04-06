@@ -3,6 +3,8 @@ class HouseholdsController < ApplicationController
   before_filter :load_current_user_household, :only => [:show, :edit, :update, :destroy]
 
   def show
+    @browser = Browser.new(request.user_agent, accept_language: "en-us")
+    prepare_honey_do_config
   end
 
   def edit
@@ -36,5 +38,20 @@ class HouseholdsController < ApplicationController
 
   def household_params
     params.require(:household).permit(:name)
+  end
+
+  def prepare_honey_do_config
+    @honey_do_config = {
+      :identity => {
+        :userId => current_user.id,
+        :userFirstName => current_user.first_name,
+        :userLastName => current_user.last_name,
+        :authToken => current_user.authentication_token,
+        :householdId => @household.id,
+        :householdName => @household.name,
+      },
+      :apiEndpoint => household_todos_path,
+      :interface => (@browser.device.mobile? ? 'touch' : 'html5')
+    }.to_json
   end
 end

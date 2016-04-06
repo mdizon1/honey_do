@@ -34,7 +34,8 @@ const emptyState = Immutable.fromJS({
   },
   configState: {
     apiEndpoint: null,
-    identityState: {
+    "interface": 'html5',
+    identity: {
       authToken: null,
       userName: null,
       userId: null,

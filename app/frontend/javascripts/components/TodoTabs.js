@@ -14,7 +14,7 @@ const TodoTabs = function (props) {
           <TodoList 
             store={props.store}
             apiEndpoint={props.appConfig.apiEndpoint}
-            authToken={props.appConfig.identityConfig.authToken}
+            authToken={props.appConfig.identity.authToken}
             onSync={props.onSync}
           />
         </div>
@@ -67,7 +67,7 @@ export default TodoTabs
 //        <div>
 //          <VisibleTodoList 
 //            apiEndpoint={props.appConfig.apiEndpoint}
-//            authToken={props.appConfig.identityConfig.authToken}
+//            authToken={props.appConfig.identity.authToken}
 //          />
 //        </div>
 //      </Tab>

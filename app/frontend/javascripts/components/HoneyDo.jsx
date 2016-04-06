@@ -64,7 +64,7 @@ export default class HoneyDo extends React.Component {
     this.props.store.dispatch(syncTodosRequest());
     $.ajax(this.props.config.apiEndpoint, {
       type: 'GET',
-      data: {authentication_token: this.props.config.identityConfig.authToken}
+      data: {authentication_token: this.props.config.identity.authToken}
     }).done((data, textStatus, jqXHR) => {
       this.props.store.dispatch(syncTodosRequestSuccess(data));
     }).fail((jqXHR, textStatus, errorThrown) => {
