@@ -59,13 +59,13 @@ function honeyDoReducer(state, action) {
         .set('configState', action.data.config);
 
     case COMPLETE_TODO_REQUEST:
-      return setTodoCompletedState(state, action.id, true);
+      return setTodoCompletedState(state, action.id, action.todoType, true);
 
     case COMPLETE_TODO_SUCCESS:
-      return setTodoState(state, action.id, action.data);
+      return setTodoState(state, action.id, action.todoType, action.data);
 
     case COMPLETE_TODO_FAILURE:
-      return setTodoCompletedState(state, action.id, false);
+      return setTodoCompletedState(state, action.id, action.todoType, false);
 
     case SWITCH_TAB:
       if(!_.includes(UiTabs, action.tab)){ return state; } // ensure the tab given (action.tab) is one of UiTabs
@@ -85,7 +85,7 @@ function honeyDoReducer(state, action) {
       return uiSyncingOff(state);
 
     case TODO_REORDER_REQUEST:
-      return reorderTodos(state, action.todosList);
+      return reorderTodos(state, action.todoType, action.todosList);
 
     case TODO_REORDER_SUCCESS:
     case TODO_REORDER_FAILURE:
@@ -99,13 +99,13 @@ function honeyDoReducer(state, action) {
       return state;
 
     case UNCOMPLETE_TODO_REQUEST:
-      return setTodoCompletedState(state, action.id, false);
+      return setTodoCompletedState(state, action.id, action.todoType, false);
 
     case UNCOMPLETE_TODO_SUCCESS:
-      return setTodoState(state, action.id, action.data);
+      return setTodoState(state, action.id, action.todoType, action.data);
 
     case UNCOMPLETE_TODO_FAILURE:
-      return setTodoCompletedState(state, action.id, true);
+      return setTodoCompletedState(state, action.id, action.todoType, true);
 
     default:
       return state;
@@ -114,20 +114,20 @@ function honeyDoReducer(state, action) {
 
 // Privates, might want to rename them with leading _ for readability
 
-const reorderTodos = (state, todosList) => {
+const reorderTodos = (state, todoType, todosList) => {
   _.forEach(todosList, (curr, index) => {
-    state = state.setIn(['dataState', 'todos', curr.id.toString(), 'position'], index);
+    state = state.setIn(['dataState', todoType, curr.id.toString(), 'position'], index);
   });
   return state;
 }
 
-const setTodoCompletedState = (state, id, todoState) => {
-  let todo = state.getIn(['dataState', 'todos', id.toString()]);
-  return state.setIn(['dataState', 'todos', id.toString()], todo.set('isCompleted', todoState));
+const setTodoCompletedState = (state, id, todoType, todoState) => {
+  let todo = state.getIn(['dataState', todoType, id.toString()]);
+  return state.setIn(['dataState', todoType, id.toString()], todo.set('isCompleted', todoState));
 }
 
-const setTodoState = (state, id, todoState) => {
-  return state.setIn(['dataState', 'todos', id.toString()], Immutable.fromJS(todoState));
+const setTodoState = (state, id, todoType, todoState) => {
+  return state.setIn(['dataState', todoType, id.toString()], Immutable.fromJS(todoState));
 }
 
 const uiSyncingOn = (state) => {

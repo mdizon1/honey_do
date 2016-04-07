@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react'
-
 import TodoListMouse from './TodoListMouse'
 import TodoListTouch from './TodoListTouch'
 
@@ -20,7 +19,7 @@ const getTodosFromStore = (store, dataStatePath) => {
 
 export default class TodoListWrap extends Component {
   componentWillMount() {
-    let dataStatePath = ['dataState', this.props.type]
+    let dataStatePath = ['dataState', this.props.todoType]
     this.setState({
       unsubscribe: this.props.store.subscribe(this.onStateChange.bind(this)),
       dataStatePath: dataStatePath,
@@ -33,55 +32,63 @@ export default class TodoListWrap extends Component {
   }
 
   completeTodo(id, dispatch) {
-    dispatch(completeTodoRequest(id)) 
+    var dispatch, todo_type;
+
+    dispatch = this.props.store.dispatch;
+    todo_type = this.props.todoType;
+
+    dispatch(completeTodoRequest(id, todo_type)) 
     $.ajax({
       type: "PUT",
       url: this.props.apiEndpoint + '/' +id+ '/complete',
       data: { authentication_token: this.props.authToken }
     })
       .done((data, textStatus, jqXHR) => {
-        dispatch(completeTodoSuccess(id, data));
+        dispatch(completeTodoSuccess(id, todo_type, data));
       })
       .fail((jqXHR, textStatus, errorThrown) => {
-        dispatch(completeTodoFailure(id, jqXHR));
+        dispatch(completeTodoFailure(id, todo_type, jqXHR));
       });
   }
 
   uncompleteTodo(id, dispatch) {
-    dispatch(uncompleteTodoRequest(id));
+    var dispatch, todo_type;
+
+    dispatch = this.props.store.dispatch;
+    todo_type = this.props.todoType;
+
+    dispatch(uncompleteTodoRequest(id, todo_type));
     $.ajax({
       type: "PUT",
       url: this.props.apiEndpoint + '/' +id+ '/uncomplete',
       data: { authentication_token: this.props.authToken }
     })
       .done((data, textStatus, jqXHR) => {
-        dispatch(uncompleteTodoSuccess(id, data));
+        dispatch(uncompleteTodoSuccess(id, todo_type, data));
       })
       .fail((jqXHR, textStatus, errorThrown) => {
-        dispatch(uncompleteTodoFailure(id, jqXHR));
+        dispatch(uncompleteTodoFailure(id, todo_type, jqXHR));
       });
   }
 
 
   handleTodoClicked(id, isChecked){
-    var dispatch = this.props.store.dispatch;
-
     if(isChecked) {
-      this.uncompleteTodo(id, dispatch)
+      this.uncompleteTodo(id, this.props.todoType)
     }else{
-      this.completeTodo(id, dispatch)
+      this.completeTodo(id, this.props.todoType)
     }
   }
 
   handleTodoDropped(droppedId, positionsJumped){
-    var self, dispatch;
+    var dispatch, todo_type, todo_data_path, temp_todo;
 
-    self = this;
     dispatch = this.props.store.dispatch;
+    todo_type = this.props.todoType;
+    todo_data_path = ['dataState', this.props.todoType, droppedId.toString()]
+    temp_todo = this.props.store.getState().getIn(todo_data_path).toJS();
 
-    let temp_todo = this.props.store.getState().getIn(['dataState', 'todos', droppedId.toString()]).toJS();
-
-    dispatch(todoReorderRequest(this.state.todos));
+    dispatch(todoReorderRequest(this.state.todos, todo_type));
     $.ajax({
       type: "PUT",
       url: this.props.apiEndpoint + '/' + temp_todo.id + '/reorder',
@@ -92,10 +99,10 @@ export default class TodoListWrap extends Component {
       }
     })
       .done((data, textStatus, jqXHR) => {
-        dispatch(todoReorderSuccess(temp_todo.id, positionsJumped));
+        dispatch(todoReorderSuccess(temp_todo.id, todo_type, positionsJumped));
       })
       .fail((jqXHR, textStatus, errorThrown) => {
-        dispatch(todoReorderFailure(temp_todo.id, jqXHR));
+        dispatch(todoReorderFailure(temp_todo.id, todo_type, jqXHR));
       })
       .always((data_jqXHR, textStatus, jqXHR_errorThrown) => {
         this.props.onSync();
@@ -103,9 +110,11 @@ export default class TodoListWrap extends Component {
   }
 
   handleTodoReorder(id, newIndex) {
-    let local_todo_state = this.state.todos;
-    let todo = _.find(local_todo_state, (curr) => { return curr.id == id; });
-    let prev_index = todo.index;
+    var local_todo_state, todo, prev_index;
+
+    local_todo_state = this.state.todos;
+    todo = _.find(local_todo_state, (curr) => { return curr.id == id; });
+    prev_index = todo.index;
 
     // change it's index
     todo.index = newIndex;

@@ -20,7 +20,6 @@ const TodoList = (props) => {
           return (
             <li key={"todo_item_" + todo.id}>
               <TodoItem 
-                key={"todo_"+todo.id}
                 todo={todo}
                 onTodoClicked={onTodoClicked}
                 onTodoDropped={onTodoDropped}

@@ -26,26 +26,29 @@ export function init(options) {
   }
 }
 
-export function completeTodoRequest(id) {
+export function completeTodoRequest(id, todoType) {
   return {
     type: COMPLETE_TODO_REQUEST,
     description: 'Complete the todo item given by id',
-    id: id
+    id: id,
+    todoType: todoType
   }
 }
 
-export function completeTodoSuccess(id, json) {
+export function completeTodoSuccess(id, todoType, json) {
   return {
     type: COMPLETE_TODO_SUCCESS,
     id: id,
+    todoType: todoType,
     data: json
   }
 }
 
-export function completeTodoFailure(id, jqXHR) {
+export function completeTodoFailure(id, todoType, jqXHR) {
   return {
     type: COMPLETE_TODO_FAILURE,
     id: id,
+    todoType: todoType,
     data: jqXHR
   }
 }
@@ -83,49 +86,55 @@ export function syncTodosRequestFailure(json, error){
   }
 }
 
-export function todoReorderRequest(todosList) {
+export function todoReorderRequest(todosList, todoType) {
   return {
     type: TODO_REORDER_REQUEST,
     description: 'Todo was dragged and dropped into a new position',
-    todosList: todosList 
+    todosList: todosList,
+    todoType: todoType
   }
 }
 
-export function todoReorderSuccess(id, json) {
+export function todoReorderSuccess(id, todoType, json) {
   return {
     type: TODO_REORDER_SUCCESS,
     description: 'Server acknowledges a todo reorder successfully',
-    data: json
+    data: json,
+    todoType: todoType
   }
 }
 
-export function todoReorderFailure(id, json) {
+export function todoReorderFailure(id, todoType, json) {
   return {
     type: TODO_REORDER_FAILURE,
     description: 'Todo was dragged and dropped into a new position',
-    data: json
+    data: json,
+    todoType: todoType
   }
 }
 
-export function uncompleteTodoRequest(id) {
+export function uncompleteTodoRequest(id, todoType) {
   return {
     type: UNCOMPLETE_TODO_REQUEST,
-    id: id
+    id: id,
+    todoType: todoType
   }
 }
 
-export function uncompleteTodoSuccess(id, json) {
+export function uncompleteTodoSuccess(id, todoType, json) {
   return {
     type: UNCOMPLETE_TODO_SUCCESS,
     id: id,
+    todoType: todoType,
     data: json
   }
 }
 
-export function uncompleteTodoFailure(id, jqXHR) {
+export function uncompleteTodoFailure(id, todoType, jqXHR) {
   return {
     type: UNCOMPLETE_TODO_FAILURE,
     id: id,
+    todoType: todoType,
     data: jqXHR
   }
 }

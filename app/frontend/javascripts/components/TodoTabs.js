@@ -7,7 +7,7 @@ const renderTabContent = (props, type) => {
   return (
     <TodoListWrap
       store={props.store}
-      type={type}
+      todoType={type}
       isTouch={props.isTouch}
       apiEndpoint={props.appConfig.apiEndpoint}
       authToken={props.appConfig.identity.authToken}
