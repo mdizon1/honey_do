@@ -85,9 +85,6 @@ export default class HoneyDo extends React.Component {
     )
   }
 
-  renderNewTodo() {
-  }
-
   render() {
     if(!this.isComponentReady() || this.isLoading()){
       return this.renderLoading();
