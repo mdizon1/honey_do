@@ -24,7 +24,7 @@ import {List, Map} from 'immutable';
 
 const emptyState = Immutable.fromJS({
   uiState: {
-    currentTab: 'SHOW_TODOS',
+    currentTab: UiTabs.TODOS,
     isSyncing: false,
     isShuffling: false
   },
@@ -78,8 +78,7 @@ function honeyDoReducer(state, action) {
       temp_state = uiSyncingOff(state);
       // TODO: This is actually doing a retrieve right now, I should refactor
       // the code to reflect this fact accordingly
-      temp_data = action.data;
-      return temp_state.set('dataState', Immutable.fromJS(temp_data));
+      return temp_state.set('dataState', Immutable.fromJS(action.data));
 
     case SYNC_TODOS_FAILURE:
       return uiSyncingOff(state);

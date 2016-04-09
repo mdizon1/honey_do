@@ -71,8 +71,7 @@ export default class TodoListWrap extends Component {
       });
   }
 
-
-  handleTodoClicked(id, isChecked){
+  handleTodoClicked(id, isChecked) {
     if(isChecked) {
       this.uncompleteTodo(id, this.props.todoType)
     }else{
@@ -80,7 +79,7 @@ export default class TodoListWrap extends Component {
     }
   }
 
-  handleTodoDropped(droppedId, positionsJumped){
+  handleTodoDropped(droppedId, positionsJumped) {
     var dispatch, todo_type, todo_data_path, temp_todo;
 
     dispatch = this.props.store.dispatch;
@@ -146,7 +145,7 @@ export default class TodoListWrap extends Component {
     this.setState({todos: local_todo_state});
   }
 
-  onStateChange(){
+  onStateChange() {
     let new_todo_state = getTodosFromStore(this.props.store, this.state.dataStatePath);
 
     if(!_.isEqual(this.state.todos, new_todo_state)){
@@ -154,29 +153,33 @@ export default class TodoListWrap extends Component {
     }
   }
 
+  renderTodoListMouse() {
+    return (
+      <TodoListMouse
+        todos={this.state.todos}
+        onTodoClicked={this.handleTodoClicked.bind(this)}
+        onTodoDropped={this.handleTodoDropped.bind(this)}
+        onTodoReorder={this.handleTodoReorder.bind(this)}
+      />
+    )
+  }
+
+  renderTodoListTouch() {
+    return (
+      <TodoListTouch
+        todos={this.state.todos}
+        onTodoClicked={this.handleTodoClicked.bind(this)}
+        onTodoDropped={this.handleTodoDropped.bind(this)}
+        onTodoReorder={this.handleTodoReorder.bind(this)}
+      />
+    )
+  }
+
   render() {
-    if(this.props.isTouch) {
-      return (
-        <div>
-          <TodoListTouch
-            todos={this.state.todos}
-            onTodoClicked={this.handleTodoClicked.bind(this)}
-            onTodoDropped={this.handleTodoDropped.bind(this)}
-            onTodoReorder={this.handleTodoReorder.bind(this)}
-          />
-        </div>
-      )
-    }else{
-      return (
-        <div>
-          <TodoListMouse
-            todos={this.state.todos}
-            onTodoClicked={this.handleTodoClicked.bind(this)}
-            onTodoDropped={this.handleTodoDropped.bind(this)}
-            onTodoReorder={this.handleTodoReorder.bind(this)}
-          />
-        </div>
-      )
-    }
+    return (
+      <div>
+        { this.props.isTouch ? renderTodoListTouch() : this.renderTodoListMouse() }
+      </div>
+    )
   }
 }

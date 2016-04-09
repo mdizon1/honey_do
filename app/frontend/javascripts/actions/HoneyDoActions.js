@@ -14,8 +14,8 @@ export const TODO_REORDER_SUCCESS = 'TODO_REORDER_SUCCESS'
 export const TODO_REORDER_FAILURE = 'TODO_REORDER_FAILURE'
 
 export const UiTabs = {
-  SHOW_TODOS: 'SHOW_TODOS',
-  SHOW_SHOPPING_LIST: 'SHOW_SHOPPING_LIST',
+  TODOS: 'TODOS',
+  SHOPPING_LIST: 'SHOPPING_LIST',
 }
 
 export function init(options) {

@@ -1,7 +1,6 @@
 import React from 'react'
 import TodoTabs from './TodoTabs'
-import { Map } from 'immutable'
-
+import NewTodo from './NewTodo'
 import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab } from './../actions/HoneyDoActions';
 
 const getConfigState = (store) => {
@@ -61,7 +60,7 @@ export default class HoneyDo extends React.Component {
     }
 
     let curr_tab = getCurrentTab(this.props.store);
-    if(!this.state.currentTab == curr_tab){ new_state.currentTab = curr_tab }
+    if(this.state.currentTab != curr_tab){ new_state.currentTab = curr_tab }
     this.setState(new_state);
   }
 
@@ -86,6 +85,9 @@ export default class HoneyDo extends React.Component {
     )
   }
 
+  renderNewTodo() {
+  }
+
   render() {
     if(!this.isComponentReady() || this.isLoading()){
       return this.renderLoading();
@@ -101,6 +103,7 @@ export default class HoneyDo extends React.Component {
           onSync={this.syncTodos.bind(this)}
           isTouch={this.interfaceIsTouch()}
         />
+        <NewTodo todoType={this.state.currentTab} />
       </div>
     )
   }

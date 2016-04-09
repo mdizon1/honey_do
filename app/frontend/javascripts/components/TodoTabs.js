@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import Tabs from 'material-ui/lib/tabs/tabs'
 import Tab from 'material-ui/lib/tabs/tab'
 import TodoListWrap from './TodoListWrap'
+import { UiTabs } from './../actions/HoneyDoActions'
 
 const renderTabContent = (props, type) => {
   return (
@@ -22,12 +23,12 @@ const TodoTabs = function (props) {
       value={props.currentTab}
       onChange={props.onChangeTab}
     >
-      <Tab label="Todo list" value="SHOW_TODOS">
+      <Tab label="Todo list" value={UiTabs.TODOS}>
         <div>
           { renderTabContent(props, 'todos') }
         </div>
       </Tab>
-      <Tab label="Shopping list" value="SHOW_SHOPPING_LIST">
+      <Tab label="Shopping list" value={UiTabs.SHOPPING_LIST}>
         <div>
           { renderTabContent(props, 'shoppingItems') }
         </div>

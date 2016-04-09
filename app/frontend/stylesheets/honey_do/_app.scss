@@ -15,6 +15,13 @@
   }
 }
 
+.new-todo-button {
+  position: fixed;
+  bottom: 1rem;
+  left: 50%;
+  margin-left: -25px;
+}
+
 .todo-item {
   &.todo-item-drag-placeholder {
     opacity: 0.2;
