@@ -1,6 +1,9 @@
 export const COMPLETE_TODO_REQUEST = 'COMPLETE_TODO_REQUEST'
 export const COMPLETE_TODO_SUCCESS = 'COMPLETE_TODO_SUCCESS'
 export const COMPLETE_TODO_FAILURE = 'COMPLETE_TODO_FAILURE'
+export const CREATE_TODO_REQUEST = 'CREATE_TODO_REQUEST'
+export const CREATE_TODO_SUCCESS = 'CREATE_TODO_SUCCESS'
+export const CREATE_TODO_FAILURE = 'CREATE_TODO_FAILURE'
 export const INITIALIZE = 'INITIALIZE'
 export const SWITCH_TAB = 'SWITCH_TAB'
 export const SYNC_TODOS_REQUEST = 'SYNC_TODOS_REQUEST'
@@ -12,11 +15,6 @@ export const UNCOMPLETE_TODO_FAILURE = 'UNCOMPLETE_TODO_FAILURE'
 export const TODO_REORDER_REQUEST = 'TODO_REORDER_REQUEST'
 export const TODO_REORDER_SUCCESS = 'TODO_REORDER_SUCCESS'
 export const TODO_REORDER_FAILURE = 'TODO_REORDER_FAILURE'
-
-export const UiTabs = {
-  TODOS: 'TODOS',
-  SHOPPING_LIST: 'SHOPPING_LIST',
-}
 
 export function init(options) {
   return {
@@ -50,6 +48,13 @@ export function completeTodoFailure(id, todoType, jqXHR) {
     id: id,
     todoType: todoType,
     data: jqXHR
+  }
+}
+
+export function createTodoRequest(params) {
+  return {
+    type: CREATE_TODO_REQUEST,
+    params: params
   }
 }
 

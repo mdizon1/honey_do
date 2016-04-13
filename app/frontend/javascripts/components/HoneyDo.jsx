@@ -1,7 +1,8 @@
 import React from 'react'
 import TodoTabs from './TodoTabs'
-import NewTodo from './NewTodo'
+import NewTodoWrap from '../containers/NewTodoWrap'
 import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab } from './../actions/HoneyDoActions';
+import { UiTabToType } from '../constants/TodoTypes'
 
 const getConfigState = (store) => {
   return store.getState().get('configState');
@@ -100,7 +101,12 @@ export default class HoneyDo extends React.Component {
           onSync={this.syncTodos.bind(this)}
           isTouch={this.interfaceIsTouch()}
         />
-        <NewTodo todoType={this.state.currentTab} />
+        <NewTodoWrap 
+          todoType={UiTabToType[this.state.currentTab]}
+          store={this.props.store}
+          appConfig={this.props.config}
+          onSync={this.syncTodos.bind(this)}
+        />
       </div>
     )
   }

@@ -2,6 +2,10 @@ FactoryGirl.define do
   factory :completable, :class => Completable do
     aasm_state 'active'
     association :household, :factory => :household
+    association :creator, :factory => :user
+    after(:build) { |completable|
+      m = FactoryGirl.create(:membership, :household => completable.household, :user => completable.creator)
+    }
   end
 
   factory :todo, :parent => :completable,:class => Completable::Todo do

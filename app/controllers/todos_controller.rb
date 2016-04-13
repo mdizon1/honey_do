@@ -4,7 +4,7 @@ class TodosController < ApplicationController
   #   token which matches the users current one
   before_filter :authenticate_user!
   before_filter :verify_auth_token
-  before_filter :load_current_user_household, :except => [:new]
+  before_filter :load_current_user_household, :only => [:index, :create]
   before_filter :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete, :reorder]
 
   def index
@@ -25,40 +25,20 @@ class TodosController < ApplicationController
   end
 
   def create
-    @household = current_user.household
-    respond_to do |format|
-      format.html do
-        if params[:completable_todo]
-          new_todo = @household.create_todo(params[:completable_todo][:title], current_user, {
-            notes => params[:completable_shopping_item][:notes]
-          })
-        elsif params[:completable_shopping_item]
-          new_todo = @household.create_todo(params[:completable_shopping_item][:title], current_user, {
-            notes => params[:completable_shopping_item][:notes],
-            klass => 'CompletableTodo::ShoppingItem'
-          })
-        end
-        flash[:notice] = "#{new_todo.friendly_name} created successfully." if new_todo.valid?
-        redirect_to household_path
-      end
-
-      format.js do
-        if params[:todo]
-          new_todo = @household.create_todo(params[:todo][:title], current_user, {
-            :notes => params[:todo][:notes], 
-            :tags  => params[:todo][:tags],
-            :klass => params[:todo][:klass]
-          })
-          render :json => new_todo.to_backbone(current_user), :status => :ok
-        end
-      end
+    begin
+      @todo = Completable.create(todo_params.merge({:household => @household, :creator => current_user}))
+      @todo = Completable.find(@todo.id).decorate # Reload with correct Model class
+      status = :ok
+    rescue
+      status = 500
     end
+    render_todo_to_json(status)
   end
 
   def update
     return render :status => 400 unless @todo 
     return render :status => 500 unless @todo.update_attributes(todo_params)
-    render :json => @todo.to_json(current_user), :status => :ok
+    render_todo_to_json(:ok)
   end
 
   def destroy
@@ -136,7 +116,7 @@ class TodosController < ApplicationController
   end
 
   def todo_params
-    params.require(:todo).permit(:title, :notes, :position)
+    params.require(:todo).permit(:title, :notes, :position, :type)
   end
 
   def render_todo_to_json(status)

@@ -8,6 +8,9 @@ class Completable < ActiveRecord::Base
   has_many :completed_events, :as => :target, :class_name => 'Event::TodoCompleted'
   has_many :accepted_events, :as => :target, :class_name => 'Event::TodoAccepted'
 
+  validates :household_id, :creator_id, :title, :presence => true
+  validate :creator_is_member
+
   include AASM
 
   aasm do
@@ -67,6 +70,11 @@ class Completable < ActiveRecord::Base
     self.completed_at = nil
     self.accepted_at = nil
     save
+  end
+
+  def creator_is_member
+    return unless household
+    errors.add(:creator, "is not a member of the household") unless household.has_member?(creator)
   end
 
   def rec_accept_event(transition_options)

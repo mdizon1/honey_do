@@ -16,8 +16,9 @@ import { INITIALIZE,
   TODO_REORDER_FAILURE,
   UNCOMPLETE_TODO_REQUEST, 
   UNCOMPLETE_TODO_SUCCESS, 
-  UNCOMPLETE_TODO_FAILURE,
-  UiTabs } from './../actions/HoneyDoActions'
+  UNCOMPLETE_TODO_FAILURE
+} from '../actions/HoneyDoActions'
+import { TodoTypeToDataState, UiTabs } from '../constants/TodoTypes'
 
 import * as Immutable from 'immutable';
 import {List, Map} from 'immutable';
@@ -52,6 +53,7 @@ function honeyDoReducer(state, action) {
 
   console.log("DEBUG: ~~~~~~~~~~~~~~~~~~~~~~~~ REDUCER CALLED ~~~~~~~~~~~~~~~~~~~~~~~~~~");
   console.log("DEBUG: type ------------> ", action.type);
+  console.log("DEBUG: action ------------> ", action);
 
   switch (action.type) {
     case INITIALIZE:
@@ -69,7 +71,7 @@ function honeyDoReducer(state, action) {
 
     case SWITCH_TAB:
       if(!_.includes(UiTabs, action.tab)){ return state; } // ensure the tab given (action.tab) is one of UiTabs
-      return state.set('uiState', state.get('uiState').set('currentTab', action.tab));
+      return state.setIn(["uiState", "currentTab"], action.tab);
 
     case SYNC_TODOS_REQUEST:
       return uiSyncingOn(state);
@@ -115,18 +117,19 @@ function honeyDoReducer(state, action) {
 
 const reorderTodos = (state, todoType, todosList) => {
   _.forEach(todosList, (curr, index) => {
-    state = state.setIn(['dataState', todoType, curr.id.toString(), 'position'], index);
+    state = state.setIn(['dataState', TodoTypeToDataState[todoType], curr.id.toString(), 'position'], index);
   });
   return state;
 }
 
 const setTodoCompletedState = (state, id, todoType, todoState) => {
-  let todo = state.getIn(['dataState', todoType, id.toString()]);
-  return state.setIn(['dataState', todoType, id.toString()], todo.set('isCompleted', todoState));
+  let todo_type_path = TodoTypeToDataState[todoType];
+  let todo = state.getIn(['dataState', todo_type_path, id.toString()]);
+  return state.setIn(['dataState', todo_type_path, id.toString()], todo.set('isCompleted', todoState));
 }
 
 const setTodoState = (state, id, todoType, todoState) => {
-  return state.setIn(['dataState', todoType, id.toString()], Immutable.fromJS(todoState));
+  return state.setIn(['dataState', TodoTypeToDataState[todoType], id.toString()], Immutable.fromJS(todoState));
 }
 
 const uiSyncingOn = (state) => {

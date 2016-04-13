@@ -1,6 +1,42 @@
 require 'spec_helper'
 
 describe Completable::Todo do
+  describe "validations" do
+    describe "presence" do
+      subject { FactoryGirl.build(:todo) }
+      it { should validate_presence_of(:title) }
+      it { should validate_presence_of(:creator_id) }
+      it { should validate_presence_of(:household_id) }
+    end
+
+    describe "creator_is_member" do
+      let(:todo) { FactoryGirl.build(:todo) }
+      let(:household) { todo.household }
+
+      context "when creator is a member of the household" do
+        it "should be valid" do
+          expect(todo.valid?).to eq true
+        end
+      end
+
+      context "when creator is not a member of the household" do
+        before do
+          c = todo.creator
+          c.membership.destroy
+        end
+
+        it "should not be valid" do
+          expect(todo.valid?).to eq false
+        end
+        
+        it "should set the correct error message" do
+          todo.valid?
+          expect(todo.errors.full_messages.join).to include('is not a member of the household')
+        end
+      end
+    end
+  end
+
   describe "relationships" do
     describe "tagging" do
       context "with a todo" do

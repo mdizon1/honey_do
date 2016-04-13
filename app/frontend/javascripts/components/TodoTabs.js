@@ -2,13 +2,13 @@ import React, { PropTypes } from 'react'
 import Tabs from 'material-ui/lib/tabs/tabs'
 import Tab from 'material-ui/lib/tabs/tab'
 import TodoListWrap from './TodoListWrap'
-import { UiTabs } from './../actions/HoneyDoActions'
+import { UiTabs, UiTabToType } from '../constants/TodoTypes'
 
-const renderTabContent = (props, type) => {
+const renderTabContent = (props, tabType) => {
   return (
     <TodoListWrap
       store={props.store}
-      todoType={type}
+      todoType={UiTabToType[tabType]}
       isTouch={props.isTouch}
       apiEndpoint={props.appConfig.apiEndpoint}
       authToken={props.appConfig.identity.authToken}
@@ -25,12 +25,12 @@ const TodoTabs = function (props) {
     >
       <Tab label="Todo list" value={UiTabs.TODOS}>
         <div>
-          { renderTabContent(props, 'todos') }
+          { renderTabContent(props, UiTabs.TODOS) }
         </div>
       </Tab>
       <Tab label="Shopping list" value={UiTabs.SHOPPING_LIST}>
         <div>
-          { renderTabContent(props, 'shoppingItems') }
+          { renderTabContent(props, UiTabs.SHOPPING_LIST) }
         </div>
       </Tab>
     </Tabs>

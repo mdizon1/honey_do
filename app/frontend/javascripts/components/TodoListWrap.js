@@ -6,10 +6,11 @@ import { completeTodoRequest, completeTodoSuccess, completeTodoFailure,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure 
   } from '../actions/HoneyDoActions'
+import { TodoTypeToDataState } from '../constants/TodoTypes'
 
 
 const getTodosFromStore = (store, dataStatePath) => {
-  let todos =  store.getState().getIn(dataStatePath).toJS();
+  let todos = store.getState().getIn(dataStatePath).toJS();
   todos = Object.keys(todos).map(key => todos[key]); // convert todos into array
   todos = _.sortBy(todos, (val) => { return val.position });
   _.forEach(todos, (curr, index) => { curr.index = index; });
@@ -19,7 +20,8 @@ const getTodosFromStore = (store, dataStatePath) => {
 
 export default class TodoListWrap extends Component {
   componentWillMount() {
-    let dataStatePath = ['dataState', this.props.todoType]
+    let dataStatePath = ['dataState', TodoTypeToDataState[this.props.todoType]]
+
     this.setState({
       unsubscribe: this.props.store.subscribe(this.onStateChange.bind(this)),
       dataStatePath: dataStatePath,
@@ -31,7 +33,7 @@ export default class TodoListWrap extends Component {
     this.state.unsubscribe();
   }
 
-  completeTodo(id, dispatch) {
+  completeTodo(id) {
     var dispatch, todo_type;
 
     dispatch = this.props.store.dispatch;
@@ -51,7 +53,7 @@ export default class TodoListWrap extends Component {
       });
   }
 
-  uncompleteTodo(id, dispatch) {
+  uncompleteTodo(id) {
     var dispatch, todo_type;
 
     dispatch = this.props.store.dispatch;
@@ -73,9 +75,9 @@ export default class TodoListWrap extends Component {
 
   handleTodoClicked(id, isChecked) {
     if(isChecked) {
-      this.uncompleteTodo(id, this.props.todoType)
+      this.uncompleteTodo(id)
     }else{
-      this.completeTodo(id, this.props.todoType)
+      this.completeTodo(id)
     }
   }
 
@@ -84,7 +86,7 @@ export default class TodoListWrap extends Component {
 
     dispatch = this.props.store.dispatch;
     todo_type = this.props.todoType;
-    todo_data_path = ['dataState', this.props.todoType, droppedId.toString()]
+    todo_data_path = ['dataState', TodoTypeToDataState[this.props.todoType], droppedId.toString()]
     temp_todo = this.props.store.getState().getIn(todo_data_path).toJS();
 
     dispatch(todoReorderRequest(this.state.todos, todo_type));
