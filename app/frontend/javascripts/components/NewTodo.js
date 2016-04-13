@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { TodoTypeToFriendlyString} from '../constants/TodoTypes'
+import { Colors } from '../constants/Colors'
 import FloatingActionButton from 'material-ui/lib/floating-action-button'
 import FlatButton from 'material-ui/lib/flat-button';
 import ContentAdd from 'material-ui/lib/svg-icons/content/add';
@@ -66,6 +67,7 @@ const renderNewTodoButton = (onOpen) => {
       className="new-todo-button"
       onMouseUp={onOpen}
       onTouchEnd={onOpen}
+      backgroundColor={Colors.BOOTSTRAP_GREEN}
     >
       <ContentAdd />
     </FloatingActionButton>
