@@ -20,8 +20,28 @@ An app for managing a household.
   + Scorekeeping
   + Checking off on behalf of others
 
+### Open issues:
 
-## TODO: 
+#### Material UI Nested list items
+I'm currently using nested list items to show the longer descriptions or notes
+under each todo or shopping item.  http://www.material-ui.com/#/components/list
+The default behavior adds a caret to the right side that expands the nested 
+list, however, I need a little expander menu there instead to handle more
+controls than just expand/contract.  
+
+The problem is, when I want to attach some handler to the menu so that the
+nested items expand or collapse, I can't.  The way nested items works is there
+is a prop to pass into the ListItem called initiallyOpen which will render the
+nested items as expanded or not.  The problem is when updating the state to
+flip initiallyOpen to true/false, it doesn't rerender.  I'm not sure if this
+is a bug or intentional.
+
+I was able to work around this by having two entirely different ListItems be
+rendered depending on whether the nested items were to be expanded or not.
+One which has nestedItems and one without.  Both would have initiallyOpen
+set to true.  If the list was supposed to be flipped open, it would render the
+ListItem with nested items, otherwise it would render the ListItem without any
+nested items.
 
 ---
 
