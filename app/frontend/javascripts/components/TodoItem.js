@@ -1,11 +1,22 @@
 import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
-import { ItemTypes } from './../constants/ItemTypes'
+import { ItemTypes } from '../constants/ItemTypes'
+import { editTodoRequest } from '../actions/HoneyDoActions'
 import flow from 'lodash/flow'
 
-import ListItem from 'material-ui/lib/lists/list-item';
-import Checkbox from 'material-ui/lib/checkbox';
+import ListItem from 'material-ui/lib/lists/list-item'
+import Checkbox from 'material-ui/lib/checkbox'
+import IconMenu from 'material-ui/lib/menus/icon-menu'
+import IconButton from 'material-ui/lib/icon-button'
+import MenuItem from 'material-ui/lib/menus/menu-item'
+import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert'
+
+const iconButtonElement = (
+  <IconButton touch={true}>
+    <MoreVertIcon color={"#333"} />
+  </IconButton>
+);
 
 const todoSource = {
   beginDrag(props, monitor) {
@@ -102,25 +113,6 @@ const renderDraggingPlaceholder = (props) => {
   ));
 }
 
-const renderDropPlaceholder = (props) => {
-  const { todo, onTodoClicked, connectDragSource, connectDropTarget } = props;
-
-  return connectDropTarget(connectDragSource(
-    <div className="todo-item">
-      <ListItem
-        primaryText={todo.title}
-        secondaryText={todo.notes}
-        leftCheckbox={renderCheckbox(todo, onTodoClicked)}
-        nestedItems={[
-          <ListItem
-            key={"todo_notes_"+todo.id}
-            primaryText={todo.notes}
-          />,
-        ]}
-      />
-    </div>
-  ));
-}
 
 class TodoItem extends Component {
 // TODO: add propTypes back in .. ?
@@ -128,17 +120,56 @@ class TodoItem extends Component {
 //    todo: PropTypes.object.isRequired,
 //    onTodoClicked: PropTypes.func.isRequired
 //  }
+  constructor(props) {
+    super(props);
+    this.state = { isNestedExpanded: false };
+  }
 
-  render() {
-    const { todo, onTodoClicked, connectDragSource, connectDropTarget, isDragging, isOver } = this.props;
+  toggleNotes() {
+    this.setState({isNestedExpanded: !this.state.isNestedExpanded});
+  }
 
-    if(isDragging) {
-      return renderDraggingPlaceholder(this.props);
+  triggerEdit() {
+    this.props.dispatch(editTodoRequest(this.props.todo));
+  }
+
+  renderEditableTodo() {
+    const { todo, onTodoClicked, connectDragSource, connectDropTarget } = this.props;
+
+    if(this.state.isNestedExpanded){
+      return connectDropTarget(connectDragSource(
+        <div className="todo-item">
+          <ListItem
+            primaryText={todo.title}
+            leftCheckbox={renderCheckbox(todo, onTodoClicked)}
+            initiallyOpen={true}
+            rightIconButton={this.renderRightIconMenu()}
+            nestedItems={[
+              <ListItem
+                key={"todo_notes_"+todo.id}
+                primaryText={todo.notes}
+              />,
+            ]}
+          />
+        </div>
+      ));
+    }else{
+      return connectDropTarget(connectDragSource(
+        <div className="todo-item">
+          <ListItem
+            primaryText={todo.title}
+            secondaryText={todo.notes}
+            leftCheckbox={renderCheckbox(todo, onTodoClicked)}
+            initiallyOpen={true}
+            rightIconButton={this.renderRightIconMenu()}
+          />
+        </div>
+      ));
     }
+  }
 
-    if(isOver) {
-      return renderDropPlaceholder(this.props);
-    }
+  renderNonEditableTodo() {
+    const { todo, onTodoClicked, connectDragSource, connectDropTarget } = this.props;
 
     return connectDropTarget(connectDragSource(
       <div className="todo-item">
@@ -155,7 +186,31 @@ class TodoItem extends Component {
         />
       </div>
     ));
-    
+  }
+
+  renderRightIconMenu() {
+    return (
+      <IconMenu iconButtonElement={iconButtonElement}>
+        <MenuItem onClick={this.toggleNotes.bind(this)}>
+          {this.state.isNestedExpanded ? "Hide Notes" : "View Notes"}
+        </MenuItem>
+        <MenuItem onClick={this.triggerEdit.bind(this)}>Edit</MenuItem>
+      </IconMenu>
+    );
+  }
+
+  render() {
+    const { todo, isDragging } = this.props;
+
+    if(isDragging) {
+      return renderDraggingPlaceholder(this.props);
+    }
+
+    if(todo.permissions.canEdit) {
+      return this.renderEditableTodo();
+    }else{
+      return this.renderNonEditableTodo()
+    }
   }
 }
 

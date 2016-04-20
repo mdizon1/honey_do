@@ -11,6 +11,10 @@ import { INITIALIZE,
   SYNC_TODOS_REQUEST,
   SYNC_TODOS_SUCCESS,
   SYNC_TODOS_FAILURE,
+  EDIT_TODO_CANCELED,
+  EDIT_TODO_REQUEST,
+  EDIT_TODO_SUCCESS,
+  EDIT_TODO_FAILURE,
   TODO_REORDER_REQUEST,
   TODO_REORDER_SUCCESS,
   TODO_REORDER_FAILURE,
@@ -26,8 +30,10 @@ import {List, Map} from 'immutable';
 const emptyState = Immutable.fromJS({
   uiState: {
     currentTab: UiTabs.TODOS,
+    isReady: false,
     isSyncing: false,
-    isShuffling: false
+    isShuffling: false,
+    isEditing: false
   },
   dataState: {
     shoppingItems: {},
@@ -62,10 +68,8 @@ function honeyDoReducer(state, action) {
 
     case COMPLETE_TODO_REQUEST:
       return setTodoCompletedState(state, action.id, action.todoType, true);
-
     case COMPLETE_TODO_SUCCESS:
       return setTodoState(state, action.id, action.todoType, action.data);
-
     case COMPLETE_TODO_FAILURE:
       return setTodoCompletedState(state, action.id, action.todoType, false);
 
@@ -75,19 +79,23 @@ function honeyDoReducer(state, action) {
 
     case SYNC_TODOS_REQUEST:
       return uiSyncingOn(state);
-
     case SYNC_TODOS_SUCCESS:
       temp_state = uiSyncingOff(state);
       // TODO: This is actually doing a retrieve right now, I should refactor
       // the code to reflect this fact accordingly
       return temp_state.set('dataState', Immutable.fromJS(action.data));
-
     case SYNC_TODOS_FAILURE:
       return uiSyncingOff(state);
 
+    case EDIT_TODO_REQUEST: 
+      return state.setIn(["uiState", "isEditing"], {todo: action.todo});
+    case EDIT_TODO_SUCCESS:
+    case EDIT_TODO_FAILURE:
+    case EDIT_TODO_CANCELED:
+      return state.setIn(["uiState", "isEditing"], false);
+
     case TODO_REORDER_REQUEST:
       return reorderTodos(state, action.todoType, action.todosList);
-
     case TODO_REORDER_SUCCESS:
     case TODO_REORDER_FAILURE:
       // TODO: Ok, some refactoring is in order here later.
@@ -101,10 +109,8 @@ function honeyDoReducer(state, action) {
 
     case UNCOMPLETE_TODO_REQUEST:
       return setTodoCompletedState(state, action.id, action.todoType, false);
-
     case UNCOMPLETE_TODO_SUCCESS:
       return setTodoState(state, action.id, action.todoType, action.data);
-
     case UNCOMPLETE_TODO_FAILURE:
       return setTodoCompletedState(state, action.id, action.todoType, true);
 

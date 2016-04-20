@@ -159,6 +159,7 @@ export default class TodoListWrap extends Component {
     return (
       <TodoListMouse
         todos={this.state.todos}
+        dispatch={this.props.store.dispatch}
         onTodoClicked={this.handleTodoClicked.bind(this)}
         onTodoDropped={this.handleTodoDropped.bind(this)}
         onTodoReorder={this.handleTodoReorder.bind(this)}
@@ -170,6 +171,7 @@ export default class TodoListWrap extends Component {
     return (
       <TodoListTouch
         todos={this.state.todos}
+        dispatch={this.props.store.dispatch}
         onTodoClicked={this.handleTodoClicked.bind(this)}
         onTodoDropped={this.handleTodoDropped.bind(this)}
         onTodoReorder={this.handleTodoReorder.bind(this)}

@@ -3,7 +3,7 @@ import List from 'material-ui/lib/lists/list'
 import TodoItem from './TodoItem'
 
 const TodoList = (props) => {
-  const { todos, onTodoClicked, onTodoDropped, onTodoReorder } = props
+  const { todos, onTodoClicked, onTodoDropped, onTodoReorder, dispatch} = props
 
   if(!todos || (todos.length < 1)) {
     return (
@@ -24,6 +24,7 @@ const TodoList = (props) => {
                 onTodoClicked={onTodoClicked}
                 onTodoDropped={onTodoDropped}
                 onTodoReorder={onTodoReorder}
+                dispatch={dispatch}
               />
             </li>
           )

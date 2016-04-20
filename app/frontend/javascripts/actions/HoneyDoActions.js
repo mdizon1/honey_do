@@ -4,17 +4,21 @@ export const COMPLETE_TODO_FAILURE = 'COMPLETE_TODO_FAILURE'
 export const CREATE_TODO_REQUEST = 'CREATE_TODO_REQUEST'
 export const CREATE_TODO_SUCCESS = 'CREATE_TODO_SUCCESS'
 export const CREATE_TODO_FAILURE = 'CREATE_TODO_FAILURE'
+export const EDIT_TODO_CANCELED = 'EDIT_TODO_CANCELED'
+export const EDIT_TODO_REQUEST  = 'EDIT_TODO_REQUEST'
+export const EDIT_TODO_SUCCESS  = 'EDIT_TODO_SUCCESS'
+export const EDIT_TODO_FAILURE  = 'EDIT_TODO_FAILURE'
 export const INITIALIZE = 'INITIALIZE'
 export const SWITCH_TAB = 'SWITCH_TAB'
 export const SYNC_TODOS_REQUEST = 'SYNC_TODOS_REQUEST'
 export const SYNC_TODOS_SUCCESS = 'SYNC_TODOS_SUCCESS'
 export const SYNC_TODOS_FAILURE = 'SYNC_TODOS_FAILURE'
-export const UNCOMPLETE_TODO_REQUEST = 'UNCOMPLETE_TODO_REQUEST'
-export const UNCOMPLETE_TODO_SUCCESS = 'UNCOMPLETE_TODO_SUCCESS'
-export const UNCOMPLETE_TODO_FAILURE = 'UNCOMPLETE_TODO_FAILURE'
 export const TODO_REORDER_REQUEST = 'TODO_REORDER_REQUEST'
 export const TODO_REORDER_SUCCESS = 'TODO_REORDER_SUCCESS'
 export const TODO_REORDER_FAILURE = 'TODO_REORDER_FAILURE'
+export const UNCOMPLETE_TODO_REQUEST = 'UNCOMPLETE_TODO_REQUEST'
+export const UNCOMPLETE_TODO_SUCCESS = 'UNCOMPLETE_TODO_SUCCESS'
+export const UNCOMPLETE_TODO_FAILURE = 'UNCOMPLETE_TODO_FAILURE'
 
 export function init(options) {
   return {
@@ -73,7 +77,7 @@ export function syncTodosRequest() {
   }
 }
 
-export function syncTodosRequestSuccess(json){
+export function syncTodosRequestSuccess(json) {
   return {
     type: SYNC_TODOS_SUCCESS,
     description: 'Make todo data in store match the passed in data',
@@ -82,7 +86,7 @@ export function syncTodosRequestSuccess(json){
   }
 }
 
-export function syncTodosRequestFailure(json, error){
+export function syncTodosRequestFailure(json, error) {
   return {
     type: SYNC_TODOS_FAILURE,
     description: 'Got a failure response from the server while attempting to sync todos',
@@ -91,6 +95,26 @@ export function syncTodosRequestFailure(json, error){
   }
 }
 
+export function editTodoCanceled() {
+  return {
+    type: EDIT_TODO_CANCELED,
+    description: 'Canceled the request to edit the todo'
+  }
+}
+
+export function editTodoRequest(todo) {
+  return {
+    type: EDIT_TODO_REQUEST,
+    description: 'Edit todo request triggered',
+    todo: todo
+  }
+}
+export function editTodoSuccess(todo) {
+}
+export function editTodoFailure(todo) {
+}
+
+// TODO: Rename todosList to todoList
 export function todoReorderRequest(todosList, todoType) {
   return {
     type: TODO_REORDER_REQUEST,

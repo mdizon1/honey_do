@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react'
+import React, { PropTypes } from 'react'
 import { TodoTypeToFriendlyString} from '../constants/TodoTypes'
 import { Colors } from '../constants/Colors'
+import TodoForm from './TodoForm'
 import FloatingActionButton from 'material-ui/lib/floating-action-button'
-import FlatButton from 'material-ui/lib/flat-button';
-import ContentAdd from 'material-ui/lib/svg-icons/content/add';
-import TextField from 'material-ui/lib/text-field';
-import Dialog from 'material-ui/lib/dialog';
+import FlatButton from 'material-ui/lib/flat-button'
+import ContentAdd from 'material-ui/lib/svg-icons/content/add'
+import Dialog from 'material-ui/lib/dialog'
 
 const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
   var actions;
@@ -33,31 +33,11 @@ const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
       open={isFormOpen}
       onRequestClose={onClose}
     >
-      {renderForm(onChange, onSubmit)}
+    <TodoForm
+      onChange={onChange}
+      onSubmit={onSubmit}
+    />
     </Dialog>
-  )
-}
-
-const renderForm = (onChange, onSubmit) => {
-  return (
-    <form>
-      <div>Form in progress </div>
-      <div className="form-group">
-        <TextField
-          floatingLabelText="Title"
-          fullWidth={true}
-          onChange={onChange}
-          name="title"
-        />
-        <TextField
-          floatingLabelText="Notes"
-          multiLine={true}
-          fullWidth={true}
-          onChange={onChange}
-          name="notes"
-        />
-      </div>
-    </form>
   )
 }
 

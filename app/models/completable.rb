@@ -40,6 +40,7 @@ class Completable < ActiveRecord::Base
       :can_uncomplete => a.can?(:uncomplete, self),
       :can_destroy => a.can?(:destroy, self),
       :can_accept => a.can?(:accept, self),
+      :can_edit => a.can?(:edit, self),
       :can_tag => a.can?(:tag, self)
     }
   end
