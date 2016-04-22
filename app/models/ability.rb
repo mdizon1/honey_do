@@ -16,9 +16,11 @@ class Ability
 
     ############################## Completable ##############################
     can :accept, Completable do |todo|
+      household = todo.household
       can?(:edit, todo) &&
         todo.completed? &&
-        !todo.accepted?
+        !todo.accepted? &&
+        can?(:administrate, household)
     end
 
     can :complete, Completable do |todo|

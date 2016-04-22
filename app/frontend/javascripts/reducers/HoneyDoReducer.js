@@ -4,6 +4,9 @@
 // For now I'll build all reducers into this file and later split as necessary
 
 import { INITIALIZE, 
+  ACCEPT_TODO_REQUEST,
+  ACCEPT_TODO_SUCCESS,
+  ACCEPT_TODO_FAILURE,
   COMPLETE_TODO_REQUEST, 
   COMPLETE_TODO_SUCCESS, 
   COMPLETE_TODO_FAILURE, 
@@ -22,7 +25,7 @@ import { INITIALIZE,
   UNCOMPLETE_TODO_SUCCESS, 
   UNCOMPLETE_TODO_FAILURE
 } from '../actions/HoneyDoActions'
-import { TodoTypeToDataState, UiTabs } from '../constants/TodoTypes'
+import { TodoKlassToDataState, TodoTypeToDataState, UiTabs } from '../constants/TodoTypes'
 
 import * as Immutable from 'immutable';
 import {List, Map} from 'immutable';
@@ -65,6 +68,12 @@ function honeyDoReducer(state, action) {
     case INITIALIZE:
       return emptyState
         .set('configState', action.data.config);
+
+    case ACCEPT_TODO_REQUEST:
+      return dropTodo(state, action.todo);
+    case ACCEPT_TODO_SUCCESS:
+    case ACCEPT_TODO_FAILURE:
+      return state;
 
     case COMPLETE_TODO_REQUEST:
       return setTodoCompletedState(state, action.id, action.todoType, true);
@@ -119,7 +128,11 @@ function honeyDoReducer(state, action) {
   }
 }
 
-// Privates, might want to rename them with leading _ for readability
+// Private.  May want to prefix with _
+
+const dropTodo = (state, todo) => {
+  return state.deleteIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], null);
+}
 
 const reorderTodos = (state, todoType, todosList) => {
   _.forEach(todosList, (curr, index) => {

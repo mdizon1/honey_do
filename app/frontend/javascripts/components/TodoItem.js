@@ -133,7 +133,31 @@ class TodoItem extends Component {
     this.props.dispatch(editTodoRequest(this.props.todo));
   }
 
-  renderEditableTodo() {
+  renderMenuItemAccept() {
+    if(!this.props.todo.permissions.canAccept) { return null; }
+    return (
+      <MenuItem onClick={() => this.props.onTodoAccepted(this.props.todo)}>
+        Accept
+      </MenuItem>
+    )
+  }
+
+  renderMenuItemEdit() {
+    if(!this.props.todo.permissions.canEdit) { return null; }
+    return (
+      <MenuItem onClick={this.triggerEdit.bind(this)}>Edit</MenuItem>
+    );
+  }
+
+  renderMenuItemToggleNotes() {
+    return (
+      <MenuItem onClick={this.toggleNotes.bind(this)}>
+        {this.state.isNestedExpanded ? "Hide Notes" : "View Notes"}
+      </MenuItem>
+    )
+  }
+
+  renderMultiActionTodo() {
     const { todo, onTodoClicked, connectDragSource, connectDropTarget } = this.props;
 
     if(this.state.isNestedExpanded){
@@ -168,7 +192,7 @@ class TodoItem extends Component {
     }
   }
 
-  renderNonEditableTodo() {
+  renderSingleActionTodo() {
     const { todo, onTodoClicked, connectDragSource, connectDropTarget } = this.props;
 
     return connectDropTarget(connectDragSource(
@@ -191,10 +215,9 @@ class TodoItem extends Component {
   renderRightIconMenu() {
     return (
       <IconMenu iconButtonElement={iconButtonElement}>
-        <MenuItem onClick={this.toggleNotes.bind(this)}>
-          {this.state.isNestedExpanded ? "Hide Notes" : "View Notes"}
-        </MenuItem>
-        <MenuItem onClick={this.triggerEdit.bind(this)}>Edit</MenuItem>
+        { this.renderMenuItemToggleNotes() }
+        { this.renderMenuItemEdit() }
+        { this.renderMenuItemAccept() }
       </IconMenu>
     );
   }
@@ -206,10 +229,10 @@ class TodoItem extends Component {
       return renderDraggingPlaceholder(this.props);
     }
 
-    if(todo.permissions.canEdit) {
-      return this.renderEditableTodo();
+    if(todo.permissions.canEdit || todo.permissions.canAccept) {
+      return this.renderMultiActionTodo();
     }else{
-      return this.renderNonEditableTodo()
+      return this.renderSingleActionTodo()
     }
   }
 }

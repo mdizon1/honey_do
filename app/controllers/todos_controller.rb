@@ -7,8 +7,8 @@ class TodosController < ApplicationController
   def index
     # TODO: (ha ha ha...) this must be heavily optimized, mapping over the 
     # todos to get permissions per item will be costly
-    @todos = @household.todos.decorate.map{|td| [td.id, td.to_json(current_user)] }.to_h
-    @shopping_items = @household.shopping_items.decorate.map{|si| [si.id, si.to_json(current_user)] }.to_h
+    @todos = @household.todos.includes([{:household => :members}, :creator, :completor, :acceptor, :tags]).decorate.map{|td| [td.id, td.to_json(current_user)] }.to_h
+    @shopping_items = @household.shopping_items.includes([{:household => :members}, :creator, :completor, :acceptor, :tags]).decorate.map{|si| [si.id, si.to_json(current_user)] }.to_h
     render :json => {:todos => @todos, :shoppingItems => @shopping_items}, :status => :ok
   end
 
@@ -54,7 +54,7 @@ class TodosController < ApplicationController
   end
 
   def accept
-    return unauthorized_response unles can?(:accept, @todo)
+    return unauthorized_response unless can?(:accept, @todo)
     begin
       @todo.accept!(:accepted_by => current_user)
       status = :ok

@@ -1,3 +1,6 @@
+export const ACCEPT_TODO_REQUEST = 'ACCEPT_TODO_REQUEST'
+export const ACCEPT_TODO_SUCCESS = 'ACCEPT_TODO_SUCCESS'
+export const ACCEPT_TODO_FAILURE = 'ACCEPT_TODO_FAILURE'
 export const COMPLETE_TODO_REQUEST = 'COMPLETE_TODO_REQUEST'
 export const COMPLETE_TODO_SUCCESS = 'COMPLETE_TODO_SUCCESS'
 export const COMPLETE_TODO_FAILURE = 'COMPLETE_TODO_FAILURE'
@@ -25,6 +28,26 @@ export function init(options) {
     type: INITIALIZE,
     description: 'Initialize the application/store to a default state',
     data: options
+  }
+}
+
+export function acceptTodoRequest(todo) {
+  return {
+    type: ACCEPT_TODO_REQUEST,
+    description: 'Admin requests to accept the todo',
+    todo: todo
+  }
+}
+
+export function acceptTodoSuccess(todo) {
+  return {
+    type: ACCEPT_TODO_SUCCESS
+  }
+}
+
+export function acceptTodoFailure(todo) {
+  return {
+    type: ACCEPT_TODO_FAILURE
   }
 }
 

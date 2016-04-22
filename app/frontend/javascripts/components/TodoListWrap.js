@@ -2,7 +2,8 @@ import React, { Component, PropTypes } from 'react'
 import TodoListMouse from './TodoListMouse'
 import TodoListTouch from './TodoListTouch'
 
-import { completeTodoRequest, completeTodoSuccess, completeTodoFailure,
+import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
+  completeTodoRequest, completeTodoSuccess, completeTodoFailure,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure 
   } from '../actions/HoneyDoActions'
@@ -31,6 +32,28 @@ export default class TodoListWrap extends Component {
 
   componentWillUnmount() {
     this.state.unsubscribe();
+  }
+
+  acceptTodo(todo) {
+    var dispatch;
+
+    dispatch = this.props.store.dispatch;
+
+    dispatch(acceptTodoRequest(todo));
+    $.ajax({
+      type: "PUT",
+      url: this.props.apiEndpoint + '/' +todo.id+ '/accept',
+      data: { authentication_token: this.props.authToken }
+    })
+      .done((data, textStatus, jqXHR) => {
+        dispatch(acceptTodoSuccess(todo));
+      })
+      .fail((jqXHR, textStatus, errorThrown) => {
+        dispatch(acceptTodoFailure(todo));
+      })
+      .always((data_jqXHR, textStatus, jqXHR_errorThrown) => {
+        this.props.onSync();
+      });
   }
 
   completeTodo(id) {
@@ -160,6 +183,7 @@ export default class TodoListWrap extends Component {
       <TodoListMouse
         todos={this.state.todos}
         dispatch={this.props.store.dispatch}
+        onTodoAccepted={this.acceptTodo.bind(this)}
         onTodoClicked={this.handleTodoClicked.bind(this)}
         onTodoDropped={this.handleTodoDropped.bind(this)}
         onTodoReorder={this.handleTodoReorder.bind(this)}
@@ -172,6 +196,7 @@ export default class TodoListWrap extends Component {
       <TodoListTouch
         todos={this.state.todos}
         dispatch={this.props.store.dispatch}
+        onTodoAccepted={this.acceptTodo.bind(this)}
         onTodoClicked={this.handleTodoClicked.bind(this)}
         onTodoDropped={this.handleTodoDropped.bind(this)}
         onTodoReorder={this.handleTodoReorder.bind(this)}

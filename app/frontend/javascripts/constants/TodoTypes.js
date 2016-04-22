@@ -13,6 +13,21 @@ export const UiTabToType = {
   SHOPPING_LIST: SHOPPING_ITEM
 }
 
+export const TodoKlassToFriendlyString = {
+  "Completable::Todo": "todo",
+  "Completable::ShoppingItem": "shopping item"
+}
+
+export const TodoKlassToType = {
+  "Completable::Todo": TODO_ITEM,
+  "Completable::ShoppingItem": SHOPPING_ITEM
+}
+
+export const TodoKlassToDataState = {
+  "Completable::Todo": "todos",
+  "Completable::ShoppingItem": "shoppingItems"
+}
+
 export const TodoTypeToDataState = {
   TODO_ITEM: "todos",
   SHOPPING_ITEM: "shoppingItems"
@@ -23,17 +38,8 @@ export const TodoTypeToFriendlyString = {
   SHOPPING_ITEM: "shopping item"
 }
 
-export const TodoKlassToFriendlyString = {
-  "Completable::Todo": "todo",
-  "Completable::ShoppingItem": "shopping item"
-}
-
 export const TodoTypeToKlass = {
   TODO_ITEM: "Completable::Todo",
   SHOPPING_ITEM: "Completable::ShoppingItem"
 }
 
-export const TodoKlassToType = {
-  "Completable::Todo": TODO_ITEM,
-  "Completable::ShoppingItem": SHOPPING_ITEM
-}

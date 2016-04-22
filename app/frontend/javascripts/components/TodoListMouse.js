@@ -10,6 +10,7 @@ class TodoListMouse extends Component {
       <div>
         <TodoList 
           todos={this.props.todos}
+          onTodoAccepted={this.props.onTodoAccepted}
           onTodoClicked={this.props.onTodoClicked}
           onTodoDropped={this.props.onTodoDropped}
           onTodoReorder={this.props.onTodoReorder}
