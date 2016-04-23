@@ -129,6 +129,10 @@ class TodoItem extends Component {
     this.setState({isNestedExpanded: !this.state.isNestedExpanded});
   }
 
+  triggerDestroy() {
+    this.props.onTodoDestroyed(this.props.todo);
+  }
+
   triggerEdit() {
     this.props.dispatch(editTodoRequest(this.props.todo));
   }
@@ -139,6 +143,13 @@ class TodoItem extends Component {
       <MenuItem onClick={() => this.props.onTodoAccepted(this.props.todo)}>
         Accept
       </MenuItem>
+    )
+  }
+
+  renderMenuItemDestroy() {
+    if(!this.props.todo.permissions.canDestroy) { return null; }
+    return (
+      <MenuItem onClick={this.triggerDestroy.bind(this)}>Delete</MenuItem>
     )
   }
 
@@ -218,6 +229,7 @@ class TodoItem extends Component {
         { this.renderMenuItemToggleNotes() }
         { this.renderMenuItemEdit() }
         { this.renderMenuItemAccept() }
+        { this.renderMenuItemDestroy() }
       </IconMenu>
     );
   }

@@ -4,6 +4,7 @@ import TodoListTouch from './TodoListTouch'
 
 import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
   completeTodoRequest, completeTodoSuccess, completeTodoFailure,
+  deleteTodoRequest, deleteTodoSuccess, deleteTodoFailure,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure 
   } from '../actions/HoneyDoActions'
@@ -35,9 +36,7 @@ export default class TodoListWrap extends Component {
   }
 
   acceptTodo(todo) {
-    var dispatch;
-
-    dispatch = this.props.store.dispatch;
+    var dispatch = this.props.store.dispatch;
 
     dispatch(acceptTodoRequest(todo));
     $.ajax({
@@ -102,6 +101,27 @@ export default class TodoListWrap extends Component {
     }else{
       this.completeTodo(id)
     }
+  }
+
+  handleTodoDestroyed(todo) {
+    var dispatch = this.props.store.dispatch;
+
+
+    dispatch(deleteTodoRequest(todo));
+    $.ajax({
+      type: "DELETE",
+      url: this.props.apiEndpoint + '/' +todo.id,
+      data: { authentication_token: this.props.authToken }
+    })
+      .done((data, textStatus, jqXHR) => {
+        dispatch(deleteTodoSuccess(todo));
+      })
+      .fail((jqXHR, textStatus, errorThrown) => {
+        dispatch(deleteTodoFailure(todo));
+      })
+      .always((data_jqXHR, textStatus, jqXHR_errorThrown) => {
+        this.props.onSync();
+      });
   }
 
   handleTodoDropped(droppedId, positionsJumped) {
@@ -185,6 +205,7 @@ export default class TodoListWrap extends Component {
         dispatch={this.props.store.dispatch}
         onTodoAccepted={this.acceptTodo.bind(this)}
         onTodoClicked={this.handleTodoClicked.bind(this)}
+        onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
         onTodoDropped={this.handleTodoDropped.bind(this)}
         onTodoReorder={this.handleTodoReorder.bind(this)}
       />
@@ -198,6 +219,7 @@ export default class TodoListWrap extends Component {
         dispatch={this.props.store.dispatch}
         onTodoAccepted={this.acceptTodo.bind(this)}
         onTodoClicked={this.handleTodoClicked.bind(this)}
+        onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
         onTodoDropped={this.handleTodoDropped.bind(this)}
         onTodoReorder={this.handleTodoReorder.bind(this)}
       />

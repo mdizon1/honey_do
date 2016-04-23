@@ -7,6 +7,9 @@ export const COMPLETE_TODO_FAILURE = 'COMPLETE_TODO_FAILURE'
 export const CREATE_TODO_REQUEST = 'CREATE_TODO_REQUEST'
 export const CREATE_TODO_SUCCESS = 'CREATE_TODO_SUCCESS'
 export const CREATE_TODO_FAILURE = 'CREATE_TODO_FAILURE'
+export const DELETE_TODO_REQUEST = 'DELETE_TODO_REQUEST'
+export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS'
+export const DELETE_TODO_FAILURE = 'DELETE_TODO_FAILURE'
 export const EDIT_TODO_CANCELED = 'EDIT_TODO_CANCELED'
 export const EDIT_TODO_REQUEST  = 'EDIT_TODO_REQUEST'
 export const EDIT_TODO_SUCCESS  = 'EDIT_TODO_SUCCESS'
@@ -82,6 +85,23 @@ export function createTodoRequest(params) {
   return {
     type: CREATE_TODO_REQUEST,
     params: params
+  }
+}
+
+export function deleteTodoRequest(todo) {
+  return {
+    type: DELETE_TODO_REQUEST,
+    todo: todo
+  }
+}
+export function deleteTodoSuccess(todo) {
+  return {
+    type: DELETE_TODO_SUCCESS
+  }
+}
+export function deleteTodoFailure(todo) {
+  return {
+    type: DELETE_TODO_FAILURE
   }
 }
 

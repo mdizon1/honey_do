@@ -10,6 +10,9 @@ import { INITIALIZE,
   COMPLETE_TODO_REQUEST, 
   COMPLETE_TODO_SUCCESS, 
   COMPLETE_TODO_FAILURE, 
+  DELETE_TODO_REQUEST,
+  DELETE_TODO_SUCCESS,
+  DELETE_TODO_FAILURE,
   SWITCH_TAB,
   SYNC_TODOS_REQUEST,
   SYNC_TODOS_SUCCESS,
@@ -81,6 +84,12 @@ function honeyDoReducer(state, action) {
       return setTodoState(state, action.id, action.todoType, action.data);
     case COMPLETE_TODO_FAILURE:
       return setTodoCompletedState(state, action.id, action.todoType, false);
+
+    case DELETE_TODO_REQUEST:
+      return dropTodo(state, action.todo);
+    case DELETE_TODO_SUCCESS:
+    case DELETE_TODO_FAILURE:
+     return state;
 
     case SWITCH_TAB:
       if(!_.includes(UiTabs, action.tab)){ return state; } // ensure the tab given (action.tab) is one of UiTabs

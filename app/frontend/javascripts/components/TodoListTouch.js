@@ -13,6 +13,7 @@ class TodoListTouch extends Component {
           todos={this.props.todos}
           onTodoAccepted={this.props.onTodoAccepted}
           onTodoClicked={this.props.onTodoClicked}
+          onTodoDestroyed={this.props.onTodoDestroyed}
           onTodoDropped={this.props.onTodoDropped}
           onTodoReorder={this.props.onTodoReorder}
           dispatch={this.props.dispatch}
