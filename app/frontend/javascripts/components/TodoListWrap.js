@@ -8,6 +8,8 @@ import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure 
   } from '../actions/HoneyDoActions'
+
+import { apiAcceptTodo, apiCompleteTodo, apiUncompleteTodo } from '../util/Api'
 import { TodoTypeToDataState } from '../constants/TodoTypes'
 
 
@@ -39,67 +41,37 @@ export default class TodoListWrap extends Component {
     var dispatch = this.props.store.dispatch;
 
     dispatch(acceptTodoRequest(todo));
-    $.ajax({
-      type: "PUT",
-      url: this.props.apiEndpoint + '/' +todo.id+ '/accept',
-      data: { authentication_token: this.props.authToken }
-    })
-      .done((data, textStatus, jqXHR) => {
-        dispatch(acceptTodoSuccess(todo));
-      })
-      .fail((jqXHR, textStatus, errorThrown) => {
-        dispatch(acceptTodoFailure(todo));
-      })
+    apiAcceptTodo(this.props.apiEndpoint, this.props.authToken, todo, dispatch)
       .always((data_jqXHR, textStatus, jqXHR_errorThrown) => {
         this.props.onSync();
       });
   }
 
-  completeTodo(id) {
+  completeTodo(todo) {
     var dispatch, todo_type;
 
     dispatch = this.props.store.dispatch;
     todo_type = this.props.todoType;
 
-    dispatch(completeTodoRequest(id, todo_type)) 
-    $.ajax({
-      type: "PUT",
-      url: this.props.apiEndpoint + '/' +id+ '/complete',
-      data: { authentication_token: this.props.authToken }
-    })
-      .done((data, textStatus, jqXHR) => {
-        dispatch(completeTodoSuccess(id, todo_type, data));
-      })
-      .fail((jqXHR, textStatus, errorThrown) => {
-        dispatch(completeTodoFailure(id, todo_type, jqXHR));
-      });
+    dispatch(completeTodoRequest(todo)) 
+    apiCompleteTodo(this.props.apiEndpoint, this.props.authToken, todo, dispatch);
   }
 
-  uncompleteTodo(id) {
+  uncompleteTodo(todo) {
     var dispatch, todo_type;
 
     dispatch = this.props.store.dispatch;
     todo_type = this.props.todoType;
 
-    dispatch(uncompleteTodoRequest(id, todo_type));
-    $.ajax({
-      type: "PUT",
-      url: this.props.apiEndpoint + '/' +id+ '/uncomplete',
-      data: { authentication_token: this.props.authToken }
-    })
-      .done((data, textStatus, jqXHR) => {
-        dispatch(uncompleteTodoSuccess(id, todo_type, data));
-      })
-      .fail((jqXHR, textStatus, errorThrown) => {
-        dispatch(uncompleteTodoFailure(id, todo_type, jqXHR));
-      });
+    dispatch(uncompleteTodoRequest(todo));
+    apiUncompleteTodo(this.props.apiEndpoint, this.props.authToken, todo, dispatch);
   }
 
-  handleTodoClicked(id, isChecked) {
-    if(isChecked) {
-      this.uncompleteTodo(id)
+  handleTodoClicked(todo) {
+    if(todo.isCompleted) {
+      this.uncompleteTodo(todo)
     }else{
-      this.completeTodo(id)
+      this.completeTodo(todo)
     }
   }
 

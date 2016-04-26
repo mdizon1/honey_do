@@ -95,7 +95,7 @@ const renderCheckbox = (todo, handleClick) => {
   return (
     <Checkbox 
       checked={todo.isCompleted}
-      onCheck={() => handleClick(todo.id, todo.isCompleted)}
+      onCheck={() => handleClick(todo)}
     />
   )
 }

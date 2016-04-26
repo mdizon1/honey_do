@@ -54,29 +54,26 @@ export function acceptTodoFailure(todo) {
   }
 }
 
-export function completeTodoRequest(id, todoType) {
+export function completeTodoRequest(todo) {
   return {
     type: COMPLETE_TODO_REQUEST,
     description: 'Complete the todo item given by id',
-    id: id,
-    todoType: todoType
+    todo: todo
   }
 }
 
-export function completeTodoSuccess(id, todoType, json) {
+export function completeTodoSuccess(todo, json) {
   return {
     type: COMPLETE_TODO_SUCCESS,
-    id: id,
-    todoType: todoType,
+    todo: todo,
     data: json
   }
 }
 
-export function completeTodoFailure(id, todoType, jqXHR) {
+export function completeTodoFailure(todo, jqXHR) {
   return {
     type: COMPLETE_TODO_FAILURE,
-    id: id,
-    todoType: todoType,
+    todo: todo,
     data: jqXHR
   }
 }
@@ -185,28 +182,25 @@ export function todoReorderFailure(id, todoType, json) {
   }
 }
 
-export function uncompleteTodoRequest(id, todoType) {
+export function uncompleteTodoRequest(todo) {
   return {
     type: UNCOMPLETE_TODO_REQUEST,
-    id: id,
-    todoType: todoType
+    todo: todo
   }
 }
 
-export function uncompleteTodoSuccess(id, todoType, json) {
+export function uncompleteTodoSuccess(todo, json) {
   return {
     type: UNCOMPLETE_TODO_SUCCESS,
-    id: id,
-    todoType: todoType,
+    todo: todo,
     data: json
   }
 }
 
-export function uncompleteTodoFailure(id, todoType, jqXHR) {
+export function uncompleteTodoFailure(todo, jqXHR) {
   return {
     type: UNCOMPLETE_TODO_FAILURE,
-    id: id,
-    todoType: todoType,
+    todo: todo,
     data: jqXHR
   }
 }
