@@ -4,6 +4,7 @@ import TodoTabs from './TodoTabs'
 import NewTodoWrap from '../containers/NewTodoWrap'
 import EditTodoWrap from '../containers/EditTodoWrap'
 import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab } from './../actions/HoneyDoActions';
+import { apiTodosSync } from '../util/Api'
 import { UiTabToType } from '../constants/TodoTypes'
 
 export default class HoneyDo extends React.Component {
@@ -66,14 +67,13 @@ export default class HoneyDo extends React.Component {
 
   syncTodos() {
     this.props.store.dispatch(syncTodosRequest());
-    $.ajax(this.props.config.apiEndpoint, {
-      type: 'GET',
-      data: {authentication_token: this.props.config.identity.authToken}
-    }).done((data, textStatus, jqXHR) => {
-      this.props.store.dispatch(syncTodosRequestSuccess(data));
-    }).fail((jqXHR, textStatus, errorThrown) => {
-      // TODO: Implement
-      //this.props.store.dispatch(syncTodosRequestFailure(jqXHR, textStatus));
+    apiTodosSync({
+      endpoint: this.props.config.apiEndpoint, 
+      authToken: this.props.config.identity.authToken,
+      onSuccess: (data, textStatus, jqXHR) => {
+        this.props.store.dispatch(syncTodosRequestSuccess(data));
+      }
+      // TODO: implement onFailure for this....
     });
   }
 

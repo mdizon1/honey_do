@@ -35,7 +35,6 @@ export const apiCompleteTodo = (args) => {
   promise = handleSuccess(promise, onSuccess);
   promise = handleFailure(promise, onFailure);
   promise = handleComplete(promise, onComplete);
-
   return promise;
 }
 
@@ -51,7 +50,21 @@ export const apiDeleteTodo = (args) => {
   promise = handleSuccess(promise, onSuccess);
   promise = handleFailure(promise, onFailure);
   promise = handleComplete(promise, onComplete);
+  return promise;
+}
 
+export const apiTodosSync = (args) => {
+  const { endpoint, authToken, onSuccess, onFailure, onComplete } = args;
+
+  let promise = $.ajax({
+    type: 'GET',
+    url: endpoint,
+    data: {authentication_token: authToken}
+  })
+
+  promise = handleSuccess(promise, onSuccess);
+  promise = handleFailure(promise, onFailure);
+  promise = handleComplete(promise, onComplete);
   return promise;
 }
 
@@ -70,7 +83,6 @@ export const apiTodoDropped = (args) => {
   promise = handleSuccess(promise, onSuccess);
   promise = handleFailure(promise, onFailure);
   promise = handleComplete(promise, onComplete);
-
   return promise;
 }
 
@@ -86,6 +98,7 @@ export const apiUncompleteTodo = (args) => {
   promise = handleSuccess(promise, onSuccess);
   promise = handleFailure(promise, onFailure);
   promise = handleComplete(promise, onComplete);
+  return promise;
 }
 
 function handleSuccess(promise, callback) {
@@ -108,7 +121,7 @@ function handleFailure(promise, callback) {
 
 function handleComplete(promise, callback) {
   if(typeof(callback) === 'function') {
-    return promise.done((data_jqXHR, textStatus, jqXHR_errorThrown) => {
+    return promise.always((data_jqXHR, textStatus, jqXHR_errorThrown) => {
       callback(data_jqXHR, textStatus, jqXHR_errorThrown);
     });
   }
