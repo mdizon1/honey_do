@@ -9,7 +9,12 @@ import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure 
   } from '../actions/HoneyDoActions'
 
-import { apiAcceptTodo, apiCompleteTodo, apiUncompleteTodo } from '../util/Api'
+import { 
+  apiAcceptTodo, 
+  apiCompleteTodo, 
+  apiDeleteTodo, 
+  apiTodoDropped, 
+  apiUncompleteTodo } from '../util/Api'
 import { TodoTypeToDataState } from '../constants/TodoTypes'
 
 
@@ -41,30 +46,54 @@ export default class TodoListWrap extends Component {
     var dispatch = this.props.store.dispatch;
 
     dispatch(acceptTodoRequest(todo));
-    apiAcceptTodo(this.props.apiEndpoint, this.props.authToken, todo, dispatch)
-      .always((data_jqXHR, textStatus, jqXHR_errorThrown) => {
+    apiAcceptTodo({
+      endpoint: this.props.apiEndpoint,
+      authToken: this.props.authToken,
+      todo: todo,
+      onSuccess: (data, textStatus, jqXHR) => {
+        dispatch(acceptTodoSuccess(todo, data));
+      },
+      onFailure: (jqXHR, textStatus, errorThrown) => {
+        dispatch(acceptTodoFailure(todo, errorThrown));
+      },
+      onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
         this.props.onSync();
-      });
+      }
+    });
   }
 
   completeTodo(todo) {
-    var dispatch, todo_type;
-
-    dispatch = this.props.store.dispatch;
-    todo_type = this.props.todoType;
+    var dispatch = this.props.store.dispatch;
 
     dispatch(completeTodoRequest(todo)) 
-    apiCompleteTodo(this.props.apiEndpoint, this.props.authToken, todo, dispatch);
+    apiCompleteTodo({
+      endpoint: this.props.apiEndpoint,
+      authToken: this.props.authToken,
+      todo: todo,
+      onSuccess: (data, textStatus, jqXHR) => {
+        dispatch(completeTodoSuccess(todo, data));
+      },
+      onFailure: (jqXHR, textStatus, errorThrown) => {
+        dispatch(completeTodoFailure(todo, errorThrown));
+      }
+    });
   }
 
   uncompleteTodo(todo) {
-    var dispatch, todo_type;
-
-    dispatch = this.props.store.dispatch;
-    todo_type = this.props.todoType;
+    var dispatch = this.props.store.dispatch;
 
     dispatch(uncompleteTodoRequest(todo));
-    apiUncompleteTodo(this.props.apiEndpoint, this.props.authToken, todo, dispatch);
+    apiUncompleteTodo({
+      endpoint: this.props.apiEndpoint,
+      authToken: this.props.authToken,
+      todo: todo,
+      onSuccess: (data, textStatus, jqXHR) => {
+        dispatch(uncompleteTodoSuccess(todo, data));
+      },
+      onFailure: (jqXHR, textStatus, errorThrown) => {
+        dispatch(uncompleteTodoFailure(todo, errorThrown));
+      }
+    });
   }
 
   handleTodoClicked(todo) {
@@ -78,22 +107,21 @@ export default class TodoListWrap extends Component {
   handleTodoDestroyed(todo) {
     var dispatch = this.props.store.dispatch;
 
-
     dispatch(deleteTodoRequest(todo));
-    $.ajax({
-      type: "DELETE",
-      url: this.props.apiEndpoint + '/' +todo.id,
-      data: { authentication_token: this.props.authToken }
-    })
-      .done((data, textStatus, jqXHR) => {
+    apiDeleteTodo({
+      endpoint: this.props.apiEndpoint,
+      authToken: this.props.authToken,
+      todo: todo,
+      onSuccess: (data, textStatus, jqXHR) => {
         dispatch(deleteTodoSuccess(todo));
-      })
-      .fail((jqXHR, textStatus, errorThrown) => {
+      },
+      onFailure: (jqXHR, textStatus, errorThrown) => {
         dispatch(deleteTodoFailure(todo));
-      })
-      .always((data_jqXHR, textStatus, jqXHR_errorThrown) => {
+      },
+      onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
         this.props.onSync();
-      });
+      }
+    });
   }
 
   handleTodoDropped(droppedId, positionsJumped) {
@@ -105,24 +133,21 @@ export default class TodoListWrap extends Component {
     temp_todo = this.props.store.getState().getIn(todo_data_path).toJS();
 
     dispatch(todoReorderRequest(this.state.todos, todo_type));
-    $.ajax({
-      type: "PUT",
-      url: this.props.apiEndpoint + '/' + temp_todo.id + '/reorder',
-      data: { 
-        authentication_token: this.props.authToken,
-        todo: temp_todo,
-        positions_jumped: positionsJumped
-      }
-    })
-      .done((data, textStatus, jqXHR) => {
+    apiTodoDropped({
+      endpoint: this.props.apiEndpoint,
+      authToken: this.props.authToken,
+      todo: temp_todo,
+      positionsJumped: positionsJumped,
+      onSuccess: (data, textStatus, jqXHR) => {
         dispatch(todoReorderSuccess(temp_todo.id, todo_type, positionsJumped));
-      })
-      .fail((jqXHR, textStatus, errorThrown) => {
+      },
+      onFailure: (jqXHR, textStatus, errorThrown) => {
         dispatch(todoReorderFailure(temp_todo.id, todo_type, jqXHR));
-      })
-      .always((data_jqXHR, textStatus, jqXHR_errorThrown) => {
+      },
+      onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
         this.props.onSync();
-      });
+      }
+    });
   }
 
   handleTodoReorder(id, newIndex) {
