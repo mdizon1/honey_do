@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { editTodoCanceled, editTodoSuccess, editTodoFailure } from './../actions/HoneyDoActions';
 import EditTodo from '../components/EditTodo'
+import { apiUpdateTodo } from '../util/Api'
 import { TodoTypeToKlass } from '../constants/TodoTypes'
 
 
@@ -56,18 +57,19 @@ class EditTodoWrap extends Component {
   handleSubmit() {
     var todo = this.state.todo;
 
-    $.ajax(this.props.appConfig.apiEndpoint + '/' + todo.id, {
-      type: "PUT", // TODO: make this PATCH i suppose
-      data: {
-        authentication_token: this.props.appConfig.identity.authToken, 
-        todo: todo
+    apiUpdateTodo({
+      endpoint: this.props.appConfig.apiEndpoint,
+      authToken: this.props.appConfig.identity.authToken, 
+      todo: todo,
+      onSuccess: (data, textStatus, jqXHR) => {
+        this.props.onSync();
+      },
+      onFailure: (jqXHR, textStatus, errorThrown) => {
+        this.props.onSync();
+      },
+      onComplete: () => {
+        this.handleClose();
       }
-    }).done((data, textStatus, jqXHR) => {
-      this.props.onSync();
-    }).fail((jqXHR, textStatus, errorThrown) => {
-      this.props.onSync();
-    }).always(() => {
-      this.handleClose();
     });
   }
 

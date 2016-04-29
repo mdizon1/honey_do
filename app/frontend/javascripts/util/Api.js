@@ -1,12 +1,5 @@
 // This file should handle all api calls to the server.
 
-import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
-  completeTodoRequest, completeTodoSuccess, completeTodoFailure,
-  deleteTodoRequest, deleteTodoSuccess, deleteTodoFailure,
-  todoReorderRequest, todoReorderSuccess, todoReorderFailure,
-  uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure 
-  } from '../actions/HoneyDoActions'
-
 export const apiAcceptTodo = (args) => {
   const { endpoint, todo, authToken, onSuccess, onFailure, onComplete } = args;
 
@@ -53,7 +46,7 @@ export const apiDeleteTodo = (args) => {
   return promise;
 }
 
-export const apiTodosSync = (args) => {
+export const apiSyncTodos = (args) => {
   const { endpoint, authToken, onSuccess, onFailure, onComplete } = args;
 
   let promise = $.ajax({
@@ -95,6 +88,23 @@ export const apiUncompleteTodo = (args) => {
     data: { authentication_token: authToken }
   });
 
+  promise = handleSuccess(promise, onSuccess);
+  promise = handleFailure(promise, onFailure);
+  promise = handleComplete(promise, onComplete);
+  return promise;
+}
+
+export const apiUpdateTodo = (args) => {
+  const { endpoint, todo, authToken, onSuccess, onFailure, onComplete } = args;
+
+  let promise = $.ajax({
+    type: "PUT", // TODO: make this PATCH i suppose
+    url: endpoint + '/' + todo.id,
+    data: {
+      authentication_token: authToken, 
+      todo: todo
+    }
+  });
   promise = handleSuccess(promise, onSuccess);
   promise = handleFailure(promise, onFailure);
   promise = handleComplete(promise, onComplete);

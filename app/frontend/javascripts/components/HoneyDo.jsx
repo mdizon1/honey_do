@@ -4,7 +4,7 @@ import TodoTabs from './TodoTabs'
 import NewTodoWrap from '../containers/NewTodoWrap'
 import EditTodoWrap from '../containers/EditTodoWrap'
 import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab } from './../actions/HoneyDoActions';
-import { apiTodosSync } from '../util/Api'
+import { apiSyncTodos } from '../util/Api'
 import { UiTabToType } from '../constants/TodoTypes'
 
 export default class HoneyDo extends React.Component {
@@ -67,7 +67,7 @@ export default class HoneyDo extends React.Component {
 
   syncTodos() {
     this.props.store.dispatch(syncTodosRequest());
-    apiTodosSync({
+    apiSyncTodos({
       endpoint: this.props.config.apiEndpoint, 
       authToken: this.props.config.identity.authToken,
       onSuccess: (data, textStatus, jqXHR) => {
