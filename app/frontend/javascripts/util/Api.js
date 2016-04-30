@@ -31,6 +31,24 @@ export const apiCompleteTodo = (args) => {
   return promise;
 }
 
+export const apiCreateTodo = (args) => {
+  const { endpoint, params, authToken, onSuccess, onFailure, onComplete } = args;
+
+  let promise = $.ajax({
+    type: "POST",
+    url: endpoint,
+    data: {
+      authentication_token: authToken, 
+      todo: params
+    }
+  });
+
+  promise = handleSuccess(promise, onSuccess);
+  promise = handleFailure(promise, onFailure);
+  promise = handleComplete(promise, onComplete);
+  return promise;
+}
+
 export const apiDeleteTodo = (args) => {
   const { endpoint, todo, authToken, onSuccess, onFailure, onComplete } = args;
 
@@ -38,7 +56,7 @@ export const apiDeleteTodo = (args) => {
     type: "DELETE",
     url: endpoint + '/' +todo.id,
     data: { authentication_token: authToken }
-  })
+  });
 
   promise = handleSuccess(promise, onSuccess);
   promise = handleFailure(promise, onFailure);
