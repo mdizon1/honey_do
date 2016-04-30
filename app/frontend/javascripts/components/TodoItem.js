@@ -96,6 +96,7 @@ const renderCheckbox = (todo, handleClick) => {
     <Checkbox 
       checked={todo.isCompleted}
       onCheck={() => handleClick(todo)}
+      disabled={todo.isCompleted && !todo.permissions.canUncomplete}
     />
   )
 }
