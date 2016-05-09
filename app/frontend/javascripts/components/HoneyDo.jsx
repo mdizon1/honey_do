@@ -6,6 +6,7 @@ import EditTodoWrap from '../containers/EditTodoWrap'
 import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab } from './../actions/HoneyDoActions';
 import { apiSyncTodos } from '../util/Api'
 import { UiTabToType } from '../constants/TodoTypes'
+import CircularProgress from 'material-ui/lib/circular-progress'
 
 export default class HoneyDo extends React.Component {
   componentWillMount() {
@@ -97,6 +98,15 @@ export default class HoneyDo extends React.Component {
     )
   }
 
+  renderSpinner() {
+    if(!this.state.uiState.isSpinning) { return null; }
+    return (
+      <div className="honey-do-spinner">
+        <CircularProgress />
+      </div>
+    )
+  }
+
   render() {
     if(!this.isComponentReady() || this.isLoading()){
       return this.renderLoading();
@@ -104,6 +114,7 @@ export default class HoneyDo extends React.Component {
 
     return (
       <div className="honey-do-app-wrap">
+        { this.renderSpinner() }
         <EditTodoWrap onSync={this.syncTodos.bind(this)} />
         <TodoTabs 
           store={this.props.store}

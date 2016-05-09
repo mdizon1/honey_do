@@ -36,10 +36,11 @@ import {List, Map} from 'immutable';
 const emptyState = Immutable.fromJS({
   uiState: {
     currentTab: UiTabs.TODOS,
+    isEditing: false,
     isReady: false,
-    isSyncing: false,
     isShuffling: false,
-    isEditing: false
+    isSpinning: false,
+    isSyncing: false
   },
   dataState: {
     shoppingItems: {},
@@ -64,8 +65,6 @@ const emptyState = Immutable.fromJS({
 
 function honeyDoReducer(state, action) {
   var temp_state;
-  var temp_item;
-  var temp_data;
 
   console.log("DEBUG: ~~~~~~~~~~~~~~~~~~~~~~~~ REDUCER CALLED ~~~~~~~~~~~~~~~~~~~~~~~~~~");
   console.log("DEBUG: type ------------> ", action.type);
@@ -77,23 +76,23 @@ function honeyDoReducer(state, action) {
         .set('configState', emptyState.get('configState').mergeDeep(action.data.config));
 
     case ACCEPT_TODO_REQUEST:
-      return dropTodo(state, action.todo);
+      return dropTodo(activateSpinner(state), action.todo);
     case ACCEPT_TODO_SUCCESS:
     case ACCEPT_TODO_FAILURE:
-      return state;
+      return deactivateSpinner(state);
 
     case COMPLETE_TODO_REQUEST:
-      return setTodoCompletedState(state, action.todo, true);
+      return setTodoCompletedState(activateSpinner(state), action.todo, true);
     case COMPLETE_TODO_SUCCESS:
-      return setTodoState(state, action.todo, action.data);
+      return setTodoState(deactivateSpinner(state), action.todo, action.data);
     case COMPLETE_TODO_FAILURE:
-      return setTodoCompletedState(state, action.todo, false);
+      return setTodoCompletedState(deactivateSpinner(state), action.todo, false);
 
     case DELETE_TODO_REQUEST:
-      return dropTodo(state, action.todo);
+      return dropTodo(activateSpinner(state), action.todo);
     case DELETE_TODO_SUCCESS:
     case DELETE_TODO_FAILURE:
-     return state;
+     return deactivateSpinner(state);
 
     case SWITCH_TAB:
       if(!_.includes(UiTabs, action.tab)){ return state; } // ensure the tab given (action.tab) is one of UiTabs
@@ -117,7 +116,7 @@ function honeyDoReducer(state, action) {
       return state.setIn(["uiState", "isEditing"], false);
 
     case TODO_REORDER_REQUEST:
-      return reorderTodos(state, action.todoType, action.todosList);
+      return reorderTodos(activateSpinner(state), action.todoType, action.todosList);
     case TODO_REORDER_SUCCESS:
     case TODO_REORDER_FAILURE:
       // TODO: Ok, some refactoring is in order here later.
@@ -127,14 +126,14 @@ function honeyDoReducer(state, action) {
       // after these actions complete, there is a trigger to sync.
       // For now, we'll just let this do nothing and sync immediately after
       // we get a success or failure back.
-      return state;
+      return deactivateSpinner(state);
 
     case UNCOMPLETE_TODO_REQUEST:
-      return setTodoCompletedState(state, action.todo, false);
+      return setTodoCompletedState(activateSpinner(state), action.todo, false);
     case UNCOMPLETE_TODO_SUCCESS:
-      return setTodoState(state, action.todo, action.data);
+      return setTodoState(deactivateSpinner(state), action.todo, action.data);
     case UNCOMPLETE_TODO_FAILURE:
-      return setTodoCompletedState(state, action.todo, true);
+      return setTodoCompletedState(deactivateSpinner(state), action.todo, true);
 
     default:
       return state;
@@ -142,6 +141,14 @@ function honeyDoReducer(state, action) {
 }
 
 // Private.  May want to prefix with _
+
+const activateSpinner = (state) => {
+  return state.setIn(['uiState', 'isSpinning'], true);
+}
+
+const deactivateSpinner = (state) => {
+  return state.setIn(['uiState', 'isSpinning'], false);
+}
 
 const dropTodo = (state, todo) => {
   return state.deleteIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], null);
@@ -163,11 +170,13 @@ const setTodoState = (state, todo, todoState) => {
 }
 
 const uiSyncingOn = (state) => {
-  return state.set('uiState', state.get('uiState').set('isSyncing', true));
+  let temp_state = state.set('uiState', state.get('uiState').set('isSyncing', true));
+  return activateSpinner(temp_state);
 }
 
 const uiSyncingOff = (state) => {
-  return state.set('uiState', state.get('uiState').set('isSyncing', false));
+  let temp_state = state.set('uiState', state.get('uiState').set('isSyncing', false));
+  return deactivateSpinner(temp_state);
 }
 
 export default honeyDoReducer

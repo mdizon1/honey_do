@@ -11,7 +11,7 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     todo: editing ? editing.todo : null,
-    appConfig: state.get('configState'),
+    appConfig: state.get('configState').toJS(),
     isFormOpen: !!editing
   }
 }
