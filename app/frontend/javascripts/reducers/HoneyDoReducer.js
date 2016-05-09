@@ -29,39 +29,12 @@ import { INITIALIZE,
   UNCOMPLETE_TODO_FAILURE
 } from '../actions/HoneyDoActions'
 import { TodoKlassToDataState, TodoTypeToDataState, TodoKlassToType, UiTabs } from '../constants/TodoTypes'
+import { EmptyStore } from '../constants/EmptyStore'
 
 import * as Immutable from 'immutable';
 import {List, Map} from 'immutable';
 
-const emptyState = Immutable.fromJS({
-  uiState: {
-    currentTab: UiTabs.TODOS,
-    isEditing: false,
-    isReady: false,
-    isShuffling: false,
-    isSpinning: false,
-    isSyncing: false
-  },
-  dataState: {
-    shoppingItems: {},
-    todos: {} 
-  },
-  configState: {
-    apiEndpoint: null,
-    "interface": 'html5',
-    identity: {
-      authToken: null,
-      userName: null,
-      userId: null,
-      householdId: null,
-      householdName: null,
-      permissions: {
-        isAdmin: false,
-        canCreateTodo: true
-      }
-    },
-  }
-});
+const emptyState = Immutable.fromJS(EmptyStore);
 
 function honeyDoReducer(state, action) {
   var temp_state;
