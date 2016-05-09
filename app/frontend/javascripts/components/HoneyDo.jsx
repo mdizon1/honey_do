@@ -85,6 +85,18 @@ export default class HoneyDo extends React.Component {
     )
   }
 
+  renderNewTodo() {
+    if(!this.state.configState.identity.permissions.canCreateTodo) { return null; }
+    return (
+      <NewTodoWrap 
+        todoType={UiTabToType[this.state.currentTab]}
+        store={this.props.store}
+        appConfig={this.props.config}
+        onSync={this.syncTodos.bind(this)}
+      />
+    )
+  }
+
   render() {
     if(!this.isComponentReady() || this.isLoading()){
       return this.renderLoading();
@@ -101,12 +113,7 @@ export default class HoneyDo extends React.Component {
           onSync={this.syncTodos.bind(this)}
           isTouch={this.interfaceIsTouch()}
         />
-        <NewTodoWrap 
-          todoType={UiTabToType[this.state.currentTab]}
-          store={this.props.store}
-          appConfig={this.props.config}
-          onSync={this.syncTodos.bind(this)}
-        />
+        { this.renderNewTodo() }
       </div>
     )
   }
@@ -114,7 +121,7 @@ export default class HoneyDo extends React.Component {
 
 // private
 const getConfigState = (store) => {
-  return store.getState().get('configState');
+  return store.getState().get('configState').toJS();
 }
 const getCurrentTab = (store) => {
   return store.getState().getIn(['uiState', 'currentTab']);

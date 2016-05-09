@@ -53,7 +53,11 @@ const emptyState = Immutable.fromJS({
       userName: null,
       userId: null,
       householdId: null,
-      householdName: null
+      householdName: null,
+      permissions: {
+        isAdmin: false,
+        canCreateTodo: true
+      }
     },
   }
 });
@@ -70,7 +74,7 @@ function honeyDoReducer(state, action) {
   switch (action.type) {
     case INITIALIZE:
       return emptyState
-        .set('configState', action.data.config);
+        .set('configState', emptyState.get('configState').mergeDeep(action.data.config));
 
     case ACCEPT_TODO_REQUEST:
       return dropTodo(state, action.todo);
