@@ -10,7 +10,7 @@ var config = module.exports = {
 };
 
 config.entry = {
-  public: './app/frontend/javascripts/entry.js'
+  'public': './app/frontend/javascripts/entry.js'
 };
 
 config.output = {
