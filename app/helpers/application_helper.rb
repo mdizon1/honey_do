@@ -25,7 +25,7 @@ module ApplicationHelper
         webpack_bundle_tag( 'public')
       ].join.html_safe
     end
-    host = (Rails.configuration.remote_development.present? ? Rails.configuration.remote_development : 'localhost')
+    host = (Rails.configuration.development[:remote].present? ? Rails.configuration.development[:remote] : 'localhost')
     [
       content_tag(:script, '', :src => "http://#{host}:8080/webpack-dev-server.js"),
       content_tag(:script, '', :src => "http://#{host}:8080/webpack/bundle.js")
