@@ -20,6 +20,21 @@ An app for managing a household.
   + Scorekeeping
   + Checking off on behalf of others
 
+### NOTES:
+
+#### Remote development
+When running the development server on a remote machine (e.g. on ec2) then use
+the following line:
+```
+REMOTE_DEVELOPMENT=<ip_address> rails s -b 0.0.0.0 
+```
+The webpack dev server must also be run with the appropriate arguments
+```
+webpack: ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-base build/ --config config/webpack/development.config.js --inline --hot --host 0.0.0.0
+```
+Lastly, a change must be made to the remote_development.js config file.  The
+file itself has the necessary instruction
+
 ### Open issues:
 
 #### Material UI Nested list items
@@ -27,7 +42,7 @@ I'm currently using nested list items to show the longer descriptions or notes
 under each todo or shopping item.  http://www.material-ui.com/#/components/list
 The default behavior adds a caret to the right side that expands the nested 
 list, however, I need a little expander menu there instead to handle more
-controls than just expand/contract.  
+controls than just expand/contract.
 
 The problem is, when I want to attach some handler to the menu so that the
 nested items expand or collapse, I can't.  The way nested items works is there

@@ -25,5 +25,9 @@ module HoneyDo
       :common_manifest => {},
     }
 
+    config.development = {
+      :remote => false
+    }
+
   end
 end

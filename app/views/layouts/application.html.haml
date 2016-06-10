@@ -12,14 +12,7 @@
       = yield
 
     = yield :modals
-    - if Rails.env.development?
-      %script{:src => "http://localhost:8080/webpack-dev-server.js"}
-      %script{:src => "http://localhost:8080/webpack/bundle.js"}
-    - else
-      = webpack_manifest_script
-      -#= webpack_bundle_tag 'common'
-      = webpack_bundle_tag 'public'
-
+    = webpack_javascript_include_helper
 
     = yield :javascripts
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>

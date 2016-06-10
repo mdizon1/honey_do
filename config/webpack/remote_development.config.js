@@ -1,8 +1,6 @@
 // NOTE: Use this file when need to access bundle.js from a remote machine
 //   Also need to update the webpack dev server script tag(s) in application layout
 //   Also need to launch webpack with --host 0.0.0.0
-//   TODO: let these read from an environment variable so I can launch the 
-//   remote server with a single command
 var webpack = require('webpack');
 var _ = require('lodash');
 var config = require('./main.config.js');
