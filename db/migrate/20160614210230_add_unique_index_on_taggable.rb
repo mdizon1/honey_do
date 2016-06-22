@@ -1,5 +1,9 @@
 class AddUniqueIndexOnTaggable < ActiveRecord::Migration
-  def change
-    add_index :tags, [:taggable_id, :taggable_type], :unique => true, :name => 'tags_taggable_id_taggable_type_idx'
+  def up
+    add_index :tags, [:taggable_id, :taggable_type, :tag_title_id], :unique => true, :name => 'tags_join_idx'
+  end
+
+  def down
+    remove_index :tags, :name => 'tags_join_idx'
   end
 end
