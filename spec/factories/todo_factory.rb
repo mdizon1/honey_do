@@ -4,7 +4,9 @@ FactoryGirl.define do
     association :household, :factory => :household
     association :creator, :factory => :user
     after(:build) { |completable|
-      m = FactoryGirl.create(:membership, :household => completable.household, :user => completable.creator)
+      unless completable.creator.household == completable.household
+        m = FactoryGirl.create(:membership, :household => completable.household, :user => completable.creator)
+      end
     }
   end
 
