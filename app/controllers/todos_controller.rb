@@ -3,6 +3,7 @@ class TodosController < ApplicationController
   before_filter :verify_auth_token
   before_filter :load_current_user_household, :only => [:index, :create]
   before_filter :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete, :reorder]
+  before_filter :prepare_completable_form, :only => [:create, :update]
 
   def index
     # TODO: (ha ha ha...) this must be heavily optimized, mapping over the 
@@ -23,8 +24,8 @@ class TodosController < ApplicationController
 
   def create
     begin
-      @todo = Completable.create(todo_params.merge({:household => @household, :creator => current_user}))
-      @todo = Completable.find(@todo.id).decorate # Reload with correct Model class
+      @completable_form.submit(todo_params.merge({:household => @household, :creator => current_user}))
+      @todo = @completable_form.resource.decorate
       status = :ok
     rescue
       status = 500
@@ -34,7 +35,8 @@ class TodosController < ApplicationController
 
   def update
     return render :status => 400 unless @todo 
-    return render :status => 500 unless @todo.update_attributes(todo_params)
+    return render :status => 500 unless @completable_form.submit(todo_params)
+    @todo = @completable_form.resource.decorate
     render_todo_to_json(:ok)
   end
 
@@ -99,6 +101,10 @@ class TodosController < ApplicationController
 
   def unauthorized_response(message=nil)
     render :json => {:message => message}, :status => 403
+  end
+
+  def prepare_completable_form
+    @completable_form = CompletableForm.new(@todo)
   end
 
   def load_todo
