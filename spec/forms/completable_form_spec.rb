@@ -95,6 +95,77 @@ describe CompletableForm do
             expect(new_completable.errors.empty?).to be true
           end
 
+
+          context "with tags in the title" do
+            let(:expected_title) { 'Buy milk' }
+            let(:expected_tag_in_title) { '' }
+            let(:new_title) { "#{expected_title} #{expected_tag_in_title}" }
+
+            context "with a single tag" do
+              let(:expected_tag_in_title) { '#Safeway' }
+
+              it "creates a todo" do
+                expect {
+                  completable_form.submit(params)
+                }.to change(Completable, :count).by(1)
+              end
+
+              it "creates the todo with the correct title" do
+                completable_form.submit(params)
+                expect(completable_form.resource.title).to eq expected_title
+              end
+
+              it "creates a TagTitle" do
+                expect {
+                  completable_form.submit(params)
+                }.to change(TagTitle, :count).by(1)
+              end
+
+              it "creates a Tag" do
+                expect {
+                  completable_form.submit(params)
+                }.to change(Tag, :count).by(1)
+              end
+
+              it "attaches the TagTitle to the new completable" do
+                completable_form.submit(params)
+                expect(completable_form.resource.tag_titles.map(&:title)).to eq ['Safeway']
+              end
+            end
+
+            context "with two tags" do
+              let(:expected_tag_in_title) { '#Safeway #WholeFoods' }
+
+              it "creates a todo" do
+                expect {
+                  completable_form.submit(params)
+                }.to change(Completable, :count).by(1)
+              end
+
+              it "creates the todo with the correct title" do
+                completable_form.submit(params)
+                expect(completable_form.resource.title).to eq expected_title
+              end
+
+              it "creates two TagTitles" do
+                expect {
+                  completable_form.submit(params)
+                }.to change(TagTitle, :count).by(2)
+              end
+
+              it "creates two Tags" do
+                expect {
+                  completable_form.submit(params)
+                }.to change(Tag, :count).by(2)
+              end
+
+              it "attaches both TagTitles to the new completable" do
+                completable_form.submit(params)
+                expect(completable_form.resource.tag_titles.map(&:title)).to eq ['Safeway', 'WholeFoods']
+              end
+            end
+          end
+
           context "with tag attributes" do
             let(:params) {{
               :title => new_title,
@@ -254,6 +325,117 @@ describe CompletableForm do
               completable_form.submit(params)
               expect(completable_form.completable.title).to eq new_title
               expect(completable_form.completable.notes).to eq new_notes
+            end
+
+            context "with tags in the title" do
+              let(:expected_title) { 'Buy milk' }
+              let(:expected_tag_in_title) { '' }
+              let(:new_title) { "#{expected_title} #{expected_tag_in_title}" }
+
+              context "with a single tag" do
+                let(:expected_tag_in_title) { '#Safeway' }
+
+                it "doesn't create a todo" do
+                  expect {
+                    completable_form.submit(params)
+                  }.not_to change(Completable, :count)
+                end
+
+                it "sets the correct title for the completable" do
+                  completable_form.submit(params)
+                  expect(completable_form.resource.title).to eq expected_title
+                end
+
+                it "creates a TagTitle" do
+                  expect {
+                    completable_form.submit(params)
+                  }.to change(TagTitle, :count).by(1)
+                end
+
+                it "creates a Tag" do
+                  expect {
+                    completable_form.submit(params)
+                  }.to change(Tag, :count).by(1)
+                end
+
+                it "attaches the TagTitle to the new completable" do
+                  completable_form.submit(params)
+                  expect(completable_form.resource.tag_titles.map(&:title)).to eq ['Safeway']
+                end
+
+                context "when a different TagTitle is already attached" do
+                  let(:already_attached_tag_title_title) { 'Costco' }
+                  let(:already_attached_tag_title) { FactoryGirl.create(:tag_title, :title => already_attached_tag_title_title)}
+                  let!(:already_attached_tag) { FactoryGirl.create(:tag, :tag_title => already_attached_tag_title, :taggable => completable) }
+
+                  it "creates a TagTitle" do
+                    expect {
+                      completable_form.submit(params)
+                    }.to change(TagTitle, :count).by(1)
+                  end
+
+                  it "doesn't create a Tag" do # existing one is destroyed and new one created
+                    expect {
+                      completable_form.submit(params)
+                    }.not_to change(Tag, :count)
+                  end
+
+                  it "attaches the TagTitle to the new completable" do
+                    completable_form.submit(params)
+                    expect(completable_form.resource.tag_titles.map(&:title)).to eq ['Safeway']
+                  end
+                end
+              end
+
+              context "with two tags" do
+                let(:expected_tag_in_title) { '#Safeway #WholeFoods' }
+
+                it "doesn't create a todo" do
+                  expect {
+                    completable_form.submit(params)
+                  }.not_to change(Completable, :count)
+                end
+
+                it "creates two TagTitles" do
+                  expect {
+                    completable_form.submit(params)
+                  }.to change(TagTitle, :count).by(2)
+                end
+
+                it "creates two Tags" do
+                  expect {
+                    completable_form.submit(params)
+                  }.to change(Tag, :count).by(2)
+                end
+
+                it "attaches the TagTitles to the new completable" do
+                  completable_form.submit(params)
+                  expect(completable_form.resource.tag_titles.map(&:title)).to eq ['Safeway', 'WholeFoods']
+                end
+
+                context "when one TagTitle is already attached" do
+                  let(:already_attached_tag_title_title) { 'Safeway' }
+                  let(:already_attached_tag_title) { FactoryGirl.create(:tag_title, :title => already_attached_tag_title_title)}
+                  let!(:already_attached_tag) { FactoryGirl.create(:tag, :tag_title => already_attached_tag_title, :taggable => completable) }
+
+                  it "creates a TagTitle" do
+                    expect {
+                      completable_form.submit(params)
+                    }.to change(TagTitle, :count).by(1)
+                  end
+
+                  it "creates a Tag" do # existing one is destroyed and new one created
+                    expect {
+                      completable_form.submit(params)
+                    }.to change(Tag, :count).by(1)
+                  end
+
+                  it "attaches the TagTitles to the new completable" do
+                    completable_form.submit(params)
+                    expect(completable_form.resource.tag_titles.map(&:title)).to eq ['Safeway', 'WholeFoods']
+                  end
+                end
+              end
             end
 
             context "when adding tags" do

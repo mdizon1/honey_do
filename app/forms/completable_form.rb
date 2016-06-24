@@ -23,6 +23,7 @@ class CompletableForm
   def submit(params=nil)
     store_params(params)
     raise ArgumentError, "No params given to CompletableForm object on submit" if !@params
+    handle_tags_in_title_param
     tag_titles_to_bind = handle_tag_params
     resource.attributes = @params
     output = resource.save
@@ -38,6 +39,13 @@ class CompletableForm
   end
 
   private
+
+  TAG_IN_TITLE_REGEX = /(#\w+)\b/
+
+  def add_tags_to_tag_params!(tags)
+    @params[:tags] ||= []
+    @params[:tags] += tags
+  end
   
   def bind_tags(tag_titles)
     resource.update_attributes(:tag_titles => tag_titles) unless tag_titles.empty?
@@ -59,8 +67,30 @@ class CompletableForm
     output
   end
 
+  def handle_tags_in_title_param
+    return if @params[:title].blank?
+    tagged_words = parse_tagged_words_in_title_param
+    return if tagged_words.empty?
+    remove_tags_from_title_param!
+    add_tags_to_tag_params!(tagged_words)
+  end
+
+  def parse_tagged_words_in_title_param
+    tagged_words = []
+    @params[:title].gsub(TAG_IN_TITLE_REGEX) do |match|
+      tagged_words << match.sub('#', '')
+      ''
+    end
+    tagged_words
+  end
+
   def reload_resource(params)
     @resource = Completable.find(resource.id) if params[:type]
+  end
+
+  def remove_tags_from_title_param!
+    @params[:title].gsub!(TAG_IN_TITLE_REGEX, '')
+    @params[:title].strip!
   end
 
   def store_params(params)
