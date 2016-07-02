@@ -226,7 +226,7 @@ export default class TodoListWrap extends Component {
   render() {
     return (
       <div>
-        { this.props.isTouch ? renderTodoListTouch() : this.renderTodoListMouse() }
+        { this.props.isTouch ? this.renderTodoListTouch() : this.renderTodoListMouse() }
       </div>
     )
   }

@@ -14,7 +14,7 @@ export default class HoneyDo extends React.Component {
     this.initialTodoLoad();
     this.setState({
       isReady: false,
-      'interface': this.props.store.getState().get('configState')['interface'],
+      'interface': this.props.store.getState().getIn(['configState', 'interface']),
       unsubscribe: this.props.store.subscribe(this.onStateChange.bind(this)),
     });
   }
