@@ -11,13 +11,11 @@ const EditTodo = (props) => {
     <FlatButton
       label="Cancel"
       secondary={true}
-      onTouchEnd={onClose}
       onMouseUp={onClose}
     />,
     <FlatButton
       label="Submit"
       primary={true}
-      onTouchEnd={onSubmit}
       onMouseUp={onSubmit}
     />,
   ];
