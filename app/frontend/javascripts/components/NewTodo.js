@@ -14,13 +14,11 @@ const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
     <FlatButton
       label="Cancel"
       secondary={true}
-      onTouchEnd={onClose}
       onMouseUp={onClose}
     />,
     <FlatButton
       label="Submit"
       primary={true}
-      onTouchEnd={onSubmit}
       onMouseUp={onSubmit}
     />,
   ];
@@ -46,7 +44,6 @@ const renderNewTodoButton = (onOpen) => {
     <FloatingActionButton 
       className="new-todo-button"
       onMouseUp={onOpen}
-      onTouchEnd={onOpen}
       backgroundColor={Colors.BOOTSTRAP_GREEN}
     >
       <ContentAdd />

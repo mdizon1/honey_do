@@ -1,3 +1,5 @@
+// This module has some custom performance debugging methods
+
 export const Perf = {
   _lastCall: null,
   read: function (str) {

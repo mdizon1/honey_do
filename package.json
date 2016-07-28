@@ -6,6 +6,7 @@
     "chunk-manifest-webpack-plugin": "~0.0.1",
     "exports-loader": "~0.6.2",
     "expose-loader": "~0.6.0",
+    "fastclick": "^1.0.6",
     "imports-loader": "~0.6.3",
     "webpack": "^1.12",
     "webpack-dev-server": "^1.14.1"

@@ -36,3 +36,5 @@ if(honey_do_container.length == 1){
 
 // Just some dev debug javascripts to ensure libs are loaded and working correctly
 // require('./setup/test');
+
+require('./util/fastclick');
