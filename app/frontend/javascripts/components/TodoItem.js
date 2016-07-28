@@ -5,6 +5,8 @@ import { ItemTypes } from '../constants/ItemTypes'
 import { editTodoRequest } from '../actions/HoneyDoActions'
 import flow from 'lodash/flow'
 
+//import TodoItemSingleAction from './TodoItemSingleAction'
+import TodoItemWrap from '../containers/TodoItemWrap'
 import ListItem from 'material-ui/lib/lists/list-item'
 import Checkbox from 'material-ui/lib/checkbox'
 import IconMenu from 'material-ui/lib/menus/icon-menu'
@@ -206,22 +208,41 @@ class TodoItem extends Component {
 
   renderSingleActionTodo() {
     const { todo, onTodoClicked, connectDragSource, connectDropTarget } = this.props;
-
-    return connectDropTarget(connectDragSource(
-      <div className="todo-item">
-        <ListItem
-          primaryText={todo.title}
-          secondaryText={todo.notes}
-          leftCheckbox={renderCheckbox(todo, onTodoClicked)}
-          nestedItems={[
-            <ListItem
-              key={"todo_notes_"+todo.id}
-              primaryText={todo.notes}
-            />,
-          ]}
+    return connectDropTarget(
+      <div className='todo-item-drag-wrap'>
+        <TodoItemWrap
+          todo={todo}
+          onTodoClicked={onTodoClicked}
+          connectDragSource={connectDragSource}
         />
       </div>
-    ));
+    );
+
+
+//    return connectDropTarget(connectDragSource(
+//      <div className='todo-item-drag-wrap'>
+//        <TodoItemWrap
+//          todo={todo}
+//          onTodoClicked={onTodoClicked}
+//        />
+//      </div>
+//    ));
+
+//    return connectDropTarget(connectDragSource(
+//      <div className="todo-item">
+//        <ListItem
+//          primaryText={todo.title}
+//          secondaryText={todo.notes}
+//          leftCheckbox={renderCheckbox(todo, onTodoClicked)}
+//          nestedItems={[
+//            <ListItem
+//              key={"todo_notes_"+todo.id}
+//              primaryText={todo.notes}
+//            />,
+//          ]}
+//        />
+//      </div>
+//    ));
   }
 
   renderRightIconMenu() {

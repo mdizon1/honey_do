@@ -9,9 +9,7 @@
 .honey-do-todo-list {
   ul {
     padding: 0;
-    li {
-      list-style-type:none;
-    }
+    li { list-style-type:none; }
   }
 }
 
@@ -26,6 +24,36 @@
   &.todo-item-drag-placeholder {
     opacity: 0.2;
     border: 1px dashed black;
+  }
+  .todo-item-checkbox {
+    position: relative;
+    top: 50%;
+    transform: translateY(50%);
+    padding-left: 15%;
+  }
+  .todo-item-drag-handle {
+    top: 50%;
+    transform: translateY(33%);
+    width: 2em;
+    height: 2em;
+    cursor: move;
+    font-size: 1.25em;
+    text-align: center;
+  }
+  .todo-item-content {}
+  .todo-item-notes {
+    &.todo-item-notes-truncated {
+      width: 95%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+  .todo-item-controls {
+    line-height: 1em;
+    i { 
+      font-size: 0.5em; 
+    }
   }
 }
 
