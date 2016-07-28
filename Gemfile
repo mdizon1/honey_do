@@ -14,7 +14,7 @@ gem 'devise-token_authenticatable'
 gem 'draper'
 #gem 'foreigner'
 gem 'foreman'
-gem 'font-awesome-rails'
+#gem 'font-awesome-rails' # included through webpack instead
 gem 'haml'
 gem 'haml-rails'
 gem 'jquery-rails'
