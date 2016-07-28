@@ -32,7 +32,8 @@
     padding-left: 15%;
   }
   .todo-item-drag-handle {
-    top: 50%;
+    display: inline-block;
+    float: left;
     transform: translateY(33%);
     width: 2em;
     height: 2em;
@@ -40,7 +41,10 @@
     font-size: 1.25em;
     text-align: center;
   }
-  .todo-item-content {}
+  .todo-item-content {
+    display: inline-block;
+    width: 85%;
+  }
   .todo-item-notes {
     &.todo-item-notes-truncated {
       width: 95%;

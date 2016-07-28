@@ -65,14 +65,13 @@ const TodoItemSingleAction = (props) => {
             />
           </div>
         </div>
-        <div className="col-xs-1">
+        <div className="col-xs-9">
           { _renderDragHandle(connectDragSource) }
-        </div>
-        <div className="col-xs-8">
           <div className="todo-item-content">
             { _renderTitle(todo) }
             { _renderNotes(todo, isExpanded) }
           </div>
+          <div className='clearfix'></div>
         </div>
         <div className="col-xs-2">
           { _renderControls(isExpanded, onToggleExpand) }
