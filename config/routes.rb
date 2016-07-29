@@ -7,6 +7,9 @@ HoneyDo::Application.routes.draw do
     resource :settings, :only => [:edit, :update], :controller => 'households/settings' do
       post :invite_admin
     end
+
+    resources :tags, :only => [:index], :controller => 'households/tags'
+
     resources :todos do
       put :complete
       put :accept

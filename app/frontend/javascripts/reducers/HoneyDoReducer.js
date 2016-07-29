@@ -21,6 +21,7 @@ import { INITIALIZE,
   EDIT_TODO_REQUEST,
   EDIT_TODO_SUCCESS,
   EDIT_TODO_FAILURE,
+  LOAD_TAG_SUCCESS,
   TODO_REORDER_REQUEST,
   TODO_REORDER_SUCCESS,
   TODO_REORDER_FAILURE,
@@ -66,6 +67,9 @@ function honeyDoReducer(state, action) {
     case DELETE_TODO_SUCCESS:
     case DELETE_TODO_FAILURE:
      return deactivateSpinner(state);
+
+    case LOAD_TAG_SUCCESS:
+      return loadTags(state, action.tags);
 
     case SWITCH_TAB:
       if(!_.includes(UiTabs, action.tab)){ return state; } // ensure the tab given (action.tab) is one of UiTabs
@@ -125,6 +129,10 @@ const deactivateSpinner = (state) => {
 
 const dropTodo = (state, todo) => {
   return state.deleteIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], null);
+}
+
+const loadTags = (state, tags) => {
+  return state.setIn(['dataState', 'tags'], tags);
 }
 
 const reorderTodos = (state, todoType, todosList) => {

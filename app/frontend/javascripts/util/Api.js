@@ -1,11 +1,13 @@
 // This file should handle all api calls to the server.
+// TODO: Create a class rather than export a bunch of functions
+//   then they don't have to all be named apiLameName
 
 export const apiAcceptTodo = (args) => {
   const { endpoint, todo, authToken, onSuccess, onFailure, onComplete } = args;
 
   let promise = $.ajax({
     type: "PUT",
-    url: endpoint + '/' +todo.id+ '/accept',
+    url: endpoint + '/todos/' +todo.id+ '/accept',
     data: { authentication_token: authToken }
   });
 
@@ -21,7 +23,7 @@ export const apiCompleteTodo = (args) => {
 
   let promise = $.ajax({
     type: "PUT",
-    url: endpoint + '/' +todo.id+ '/complete',
+    url: endpoint + '/todos/' +todo.id+ '/complete',
     data: { authentication_token: authToken }
   })
 
@@ -54,7 +56,7 @@ export const apiDeleteTodo = (args) => {
 
   let promise = $.ajax({
     type: "DELETE",
-    url: endpoint + '/' +todo.id,
+    url: endpoint + '/todos/' +todo.id,
     data: { authentication_token: authToken }
   });
 
@@ -62,6 +64,19 @@ export const apiDeleteTodo = (args) => {
   promise = handleFailure(promise, onFailure);
   promise = handleComplete(promise, onComplete);
   return promise;
+}
+
+export const apiLoadTags = (args) => {
+  const { endpoint, authToken, onSuccess, onFailure, onComplete } = args;
+  let promise = $.ajax({
+    type: "GET",
+    url: endpoint + '/tags',
+    data: { authentication_token: authToken }
+  });
+  
+  promise = handleSuccess(promise, onSuccess);
+  promise = handleFailure(promise, onFailure);
+  promise = handleComplete(promise, onComplete);
 }
 
 export const apiSyncTodos = (args) => {
@@ -84,7 +99,7 @@ export const apiTodoDropped = (args) => {
 
   let promise = $.ajax({
     type: "PUT",
-    url: endpoint + '/' + todo.id + '/reorder',
+    url: endpoint + '/todos/' + todo.id + '/reorder',
     data: { 
       authentication_token: authToken,
       todo: todo,
@@ -102,7 +117,7 @@ export const apiUncompleteTodo = (args) => {
 
   let promise = $.ajax({
     type: "PUT",
-    url: endpoint + '/' +todo.id+ '/uncomplete',
+    url: endpoint + '/todos/' +todo.id+ '/uncomplete',
     data: { authentication_token: authToken }
   });
 
@@ -117,7 +132,7 @@ export const apiUpdateTodo = (args) => {
 
   let promise = $.ajax({
     type: "PUT", // TODO: make this PATCH i suppose
-    url: endpoint + '/' + todo.id,
+    url: endpoint + '/todos/' + todo.id,
     data: {
       authentication_token: authToken, 
       todo: todo

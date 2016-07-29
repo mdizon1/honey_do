@@ -3,14 +3,15 @@ import React from 'react'
 import TodoTabs from './TodoTabs'
 import NewTodoWrap from '../containers/NewTodoWrap'
 import EditTodoWrap from '../containers/EditTodoWrap'
-import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab } from './../actions/HoneyDoActions';
-import { apiSyncTodos } from '../util/Api'
+import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab, loadTagSuccess } from './../actions/HoneyDoActions';
+import { apiSyncTodos, apiLoadTags } from '../util/Api'
 import { UiTabToType } from '../constants/TodoTypes'
 import CircularProgress from 'material-ui/lib/circular-progress'
 
 export default class HoneyDo extends React.Component {
   componentWillMount() {
     this.initAppConfig();
+    this.initialTagLoad();
     this.initialTodoLoad();
     this.setState({
       isReady: false,
@@ -27,6 +28,16 @@ export default class HoneyDo extends React.Component {
     this.props.store.dispatch(init({
       config: this.props.config
     }));
+  }
+
+  initialTagLoad() {
+    apiLoadTags({
+      endpoint: this.props.config.apiEndpoint, 
+      authToken: this.props.config.identity.authToken,
+      onSuccess: (data, textStatus, jqXHR) => {
+        this.props.store.dispatch(loadTagSuccess(data));
+      }
+    });
   }
 
   initialTodoLoad() {

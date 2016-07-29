@@ -15,6 +15,7 @@ export const EDIT_TODO_REQUEST  = 'EDIT_TODO_REQUEST'
 export const EDIT_TODO_SUCCESS  = 'EDIT_TODO_SUCCESS'
 export const EDIT_TODO_FAILURE  = 'EDIT_TODO_FAILURE'
 export const INITIALIZE = 'INITIALIZE'
+export const LOAD_TAG_SUCCESS = 'LOAD_TAG_SUCCESS'
 export const SWITCH_TAB = 'SWITCH_TAB'
 export const SYNC_TODOS_REQUEST = 'SYNC_TODOS_REQUEST'
 export const SYNC_TODOS_SUCCESS = 'SYNC_TODOS_SUCCESS'
@@ -99,6 +100,13 @@ export function deleteTodoSuccess(todo) {
 export function deleteTodoFailure(todo) {
   return {
     type: DELETE_TODO_FAILURE
+  }
+}
+
+export function loadTagSuccess(data) {
+  return {
+    tags: data,
+    type: LOAD_TAG_SUCCESS
   }
 }
 
