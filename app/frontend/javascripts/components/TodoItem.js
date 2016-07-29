@@ -5,7 +5,6 @@ import { ItemTypes } from '../constants/ItemTypes'
 import { editTodoRequest } from '../actions/HoneyDoActions'
 import flow from 'lodash/flow'
 
-//import TodoItemSingleAction from './TodoItemSingleAction'
 import TodoItemWrap from '../containers/TodoItemWrap'
 import ListItem from 'material-ui/lib/lists/list-item'
 import Checkbox from 'material-ui/lib/checkbox'
@@ -140,119 +139,19 @@ class TodoItem extends Component {
     this.props.dispatch(editTodoRequest(this.props.todo));
   }
 
-  renderMenuItemAccept() {
-    if(!this.props.todo.permissions.canAccept) { return null; }
-    return (
-      <MenuItem onClick={() => this.props.onTodoAccepted(this.props.todo)}>
-        Accept
-      </MenuItem>
-    )
-  }
 
-  renderMenuItemDestroy() {
-    if(!this.props.todo.permissions.canDestroy) { return null; }
-    return (
-      <MenuItem onClick={this.triggerDestroy.bind(this)}>Delete</MenuItem>
-    )
-  }
-
-  renderMenuItemEdit() {
-    if(!this.props.todo.permissions.canEdit) { return null; }
-    return (
-      <MenuItem onClick={this.triggerEdit.bind(this)}>Edit</MenuItem>
-    );
-  }
-
-  renderMenuItemToggleNotes() {
-    return (
-      <MenuItem onClick={this.toggleNotes.bind(this)}>
-        {this.state.isNestedExpanded ? "Hide Notes" : "View Notes"}
-      </MenuItem>
-    )
-  }
-
-  renderMultiActionTodo() {
-    const { todo, onTodoClicked, connectDragSource, connectDropTarget } = this.props;
-
-    if(this.state.isNestedExpanded){
-      return connectDropTarget(connectDragSource(
-        <div className="todo-item">
-          <ListItem
-            primaryText={todo.title}
-            leftCheckbox={renderCheckbox(todo, onTodoClicked)}
-            initiallyOpen={true}
-            rightIconButton={this.renderRightIconMenu()}
-            nestedItems={[
-              <ListItem
-                key={"todo_notes_"+todo.id}
-                primaryText={todo.notes}
-              />,
-            ]}
-          />
-        </div>
-      ));
-    }else{
-      return connectDropTarget(connectDragSource(
-        <div className="todo-item">
-          <ListItem
-            primaryText={todo.title}
-            secondaryText={todo.notes}
-            leftCheckbox={renderCheckbox(todo, onTodoClicked)}
-            initiallyOpen={true}
-            rightIconButton={this.renderRightIconMenu()}
-          />
-        </div>
-      ));
-    }
-  }
-
-  renderSingleActionTodo() {
-    const { todo, onTodoClicked, connectDragSource, connectDropTarget } = this.props;
+  renderTodoItemWrap() {
+    const { todo, onTodoClicked, onTodoDestroyed, onTodoAccepted, connectDragSource, connectDropTarget } = this.props;
     return connectDropTarget(
       <div className='todo-item-drag-wrap'>
         <TodoItemWrap
           todo={todo}
-          onTodoClicked={onTodoClicked}
           connectDragSource={connectDragSource}
+          onTodoClicked={onTodoClicked}
+          onTodoDestroyed={() => onTodoDestroyed(todo)}
+          onTodoAccepted={() => onTodoAccepted(todo)}
         />
       </div>
-    );
-
-
-//    return connectDropTarget(connectDragSource(
-//      <div className='todo-item-drag-wrap'>
-//        <TodoItemWrap
-//          todo={todo}
-//          onTodoClicked={onTodoClicked}
-//        />
-//      </div>
-//    ));
-
-//    return connectDropTarget(connectDragSource(
-//      <div className="todo-item">
-//        <ListItem
-//          primaryText={todo.title}
-//          secondaryText={todo.notes}
-//          leftCheckbox={renderCheckbox(todo, onTodoClicked)}
-//          nestedItems={[
-//            <ListItem
-//              key={"todo_notes_"+todo.id}
-//              primaryText={todo.notes}
-//            />,
-//          ]}
-//        />
-//      </div>
-//    ));
-  }
-
-  renderRightIconMenu() {
-    return (
-      <IconMenu iconButtonElement={iconButtonElement}>
-        { this.renderMenuItemToggleNotes() }
-        { this.renderMenuItemEdit() }
-        { this.renderMenuItemAccept() }
-        { this.renderMenuItemDestroy() }
-      </IconMenu>
     );
   }
 
@@ -263,11 +162,7 @@ class TodoItem extends Component {
       return renderDraggingPlaceholder(this.props);
     }
 
-    if(todo.permissions.canEdit || todo.permissions.canAccept) {
-      return this.renderMultiActionTodo();
-    }else{
-      return this.renderSingleActionTodo()
-    }
+    return this.renderTodoItemWrap();
   }
 }
 
@@ -295,4 +190,3 @@ export default flow(
 //  isDragging: monitor.isDragging()
 //}))
 // export default class TodoItem extends Component { ....
-

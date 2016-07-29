@@ -1,8 +1,13 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import TodoItemSingleAction from '../components/TodoItemSingleAction'
+import TodoItemCore from '../components/TodoItemCore'
+import { editTodoRequest } from '../actions/HoneyDoActions'
 
-export default class TodoItemWrap extends Component {
+const mapStateToProps = (state, ownProps) => {
+  return { }
+}
+
+class TodoItemWrap extends Component {
   constructor(props){
     super(props);
     this.state = { isExpanded: false }
@@ -12,15 +17,25 @@ export default class TodoItemWrap extends Component {
     this.setState({isExpanded: !this.state.isExpanded});
   }
 
+  handleTodoEdit(evt){
+    this.props.dispatch(editTodoRequest(this.props.todo));
+  }
+
   render() {
+    console.log("DEBUG: in render for TodoItemWrap");
     return (
-      <TodoItemSingleAction
+      <TodoItemCore
         todo={this.props.todo}
-        onTodoClicked={this.props.onTodoClicked}
-        isExpanded={this.state.isExpanded}
-        onToggleExpand={this.handleToggleExpand.bind(this)}
         connectDragSource={this.props.connectDragSource}
+        isExpanded={this.state.isExpanded}
+        onTodoClicked={this.props.onTodoClicked}
+        onToggleExpand={this.handleToggleExpand.bind(this)}
+        onTodoEdit={this.handleTodoEdit.bind(this)}
+        onTodoDestroyed={this.props.onTodoDestroyed}
+        onTodoAccepted={this.props.onTodoAccepted}
       />
     )
   }
 }
+
+export default connect(mapStateToProps)(TodoItemWrap)
