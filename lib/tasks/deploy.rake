@@ -1,6 +1,6 @@
 namespace :deploy do
   desc 'deploy to heroku'
-  task :heroku => :environmentdo
+  task :heroku => :environment do
     if Rails.env != 'development'
       raise 'Error, attempting to deploy from a non development environment'
     end
