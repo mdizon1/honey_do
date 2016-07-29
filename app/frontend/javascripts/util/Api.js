@@ -84,7 +84,7 @@ export const apiSyncTodos = (args) => {
 
   let promise = $.ajax({
     type: 'GET',
-    url: endpoint,
+    url: endpoint + '/todos',
     data: {authentication_token: authToken}
   })
 
