@@ -66,6 +66,20 @@ export const apiDeleteTodo = (args) => {
   return promise;
 }
 
+export const apiRemoveTag = (args) => {
+  const { endpoint, authToken, todo, tag, onSuccess, onFailure, onComplete} = args;
+
+  let promise = $.ajax({
+    type: "DELETE",
+    url: endpoint + '/todos/' + todo.id + '/tags/' + tag
+  });
+
+  promise = handleSuccess(promise, onSuccess);
+  promise = handleFailure(promise, onFailure);
+  promise = handleComplete(promise, onComplete);
+  return promise;
+}
+
 export const apiLoadTags = (args) => {
   const { endpoint, authToken, onSuccess, onFailure, onComplete } = args;
   let promise = $.ajax({

@@ -562,6 +562,35 @@ describe Completable::Todo do
       end
     end
 
+    #TODO: Fill these in
+    describe "#remove_tag" do
+      context "with a todo" do
+        context "that has no tags" do
+          it "does not remove any Tags"
+          it "does not remove any TagTitles"
+        end
+
+        context "that has a tag" do
+          context "and we remove that tag" do
+            it "removes a Tag"
+            it "does not remove a TagTitle"
+          end
+
+          context "and we remove a different tag" do
+            it "does not delete a Tag"
+            it "does not delete a TagTitle"
+          end
+        end
+
+        context "that has two tags" do
+          context "and we remove one of them" do
+            it "removes a Tag"
+            it "leaves a single Tag attached to the Todo"
+          end
+        end
+      end
+    end
+
     describe "#tag_with" do
       context "with a todo" do
         let(:todo) { FactoryGirl.create(:todo) }

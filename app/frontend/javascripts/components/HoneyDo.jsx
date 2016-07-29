@@ -6,7 +6,9 @@ import EditTodoWrap from '../containers/EditTodoWrap'
 import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab, loadTagSuccess } from './../actions/HoneyDoActions';
 import { apiSyncTodos, apiLoadTags } from '../util/Api'
 import { UiTabToType } from '../constants/TodoTypes'
-import CircularProgress from 'material-ui/lib/circular-progress'
+import getMuiTheme from 'material-ui/styles/getMuiTheme'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
+import CircularProgress from 'material-ui/CircularProgress/CircularProgress'
 
 export default class HoneyDo extends React.Component {
   componentWillMount() {
@@ -124,19 +126,21 @@ export default class HoneyDo extends React.Component {
     }
 
     return (
-      <div className="honey-do-app-wrap">
-        { this.renderSpinner() }
-        <EditTodoWrap onSync={this.syncTodos.bind(this)} />
-        <TodoTabs 
-          store={this.props.store}
-          currentTab={this.state.currentTab}
-          appConfig={this.state.configState}
-          onChangeTab={this.handleChangeTab.bind(this)}
-          onSync={this.syncTodos.bind(this)}
-          isTouch={this.interfaceIsTouch()}
-        />
-        { this.renderNewTodo() }
-      </div>
+      <MuiThemeProvider muiTheme={getMuiTheme()}>
+        <div className="honey-do-app-wrap">
+          { this.renderSpinner() }
+          <EditTodoWrap onSync={this.syncTodos.bind(this)} />
+          <TodoTabs 
+            store={this.props.store}
+            currentTab={this.state.currentTab}
+            appConfig={this.state.configState}
+            onChangeTab={this.handleChangeTab.bind(this)}
+            onSync={this.syncTodos.bind(this)}
+            isTouch={this.interfaceIsTouch()}
+          />
+          { this.renderNewTodo() }
+        </div>
+      </MuiThemeProvider>
     )
   }
 }

@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import Checkbox from 'material-ui/lib/checkbox'
-import IconMenu from 'material-ui/lib/menus/icon-menu'
-import IconButton from 'material-ui/lib/icon-button'
-import FontIcon from 'material-ui/lib/font-icon'
-import MenuItem from 'material-ui/lib/menus/menu-item'
-import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert';
+import Checkbox from 'material-ui/Checkbox/Checkbox'
+import Chip from 'material-ui/Chip/Chip'
+import IconMenu from 'material-ui/IconMenu/IconMenu'
+import IconButton from 'material-ui/IconButton/IconButton'
+import FontIcon from 'material-ui/FontIcon/FontIcon'
+import MenuItem from 'material-ui/MenuItem/MenuItem'
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
 
 const _renderControls = (props) => {
@@ -97,6 +98,25 @@ const _renderNotes = (todo, isExpanded) => {
   )
 }
 
+const _renderTag = (tag, todo, onTodoTagDestroyed) => {
+  return (
+    <Chip
+      key={_.uniqueId()}
+      onRequestDelete={(evt) => {
+        onTodoTagDestroyed(todo, tag);
+      }}
+    >
+      { tag }
+    </Chip>
+  )
+}
+
+const _renderTags = (todo, onTodoTagDestroyed) => {
+  return _.map(todo.tags, (tag) => {
+    return _renderTag(tag, todo, onTodoTagDestroyed);
+  });
+}
+
 const _renderTitle = (todo) => {
   return (
     <div className='todo-item-title'>
@@ -107,7 +127,7 @@ const _renderTitle = (todo) => {
 
 const TodoItemCore = (props) => {
 
-  const {todo, isExpanded, onTodoClicked, onToggleExpand, connectDragSource} = props;
+  const {todo, isExpanded, onTodoClicked, onTodoTagDestroyed, onToggleExpand, connectDragSource} = props;
 
   return (
     <div className="todo-item">
@@ -126,6 +146,7 @@ const TodoItemCore = (props) => {
           <div className="todo-item-content">
             { _renderTitle(todo) }
             { _renderNotes(todo, isExpanded) }
+            { _renderTags(todo, onTodoTagDestroyed) }
           </div>
         </div>
         <div className="col-xs-1 col-sm-2">

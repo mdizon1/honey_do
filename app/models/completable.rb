@@ -47,6 +47,18 @@ class Completable < ActiveRecord::Base
     }
   end
 
+  def remove_tag(tag_string)
+    output = false
+    tags.each do |t| 
+      if(t.tag_title.title == tag_string)
+        t.destroy
+        output = true
+      end
+    end
+    reload
+    output
+  end
+
   # Accept a string of tags separated by either commas or semicolons
   # Find or create tags from each and attach to this completable
   def tag_with(tag_string)

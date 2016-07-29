@@ -6,12 +6,12 @@ import { editTodoRequest } from '../actions/HoneyDoActions'
 import flow from 'lodash/flow'
 
 import TodoItemWrap from '../containers/TodoItemWrap'
-import ListItem from 'material-ui/lib/lists/list-item'
-import Checkbox from 'material-ui/lib/checkbox'
-import IconMenu from 'material-ui/lib/menus/icon-menu'
-import IconButton from 'material-ui/lib/icon-button'
-import MenuItem from 'material-ui/lib/menus/menu-item'
-import MoreVertIcon from 'material-ui/lib/svg-icons/navigation/more-vert'
+import ListItem from 'material-ui/List/ListItem'
+import Checkbox from 'material-ui/Checkbox/Checkbox'
+import IconMenu from 'material-ui/IconMenu/IconMenu'
+import IconButton from 'material-ui/IconButton/IconButton'
+import MenuItem from 'material-ui/MenuItem/MenuItem'
+import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
 const iconButtonElement = (
   <IconButton touch={true}>

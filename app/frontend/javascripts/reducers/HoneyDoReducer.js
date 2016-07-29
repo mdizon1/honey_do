@@ -13,6 +13,9 @@ import { INITIALIZE,
   DELETE_TODO_REQUEST,
   DELETE_TODO_SUCCESS,
   DELETE_TODO_FAILURE,
+  DELETE_TODO_TAG_REQUEST,
+  DELETE_TODO_TAG_SUCCESS,
+  DELETE_TODO_TAG_FAILURE,
   SWITCH_TAB,
   SYNC_TODOS_REQUEST,
   SYNC_TODOS_SUCCESS,
@@ -67,6 +70,14 @@ function honeyDoReducer(state, action) {
     case DELETE_TODO_SUCCESS:
     case DELETE_TODO_FAILURE:
      return deactivateSpinner(state);
+
+    case DELETE_TODO_TAG_REQUEST:
+      // find the given todo and remove it's tag
+      return removeTag(state, action.todo, action.tag);
+    case DELETE_TODO_TAG_SUCCESS:
+      return state;
+    case DELETE_TODO_TAG_FAILURE: // TODO: In this case we should reload the todo
+      return state;
 
     case LOAD_TAG_SUCCESS:
       return loadTags(state, action.tags);
@@ -133,6 +144,21 @@ const dropTodo = (state, todo) => {
 
 const loadTags = (state, tags) => {
   return state.setIn(['dataState', 'tags'], tags);
+}
+
+const removeTag = (state, todo, tag) => {
+  var todo_from_state, tag_list;
+
+  todo_from_state = retrieveTodo(state, todo);
+  tag_list = todo_from_state.get('tags').toJS();
+  tag_list = _.without(tag_list, tag);
+  tag_list = Immutable.fromJS(tag_list);
+
+  return state.setIn(['dataState', TodoTypeToDataState[todo.klass], todo.id.toString, 'tags'], tag_list);
+}
+
+const retrieveTodo = (state, todo) => {
+  return state.getIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()]);
 }
 
 const reorderTodos = (state, todoType, todosList) => {

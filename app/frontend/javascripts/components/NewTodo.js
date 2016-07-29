@@ -2,10 +2,10 @@ import React, { PropTypes } from 'react'
 import { TodoTypeToFriendlyString} from '../constants/TodoTypes'
 import { Colors } from '../constants/Colors'
 import TodoForm from './TodoForm'
-import FloatingActionButton from 'material-ui/lib/floating-action-button'
-import FlatButton from 'material-ui/lib/flat-button'
-import ContentAdd from 'material-ui/lib/svg-icons/content/add'
-import Dialog from 'material-ui/lib/dialog'
+import FloatingActionButton from 'material-ui/FloatingActionButton/FloatingActionButton'
+import FlatButton from 'material-ui/FlatButton/FlatButton'
+import ContentAdd from 'material-ui/svg-icons/content/add'
+import Dialog from 'material-ui/Dialog/Dialog'
 
 const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
   var actions;

@@ -15,6 +15,7 @@ HoneyDo::Application.routes.draw do
       put :accept
       put :uncomplete
       put :reorder
+      resources :tags, :only => [:destroy], :controller => 'households/todos/tags'
     end
   end
 

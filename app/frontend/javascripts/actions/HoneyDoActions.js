@@ -10,6 +10,9 @@ export const CREATE_TODO_FAILURE = 'CREATE_TODO_FAILURE'
 export const DELETE_TODO_REQUEST = 'DELETE_TODO_REQUEST'
 export const DELETE_TODO_SUCCESS = 'DELETE_TODO_SUCCESS'
 export const DELETE_TODO_FAILURE = 'DELETE_TODO_FAILURE'
+export const DELETE_TODO_TAG_REQUEST = 'DELETE_TODO_TAG_REQUEST'
+export const DELETE_TODO_TAG_SUCCESS = 'DELETE_TODO_TAG_SUCCESS'
+export const DELETE_TODO_TAG_FAILURE = 'DELETE_TODO_TAG_FAILURE'
 export const EDIT_TODO_CANCELED = 'EDIT_TODO_CANCELED'
 export const EDIT_TODO_REQUEST  = 'EDIT_TODO_REQUEST'
 export const EDIT_TODO_SUCCESS  = 'EDIT_TODO_SUCCESS'
@@ -100,6 +103,28 @@ export function deleteTodoSuccess(todo) {
 export function deleteTodoFailure(todo) {
   return {
     type: DELETE_TODO_FAILURE
+  }
+}
+
+export function deleteTodoTagRequest(todo, tag) {
+  return {
+    type: DELETE_TODO_TAG_REQUEST,
+    todo: todo,
+    tag: tag
+  }
+}
+export function deleteTodoTagSuccess(todo, tag) {
+  return {
+    type: DELETE_TODO_TAG_SUCCESS,
+    todo: todo,
+    tag: tag
+  }
+}
+export function deleteTodoTagFailure(todo, tag) {
+  return {
+    type: DELETE_TODO_TAG_FAILURE,
+    todo: todo,
+    tag: tag
   }
 }
 

@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
-import Tabs from 'material-ui/lib/tabs/tabs'
-import Tab from 'material-ui/lib/tabs/tab'
+import Tabs from 'material-ui/Tabs/Tabs'
+import Tab from 'material-ui/tabs/Tab'
 import TodoListWrap from './TodoListWrap'
 import { UiTabs, UiTabToType } from '../constants/TodoTypes'
 

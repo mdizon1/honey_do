@@ -2,8 +2,8 @@ import React, { PropTypes } from 'react'
 import { TodoKlassToFriendlyString } from '../constants/TodoTypes'
 import TodoForm from './TodoForm'
 
-import Dialog from 'material-ui/lib/dialog'
-import FlatButton from 'material-ui/lib/flat-button'
+import Dialog from 'material-ui/Dialog/Dialog'
+import FlatButton from 'material-ui/FlatButton/FlatButton'
 
 const EditTodo = (props) => {
   const { todo, isFormOpen, onClose, onChange, onSubmit } = props;
