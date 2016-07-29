@@ -15,6 +15,10 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def detect_browser
+    @browser = Browser.new(request.user_agent, accept_language: "en-us")
+  end
+
   def load_current_user_household
     @household = current_user.household
   end
