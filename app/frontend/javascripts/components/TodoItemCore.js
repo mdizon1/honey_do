@@ -127,9 +127,8 @@ const TodoItemCore = (props) => {
             { _renderTitle(todo) }
             { _renderNotes(todo, isExpanded) }
           </div>
-          <div className='clearfix'></div>
         </div>
-        <div className="col-xs-2">
+        <div className="col-xs-1">
           { _renderControls(props) }
         </div>
       </div>
