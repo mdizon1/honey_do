@@ -42,6 +42,11 @@ class CompletableForm
 
   TAG_IN_TITLE_REGEX = /(#\w+)\b/
 
+  def add_existing_tags_to_tag_params!
+    @params[:tags] ||= []
+    @params[:tags] += resource.tag_titles.map(&:title)
+  end
+
   def add_tags_to_tag_params!(tags)
     @params[:tags] ||= []
     @params[:tags] += tags
@@ -73,6 +78,7 @@ class CompletableForm
     return if tagged_words.empty?
     remove_tags_from_title_param!
     add_tags_to_tag_params!(tagged_words)
+    add_existing_tags_to_tag_params!
   end
 
   def parse_tagged_words_in_title_param

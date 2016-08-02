@@ -374,15 +374,15 @@ describe CompletableForm do
                     }.to change(TagTitle, :count).by(1)
                   end
 
-                  it "doesn't create a Tag" do # existing one is destroyed and new one created
+                  it "creates a Tag" do
                     expect {
                       completable_form.submit(params)
-                    }.not_to change(Tag, :count)
+                    }.to change(Tag, :count).by(1)
                   end
 
                   it "attaches the TagTitle to the new completable" do
                     completable_form.submit(params)
-                    expect(completable_form.resource.tag_titles.map(&:title)).to eq ['Safeway']
+                    expect(completable_form.resource.tag_titles.map(&:title)).to match_array ['Safeway', 'Costco']
                   end
                 end
               end
