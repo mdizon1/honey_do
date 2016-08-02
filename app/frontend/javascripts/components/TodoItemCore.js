@@ -101,10 +101,8 @@ const _renderNotes = (todo, isExpanded) => {
 const _renderTag = (tag, todo, onTodoTagDestroyed) => {
   return (
     <Chip
+      style={{margin: "0 0.25em 0 0"}}
       key={_.uniqueId()}
-      onRequestDelete={(evt) => {
-        onTodoTagDestroyed(todo, tag);
-      }}
     >
       { tag }
     </Chip>
@@ -112,9 +110,15 @@ const _renderTag = (tag, todo, onTodoTagDestroyed) => {
 }
 
 const _renderTags = (todo, onTodoTagDestroyed) => {
-  return _.map(todo.tags, (tag) => {
+  var tags = _.map(todo.tags, (tag) => {
     return _renderTag(tag, todo, onTodoTagDestroyed);
   });
+
+  return (
+    <div className='todo-item-tags'>
+      { tags }
+    </div>
+  )
 }
 
 const _renderTitle = (todo) => {
@@ -143,7 +147,7 @@ const TodoItemCore = (props) => {
         </div>
         <div className="col-xs-9 col-sm-9">
           { _renderDragHandle(connectDragSource) }
-          <div className="todo-item-content">
+          <div className={"todo-item-content" + (isExpanded ? " todo-item-content-expanded" : "")}>
             { _renderTitle(todo) }
             { _renderNotes(todo, isExpanded) }
             { _renderTags(todo, onTodoTagDestroyed) }

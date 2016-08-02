@@ -44,6 +44,11 @@
   .todo-item-content {
     display: inline-block;
     width: 83%;
+    &.todo-item-content-expanded {
+      .todo-item-tags {
+        display: flex;
+      }
+    }
   }
   .todo-item-notes {
     &.todo-item-notes-truncated {
@@ -59,6 +64,10 @@
       font-size: 0.5em; 
     }
   }
+  .todo-item-tags {
+    display: none;
+    flex-wrap: wrap;
+  }
 }
 
 .honey-do-spinner {
@@ -66,4 +75,14 @@
   top: 46%;
   left: 43%;
   z-index: 10;
+}
+
+@media (min-width: $screen-sm-min) { }
+
+@media (min-width: $screen-md-min) {
+  .todo-item {
+    .todo-item-tags {
+      display: flex;
+    }
+  }
 }
