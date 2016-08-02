@@ -1,8 +1,8 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { editTodoCanceled, editTodoSuccess, editTodoFailure } from './../actions/HoneyDoActions';
+import { editTodoCanceled, editTodoSuccess, editTodoFailure, deleteTodoTagRequest } from './../actions/HoneyDoActions';
 import EditTodo from '../components/EditTodo'
-import { apiUpdateTodo } from '../util/Api'
+import { apiRemoveTag, apiUpdateTodo } from '../util/Api'
 import { TodoTypeToKlass } from '../constants/TodoTypes'
 
 
@@ -36,6 +36,21 @@ class EditTodoWrap extends Component {
     if(nextProps.todo) { 
       this.setState({todo: nextProps.todo});
     }
+  }
+
+  handleDestroyTag(tag){
+    let todo = this.state.todo;
+    let new_tags = _.without(todo.tags, tag);
+    todo.tags = new_tags;
+
+    this.setState({todo: todo});
+    this.props.dispatch(deleteTodoTagRequest(todo, tag));
+    apiRemoveTag({
+      endpoint: this.props.appConfig.apiEndpoint,
+      authToken: this.props.appConfig.identity.authToken,
+      todo: todo,
+      tag: tag
+    });
   }
 
   handleChange(evt) {
@@ -98,6 +113,7 @@ class EditTodoWrap extends Component {
         onChange={this.handleChange.bind(this)}
         onClose={this.handleClose.bind(this)}
         onSubmit={this.handleSubmit.bind(this)}
+        onDestroyTag={this.handleDestroyTag.bind(this)}
       />
     )
   }
