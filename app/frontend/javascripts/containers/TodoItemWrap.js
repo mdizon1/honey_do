@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import TodoItemCore from '../components/TodoItemCore'
 import { editTodoRequest} from '../actions/HoneyDoActions'
-import { apiRemoveTag } from '../util/Api'
 
 const mapStateToProps = (state, ownProps) => {
   return { 

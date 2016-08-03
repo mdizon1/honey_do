@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { editTodoCanceled, editTodoSuccess, editTodoFailure, deleteTodoTagRequest } from './../actions/HoneyDoActions';
+import { editTodoCanceled, editTodoSuccess, editTodoFailure, deleteTodoTagRequest, updateTodoRequest } from './../actions/HoneyDoActions';
 import EditTodo from '../components/EditTodo'
 import { apiRemoveTag, apiUpdateTodo } from '../util/Api'
 import { TodoTypeToKlass } from '../constants/TodoTypes'
@@ -83,6 +83,7 @@ class EditTodoWrap extends Component {
   handleSubmit() {
     var todo = this.state.todo;
 
+    this.props.dispatch(updateTodoRequest(todo));
     apiUpdateTodo({
       endpoint: this.props.appConfig.apiEndpoint,
       authToken: this.props.appConfig.identity.authToken, 

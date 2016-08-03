@@ -15,8 +15,6 @@ export const DELETE_TODO_TAG_SUCCESS = 'DELETE_TODO_TAG_SUCCESS'
 export const DELETE_TODO_TAG_FAILURE = 'DELETE_TODO_TAG_FAILURE'
 export const EDIT_TODO_CANCELED = 'EDIT_TODO_CANCELED'
 export const EDIT_TODO_REQUEST  = 'EDIT_TODO_REQUEST'
-export const EDIT_TODO_SUCCESS  = 'EDIT_TODO_SUCCESS'
-export const EDIT_TODO_FAILURE  = 'EDIT_TODO_FAILURE'
 export const INITIALIZE = 'INITIALIZE'
 export const LOAD_TAG_SUCCESS = 'LOAD_TAG_SUCCESS'
 export const SWITCH_TAB = 'SWITCH_TAB'
@@ -26,6 +24,9 @@ export const SYNC_TODOS_FAILURE = 'SYNC_TODOS_FAILURE'
 export const TODO_REORDER_REQUEST = 'TODO_REORDER_REQUEST'
 export const TODO_REORDER_SUCCESS = 'TODO_REORDER_SUCCESS'
 export const TODO_REORDER_FAILURE = 'TODO_REORDER_FAILURE'
+export const UPDATE_TODO_REQUEST = 'UPDATE_TODO_REQUEST'
+export const UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS'
+export const UPDATE_TODO_FAILURE = 'UPDATE_TODO_FAILURE'
 export const UNCOMPLETE_TODO_REQUEST = 'UNCOMPLETE_TODO_REQUEST'
 export const UNCOMPLETE_TODO_SUCCESS = 'UNCOMPLETE_TODO_SUCCESS'
 export const UNCOMPLETE_TODO_FAILURE = 'UNCOMPLETE_TODO_FAILURE'
@@ -182,10 +183,8 @@ export function editTodoRequest(todo) {
     todo: todo
   }
 }
-export function editTodoSuccess(todo) {
-}
-export function editTodoFailure(todo) {
-}
+export function editTodoSuccess(todo) { }
+export function editTodoFailure(todo) { }
 
 // TODO: Rename todosList to todoList
 export function todoReorderRequest(todosList, todoType) {
@@ -212,6 +211,13 @@ export function todoReorderFailure(id, todoType, json) {
     description: 'Todo was dragged and dropped into a new position',
     data: json,
     todoType: todoType
+  }
+}
+
+export function updateTodoRequest(todo) {
+  return {
+    type: UPDATE_TODO_REQUEST,
+    todo: todo
   }
 }
 

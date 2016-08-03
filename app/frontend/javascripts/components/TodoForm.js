@@ -7,7 +7,7 @@ const TodoForm = (props) => {
 
   if(todo) {
     return (
-      <form>
+      <form onSubmit={onSubmit}>
         <div className="form-group">
           <TextField
             floatingLabelText="Title"
@@ -30,7 +30,7 @@ const TodoForm = (props) => {
  
   }else{
     return (
-      <form>
+      <form onSubmit={onSubmit}>
         <div className="form-group">
           <TextField
             floatingLabelText="Title"

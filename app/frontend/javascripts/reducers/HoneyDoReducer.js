@@ -22,12 +22,13 @@ import { INITIALIZE,
   SYNC_TODOS_FAILURE,
   EDIT_TODO_CANCELED,
   EDIT_TODO_REQUEST,
-  EDIT_TODO_SUCCESS,
-  EDIT_TODO_FAILURE,
   LOAD_TAG_SUCCESS,
   TODO_REORDER_REQUEST,
   TODO_REORDER_SUCCESS,
   TODO_REORDER_FAILURE,
+  UPDATE_TODO_REQUEST,
+  UPDATE_TODO_SUCCESS,
+  UPDATE_TODO_FAILURE,
   UNCOMPLETE_TODO_REQUEST, 
   UNCOMPLETE_TODO_SUCCESS, 
   UNCOMPLETE_TODO_FAILURE
@@ -44,7 +45,6 @@ function honeyDoReducer(state, action) {
   var temp_state;
 
   console.log("DEBUG: ~~~~~~~~~~~~~~~~~~~~~~~~ REDUCER CALLED ~~~~~~~~~~~~~~~~~~~~~~~~~~");
-  console.log("DEBUG: type ------------> ", action.type);
   console.log("DEBUG: action ------------> ", action);
 
   switch (action.type) {
@@ -98,8 +98,6 @@ function honeyDoReducer(state, action) {
 
     case EDIT_TODO_REQUEST: 
       return state.setIn(["uiState", "isEditing"], {todo: action.todo});
-    case EDIT_TODO_SUCCESS:
-    case EDIT_TODO_FAILURE:
     case EDIT_TODO_CANCELED:
       return state.setIn(["uiState", "isEditing"], false);
 
@@ -115,6 +113,12 @@ function honeyDoReducer(state, action) {
       // For now, we'll just let this do nothing and sync immediately after
       // we get a success or failure back.
       return deactivateSpinner(state);
+
+    case UPDATE_TODO_REQUEST:
+      return updateTodo(state, action.todo);
+    case UPDATE_TODO_SUCCESS:
+    case UPDATE_TODO_FAILURE:
+      return state;
 
     case UNCOMPLETE_TODO_REQUEST:
       return setTodoCompletedState(activateSpinner(state), action.todo, false);
@@ -184,6 +188,15 @@ const uiSyncingOn = (state) => {
 const uiSyncingOff = (state) => {
   let temp_state = state.set('uiState', state.get('uiState').set('isSyncing', false));
   return deactivateSpinner(temp_state);
+}
+
+const updateTodo = (state, todo) => { // Look for given todo in state and replace with given todo
+  let tags_in_title = _.words(todo.title, /#.*/g);
+  tags_in_title = _.map(tags_in_title, (tag_in_title) => { return _.replace(tag_in_title, /#/g, '')});
+  todo.tags = _.uniq(_.concat(todo.tags, tags_in_title));
+  let new_title = _.trim(_.replace(todo.title, /#.*/g, ''));
+  todo.title = new_title;
+  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], Immutable.fromJS(todo));
 }
 
 export default honeyDoReducer
