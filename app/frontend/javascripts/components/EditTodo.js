@@ -10,6 +10,7 @@ const renderTag = (todo, tag, onDestroyTag) => {
   return (
     <Chip
       onRequestDelete={((evt) => onDestroyTag(tag))}
+      key={_.uniqueId('tag_on_edit_todo_')}
       style={{margin: "0 0.25em 0 0"}}
     >
       { tag }
