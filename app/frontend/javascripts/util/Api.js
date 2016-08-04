@@ -38,7 +38,7 @@ export const apiCreateTodo = (args) => {
 
   let promise = $.ajax({
     type: "POST",
-    url: endpoint,
+    url: endpoint + '/todos',
     data: {
       authentication_token: authToken, 
       todo: params
