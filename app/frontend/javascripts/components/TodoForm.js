@@ -1,6 +1,14 @@
 import React, { PropTypes } from 'react'
 import TextField from 'material-ui/TextField/TextField';
 
+const checkForEnterKeypress = (evt, onEnterPressed) => {
+  if(evt.keyCode === 13) {
+    evt.preventDefault();
+    evt.stopPropagation();
+    onEnterPressed();
+  }
+}
+
 const TodoForm = (props) => {
 
   const { todo, onChange, onSubmit } = props;
@@ -12,17 +20,19 @@ const TodoForm = (props) => {
           <TextField
             floatingLabelText="Title"
             fullWidth={true}
-            onChange={onChange}
             name="title"
             value={todo.title}
+            onChange={onChange}
+            onKeyDown={(evt) => checkForEnterKeypress(evt, onSubmit)}
           />
           <TextField
             floatingLabelText="Notes"
             multiLine={true}
             fullWidth={true}
-            onChange={onChange}
             name="notes"
             value={todo.notes}
+            onChange={onChange}
+            onKeyDown={(evt) => checkForEnterKeypress(evt, onSubmit)}
           />
         </div>
       </form>
@@ -35,15 +45,17 @@ const TodoForm = (props) => {
           <TextField
             floatingLabelText="Title"
             fullWidth={true}
-            onChange={onChange}
             name="title"
+            onChange={onChange}
+            onKeyDown={(evt) => checkForEnterKeypress(evt, onSubmit)}
           />
           <TextField
             floatingLabelText="Notes"
             multiLine={true}
             fullWidth={true}
-            onChange={onChange}
             name="notes"
+            onChange={onChange}
+            onKeyDown={(evt) => checkForEnterKeypress(evt, onSubmit)}
           />
         </div>
       </form>
