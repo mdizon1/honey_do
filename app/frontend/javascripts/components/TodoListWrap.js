@@ -21,8 +21,8 @@ import { TodoTypeToDataState } from '../constants/TodoTypes'
 const getTodosFromStore = (store, dataStatePath) => {
   let todos = store.getState().getIn(dataStatePath).toJS();
   todos = Object.keys(todos).map(key => todos[key]); // convert todos into array
-  todos = _.sortBy(todos, (val) => { return val.position });
-  _.forEach(todos, (curr, index) => { curr.index = index; });
+  todos = _.sortBy(todos, (curr_todo) => { return curr_todo.position }); // sort by position
+  _.forEach(todos, (curr_todo, index) => { curr_todo.index = index; }); // renumber todo indices by their array index
   
   return todos;
 }

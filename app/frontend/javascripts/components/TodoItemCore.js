@@ -7,7 +7,6 @@ import FontIcon from 'material-ui/FontIcon/FontIcon'
 import MenuItem from 'material-ui/MenuItem/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
-
 const _renderControls = (props) => {
   const {todo, isExpanded, onToggleExpand, onTodoEdit, onTodoAccepted, onTodoDestroyed} = props
   
