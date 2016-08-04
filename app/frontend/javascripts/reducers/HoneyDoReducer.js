@@ -154,7 +154,7 @@ const removeTag = (state, todo, tag) => {
   var todo_from_state, tag_list;
 
   todo_from_state = retrieveTodo(state, todo);
-  tag_list = todo_from_state.get('tags').toJS();
+  tag_list = todo_from_state.tags;
   tag_list = _.without(tag_list, tag);
   tag_list = Immutable.fromJS(tag_list);
 
@@ -196,7 +196,7 @@ const updateTodo = (state, todo) => { // Look for given todo in state and replac
   todo.tags = _.uniq(_.concat(todo.tags, tags_in_title));
   let new_title = _.trim(_.replace(todo.title, /#.*/g, ''));
   todo.title = new_title;
-  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], Immutable.fromJS(todo));
+  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], todo);
 }
 
 export default honeyDoReducer

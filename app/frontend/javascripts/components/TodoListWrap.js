@@ -130,7 +130,7 @@ export default class TodoListWrap extends Component {
     dispatch = this.props.store.dispatch;
     todo_type = this.props.todoType;
     todo_data_path = ['dataState', TodoTypeToDataState[this.props.todoType], droppedId.toString()]
-    temp_todo = this.props.store.getState().getIn(todo_data_path).toJS();
+    temp_todo = this.props.store.getState().getIn(todo_data_path);
 
     dispatch(todoReorderRequest(this.state.todos, todo_type));
     apiTodoDropped({
