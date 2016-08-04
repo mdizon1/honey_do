@@ -115,7 +115,7 @@ class TodosController < ApplicationController
   end
 
   def todo_params
-    params.require(:todo).permit(:title, :notes, :position, :type)
+    params.require(:todo).permit(:title, :notes, :type, :tags => [])
   end
 
   def render_todo_to_json(status)
