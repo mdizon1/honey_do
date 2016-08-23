@@ -26,3 +26,6 @@
 
 # Ignore database yml
 /config/database.yml
+
+# Ignore node modules
+/node_modules
