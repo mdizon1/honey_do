@@ -12,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
 class TodoItemWrap extends Component {
   constructor(props){
     super(props);
-    this.state = { isExpanded: false, todo: props.todo }
+    this.state = { isExpanded: false }
   }
 
   handleToggleExpand(evt){
@@ -26,7 +26,7 @@ class TodoItemWrap extends Component {
   render() {
     return (
       <TodoItemCore
-        todo={this.state.todo}
+        todo={this.props.todo}
         connectDragSource={this.props.connectDragSource}
         isExpanded={this.state.isExpanded}
         onTodoClicked={this.props.onTodoClicked}
