@@ -91,7 +91,7 @@ function honeyDoReducer(state, action) {
     case SYNC_TODOS_SUCCESS:
       temp_state = uiSyncingOff(state);
       // TODO: This is actually doing a retrieve right now, I should refactor
-      // the code to reflect this fact accordingly
+      // the code to reflect this accordingly
       return temp_state.set('dataState', Immutable.fromJS(action.data));
     case SYNC_TODOS_FAILURE:
       return uiSyncingOff(state);
@@ -166,18 +166,23 @@ const retrieveTodo = (state, todo) => {
 }
 
 const reorderTodos = (state, todoType, todosList) => {
+  var curr_todo;
   _.forEach(todosList, (curr, index) => {
-    state = state.setIn(['dataState', TodoTypeToDataState[todoType], curr.id.toString(), 'position'], index);
+    curr_todo = state.getIn(['dataState', TodoTypeToDataState[todoType], curr.id.toString()]);
+    curr_todo.position = index;
+    state = state.setIn(['dataState', TodoTypeToDataState[todoType], curr.id.toString()], curr_todo);
   });
   return state;
 }
 
 const setTodoCompletedState = (state, todo, isCompleted) => {
-  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString(), 'isCompleted'], isCompleted);
+  let updated_todo = state.getIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()]);
+  updated_todo.isCompleted = isCompleted
+  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], updated_todo);
 }
 
 const setTodoState = (state, todo, todoState) => {
-  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], Immutable.fromJS(todoState));
+  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], todoState);
 }
 
 const uiSyncingOn = (state) => {
