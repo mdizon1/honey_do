@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import {Map} from 'immutable'
 import TodoListMouse from './TodoListMouse'
 import TodoListTouch from './TodoListTouch'
 
@@ -19,6 +20,8 @@ import { TodoTypeToDataState } from '../constants/TodoTypes'
 
 
 const getTodosFromStore = (store, dataStatePath) => {
+  // TODO: (hurrr) Might be able to avoid the toJS call here and use Immutable 
+  // map method rather than converting to hash first then array...
   let todos = store.getState().getIn(dataStatePath).toJS();
   todos = Object.keys(todos).map(key => todos[key]); // convert todos into array
   todos = _.sortBy(todos, (curr_todo) => { return curr_todo.position }); // sort by position
@@ -131,6 +134,7 @@ export default class TodoListWrap extends Component {
     todo_type = this.props.todoType;
     todo_data_path = ['dataState', TodoTypeToDataState[this.props.todoType], droppedId.toString()]
     temp_todo = this.props.store.getState().getIn(todo_data_path);
+    if(Map.isMap(temp_todo)) { temp_todo = temp_todo.toJS(); }
 
     dispatch(todoReorderRequest(this.state.todos, todo_type));
     apiTodoDropped({
