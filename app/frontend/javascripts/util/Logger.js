@@ -17,11 +17,12 @@ function _output(msg, logLevel, outObjects){
     return;
   }
 
-  if(outObjects.length == 0) {
+  if(!outObjects || outObjects.length === 0) {
     console.log(msg);
-  }else{
-    console.log(msg, outObjects);
+    return
   }
+
+  console.log(msg, outObjects);
 }
 
 export { log, debug, dev };
