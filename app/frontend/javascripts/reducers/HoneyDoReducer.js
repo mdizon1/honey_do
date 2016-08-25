@@ -44,8 +44,8 @@ const emptyState = Immutable.fromJS(EmptyStore);
 function honeyDoReducer(state, action) {
   var temp_state;
 
-  console.log("DEBUG: ~~~~~~~~~~~~~~~~~~~~~~~~ REDUCER CALLED ~~~~~~~~~~~~~~~~~~~~~~~~~~");
-  console.log("DEBUG: action ------------> ", action);
+  Logger.debug("~~~~~~~~~~~~~~~~~~~~~~~~ REDUCER CALLED ~~~~~~~~~~~~~~~~~~~~~~~~~~");
+  Logger.debug("action ------------> ", action);
 
   switch (action.type) {
     case INITIALIZE:
@@ -166,11 +166,16 @@ const retrieveTodo = (state, todo) => {
 }
 
 const reorderTodos = (state, todoType, todosList) => {
-  var curr_todo;
-  _.forEach(todosList, (curr, index) => {
-    curr_todo = state.getIn(['dataState', TodoTypeToDataState[todoType], curr.id.toString()]);
-    curr_todo.position = index;
-    state = state.setIn(['dataState', TodoTypeToDataState[todoType], curr.id.toString()], curr_todo);
+  var curr_todo_from_store;
+
+  incoming_list_order = _.map(todosList, (curr) => {
+    return curr.title;
+  });
+  _.each(todosList, (curr_todo, index) => {
+    curr_todo_from_store = state.getIn(['dataState', TodoTypeToDataState[todoType], curr_todo.id.toString()]);
+    if(Immutable.isMap(curr_todo_from_store)){ curr_todo_from_store = curr_todo_from_store.toJS()}
+    curr_todo_from_store.position = index;
+    state = state.setIn(['dataState', TodoTypeToDataState[todoType], curr_todo.id.toString()], curr_todo_from_store);
   });
   return state;
 }
