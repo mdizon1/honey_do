@@ -35,7 +35,7 @@ export default class TodoListWrap extends Component {
     let dataStatePath = ['dataState', TodoTypeToDataState[this.props.todoType]]
 
     this.setState({
-      unsubscribe: this.props.store.subscribe(this.onStateChange.bind(this)),
+      unsubscribe: this.props.store.subscribe(this.handleStateChange.bind(this)),
       dataStatePath: dataStatePath,
       todos: getTodosFromStore(this.props.store, dataStatePath)
     });
@@ -135,8 +135,8 @@ export default class TodoListWrap extends Component {
     todo_data_path = ['dataState', TodoTypeToDataState[this.props.todoType], droppedId.toString()]
     temp_todo = this.props.store.getState().getIn(todo_data_path);
     if(Map.isMap(temp_todo)) { temp_todo = temp_todo.toJS(); }
-
     dispatch(todoReorderRequest(this.state.todos, todo_type));
+
     apiTodoDropped({
       endpoint: this.props.apiEndpoint,
       authToken: this.props.authToken,
@@ -191,7 +191,7 @@ export default class TodoListWrap extends Component {
     this.setState({todos: local_todo_state});
   }
 
-  onStateChange() {
+  handleStateChange() {
     let new_todo_state = getTodosFromStore(this.props.store, this.state.dataStatePath);
 
     if(!_.isEqual(this.state.todos, new_todo_state)){
