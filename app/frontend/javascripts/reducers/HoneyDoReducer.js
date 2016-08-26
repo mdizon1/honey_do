@@ -168,12 +168,9 @@ const retrieveTodo = (state, todo) => {
 const reorderTodos = (state, todoType, todosList) => {
   var curr_todo_from_store;
 
-  incoming_list_order = _.map(todosList, (curr) => {
-    return curr.title;
-  });
   _.each(todosList, (curr_todo, index) => {
     curr_todo_from_store = state.getIn(['dataState', TodoTypeToDataState[todoType], curr_todo.id.toString()]);
-    if(Immutable.isMap(curr_todo_from_store)){ curr_todo_from_store = curr_todo_from_store.toJS()}
+    if(Immutable.Map.isMap(curr_todo_from_store)){ curr_todo_from_store = curr_todo_from_store.toJS()}
     curr_todo_from_store.position = index;
     state = state.setIn(['dataState', TodoTypeToDataState[todoType], curr_todo.id.toString()], curr_todo_from_store);
   });
