@@ -13,10 +13,9 @@ HoneyDo::Application.configure do
   config.eager_load = false
 
   # Configure static asset server for tests with Cache-Control for performance.
-  config.serve_static_files  = false
+  config.serve_static_files = true
   config.static_cache_control = "public, max-age=3600"
 
-  config.serve_static_assets  = true
   config.assets.compile = false
 
   config.webpack[:use_manifest] = true
