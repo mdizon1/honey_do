@@ -16,6 +16,15 @@ HoneyDo::Application.configure do
   config.serve_static_files  = false
   config.static_cache_control = "public, max-age=3600"
 
+  config.serve_static_assets  = true
+  config.assets.compile = false
+
+  config.webpack[:use_manifest] = true
+
+  config.action_controller.asset_host = "file://#{::Rails.root}/public"
+
+  config.active_record.raise_in_transactional_callbacks = true
+
   # Show full error reports and disable caching.
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
