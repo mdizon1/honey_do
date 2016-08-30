@@ -1,5 +1,5 @@
-Given /^a user with the email "(.*?)" exists$/ do |email|
-  FactoryGirl.create(:user, :email => email, :password => '123456', :password_confirmation => '123456')
+Given /^a user exists with the email "(.*?)" and password "(.*?)"$/ do |email, password|
+  FactoryGirl.create(:user, :email => email, :password => password, :password_confirmation => password)
 end
 
 Given /^the user "(.*?)" belongs to the household "(.*?)"$/ do |email, household_name|
