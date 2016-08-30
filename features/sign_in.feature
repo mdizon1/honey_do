@@ -3,8 +3,23 @@
 Feature: User Sign in
   Scenario: A registered user should be able to sign-in to the app
     Given a household named "Tuttle" exists
-    And a user with the email "foo@bar.com" exists
+    And a user exists with the email "foo@bar.com" and password "123456"
     And the user "foo@bar.com" belongs to the household "Tuttle"
     And I visit the home page
     Then I should see "Honey Do"
 
+    When I click the sign in link
+    Then I should see the sign in fields
+    When I fill in "foo@bar.com" for "user_email"
+    And I fill in "123456" for "user_password" 
+    And I submit the "new_user" form
+
+    Then I should see "Signed in successfully."
+    When I wait 5 seconds
+    And I open the page
+    # LEFT OFF~~~~~~~~~~~~~~~~
+    #   Following step not passing
+    #Then I should see "Loading"
+    Then I should see "Todo list"
+
+    And I start the debugger
