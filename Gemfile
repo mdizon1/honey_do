@@ -42,6 +42,9 @@ group :development, :test do
 end
 
 group :test do
+  gem 'cucumber-rails', :require => false
+  gem 'database_cleaner'
+  gem 'selenium-webdriver'
   gem 'shoulda-matchers', :require => false # :require => false seems to be needed for spork
   gem 'spork-rails'
 end
