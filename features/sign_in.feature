@@ -1,6 +1,10 @@
 @javascript
 
 Feature: User Sign in
+         In order to use the app
+         As a registered user
+         I want to be able to log in
+
   Scenario: A registered user should be able to sign-in to the app
     Given a household named "Tuttle" exists
     And a user exists with the email "foo@bar.com" and password "123456"
