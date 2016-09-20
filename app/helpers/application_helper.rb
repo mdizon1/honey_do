@@ -4,7 +4,6 @@ module ApplicationHelper
       if Rails.configuration.webpack[:use_manifest]
         manifest = Rails.configuration.webpack[:asset_manifest]
         filename = manifest[bundle]
-
         "#{compute_asset_host}/assets/#{filename}"
       else
         "#{compute_asset_host}/assets/#{bundle}-bundle"
@@ -19,7 +18,7 @@ module ApplicationHelper
   end
 
   def webpack_javascript_include_helper
-    unless Rails.env.development?
+    unless Rails.env.development? || Rails.env.test?
       return [
         webpack_manifest_script,
         webpack_bundle_tag( 'public')
