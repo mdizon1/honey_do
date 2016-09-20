@@ -136,7 +136,7 @@ const TodoItemCore = (props) => {
     <div className="todo-item">
       <div className="row">
         <div className="col-xs-1 col-sm-1">
-          <div className="todo-item-checkbox">
+          <div className={"todo-item-checkbox" + (todo.isCompleted ? ' checkbox-checked' : '')}>
             <Checkbox
               checked={todo.isCompleted}
               onCheck={() => onTodoClicked(todo)}
