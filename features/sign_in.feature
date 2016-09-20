@@ -15,11 +15,5 @@ Feature: User Sign in
     And I submit the "new_user" form
 
     Then I should see "Signed in successfully."
-    When I wait 5 seconds
-    And I open the page
-    # LEFT OFF~~~~~~~~~~~~~~~~
-    #   Following step not passing
-    #Then I should see "Loading"
-    Then I should see "Todo list"
-
-    And I start the debugger
+    And I should see "TODO LIST"
+    And I should see "No items"
