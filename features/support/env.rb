@@ -33,7 +33,7 @@ Capybara.register_driver :chrome do |app|
 end
 
 Capybara.javascript_driver = :chrome
-Capybara.default_wait_time = 8 
+Capybara.default_max_wait_time = 8 
 Selenium::WebDriver::Chrome.driver_path = '/Users/zacherychin/Softwares/chromedriver/chromedriver'
 
 #driver = Selenium::WebDriver.for :chrome, :switches => %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate]
