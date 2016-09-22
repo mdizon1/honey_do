@@ -1,9 +1,9 @@
 @javascript
 
-Feature: Create todo item
-         In order to manage household chores
+Feature: Switch tags
+         In order to manage household tasks
          As a member of the household
-         I want to be able to create todo items
+         I want to be able switch from todo items to the shopping list
 
   Scenario: Create todo item from blank list
     Given a household named "Tuttle" exists

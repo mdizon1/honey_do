@@ -10,4 +10,3 @@ Given /^there is a (shopping|todo) item titled "([^"]*)" which belongs to the ho
     raise "Should be impossible to get here"
   end
 end
-
