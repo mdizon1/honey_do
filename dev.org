@@ -1,0 +1,99 @@
+* Purpose of this document
+  Keep track of todo items for Honey Do
+* Current
+** TODO Upgrade Ruby
+** TODO Upgrade Rails
+* Backlog
+** TODO Use webpacker rather than current custom webpack integration
+** TODO Dockerize the app
+* Icebox
+** TODO Deploy to heroku
+** TODO change accept todo icon
+** TODO Iron out the signup flow
+** TODO Craft welcome/landing page (logged out)
+** TODO Todo items should go to the front of the list when added
+** TODO Tags can have icons or avatars (not sure which yet, probably both)
+** TODO Create seed list of built in tags
+** TODO Add foreign key constraints
+** TODO Handle submit on enter when creating todo
+** TODO Add additional validations on todocontroller for permission verification
+** TODO User can have an avatar (MARTY)
+** TODO Handle close new todo modal with escape
+** TODO Handle error on todo creation
+** TODO Take picture of item to add to todo (or any uploaded image)
+** TODO Household 'make head admin' command must remove other head admin
+** TODO Household admin can invite other members
+** TODO Create UI for choosing colors for tags (premium feature?)
+** TODO Allow user to edit their profile
+** TODO User can hide completed todos
+** TODO Completed todos hidden by default except for admins
+** TODO Show user name in navbar when logged in
+** TODO Switch to Thin server
+** TODO Admin can assign tasks to members
+* Done
+** DONE Todo list can be filtered by tag
+** DONE Create UI for displaying tags
+** DONE Install and set up guard-spork
+** DONE Add interface for tagging todo items
+** DONE Todo items (and shopping items) can be tagged
+** DONE Add spork
+** DONE Create shopping list and add to shopping tab
+** DONE Update backbone
+*** BUG: creating a new todo doesn't add it to the list
+** DONE Make todos orderable
+** DONE REFACTOR: Use 1 collection instead of 2 in backbone for todos
+** DONE Create an event system and track events on todo transitions
+** DONE REFACTOR: Add state machine to todos
+** DONE Backbonize todo list control
+** DONE Add tooltips to todo controls
+** DONE Install/setup backbone rails
+** DONE Household head admin can give admin status to other members
+** DONE Design 2nd pass
+*** Mobile first
+*** Make it responsive
+*** Todo management, shopping list management
+** DONE Display user email in navbar when logged in
+** DONE Add shopping list tab
+** DONE House admin can uncomplete a todo
+** DONE Todo can be destroyed
+** DONE Add indexes to households table
+** DONE Add indexes to todos table
+** DONE User can create a todo item for the household
+** DONE User can complete a todo item
+** DONE When user logs in, if they have a household, goto the show view
+** DONE First wave of style
+*** Add bootstrap
+*** Install a bootstrap skin
+*** Bootstrapize the markup
+*** Make some crappy first pass on design
+** DONE Create proper route around todo creation: household/todos
+** DONE Make todos acceptible
+*** An admin of the household must accept a todo to remove it
+*** Simply completing the todo makes it display crossed out
+** DONE Choose/use a bootstrap theme
+** DONE User can create a household
+** DONE Only a household admin may create todos
+** DONE Change user to has\_one household
+** DONE A user can be a household administrator
+*** Gets associated when they create a household
+*** Each household has a single head who has highest admin access
+** DONE Create unique index on is\_head\_admin for membership
+   Ensure only 1 head admin per household
+** DONE Validate only 1 head admin per household
+** DONE Flesh out user model more
+*** Add name
+** DONE User can sign in
+*** install devise
+*** generate devise actions
+*** put login/out actions in place
+** DONE Install twitter bootstrap
+** DONE Create and push project repo to github
+** DONE Todo item can be asked whether it's complete
+** DONE Todo item can be uncompleted
+** DONE Todo item can be completed
+** DONE Household has many 'items'
+** DONE Household has many 'members'
+*** Members are users
+** DONE Create household model
+** DONE Attach devise to user model
+** DONE Create user model
