@@ -1,1 +1,1 @@
-rvm use --create 2.2.0@honey_do
+rvm use --create 2.4.1@honey_do

@@ -1,7 +1,8 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
-** TODO Upgrade Ruby
+** DONE Upgrade Ruby
+   CLOSED: [2017-08-02 Wed 17:50]
 ** TODO Upgrade Rails
 * Backlog
 ** TODO Use webpacker rather than current custom webpack integration
