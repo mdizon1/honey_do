@@ -1,7 +1,10 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
-** TODO Use webpacker rather than current custom webpack integration
+** TODO Migrate code from old custom webpack to webpacker structure
+*** TODO Move over modules
+*** TODO remove uses of type check
+*** TODO use typescript conventions
 * Backlog
 * Icebox
 ** TODO Deploy to heroku
@@ -28,6 +31,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Use webpacker rather than current custom webpack integration
+   CLOSED: [2017-08-04 Fri 14:59]
 ** DONE Dockerize the app
    CLOSED: [2017-08-04 Fri 14:38]
 ** DONE Upgrade Ruby
