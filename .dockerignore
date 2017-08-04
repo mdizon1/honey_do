@@ -1,0 +1,6 @@
+node_modules/
+.git/
+tmp/
+log/
+README.md
+dev.org
