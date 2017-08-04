@@ -1,6 +1,6 @@
 # TagTitle holds the actual tag content such as title and any associated 
 # metadata
-class TagTitle < ActiveRecord::Base
+class TagTitle < ApplicationRecord
   has_many :tags, :dependent => :destroy
   has_many :todos, :through => :tags#, :source => :taggable, :source_type => 'Completable::Todo'
 

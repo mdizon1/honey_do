@@ -1,9 +1,9 @@
 module Households
   module Todos
     class TagsController < ApplicationController
-      before_filter :authenticate_user!
-      before_filter :load_current_user_household
-      before_filter :load_todo
+      before_action :authenticate_user!
+      before_action :load_current_user_household
+      before_action :load_todo
 
       def destroy
         @todo.remove_tag(params[:id])

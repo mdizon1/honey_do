@@ -24,6 +24,7 @@ gem 'rails-backbone'
 # gem 'sass-rails'
 gem 'therubyracer'
 gem 'uglifier'
+gem 'webpacker'
 
 group :development do
   gem 'awesome_print'
@@ -34,8 +35,8 @@ end
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
-  gem 'guard'
-  gem 'guard-spork'
+#  gem 'guard'
+#  gem 'guard-spork'
   gem 'pry'
   gem 'pry-rails'
   gem 'rspec-rails'
@@ -46,7 +47,7 @@ group :test do
   gem 'database_cleaner'
   gem 'selenium-webdriver'
   gem 'shoulda-matchers', :require => false # :require => false seems to be needed for spork
-  gem 'spork-rails'
+#  gem 'spork-rails'
 end
 
 group :production do

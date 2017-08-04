@@ -10,7 +10,7 @@ FactoryGirl.define do
     }
   end
 
-  factory :todo, :parent => :completable,:class => Completable::Todo do
+  factory :todo, :parent => :completable, :class => Completable::Todo do
     title { Faker::Company.bs }
     notes { Faker::Hacker.phrases.sample }
   end

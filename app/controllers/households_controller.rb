@@ -1,6 +1,6 @@
 class HouseholdsController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :load_current_user_household, :only => [:show, :edit, :update, :destroy]
+  before_action :authenticate_user!
+  before_action :load_current_user_household, :only => [:show, :edit, :update, :destroy]
 
   def show
     detect_browser

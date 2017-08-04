@@ -1,9 +1,9 @@
 class TodosController < ApplicationController
-  before_filter :authenticate_user!
-  before_filter :verify_auth_token
-  before_filter :load_current_user_household, :only => [:index, :create]
-  before_filter :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete, :reorder]
-  before_filter :prepare_completable_form, :only => [:create, :update]
+  before_action :authenticate_user!
+  before_action :verify_auth_token
+  before_action :load_current_user_household, :only => [:index, :create]
+  before_action :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete, :reorder]
+  before_action :prepare_completable_form, :only => [:create, :update]
 
   def index
     # TODO: (ha ha ha...) this must be heavily optimized, mapping over the 

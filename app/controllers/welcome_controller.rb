@@ -1,5 +1,5 @@
 class WelcomeController < ApplicationController
-  before_filter :redirect_to_household, :only => :index
+  before_action :redirect_to_household, :only => :index
 
   def index
     #nothing here yet

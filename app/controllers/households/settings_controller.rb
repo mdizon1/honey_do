@@ -1,8 +1,8 @@
 module Households
   class SettingsController < ApplicationController
-    before_filter :authenticate_user!
-    before_filter :load_current_user_household
-    before_filter :authenticate_household_admin
+    before_action :authenticate_user!
+    before_action :load_current_user_household
+    before_action :authenticate_household_admin
 
     def edit
     end

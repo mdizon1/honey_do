@@ -1,6 +1,6 @@
 # Tag is the join object that connects the taggable to the TagTitle which holds
 # the actual tag content
-class Tag < ActiveRecord::Base
+class Tag < ApplicationRecord
   belongs_to :taggable, :polymorphic => true
   belongs_to :tag_title
 

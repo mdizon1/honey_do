@@ -1,4 +1,4 @@
-class Membership < ActiveRecord::Base
+class Membership < ApplicationRecord
   belongs_to :household
   belongs_to :user, :foreign_key => :member_id
 

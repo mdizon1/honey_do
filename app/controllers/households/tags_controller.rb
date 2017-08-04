@@ -1,7 +1,7 @@
 module Households
   class TagsController < ApplicationController
-    before_filter :authenticate_user!
-    before_filter :load_current_user_household
+    before_action :authenticate_user!
+    before_action :load_current_user_household
 
     def index
       load_tags

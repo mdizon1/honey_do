@@ -1,4 +1,4 @@
-class CreateTodo < ActiveRecord::Migration
+class CreateTodo < ActiveRecord::Migration[4.2]
   def change
     create_table :todos do |t|
       t.integer :household_id
