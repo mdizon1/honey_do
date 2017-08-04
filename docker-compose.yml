@@ -12,23 +12,23 @@ services:
       - "3000:3000"
     depends_on:
       - db
-        #      - webpack-dev
+      - webpack-dev
     command: ./bin/rails s -p 3000 -b '0.0.0.0' 
 
   bundle:
-    image: typewar_web
+    image: honey_do_web
     command: echo bundling ruby gems??
     volumes:
       - /bundle
 
 #  node_modules:
-#    image: typewar_web
+#    image: honey_do_web
 #    command: echo building node modules??
 #    volumes: 
 #      - /node_modules
 
   webpack-dev:
-    image: typewar_web
+    image: honey_do_web
     build:
       context: .
     environment:
