@@ -4,6 +4,8 @@
     %title Honey Do
     = csrf_meta_tags
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, user-scalable=no'}
+    = stylesheet_link_tag 'application'
+    = javascript_pack_tag 'application'
 
   %body
     = render 'layouts/navbar'
@@ -12,7 +14,7 @@
       = yield
 
     = yield :modals
-    = webpack_javascript_include_helper
+    -#= webpack_javascript_include_helper
 
     = yield :javascripts
     <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
