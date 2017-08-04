@@ -1,10 +1,8 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
-** TODO Dockerize the app
-*** LEFT OFF: Everything's installed, now move config from old custom webpack to webpacker.
-* Backlog
 ** TODO Use webpacker rather than current custom webpack integration
+* Backlog
 * Icebox
 ** TODO Deploy to heroku
 ** TODO change accept todo icon
@@ -30,6 +28,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Dockerize the app
+   CLOSED: [2017-08-04 Fri 14:38]
 ** DONE Upgrade Ruby
    CLOSED: [2017-08-02 Wed 17:50]
 ** DONE Upgrade Rails
