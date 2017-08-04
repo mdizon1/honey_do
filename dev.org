@@ -1,12 +1,10 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
-** DONE Upgrade Ruby
-   CLOSED: [2017-08-02 Wed 17:50]
-** TODO Upgrade Rails
+** TODO Dockerize the app
+*** LEFT OFF: Everything's installed, now move config from old custom webpack to webpacker.
 * Backlog
 ** TODO Use webpacker rather than current custom webpack integration
-** TODO Dockerize the app
 * Icebox
 ** TODO Deploy to heroku
 ** TODO change accept todo icon
@@ -32,6 +30,10 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Upgrade Ruby
+   CLOSED: [2017-08-02 Wed 17:50]
+** DONE Upgrade Rails
+   CLOSED: [2017-08-02 Wed 17:52]
 ** DONE Todo list can be filtered by tag
 ** DONE Create UI for displaying tags
 ** DONE Install and set up guard-spork
