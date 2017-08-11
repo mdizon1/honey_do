@@ -2,6 +2,10 @@
   Keep track of todo items for Honey Do
 * Current
 ** TODO Migrate code from old custom webpack to webpacker structure
+*** DONE Load up bootstrap
+    CLOSED: [2017-08-10 Thu 20:44]
+*** TODO Move stylesheets
+*** TODO remove stylesheet link tag
 *** TODO Move over modules
 *** TODO remove uses of type check
 *** TODO use typescript conventions

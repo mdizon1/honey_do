@@ -7,6 +7,14 @@
 // To reference this file, add <%= javascript_pack_tag 'application' %> to the appropriate
 // layout file, like app/views/layouts/application.html.erb
 
+
+require("expose-loader?$!expose-loader?jQuery!jquery"); // adds $ to window so we can jquery in global scope
+require("jquery-ujs");
+require("bootstrap-loader");
+require("font-awesome-sass-loader");
+var _ = require("lodash");
+
+
 console.log('Hello World from Webpacker')
 
 // BEGIN TYPESCRIPT CHECK
