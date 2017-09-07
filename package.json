@@ -3,13 +3,11 @@
   "description": "A to-do list for the family",
   "version": "1.0.0",
   "devDependencies": {
-    "bootstrap-loader": "^2.1.0",
-    "bootstrap-sass": "^3.3.7",
+    "bootstrap-loader": "^2.2.0",
     "chunk-manifest-webpack-plugin": "~0.0.1",
     "exports-loader": "~0.6.4",
     "expose-loader": "~0.6.0",
-    "font-awesome": "^4.6.3",
-    "font-awesome-sass-loader": "^1.0.1",
+    "font-awesome-sass-loader": "^2.0.1",
     "imports-loader": "~0.7.1",
     "webpack": "^1.12",
     "webpack-dev-server": "^2.6.1"

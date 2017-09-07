@@ -14,8 +14,18 @@ require("bootstrap-loader");
 require("font-awesome-sass-loader");
 var _ = require("lodash");
 
+import "../styles/application"
 
-console.log('Hello World from Webpacker')
+
+console.log('Hello World from Webpacker');
+
+
+
+
+
+
+
+
 
 // BEGIN TYPESCRIPT CHECK
 class Student {
@@ -41,3 +51,7 @@ var user = new Student("Jane", "M.", "User");
 
 console.log("DEBUG: Typescript check ---> ", greeter(user));
 // END TYPESCRIPT CHECK
+//
+//
+
+require ("./honey_do/entry.js");

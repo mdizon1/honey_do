@@ -4,11 +4,24 @@
 ** TODO Migrate code from old custom webpack to webpacker structure
 *** DONE Load up bootstrap
     CLOSED: [2017-08-10 Thu 20:44]
-*** TODO Move stylesheets
-*** TODO remove stylesheet link tag
-*** TODO Move over modules
+*** DONE Move stylesheets
+    CLOSED: [2017-09-06 Wed 18:01]
+    LEFT OFF: __webpack_require__(...) is not a function
+    Some issue with loading the css on
+    import "../styles/application"
+*** DONE remove stylesheet link tag
+    CLOSED: [2017-09-06 Wed 18:01]
+*** DONE Move over modules
+    CLOSED: [2017-09-06 Wed 18:01]
+*** TODO unknown prop 'onTouchTap'
+    I commented out initTapEventPlugin.  That was probably specific to the
+    older version of react that I was using when I first built this, I think
+    now, touch events are either built in or there's a newer plugin.  Need to
+    investigate and fix
 *** TODO remove uses of type check
 *** TODO use typescript conventions
+*** TODO Fix font awesome loading
+*** TODO Fix bootstrap styles
 * Backlog
 * Icebox
 ** TODO Deploy to heroku

@@ -16,7 +16,7 @@ services:
     command: ./bin/rails s -p 3000 -b '0.0.0.0' 
 
   bundle:
-    image: honey_do_web
+    image: honeydo_web
     command: echo bundling ruby gems??
     volumes:
       - /bundle
@@ -28,7 +28,7 @@ services:
 #      - /node_modules
 
   webpack-dev:
-    image: honey_do_web
+    image: honeydo_web
     build:
       context: .
     environment:
@@ -38,4 +38,4 @@ services:
     volumes:
       - .:/myapp/
     #command: ./bin/webpack-dev-server --host 0.0.0.0 --inline true --hot true
-    command: ./bin/webpack-dev-server --inline true --hot true
+    command: ./bin/webpack-dev-server --inline true --hot true --port 8080 --public localhost:8080
