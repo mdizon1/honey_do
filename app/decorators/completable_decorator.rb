@@ -10,7 +10,7 @@ class CompletableDecorator < Draper::Decorator
       :title       => title,
       :notes       => notes,
       :state       => aasm_state,
-      :klass       => source.class.to_s,
+      :klass       => object.class.to_s,
       :tags        => tag_titles.map(&:title),
       :isActive    => active?,
       :isCompleted => completed?,
