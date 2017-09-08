@@ -1,3 +1,4 @@
+// Deprecated?
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 // Needed for onTouchTap

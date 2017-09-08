@@ -10,6 +10,8 @@
 
 //require("../../../styles/application.scss");
 
+
+// deprecated?
 //require("./setup/initTapEventPlugin");
  
 import React from "react";
@@ -29,7 +31,7 @@ $(function (){
     console.log("DEBUG: ok, should be initializing the whole kit n kaboodle here...");
     let honey_do_options = honey_do_container.data();
 
-    ReactDOM.render( 
+    ReactDOM.render(
       <Provider store={store}>
         <HoneyDo 
           config={honey_do_options.config}

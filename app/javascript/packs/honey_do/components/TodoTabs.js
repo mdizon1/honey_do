@@ -18,6 +18,7 @@ const renderTabContent = (props, tabType) => {
 }
 
 const TodoTabs = function (props) {
+  console.log("DEBUG: rendering TODO TABS, props are ----> ",props); 
   return (
     <Tabs
       value={props.currentTab}

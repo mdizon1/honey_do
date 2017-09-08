@@ -1,4 +1,4 @@
-version: '3'
+version: '3.2'
 services:
   db:
     image: postgres
@@ -6,29 +6,28 @@ services:
   web:
     build: .
     volumes:
-      - .:/myapp/
-      - /bundle
+      #      - .:/myapp
+      #      - /bundle
+      #- type: bind
+      #  source: .
+      #  target: /myapp
+      - .:/myapp
+      - type: volume
+        source: bundle
+        target: /bundle
+        volume: 
+          nocopy: true
+
     ports:
       - "3000:3000"
     depends_on:
       - db
+      - bundle 
       - webpack-dev
     command: ./bin/rails s -p 3000 -b '0.0.0.0' 
 
-  bundle:
-    image: honeydo_web
-    command: echo bundling ruby gems??
-    volumes:
-      - /bundle
-
-#  node_modules:
-#    image: honey_do_web
-#    command: echo building node modules??
-#    volumes: 
-#      - /node_modules
-
   webpack-dev:
-    image: honeydo_web
+    image: honey_do_web
     build:
       context: .
     environment:
@@ -36,6 +35,23 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - .:/myapp/
-    #command: ./bin/webpack-dev-server --host 0.0.0.0 --inline true --hot true
+      - .:/myapp
     command: ./bin/webpack-dev-server --inline true --hot true --port 8080 --public localhost:8080
+
+  bundle:
+    image: honey_do_web
+    command: echo bundling ruby gems??
+    volumes:
+      - type: volume
+        source: bundle
+        target: /bundle
+
+
+#  node_modules:
+#    image: honey_do_web
+#    command: echo building node modules??
+#    volumes: 
+#      - /node_modules
+
+volumes: 
+  bundle:
