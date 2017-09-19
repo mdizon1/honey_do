@@ -1,31 +1,18 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
-** TODO Migrate code from old custom webpack to webpacker structure
-*** DONE Load up bootstrap
-    CLOSED: [2017-08-10 Thu 20:44]
-*** DONE Move stylesheets
-    CLOSED: [2017-09-06 Wed 18:01]
-    LEFT OFF: __webpack_require__(...) is not a function
-    Some issue with loading the css on
-    import "../styles/application"
-*** DONE remove stylesheet link tag
-    CLOSED: [2017-09-06 Wed 18:01]
-*** DONE Move over modules
-    CLOSED: [2017-09-06 Wed 18:01]
-*** TODO unknown prop 'onTouchTap'
-    I commented out initTapEventPlugin.  That was probably specific to the
-    older version of react that I was using when I first built this, I think
-    now, touch events are either built in or there's a newer plugin.  Need to
-    investigate and fix
-*** TODO remove uses of type check
-*** TODO use typescript conventions
-*** TODO Fix font awesome loading
-*** TODO Fix bootstrap styles
 * Backlog
 * Icebox
-** TODO Deploy to heroku
+** TODO when dragging an item, render seems to be triggered 4 times
+** TODO Fix bootstrap styles
+** TODO Fix seeding issue
+   It relates to rails 5 upgrade, subclasses of rails models not behaving well
 ** TODO change accept todo icon
+** TODO Deploy to heroku
+** TODO Integrate service workers
+*** TODO Research how to use service workers
+** TODO remove uses of type check
+** TODO use typescript conventions
 ** TODO Iron out the signup flow
 ** TODO Craft welcome/landing page (logged out)
 ** TODO Todo items should go to the front of the list when added
@@ -48,6 +35,29 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Fix font awesome loading
+   CLOSED: [2017-09-19 Tue 16:31]
+** DONE Get it working again
+   CLOSED: [2017-09-19 Tue 16:31]
+** DONE Migrate code from old custom webpack to webpacker structure
+   CLOSED: [2017-09-07 Thu 18:55]
+*** DONE Load up bootstrap
+    CLOSED: [2017-08-10 Thu 20:44]
+*** DONE Move stylesheets
+    CLOSED: [2017-09-06 Wed 18:01]
+    LEFT OFF: __webpack_require__(...) is not a function
+    Some issue with loading the css on
+    import "../styles/application"
+*** DONE remove stylesheet link tag
+    CLOSED: [2017-09-06 Wed 18:01]
+*** DONE Move over modules
+    CLOSED: [2017-09-06 Wed 18:01]
+*** DONE unknown prop 'onTouchTap'
+    CLOSED: [2017-09-07 Thu 18:53]
+    I commented out initTapEventPlugin.  That was probably specific to the
+    older version of react that I was using when I first built this, I think
+    now, touch events are either built in or there's a newer plugin.  Need to
+    investigate and fix
 ** DONE Use webpacker rather than current custom webpack integration
    CLOSED: [2017-08-04 Fri 14:59]
 ** DONE Dockerize the app

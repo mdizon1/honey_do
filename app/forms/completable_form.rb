@@ -100,6 +100,6 @@ class CompletableForm
   end
 
   def store_params(params)
-    @params = params.with_indifferent_access if params.present?
+    @params = params.to_h if params.present?
   end
 end
