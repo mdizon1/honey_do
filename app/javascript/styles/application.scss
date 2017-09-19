@@ -1,10 +1,8 @@
 //@import "bootstrap_overrides";
-//@import "font-awesome";
-//@import "jquery-ui/draggable";
-//@import "jquery-ui/sortable";
-@import "fonts";
+
+//@import "./fonts"
 
 // application styles
-@import "colors";
-@import "layout";
+@import "./colors";
+@import "./layout";
 @import "./honey_do/app";

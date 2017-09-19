@@ -23,12 +23,10 @@ import { createStore } from "redux";
 import honeyDoReducer from "./reducers/HoneyDoReducer";
 
 $(function (){
-
   var store = createStore(honeyDoReducer, {});
-
   var honey_do_container = $("#honey-do");
+
   if(honey_do_container.length == 1){
-    console.log("DEBUG: ok, should be initializing the whole kit n kaboodle here...");
     let honey_do_options = honey_do_container.data();
 
     ReactDOM.render(
