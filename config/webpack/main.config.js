@@ -39,8 +39,8 @@ config.resolve = {
 };
 
 config.module = {
-  loaders: [
-    { 
+  rules: [
+    {
       test: /\.js$/, 
       exclude: /node_modules/, 
       loader: "babel-loader"
@@ -48,28 +48,28 @@ config.module = {
     {
       test: /\.jsx?$/,
       exclude: /(node_modules|bower_components)/,
-      loader: 'babel', // 'babel-loader' is also a legal name to reference
-      query: {
-        presets: ['react', 'es2015']
-      }
+      loader: 'babel-loader',
+      query: { presets: ['react', 'es2015'] }
     },
     {
       test: /\.scss$/,
       loaders: ["style", "css", "sass"]
     },
-    //{
-    //  test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-    //  loader: "url?limit=10000"
-    //},
-    //{
-    //  test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
-    //  loader: 'file'
-    //},
-    // For font awesome sass
-    { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-    { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" }
+    {
+      test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: 'url-loader',
+      options: {
+        limit: 10000,
+        mimetype: 'application/font-woff'
+      }
+    },
+    {
+      test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+      loader: "file-loader"
+    }
   ]
 };
+
 config.sassLoader = {
   includePaths: [path.resolve(__dirname, "../", "../", "./app", "./assets", "./stylesheets")]
 };
