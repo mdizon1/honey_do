@@ -29,7 +29,7 @@ services:
     stdin_open: true
 
   webpack-dev:
-    image: honey_do_web
+    image: honeydo_web
     build:
       context: .
     environment:
@@ -41,7 +41,7 @@ services:
     command: ./bin/webpack-dev-server --inline true --hot true --port 8080 --public localhost:8080
 
   bundle:
-    image: honey_do_web
+    image: honeydo_web
     command: echo bundling ruby gems??
     volumes:
       - type: volume
