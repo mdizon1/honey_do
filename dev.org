@@ -1,35 +1,37 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
-* Backlog
-* Icebox
-** TODO when dragging an item, render seems to be triggered 4 times
-** TODO Fix bootstrap styles
 ** TODO Fix seeding issue
    It relates to rails 5 upgrade, subclasses of rails models not behaving well
-** TODO change accept todo icon
+* Backlog
+** TODO Todo items should go to the front of the list when added
+** TODO Fix bootstrap styles
+** TODO when dragging an item, render seems to be triggered 4 times
 ** TODO Deploy to heroku
+** TODO change accept todo icon
+** TODO Handle submit on enter when creating todo
+** TODO Handle close new todo modal with escape
+** TODO User can hide completed todos
+** TODO Craft welcome/landing page (logged out)
+** TODO Tags can have icons or avatars (not sure which yet, probably both)
+** TODO Create seed list of built in tags
+* Icebox
+** TODO 1 button deploy
+** TODO Add HTTPS
 ** TODO Integrate service workers
 *** TODO Research how to use service workers
 ** TODO remove uses of type check
 ** TODO use typescript conventions
 ** TODO Iron out the signup flow
-** TODO Craft welcome/landing page (logged out)
-** TODO Todo items should go to the front of the list when added
-** TODO Tags can have icons or avatars (not sure which yet, probably both)
-** TODO Create seed list of built in tags
 ** TODO Add foreign key constraints
-** TODO Handle submit on enter when creating todo
 ** TODO Add additional validations on todocontroller for permission verification
 ** TODO User can have an avatar (MARTY)
-** TODO Handle close new todo modal with escape
 ** TODO Handle error on todo creation
 ** TODO Take picture of item to add to todo (or any uploaded image)
 ** TODO Household 'make head admin' command must remove other head admin
 ** TODO Household admin can invite other members
 ** TODO Create UI for choosing colors for tags (premium feature?)
 ** TODO Allow user to edit their profile
-** TODO User can hide completed todos
 ** TODO Completed todos hidden by default except for admins
 ** TODO Show user name in navbar when logged in
 ** TODO Switch to Thin server

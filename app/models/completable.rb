@@ -11,6 +11,8 @@ class Completable < ApplicationRecord
   validates :household_id, :creator_id, :title, :presence => true
   validate :creator_is_member
 
+  acts_as_list :scope => :household
+
   accepts_nested_attributes_for :tag_titles, :allow_destroy => true
 
   include AASM
