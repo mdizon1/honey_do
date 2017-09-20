@@ -1,13 +1,12 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
-** TODO Fix seeding issue
-   It relates to rails 5 upgrade, subclasses of rails models not behaving well
 * Backlog
-** TODO Todo items should go to the front of the list when added
 ** TODO Fix bootstrap styles
 ** TODO when dragging an item, render seems to be triggered 4 times
+** TODO 1 button deploy
 ** TODO Deploy to heroku
+** TODO Get cukes working
 ** TODO change accept todo icon
 ** TODO Handle submit on enter when creating todo
 ** TODO Handle close new todo modal with escape
@@ -16,7 +15,6 @@
 ** TODO Tags can have icons or avatars (not sure which yet, probably both)
 ** TODO Create seed list of built in tags
 * Icebox
-** TODO 1 button deploy
 ** TODO Add HTTPS
 ** TODO Integrate service workers
 *** TODO Research how to use service workers
@@ -37,6 +35,11 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Todo items should go to the front of the list when added
+   CLOSED: [2017-09-19 Tue 18:54]
+** DONE Fix seeding issue
+   CLOSED: [2017-09-19 Tue 18:32]
+   It relates to rails 5 upgrade, subclasses of rails models not behaving well
 ** DONE Fix font awesome loading
    CLOSED: [2017-09-19 Tue 16:31]
 ** DONE Get it working again
