@@ -2,12 +2,7 @@
   Keep track of todo items for Honey Do
 * Current
 * Backlog
-** TODO Get cukes working
-   Need to install chromedriver and probably selenium into the image
-** TODO Handle submit on enter when creating todo
-** TODO Handle close new todo modal with escape
 ** TODO when dragging an item, render seems to be triggered 4 times
-** TODO 1 button deploy
 ** TODO Deploy to heroku
 ** TODO User can hide completed todos
 ** TODO change accept todo icon
@@ -38,6 +33,11 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE 1 button deploy
+   CLOSED: [2017-09-22 Fri 14:52]
+** DONE Get cukes working
+   CLOSED: [2017-09-22 Fri 13:06]
+   Need to install chromedriver and probably selenium into the image
 ** DONE Todo items should go to the front of the list when added
    CLOSED: [2017-09-19 Tue 18:54]
 ** DONE Fix seeding issue

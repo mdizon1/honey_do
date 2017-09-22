@@ -35,6 +35,16 @@ webpack: ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-b
 Lastly, a change must be made to the remote_development.js config file.  The
 file itself has the necessary instruction
 
+### Development setup
+Install Docker.
+Install docker-compose
+docker-compose build
+docker-compose up
+docker-compose run --rm web bundle exec rake db:create db:migrate dev:seed
+
+### Deploy process
+heroku container:push web
+
 ### Open issues:
 
 #### Material UI Nested list items
