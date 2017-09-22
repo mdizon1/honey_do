@@ -48,6 +48,15 @@ services:
         source: bundle
         target: /bundle
 
+      #  cucumber:
+      #    build:
+      #      context: .
+      #      dockerfile: Dockerfile.cucumber
+      #    command: ./bin/rake cucumber
+      #    depends_on:
+      #      - db
+      #      - bundle
+
 
 #  node_modules:
 #    image: honey_do_web

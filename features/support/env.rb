@@ -28,13 +28,14 @@ require 'cucumber/rails'
 #
 ActionController::Base.allow_rescue = false
 
-Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, :browser => :chrome, :switches => %w(--incognito))
-end
-
-Capybara.javascript_driver = :chrome
-Capybara.default_max_wait_time = 8 
-Selenium::WebDriver::Chrome.driver_path = '/Users/zacherychin/Softwares/chromedriver/chromedriver'
+Capybara.default_driver = :selenium
+#Capybara.register_driver :chrome do |app|
+#  Capybara::Selenium::Driver.new(app, :browser => :chrome, :switches => %w(--incognito))
+#end
+#
+#Capybara.javascript_driver = :chrome
+#Capybara.default_max_wait_time = 8 
+#Selenium::WebDriver::Chrome.driver_path = '/Users/zacherychin/Softwares/chromedriver/chromedriver'
 
 #driver = Selenium::WebDriver.for :chrome, :switches => %w[--ignore-certificate-errors --disable-popup-blocking --disable-translate]
 

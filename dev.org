@@ -2,18 +2,21 @@
   Keep track of todo items for Honey Do
 * Current
 * Backlog
-** TODO Fix bootstrap styles
+** TODO Get cukes working
+   Need to install chromedriver and probably selenium into the image
+** TODO Handle submit on enter when creating todo
+** TODO Handle close new todo modal with escape
 ** TODO when dragging an item, render seems to be triggered 4 times
 ** TODO 1 button deploy
 ** TODO Deploy to heroku
-** TODO Get cukes working
-** TODO change accept todo icon
-** TODO Handle submit on enter when creating todo
-** TODO Handle close new todo modal with escape
 ** TODO User can hide completed todos
+** TODO change accept todo icon
 ** TODO Craft welcome/landing page (logged out)
 ** TODO Tags can have icons or avatars (not sure which yet, probably both)
 ** TODO Create seed list of built in tags
+** TODO Fix bootstrap styles
+   I think the issue with the navbar is the documentation on bootstrap's site
+   isn't up to date.
 * Icebox
 ** TODO Add HTTPS
 ** TODO Integrate service workers
