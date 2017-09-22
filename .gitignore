@@ -26,9 +26,6 @@
 # Ignore javascript assets (for webpack)
 /app/assets/javascripts
 
-# Ignore database yml
-/config/database.yml
-
 # Ignore node modules
 /node_modules
 /public/packs
