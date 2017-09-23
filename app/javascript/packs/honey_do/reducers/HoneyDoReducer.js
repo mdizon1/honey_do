@@ -26,6 +26,7 @@ import { INITIALIZE,
   TODO_REORDER_REQUEST,
   TODO_REORDER_SUCCESS,
   TODO_REORDER_FAILURE,
+  TOGGLE_HIDE_COMPLETED,
   UPDATE_TODO_REQUEST,
   UPDATE_TODO_SUCCESS,
   UPDATE_TODO_FAILURE,
@@ -116,6 +117,9 @@ function honeyDoReducer(state, action) {
       // we get a success or failure back.
       return deactivateSpinner(state);
 
+    case TOGGLE_HIDE_COMPLETED:
+      return toggleHideCompletedTodos(state);
+
     case UPDATE_TODO_REQUEST:
       return updateTodo(state, action.todo);
     case UPDATE_TODO_SUCCESS:
@@ -187,6 +191,12 @@ const setTodoCompletedState = (state, todo, isCompleted) => {
 
 const setTodoState = (state, todo, todoState) => {
   return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], todoState);
+}
+
+const toggleHideCompletedTodos = (state) => {
+  var curr_hidden_state;
+  curr_hidden_state = state.getIn(["uiState", "isCompletedHidden"]);
+  return state.setIn(["uiState", "isCompletedHidden"], !curr_hidden_state);
 }
 
 const uiSyncingOn = (state) => {

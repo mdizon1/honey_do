@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import Tabs from 'material-ui/Tabs/Tabs'
 import Tab from 'material-ui/Tabs/Tab'
 import TodoListWrap from './TodoListWrap'
+import HoneyDoConfigWrap from "../containers/HoneyDoConfigWrap"
 import { UiTabs, UiTabToType } from '../constants/TodoTypes'
 
 const renderTabContent = (props, tabType) => {
@@ -18,12 +19,16 @@ const renderTabContent = (props, tabType) => {
 }
 
 const TodoTabs = function (props) {
-  console.log("DEBUG: rendering TODO TABS, props are ----> ",props); 
   return (
     <Tabs
       value={props.currentTab}
       onChange={props.onChangeTab}
     >
+      <Tab label="Configuration" value={UiTabs.CONFIG}>
+        <div>
+          <HoneyDoConfigWrap store={props.store}/>
+        </div>
+      </Tab>
       <Tab label="Todo list" value={UiTabs.TODOS}>
         <div>
           { renderTabContent(props, UiTabs.TODOS) }

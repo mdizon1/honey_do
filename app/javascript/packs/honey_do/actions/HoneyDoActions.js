@@ -24,6 +24,7 @@ export const SYNC_TODOS_FAILURE = 'SYNC_TODOS_FAILURE'
 export const TODO_REORDER_REQUEST = 'TODO_REORDER_REQUEST'
 export const TODO_REORDER_SUCCESS = 'TODO_REORDER_SUCCESS'
 export const TODO_REORDER_FAILURE = 'TODO_REORDER_FAILURE'
+export const TOGGLE_HIDE_COMPLETED = "TOGGLE_HIDE_COMPLETED"
 export const UPDATE_TODO_REQUEST = 'UPDATE_TODO_REQUEST'
 export const UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS'
 export const UPDATE_TODO_FAILURE = 'UPDATE_TODO_FAILURE'
@@ -211,6 +212,13 @@ export function todoReorderFailure(id, todoType, json) {
     description: 'Todo was dragged and dropped into a new position',
     data: json,
     todoType: todoType
+  }
+}
+
+export function toggleHideCompleted(){
+  return {
+    type: TOGGLE_HIDE_COMPLETED,
+    description: "Show/Hide todos which were already completed"
   }
 }
 

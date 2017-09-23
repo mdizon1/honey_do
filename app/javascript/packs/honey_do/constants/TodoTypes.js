@@ -1,11 +1,13 @@
 export const TODOS = 'TODOS'
 export const SHOPPING_LIST = 'SHOPPING_LIST'
+export const CONFIG = "CONFIGURATION"
 export const TODO_ITEM = 'TODO_ITEM'
 export const SHOPPING_ITEM = 'SHOPPING_ITEM'
 
 export const UiTabs = {
   TODOS: TODOS,
-  SHOPPING_LIST: SHOPPING_LIST
+  SHOPPING_LIST: SHOPPING_LIST,
+  CONFIG: CONFIG
 }
 
 export const UiTabToType = {

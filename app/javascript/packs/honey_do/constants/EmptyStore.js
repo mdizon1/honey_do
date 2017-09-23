@@ -9,7 +9,8 @@ export const EmptyStore = {
     isReady: false,
     isShuffling: false,
     isSpinning: false,
-    isSyncing: false
+    isSyncing: false,
+    isCompletedHidden: true
   },
   dataState: {
     shoppingItems: {},

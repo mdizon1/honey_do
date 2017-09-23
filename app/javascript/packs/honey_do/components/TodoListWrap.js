@@ -24,6 +24,10 @@ const getTodosFromStore = (store, dataStatePath) => {
   // map method rather than converting to hash first then array...
   let todos = store.getState().getIn(dataStatePath).toJS();
   todos = Object.keys(todos).map(key => todos[key]); // convert todos into array
+  // filter out completed todos if the config is set to such
+  if(store.getState().getIn(["uiState", "isCompletedHidden"])){
+    todos = _.filter(todos, (curr_todo) => { return !curr_todo.isCompleted });
+  }
   todos = _.sortBy(todos, (curr_todo) => { return curr_todo.position }); // sort by position
   _.forEach(todos, (curr_todo, index) => { curr_todo.index = index; }); // renumber todo indices by their array index
   

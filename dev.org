@@ -1,10 +1,9 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
+** DONE User can hide completed todos
+   CLOSED: [2017-09-22 Fri 18:55]
 * Backlog
-** TODO when dragging an item, render seems to be triggered 4 times
-** TODO Deploy to heroku
-** TODO User can hide completed todos
 ** TODO change accept todo icon
 ** TODO Craft welcome/landing page (logged out)
 ** TODO Tags can have icons or avatars (not sure which yet, probably both)
@@ -13,6 +12,8 @@
    I think the issue with the navbar is the documentation on bootstrap's site
    isn't up to date.
 * Icebox
+** TODO Develop keyboard shortcuts
+** TODO when dragging an item, render seems to be triggered 4 times
 ** TODO Add HTTPS
 ** TODO Integrate service workers
 *** TODO Research how to use service workers
@@ -33,6 +34,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Deploy to heroku
+   CLOSED: [2017-09-22 Fri 15:02]
 ** DONE 1 button deploy
    CLOSED: [2017-09-22 Fri 14:52]
 ** DONE Get cukes working
