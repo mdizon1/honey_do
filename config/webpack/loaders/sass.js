@@ -1,3 +1,4 @@
+var path = require("path");
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const { env } = require('../configuration.js')
 
@@ -9,7 +10,12 @@ module.exports = {
       { loader: 'css-loader', options: { minimize: env.NODE_ENV === 'production', importLoaders: 1, sourceMap: true } },
       { loader: 'postcss-loader', options: { sourceMap: true } },
       'resolve-url-loader',
-      { loader: 'sass-loader', options: { sourceMap: true } }
+      { loader: 'sass-loader', options: { sourceMap: true } },
+      { loader: 'sass-resources-loader', 
+        options: {
+          resources: path.join(__dirname, "../", "../", "../", "app", "javascript", "styles", "common.scss")
+        }
+      }
     ]
   })
 }
