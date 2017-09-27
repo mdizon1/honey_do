@@ -1,10 +1,12 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
-** DONE User can hide completed todos
-   CLOSED: [2017-09-22 Fri 18:55]
+** TODO Fix todo item (row) style
 * Backlog
-** TODO change accept todo icon
+** TODO Fix drag n drop for mobile
+** TODO Render completed todos at bottom of list
+   When configuration turns them on
+** TODO Fix navbar style
 ** TODO Craft welcome/landing page (logged out)
 ** TODO Tags can have icons or avatars (not sure which yet, probably both)
 ** TODO Create seed list of built in tags
@@ -12,7 +14,12 @@
    I think the issue with the navbar is the documentation on bootstrap's site
    isn't up to date.
 * Icebox
+** TODO Add icons for each tab
+   Ideally it'd show text + icon for med-up and only icon for mobile
 ** TODO Develop keyboard shortcuts
+*** TODO Determine what commands should have shortcuts
+*** TODO Get some kind of keystroke catcher working
+*** TODO map keystrokes to commands (actions)
 ** TODO when dragging an item, render seems to be triggered 4 times
 ** TODO Add HTTPS
 ** TODO Integrate service workers
@@ -34,6 +41,10 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE change accept todo icon
+   CLOSED: [2017-09-22 Fri 22:13]
+** DONE User can hide completed todos
+   CLOSED: [2017-09-22 Fri 18:55]
 ** DONE Deploy to heroku
    CLOSED: [2017-09-22 Fri 15:02]
 ** DONE 1 button deploy
