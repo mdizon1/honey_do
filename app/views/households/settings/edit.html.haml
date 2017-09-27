@@ -15,9 +15,9 @@
       %h3 Admins
       - @household.admins.each do |a|
         .row
-          .col-lg-6.col-xs-6
+          .col-6
             = a.email
-          .col-lg-6.col-xs-6
+          .col-6
             = link_to 'Promote Admin', '#', :class => 'btn btn-danger'
             = link_to 'Remove Admin', '#', :class => 'btn btn-danger'
       %br

@@ -4,9 +4,7 @@ import TodoItemCore from '../components/TodoItemCore'
 import { editTodoRequest} from '../actions/HoneyDoActions'
 
 const mapStateToProps = (state, ownProps) => {
-  return { 
-    appConfig: state.get('configState').toJS(),
-  }
+  return { appConfig: state.get('configState').toJS() };
 }
 
 class TodoItemWrap extends Component {

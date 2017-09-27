@@ -8,7 +8,7 @@ import MenuItem from 'material-ui/MenuItem/MenuItem'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
 const _renderControls = (props) => {
-  const {todo, isExpanded, onToggleExpand, onTodoEdit, onTodoAccepted, onTodoDestroyed} = props
+  const {todo, isExpanded, onToggleExpand, onTodoEdit, onTodoAccepted, onTodoDestroyed} = props;
   
   if(todo.permissions.canEdit || 
      todo.permissions.canAccept ||
@@ -27,8 +27,7 @@ const _renderControls = (props) => {
           { _renderMenuItemToggleExpand(isExpanded, onToggleExpand) }
         </IconMenu>
       </div>
-    )
-
+    );
   }else{
     // Only render the caret to expand/close todo notes
     return (
@@ -56,6 +55,12 @@ const _renderDragHandle = (connectDragSource) => {
   );
 }
 
+const _renderEditIcon = () => {
+  return (
+    <i className="todo-item-controls-icon fa fa-pencil-square-o"></i>
+  )
+}
+
 const _renderMenuItemAccept = (todo, onTodoAccepted) => {
   if(!todo.permissions.canAccept){ return null; }
   return (
@@ -66,20 +71,21 @@ const _renderMenuItemAccept = (todo, onTodoAccepted) => {
 const _renderMenuItemDestroy = (todo, onTodoDestroyed) => {
   if(!todo.permissions.canDestroy){ return null; }
   return (
-    <MenuItem onClick={onTodoDestroyed} primaryText="Destroy" />
+    <MenuItem leftIcon={_renderTrashIcon()} onClick={onTodoDestroyed} primaryText="Destroy" />
   )
 }
 
 const _renderMenuItemEdit = (todo, onTodoEdit) => {
   if(!todo.permissions.canEdit){ return null; }
   return ( 
-    <MenuItem onClick={onTodoEdit} primaryText="Edit" />
+    <MenuItem leftIcon={_renderEditIcon()} onClick={onTodoEdit} primaryText="Edit" />
   )
 }
 
 const _renderMenuItemToggleExpand = (isExpanded, onToggleExpand) => {
   return ( 
     <MenuItem 
+      leftIcon={_renderTextFileIcon()}
       onClick={onToggleExpand}
       primaryText={isExpanded ? "Collapse notes" : "Expand notes"}
     />
@@ -120,11 +126,23 @@ const _renderTags = (todo, onTodoTagDestroyed) => {
   )
 }
 
+const _renderTextFileIcon = () => {
+  return (
+    <i className="todo-item-controls-icon fa fa-file-text-o"></i>
+  )
+}
+
 const _renderTitle = (todo) => {
   return (
     <div className='todo-item-title'>
       <h4> { todo.title } </h4>
     </div>
+  )
+}
+
+const _renderTrashIcon = () => {
+  return (
+    <i className="todo-item-controls-icon fa fa-trash"></i>
   )
 }
 
@@ -135,7 +153,7 @@ const TodoItemCore = (props) => {
   return (
     <div className="todo-item">
       <div className="row">
-        <div className="col-xs-1 col-sm-1">
+        <div className="col-2">
           <div className={"todo-item-checkbox" + (todo.isCompleted ? ' checkbox-checked' : '')}>
             <Checkbox
               checked={todo.isCompleted}
@@ -143,16 +161,16 @@ const TodoItemCore = (props) => {
               disabled={todo.isCompleted && !todo.permissions.canUncomplete}
             />
           </div>
-        </div>
-        <div className="col-xs-9 col-sm-9">
           { _renderDragHandle(connectDragSource) }
+        </div>
+        <div className="col-9">
           <div className={"todo-item-content" + (isExpanded ? " todo-item-content-expanded" : "")}>
             { _renderTitle(todo) }
             { _renderNotes(todo, isExpanded) }
             { _renderTags(todo, onTodoTagDestroyed) }
           </div>
         </div>
-        <div className="col-xs-1 col-sm-2">
+        <div className="col-1">
           { _renderControls(props) }
         </div>
       </div>
