@@ -63,6 +63,12 @@
     display: none;
     flex-wrap: wrap;
   }
+
+  &.todo-item-drag-placeholder {
+    .todo-item-checkbox {
+      display: none;
+    }
+  }
 }
 
 .todo-item-controls-icon { font-size: 1.5em; }
