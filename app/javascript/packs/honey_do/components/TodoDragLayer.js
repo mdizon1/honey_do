@@ -94,6 +94,3 @@ class TodoDragLayer extends Component {
 }
 
 export default DragLayer(collect)(TodoDragLayer);
-//          <div style={getItemStyles(this.props)}>
-//            <h4> Hey! Put me down! </h4>
-//          </div>

@@ -1,10 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
-** TODO Fix drag n drop for mobile
-*** DONE When dragging, ensure consistency of the placeholder
-    CLOSED: [2017-09-27 Wed 18:09]
-*** TODO When you drag, don't scroll unless hitting the bottom/top of the viewport
 * Backlog
 ** TODO Fix navbar style
 ** TODO Render completed todos at bottom of list
@@ -12,6 +8,13 @@
 ** TODO Craft welcome/landing page (logged out)
 ** TODO Tags can have icons or avatars (not sure which yet, probably both)
 ** TODO Create seed list of built in tags
+** TODO Fix drag n drop for mobile
+*** DONE When dragging, ensure consistency of the placeholder
+    CLOSED: [2017-09-27 Wed 18:09]
+*** TODO Drag takes 2 clicks.  
+    1 to activate the drag, 2nd to actually start dragging
+    Test this on actual mobile device to see if it's just a simulator issue
+*** TODO When you drag, don't scroll unless hitting the bottom/top of the viewport
 * Icebox
 ** TODO Add icons for each tab
    Ideally it'd show text + icon for med-up and only icon for mobile
