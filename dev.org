@@ -1,13 +1,10 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
+** TODO Get tests working
+   At least some basic workflow like cucumber/selenium can run and look at the
+   starting page
 * Backlog
-** TODO Fix navbar style
-** TODO Render completed todos at bottom of list
-   When configuration turns them on
-** TODO Craft welcome/landing page (logged out)
-** TODO Tags can have icons or avatars (not sure which yet, probably both)
-** TODO Create seed list of built in tags
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
     CLOSED: [2017-09-27 Wed 18:09]
@@ -15,7 +12,11 @@
     1 to activate the drag, 2nd to actually start dragging
     Test this on actual mobile device to see if it's just a simulator issue
 *** TODO When you drag, don't scroll unless hitting the bottom/top of the viewport
+** TODO Tags can have icons or avatars (not sure which yet, probably both)
+** TODO Create seed list of built in tags
+** TODO Craft welcome/landing page (logged out)
 * Icebox
+** TODO Fix navbar style
 ** TODO Add icons for each tab
    Ideally it'd show text + icon for med-up and only icon for mobile
 ** TODO Develop keyboard shortcuts
@@ -43,6 +44,9 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Render completed todos at bottom of list
+   CLOSED: [2017-10-21 Sat 20:50]
+   When configuration turns them on
 ** DONE Fix todo item (row) style
    CLOSED: [2017-09-27 Wed 16:44]
 ** DONE change accept todo icon
