@@ -1,10 +1,11 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
-** TODO Get tests working
-   At least some basic workflow like cucumber/selenium can run and look at the
-   starting page
+** DONE Able to search todos
+   CLOSED: [2017-10-24 Tue 17:21]
 * Backlog
+** TODO Create seed list of built in tags
+** TODO Add some random tags to dev:seed task
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
     CLOSED: [2017-09-27 Wed 18:09]
@@ -13,8 +14,17 @@
     Test this on actual mobile device to see if it's just a simulator issue
 *** TODO When you drag, don't scroll unless hitting the bottom/top of the viewport
 ** TODO Tags can have icons or avatars (not sure which yet, probably both)
-** TODO Create seed list of built in tags
+** TODO Can search tags
 ** TODO Craft welcome/landing page (logged out)
+** TODO Get tests working
+   At least some basic workflow like cucumber/selenium can run and look at the
+   starting page
+
+   Where I left off, I was attempting to get PhantomJS/poltergeist working
+   within the cucumber container. I got stuck yak shaving all day so screw that.
+   Even downloading phantom js was problematic. It worked fine the first 2 or 3
+   times now it just get's stuck in a 302 loop and bails out during the wget of
+   the zip file. WTF???
 * Icebox
 ** TODO Fix navbar style
 ** TODO Add icons for each tab

@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import {Map} from 'immutable'
 import TodoListMouse from './TodoListMouse'
 import TodoListTouch from './TodoListTouch'
+import SearchTodos from './SearchTodos'
 
 import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
   completeTodoRequest, completeTodoSuccess, completeTodoFailure,
@@ -101,6 +102,19 @@ export default class TodoListWrap extends Component {
         dispatch(uncompleteTodoFailure(todo, errorThrown));
       }
     });
+  }
+
+  handleSearchChanged(evt, newVal) {
+    var new_todo_state, sanitized_searchval, search_regex;
+
+    sanitized_searchval = _.trim(newVal);
+    search_regex = new RegExp(sanitized_searchval, "i");
+
+    new_todo_state = _.filter(getTodosFromStore(this.props.store, this.state.dataStatePath), (curr_todo) => {
+      return curr_todo.title.match(search_regex);
+    });
+
+    this.setState({todos: new_todo_state});
   }
 
   handleTodoClicked(todo) {
@@ -205,29 +219,35 @@ export default class TodoListWrap extends Component {
 
   renderTodoListMouse() {
     return (
-      <TodoListMouse
-        todos={this.state.todos}
-        dispatch={this.props.store.dispatch}
-        onTodoAccepted={this.acceptTodo.bind(this)}
-        onTodoClicked={this.handleTodoClicked.bind(this)}
-        onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
-        onTodoDropped={this.handleTodoDropped.bind(this)}
-        onTodoReorder={this.handleTodoReorder.bind(this)}
-      />
+      <div>
+        <SearchTodos onChange={this.handleSearchChanged.bind(this)}/>
+        <TodoListMouse
+          todos={this.state.todos}
+          dispatch={this.props.store.dispatch}
+          onTodoAccepted={this.acceptTodo.bind(this)}
+          onTodoClicked={this.handleTodoClicked.bind(this)}
+          onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
+          onTodoDropped={this.handleTodoDropped.bind(this)}
+          onTodoReorder={this.handleTodoReorder.bind(this)}
+        />
+      </div>
     )
   }
 
   renderTodoListTouch() {
     return (
-      <TodoListTouch
-        todos={this.state.todos}
-        dispatch={this.props.store.dispatch}
-        onTodoAccepted={this.acceptTodo.bind(this)}
-        onTodoClicked={this.handleTodoClicked.bind(this)}
-        onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
-        onTodoDropped={this.handleTodoDropped.bind(this)}
-        onTodoReorder={this.handleTodoReorder.bind(this)}
-      />
+      <div>
+        <SearchTodos onChange={this.handleSearchChanged}/>
+        <TodoListTouch
+          todos={this.state.todos}
+          dispatch={this.props.store.dispatch}
+          onTodoAccepted={this.acceptTodo.bind(this)}
+          onTodoClicked={this.handleTodoClicked.bind(this)}
+          onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
+          onTodoDropped={this.handleTodoDropped.bind(this)}
+          onTodoReorder={this.handleTodoReorder.bind(this)}
+        />
+      </div>
     )
   }
 
