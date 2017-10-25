@@ -111,7 +111,10 @@ export default class TodoListWrap extends Component {
     search_regex = new RegExp(sanitized_searchval, "i");
 
     new_todo_state = _.filter(getTodosFromStore(this.props.store, this.state.dataStatePath), (curr_todo) => {
-      return curr_todo.title.match(search_regex);
+      return (
+        curr_todo.title.match(search_regex) ||
+        curr_todo.tags.join(" ").match(search_regex)
+      );
     });
 
     this.setState({todos: new_todo_state});

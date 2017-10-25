@@ -6,7 +6,7 @@
     CLOSED: [2017-10-24 Tue 17:47]
 *** TODO Compile list of tags
 * Backlog
-** TODO Can search/filter by tags
+** TODO Add an x button to the search/filter field to easily clear it.
 ** TODO Can add/edit tags to a todo
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
@@ -33,6 +33,13 @@
    after a while. They should also be shown on the top level list without having
    to expand the edit modal. There probably won't be space on a phone but it
    could show conditionally if the window/device is wide enough.
+** TODO :bug: If search/filter todo, then edit todo, then dismiss modal, it stops filtering but the search field doesn't clear
+   I think it has to do with the way the TodoList is rerendered when the UI
+   state changes. So the UI state changes causing a rerender up in the todo
+   list, but the search/filter only happens when the search field changes.
+   Either make the filtering happen intrinsically based on whatever value is in
+   the search field, or clear the filter field when the modal goes away or on
+   any rerender up the tree
 * Icebox
 ** TODO Fix navbar style
 ** TODO Add icons for each tab
@@ -62,6 +69,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Can search/filter by tags
+   CLOSED: [2017-10-25 Wed 16:43]
 ** DONE Add some random tags to dev:seed task
    CLOSED: [2017-10-25 Wed 16:19]
 ** DONE Document app features
