@@ -1,10 +1,11 @@
 * Purpose of this document
   Keep track of todo items for Honey Do
 * Current
-** DONE Able to search todos
-   CLOSED: [2017-10-24 Tue 17:21]
-* Backlog
 ** TODO Create seed list of built in tags
+*** DONE Build seeds file
+    CLOSED: [2017-10-24 Tue 17:47]
+*** TODO Compile list of tags
+* Backlog
 ** TODO Add some random tags to dev:seed task
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
@@ -54,6 +55,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Able to search todos
+   CLOSED: [2017-10-24 Tue 17:21]
 ** DONE Render completed todos at bottom of list
    CLOSED: [2017-10-21 Sat 20:50]
    When configuration turns them on
