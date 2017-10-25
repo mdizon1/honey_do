@@ -22,7 +22,6 @@ The app's workflow is structured for ease and swiftness of use. The software is
 meant to get out of your way and function simply as a tool.
 
 ##### Quick tagging
-
 When creating a new Todo or Shopping item, simply add a hashtagged word to tag that item.  For example:
 
 `Milk #grocery`

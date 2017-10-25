@@ -31,4 +31,8 @@ FactoryGirl.define do
     title { Faker::Commerce.product_name }
     notes { Faker::Commerce.price }
   end
+
+  factory :food_shopping_item, :parent => :shopping_item do
+    title { Faker::Food.ingredient }
+  end
 end

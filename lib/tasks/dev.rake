@@ -20,11 +20,11 @@ namespace :dev do
     household = FactoryGirl.create :household
 
     ##################################################
-    ############## END INIT HOUSEHOLDS ###################
+    ############## END INIT HOUSEHOLDS ###############
     ##################################################
 
     ##################################################
-    ############## INIT USERS ###################
+    ############## INIT USERS ########################
     ##################################################
     puts "\tLOG: SEED: building users"
 
@@ -48,12 +48,29 @@ namespace :dev do
     house_admin.save
 
     ##################################################
-    ############## END INIT USERS ###################
+    ############## END INIT USERS ####################
     ##################################################
 
+    ##################################################
+    ############## INIT TAGS #########################
+    ##################################################
+
+    puts "\tLOG: SEED: building Tags"
+
+    (rand(40) + 3).times do |itor|
+      begin
+        t = FactoryGirl.create :color_tag_title
+        puts "\tLOG: SEED: TagTitle added -> #{t.title}"
+      rescue
+      end
+    end
 
     ##################################################
-    ############## INIT TODOS ###################
+    ############## END INIT TAGS #####################
+    ##################################################
+
+    ##################################################
+    ############## INIT TODOS ########################
     ##################################################
     puts "\tLOG: SEED: building todos"
     
@@ -76,9 +93,32 @@ namespace :dev do
       t = FactoryGirl.create :shopping_item, :household => household
       puts "\tLOG: SEED: shopping item added -> #{t.title}"
     end
+
+    (rand(15) + 3).times do |itor|
+      t = FactoryGirl.create :food_shopping_item, :household => household
+      puts "\tLOG: SEED: food item added -> #{t.title}"
+    end
     
     ##################################################
-    ############## END INIT TODOS ###################
+    ############## END INIT TODOS ####################
+    ##################################################
+
+    ##################################################
+    ############## TAG RANDOM TODOS ##################
+    ##################################################
+
+    all_tag_titles = TagTitle.all
+    Completable.all.sample(rand(Completable.count)).each do |curr_todo|
+      (rand(3) + 1).times do |itor|
+        begin
+          curr_todo.tag_titles << all_tag_titles.sample
+        rescue
+        end
+      end
+    end
+
+    ##################################################
+    ############## END TAG TODOS #####################
     ##################################################
   end
 end

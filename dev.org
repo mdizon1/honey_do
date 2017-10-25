@@ -6,8 +6,8 @@
     CLOSED: [2017-10-24 Tue 17:47]
 *** TODO Compile list of tags
 * Backlog
+** TODO Can search/filter by tags
 ** TODO Can add/edit tags to a todo
-** TODO Add some random tags to dev:seed task
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
     CLOSED: [2017-09-27 Wed 18:09]
@@ -27,6 +27,12 @@
    Even downloading phantom js was problematic. It worked fine the first 2 or 3
    times now it just get's stuck in a 302 loop and bails out during the wget of
    the zip file. WTF???
+** TODO :design: Make tags clearer/more visible
+   Right now, they show above the title when you're editing a todo but it's not
+   very clear what they are. Even I was confused after coming back to the app
+   after a while. They should also be shown on the top level list without having
+   to expand the edit modal. There probably won't be space on a phone but it
+   could show conditionally if the window/device is wide enough.
 * Icebox
 ** TODO Fix navbar style
 ** TODO Add icons for each tab
@@ -56,6 +62,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Add some random tags to dev:seed task
+   CLOSED: [2017-10-25 Wed 16:19]
 ** DONE Document app features
    CLOSED: [2017-10-25 Wed 15:40]
    I realize I've forgotten a bunch of things around how the app works. Tagging,
