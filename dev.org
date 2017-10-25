@@ -6,6 +6,7 @@
     CLOSED: [2017-10-24 Tue 17:47]
 *** TODO Compile list of tags
 * Backlog
+** TODO Can add/edit tags to a todo
 ** TODO Add some random tags to dev:seed task
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
@@ -55,6 +56,11 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Document app features
+   CLOSED: [2017-10-25 Wed 15:40]
+   I realize I've forgotten a bunch of things around how the app works. Tagging,
+   for example. I should put any new/completed features and how they work into
+   the readme
 ** DONE Able to search todos
    CLOSED: [2017-10-24 Tue 17:21]
 ** DONE Render completed todos at bottom of list

@@ -12,6 +12,27 @@
   + Only an owner of the household may delete an item
   + The household has a shopping list
 
+### Features:
+
+##### Responsive
+All you need is a browser
+
+##### Streamlined UX
+The app's workflow is structured for ease and swiftness of use. The software is
+meant to get out of your way and function simply as a tool.
+
+##### Quick tagging
+
+When creating a new Todo or Shopping item, simply add a hashtagged word to tag that item.  For example:
+
+`Milk #grocery`
+
+will create a todo item named Milk with the tag grocery.  Further:
+
+`Eggs #grocery #safeway #costco`
+
+would tag Eggs with grocery, safeway, and costco
+
 ### Premium features:
   + Recurring tasks
   + Scheduled tasks (with a due date)
