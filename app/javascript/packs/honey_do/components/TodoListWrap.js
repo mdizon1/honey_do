@@ -42,6 +42,7 @@ export default class TodoListWrap extends Component {
     this.setState({
       unsubscribe: this.props.store.subscribe(this.handleStateChange.bind(this)),
       dataStatePath: dataStatePath,
+      searchValue: "",
       todos: getTodosFromStore(this.props.store, dataStatePath)
     });
   }
@@ -104,20 +105,30 @@ export default class TodoListWrap extends Component {
     });
   }
 
-  handleSearchChanged(evt, newVal) {
-    var new_todo_state, sanitized_searchval, search_regex;
+  filterTodos(filterVal) {
+    var all_todos, new_todo_state, sanitized_searchval, search_regex;
 
-    sanitized_searchval = _.trim(newVal);
+    sanitized_searchval = _.trim(filterVal);
+    all_todos = getTodosFromStore(this.props.store, this.state.dataStatePath);
+
+    if(sanitized_searchval.size < 1) { return all_todos; };
     search_regex = new RegExp(sanitized_searchval, "i");
 
-    new_todo_state = _.filter(getTodosFromStore(this.props.store, this.state.dataStatePath), (curr_todo) => {
+    return _.filter(all_todos, (curr_todo) => {
       return (
         curr_todo.title.match(search_regex) ||
         curr_todo.tags.join(" ").match(search_regex)
       );
     });
 
-    this.setState({todos: new_todo_state});
+  }
+
+  handleSearchChanged(evt, newVal) {
+    this.setState({todos: this.filterTodos(newVal), searchValue: newVal});
+  }
+
+  handleSearchCleared(evt) {
+    this.setState({searchValue: ""});
   }
 
   handleTodoClicked(todo) {
@@ -223,7 +234,11 @@ export default class TodoListWrap extends Component {
   renderTodoListMouse() {
     return (
       <div>
-        <SearchTodos onChange={this.handleSearchChanged.bind(this)}/>
+        <SearchTodos 
+          onChange={this.handleSearchChanged.bind(this)}
+          onClear={this.handleSearchCleared.bind(this)}
+          value={this.state.searchValue}
+        />
         <TodoListMouse
           todos={this.state.todos}
           dispatch={this.props.store.dispatch}
@@ -240,7 +255,11 @@ export default class TodoListWrap extends Component {
   renderTodoListTouch() {
     return (
       <div>
-        <SearchTodos onChange={this.handleSearchChanged}/>
+        <SearchTodos 
+          onChange={this.handleSearchChanged.bind(this)}
+          onClear={this.handleSearchCleared.bind(this)}
+          value={this.state.searchValue}
+        />
         <TodoListTouch
           todos={this.state.todos}
           dispatch={this.props.store.dispatch}

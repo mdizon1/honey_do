@@ -71,6 +71,18 @@
   }
 }
 
+.todo-search {
+  .search-icon {
+    margin-right: 10px;
+  }
+
+  .clear-button { 
+    i.fa {
+      font-size: 1.2em;
+    }
+  }
+}
+
 .todo-item-controls-icon { font-size: 1.5em; }
 
 .edit-todo-tag-list {

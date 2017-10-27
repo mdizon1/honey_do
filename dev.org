@@ -6,7 +6,6 @@
     CLOSED: [2017-10-24 Tue 17:47]
 *** TODO Compile list of tags
 * Backlog
-** TODO Add an x button to the search/filter field to easily clear it.
 ** TODO Can add/edit tags to a todo
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
@@ -40,7 +39,11 @@
    Either make the filtering happen intrinsically based on whatever value is in
    the search field, or clear the filter field when the modal goes away or on
    any rerender up the tree
+** TODO Add an x button to the search/filter field to easily clear it.
 * Icebox
+** TODO Make search/filter field display with error style if no results found
+   To give the user a hint that they have no todos because of whats been typed
+   into that field, not that it's broken or something
 ** TODO Fix navbar style
 ** TODO Add icons for each tab
    Ideally it'd show text + icon for med-up and only icon for mobile
