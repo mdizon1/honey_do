@@ -30,11 +30,12 @@ const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
       modal={false}
       open={isFormOpen}
       onRequestClose={onClose}
+      autoScrollBodyContent={true}
     >
-    <TodoForm
-      onChange={onChange}
-      onSubmit={onSubmit}
-    />
+      <TodoForm
+        onChange={onChange}
+        onSubmit={onSubmit}
+      />
     </Dialog>
   )
 }

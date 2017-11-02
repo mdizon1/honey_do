@@ -51,6 +51,7 @@ const EditTodo = (props) => {
       modal={false}
       open={isFormOpen}
       onRequestClose={onClose}
+      autoScrollBodyContent={true}
     >
       { renderTags(todo, onDestroyTag) }
       <TodoForm

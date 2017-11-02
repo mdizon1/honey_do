@@ -5,17 +5,15 @@
 *** DONE Build seeds file
     CLOSED: [2017-10-24 Tue 17:47]
 *** TODO Compile list of tags
-* Backlog
-** TODO Can add/edit tags to a todo
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
     CLOSED: [2017-09-27 Wed 18:09]
-*** TODO Drag takes 2 clicks.  
+*** TODO Drag takes 2 clicks
     1 to activate the drag, 2nd to actually start dragging
     Test this on actual mobile device to see if it's just a simulator issue
 *** TODO When you drag, don't scroll unless hitting the bottom/top of the viewport
+* Backlog
 ** TODO Tags can have icons or avatars (not sure which yet, probably both)
-** TODO Can search tags
 ** TODO Craft welcome/landing page (logged out)
 ** TODO Get tests working
    At least some basic workflow like cucumber/selenium can run and look at the
@@ -40,6 +38,15 @@
    the search field, or clear the filter field when the modal goes away or on
    any rerender up the tree
 ** TODO Add an x button to the search/filter field to easily clear it.
+   Tried doing this before but was having difficulty wrangling material ui to
+   give the result I want. The spec for material ui specifies that X buttons in
+   fields should live WITHIN the field. However, there is no built in mechanism
+   to do so with <TextField> in the react lib. I figured I could mimic that
+   behavior by adding it as a child component but that prevented me from
+   clicking on the TextField at all.
+** TODO Can add/edit tags to a todo
+   Tags can currently be added/edited through the title field but there should
+   also be a distinct tag section for clarity
 * Icebox
 ** TODO Make search/filter field display with error style if no results found
    To give the user a hint that they have no todos because of whats been typed
