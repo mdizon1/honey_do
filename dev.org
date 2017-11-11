@@ -8,11 +8,84 @@
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
     CLOSED: [2017-09-27 Wed 18:09]
-*** TODO Drag takes 2 clicks
+*** TODO Drag takes 2 taps
     1 to activate the drag, 2nd to actually start dragging
     Test this on actual mobile device to see if it's just a simulator issue
+
+    Yep, tested on mobile and there is a problem.
+
+    Look into TodoItem which has todoSource which has the beginDrag function.
+    Maybe there's something going on there when picking something up on touch.
+
+    After putting in some debugs there is no indication that the problem is
+    there. beginDrag and hover are both called when the initial touch+drag
+    happens. However, after that it just stops without triggering any endDrag or
+    drop. Once you again touch the placeholder, it continues triggering hovers
+
+*** TODO Drag and drop performance is horrible, especially on mobile
+    Having trouble pinning this down. Performance tool in chrome points to none
+    of my code. Inserting a little timer debug statement seems to indicate there
+    is a significant lag in TodoListWrap#handleTodoReorder callback, which gets
+    called every time the todo item is being dragged to a new slot. However, the
+    time delay happens after setState is called. Perhaps updating the state
+    repeatedly is the wrong way to go about this?
+
+    An alternative might be to create the draglayer card thingy, then attach
+    that to a single todo. It would be drawn before that todo. So on update,
+    rather than change state, only that particular todo and the next todo to
+    acquire the placeholder would be updated.
+
 *** TODO When you drag, don't scroll unless hitting the bottom/top of the viewport
 * Backlog
+** TODO Performance issues
+*** TODO 2 taps to drag on mobile
+*** TODO Slow drag performance esp on mobile
+*** TODO Performance of sync operation
+    The actual timing of sync isn't too important, the problem lies in that
+    syncing blocks the app from doing anything else. Syncing should happen in
+    the background. The app should maintain it's own state and then periodically
+    sync/update it's state with that of the main server.
+
+    My initial thought is that it basically keeps a log of all the operations
+    that happen and if there is a conflict, then it'll have to be resolved by
+    the person who modified it later. For example, if someone updates Todo 37
+    and someone else updates it as well, upon sync, the second person's edit
+    will be presented to them as a conflict resolution.
+
+    Ultimately, a system like Git is the most solid, but way too heavyweight for
+    such a simple todo app. The chances of there being a conflict are pretty
+    small to begin with. The most likely scenario I can think of is let's say
+    I'm going into BART and I'm doing some TODO management. I load the app, do
+    some stuff at the station and then step into the train. Now I do some more
+    work on hte train while I have no internet access. Once I get reception
+    again, the sync operation is going to run and potentially there will be some
+    conflicts. How will they get resolved?
+
+    So, the possible solutions are as follows in order of complexity:
+    + Git-like
+    + Last-in rejected with conflict resolution step
+    + First-in survivor
+    + Last-in survivor
+
+    No matter which one I go with, there are going to be a bunch of edge cases
+    to contend with. What if userA deletes todo which is later edited by userB
+    while they were offline?
+
+    I think for the purposes of this app I should stick with the simplest
+    solution which makes sense. I don't want a journaling-type system because
+    that would involve making a "change" or "action" into a discrete object on
+    it's own. The way I'd like to handle syncing would be to have all the app
+    data loaded locally, and periodically a service worker would take what's in
+    the store and present it to the server who would then incorporate the state
+    of the store into the canonical state of the store (which is what's in the
+    DB). The single sync operation should resolve all conflicts.
+
+    The question then becomes: how to take state C (canonical state) and update
+    it correctly when state A comes in? Then what happens to state B which is in
+    flux and receives some update from the server with a new state C? I shall
+    need to think on this problem some first
+
+*** TODO TodosController#index is slow
 ** TODO Tags can have icons or avatars (not sure which yet, probably both)
 ** TODO Craft welcome/landing page (logged out)
 ** TODO Get tests working
@@ -79,6 +152,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE :bug: in dialog(modal) on mobile, opening keyboard hides most of the dialog
+   CLOSED: [2017-11-02 Thu 16:01]
 ** DONE Can search/filter by tags
    CLOSED: [2017-10-25 Wed 16:43]
 ** DONE Add some random tags to dev:seed task
