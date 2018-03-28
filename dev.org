@@ -37,6 +37,8 @@
 
 *** TODO When you drag, don't scroll unless hitting the bottom/top of the viewport
 * Backlog
+** TODO Upgrade nokogiri (why am i using it anyway?)
+   Seems to be a security error
 ** TODO Integrate service workers (initial)
 *** Set up a file as the service worker entry point (not webpack entry point, at least not yet)
 *** Get the service worker to register into the page
