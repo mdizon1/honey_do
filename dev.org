@@ -14,7 +14,20 @@
    from upstream (server side) will be displayed to the user. Ultimately a
    service worker should handle the syncing but even without that I can just
    mock it by having the sync happen at some arbitrary interval
+
+   Looks like perhaps I've been using redux wrong(?) Rather than try to cleverly
+   organize things to attempt to prevent cascading rerenders, I guess you're
+   just supposed to subscribe things to the store as needed and redux/react
+   should just do the right thing. And if not, then use redux-batched-updates
+   which should supposedly handle it.
+
+   So step 1, stop using x.state and anything that depends on state should
+   instead subscribe to the store. Otherwise, things just get rendered based on
+   their props(?).  Do this, then see how the performance looks
+
+---
 * Backlog
+** TODO Upgrade immutable js
 ** TODO Design a landing page (logged out)
 *** TODO Fix bootstrap styles for navbar
     Maybe upgrade bootstrap first
@@ -159,6 +172,8 @@
 ** TODO Can add/edit tags to a todo
    Tags can currently be added/edited through the title field but there should
    also be a distinct tag section for clarity
+** TODO Make flash animate out fade rather than blink out
+** TODO See if I can make the configuration tab small (just an icon)
 * Icebox
 ** TODO Make search/filter field display with error style if no results found
    To give the user a hint that they have no todos because of whats been typed
