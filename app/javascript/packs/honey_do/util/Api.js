@@ -40,7 +40,7 @@ export const apiCreateTodo = (args) => {
     type: "POST",
     url: endpoint + '/todos',
     data: {
-      authentication_token: authToken, 
+      authentication_token: authToken,
       todo: params
     }
   });
@@ -87,7 +87,7 @@ export const apiLoadTags = (args) => {
     url: endpoint + '/tags',
     data: { authentication_token: authToken }
   });
-  
+
   promise = handleSuccess(promise, onSuccess);
   promise = handleFailure(promise, onFailure);
   promise = handleComplete(promise, onComplete);
@@ -114,7 +114,7 @@ export const apiTodoDropped = (args) => {
   let promise = $.ajax({
     type: "PUT",
     url: endpoint + '/todos/' + todo.id + '/reorder',
-    data: { 
+    data: {
       authentication_token: authToken,
       todo: todo,
       positions_jumped: positionsJumped
@@ -148,7 +148,7 @@ export const apiUpdateTodo = (args) => {
     type: "PUT", // TODO: make this PATCH i suppose
     url: endpoint + '/todos/' + todo.id,
     data: {
-      authentication_token: authToken, 
+      authentication_token: authToken,
       todo: todo
     }
   });
