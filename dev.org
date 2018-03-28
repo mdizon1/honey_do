@@ -1,10 +1,50 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Create seed list of built in tags
-*** DONE Build seeds file
-    CLOSED: [2017-10-24 Tue 17:47]
-*** TODO Compile list of tags
+** TODO Separate syncing from client
+   This is bringing me back to the syncing concept. Thinking about it freshly
+   again, I think one possibility is to have the concept of "commands" or api
+   calls go into a buffer which empties out on sync. So if you create 3 todo's,
+   move 2 todo's, edit 1 todo, and delete a todo, then those actions get saved
+   in a command buffer. When a sync is triggered, those commands get flushed to
+   the server which then resolves them based on whatever state is currently
+   canonical. So syncing happens asynchronously (doesn't happen on each action)
+   and the state of the app is completely contained within the client. When the
+   sync happens, then the app is refreshed and whatever status changes come down
+   from upstream (server side) will be displayed to the user. Ultimately a
+   service worker should handle the syncing but even without that I can just
+   mock it by having the sync happen at some arbitrary interval
+* Backlog
+** TODO Design a landing page (logged out)
+*** TODO Fix bootstrap styles for navbar
+    Maybe upgrade bootstrap first
+** TODO Build landing page
+** TODO Design a sandbox implementation
+   That can be used when logged out, so from the home/landing page you can start
+   dicking around with what the actual app looks like. I might need to do a
+   bunch of refactoring including the way that data is stored in the app. Must
+   decouple the API component which talks to the server with the pure javascript
+   app interactivity. This way you could run a version of the app whicih doesn't
+   talk to the server at all and has no persistent state (or maybe it does..)
+** TODO Create a workflow for signup -> using the app
+** TODO Create a seed list of tags for production
+*** Costco
+*** Target
+*** Safeway
+*** Raleys
+*** etc.
+*** Kitchen
+*** Cleaing
+*** Chore
+*** Maintenance
+*** Vehicle
+*** Errand
+*** etc.
+** TODO Integrate service workers (initial)
+*** Set up a file as the service worker entry point (not webpack entry point, at least not yet)
+*** Get the service worker to register into the page
+** TODO Remove bootstrap-loader
+   Apparently bootstrap doesn't need it anymore with v4.0.0
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
     CLOSED: [2017-09-27 Wed 18:09]
@@ -36,37 +76,6 @@
     acquire the placeholder would be updated.
 
 *** TODO When you drag, don't scroll unless hitting the bottom/top of the viewport
-* Backlog
-** TODO Fix bootstrap styles
-   Maybe upgrade bootstrap first
-** TODO Design a landing page (logged out)
-** TODO Build landing page
-** TODO Upgrade nokogiri (why am i using it anyway?)
-   Seems to be a security error
-** TODO Create a workflow for signup -> using the app
-** TODO Design a sandbox implementation
-   That can be used when logged out, so from the home/landing page you can start
-   dicking around with what the actual app looks like. I might need to do a
-   bunch of refactoring including the way that data is stored in the app. Must
-   decouple the API component which talks to the server with the pure javascript
-   app interactivity. This way you could run a version of the app whicih doesn't
-   talk to the server at all and has no persistent state (or maybe it does..)
-
-   This is bringing me back to the syncing concept. Thinking about it freshly
-   again, I think one possibility is to have the concept of "commands" or api
-   calls go into a buffer which empties out on sync. So if you create 3 todo's,
-   move 2 todo's, edit 1 todo, and delete a todo, then those actions get saved
-   in a command buffer. When a sync is triggered, those commands get flushed to
-   the server which then resolves them based on whatever state is currently
-   canonical. So syncing happens asynchronously (doesn't happen on each action)
-   and the state of the app is completely contained within the client. When the
-   sync happens, then the app is refreshed and whatever status changes come down
-   from upstream (server side) will be displayed to the user. Ultimately a
-   service worker should handle the syncing but even without that I can just
-   mock it by having the sync happen at some arbitrary interval
-** TODO Integrate service workers (initial)
-*** Set up a file as the service worker entry point (not webpack entry point, at least not yet)
-*** Get the service worker to register into the page
 ** TODO Performance issues
 *** TODO 2 taps to drag on mobile
 *** TODO Slow drag performance esp on mobile
@@ -146,6 +155,7 @@
    to do so with <TextField> in the react lib. I figured I could mimic that
    behavior by adding it as a child component but that prevented me from
    clicking on the TextField at all.
+** TODO Upgrade material ui
 ** TODO Can add/edit tags to a todo
    Tags can currently be added/edited through the title field but there should
    also be a distinct tag section for clarity
@@ -181,6 +191,16 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Upgrade nokogiri (why am i using it anyway?)
+   CLOSED: [2018-03-28 Wed 11:44]
+   Seems to be a security error
+   Non issue, nokogiri is a dependency of capybara which is used for test only
+** DONE Create seed list of built in tags
+   CLOSED: [2018-03-28 Wed 11:34]
+*** DONE Build seeds file
+    CLOSED: [2017-10-24 Tue 17:47]
+*** DONE Compile list of tags
+    CLOSED: [2018-03-28 Wed 11:34]
 ** DONE :bug: in dialog(modal) on mobile, opening keyboard hides most of the dialog
    CLOSED: [2017-11-02 Thu 16:01]
 ** DONE Can search/filter by tags
