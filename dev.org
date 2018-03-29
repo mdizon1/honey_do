@@ -6,7 +6,12 @@
    Just let redux/react handle the re-rendering and batching
 *** DONE Upgrade babel
     CLOSED: [2018-03-28 Wed 18:02]
-*** TODO Install react hot loader (latest)
+*** DONE Install react hot loader (latest)
+    CLOSED: [2018-03-28 Wed 18:51]
+*** TODO use redux connect on some component (replace use of store.subscribe())
+*** TODO use redux connect on the lowest level component that should have it
+    Test that it works.
+*** TODO Restructure which components need to use connect
 ** TODO Separate syncing from client
    This is bringing me back to the syncing concept. Thinking about it freshly
    again, I think one possibility is to have the concept of "commands" or api

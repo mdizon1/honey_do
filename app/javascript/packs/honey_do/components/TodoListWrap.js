@@ -8,20 +8,20 @@ import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
   completeTodoRequest, completeTodoSuccess, completeTodoFailure,
   deleteTodoRequest, deleteTodoSuccess, deleteTodoFailure,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
-  uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure 
+  uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure
   } from '../actions/HoneyDoActions'
 
-import { 
-  apiAcceptTodo, 
-  apiCompleteTodo, 
-  apiDeleteTodo, 
-  apiTodoDropped, 
+import {
+  apiAcceptTodo,
+  apiCompleteTodo,
+  apiDeleteTodo,
+  apiTodoDropped,
   apiUncompleteTodo } from '../util/Api'
 import { TodoTypeToDataState } from '../constants/TodoTypes'
 
 
 const getTodosFromStore = (store, dataStatePath) => {
-  // TODO: (hurrr) Might be able to avoid the toJS call here and use Immutable 
+  // TODO: (hurrr) Might be able to avoid the toJS call here and use Immutable
   // map method rather than converting to hash first then array...
   let todos = store.getState().getIn(dataStatePath).toJS();
   todos = Object.keys(todos).map(key => todos[key]); // convert todos into array
@@ -31,7 +31,6 @@ const getTodosFromStore = (store, dataStatePath) => {
   }
   todos = _.sortBy(todos, (curr_todo) => { return curr_todo.position }); // sort by position
   _.forEach(todos, (curr_todo, index) => { curr_todo.index = index; }); // renumber todo indices by their array index
-  
   return todos;
 }
 
@@ -74,7 +73,7 @@ export default class TodoListWrap extends Component {
   completeTodo(todo) {
     var dispatch = this.props.store.dispatch;
 
-    dispatch(completeTodoRequest(todo)) 
+    dispatch(completeTodoRequest(todo))
     apiCompleteTodo({
       endpoint: this.props.apiEndpoint,
       authToken: this.props.authToken,
@@ -234,7 +233,7 @@ export default class TodoListWrap extends Component {
   renderTodoListMouse() {
     return (
       <div>
-        <SearchTodos 
+        <SearchTodos
           onChange={this.handleSearchChanged.bind(this)}
           onClear={this.handleSearchCleared.bind(this)}
           value={this.state.searchValue}
@@ -255,7 +254,7 @@ export default class TodoListWrap extends Component {
   renderTodoListTouch() {
     return (
       <div>
-        <SearchTodos 
+        <SearchTodos
           onChange={this.handleSearchChanged.bind(this)}
           onClear={this.handleSearchCleared.bind(this)}
           value={this.state.searchValue}
