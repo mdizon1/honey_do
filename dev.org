@@ -1,6 +1,11 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
+** TODO Try refactoring the way I'm handling state and dispatch
+   Gonna try doing it the redux way where we use `connect` everywhere
+   Just let redux/react handle the re-rendering and batching
+*** TODO Upgrade babel
+*** TODO Install react hot loader (latest)
 ** TODO Separate syncing from client
    This is bringing me back to the syncing concept. Thinking about it freshly
    again, I think one possibility is to have the concept of "commands" or api
@@ -27,6 +32,9 @@
 
 ---
 * Backlog
+** TODO Switching tabs (from todo to shopping) should trigger a sweep in/out animation
+   Like the current todos slide out and the newly chosen ones slide in
+** TODO Install react loader
 ** TODO Upgrade immutable js
 ** TODO Design a landing page (logged out)
 *** TODO Fix bootstrap styles for navbar

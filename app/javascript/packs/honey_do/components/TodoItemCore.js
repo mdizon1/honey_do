@@ -9,8 +9,8 @@ import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 
 const _renderControls = (props) => {
   const {todo, isExpanded, onToggleExpand, onTodoEdit, onTodoAccepted, onTodoDestroyed} = props;
-  
-  if(todo.permissions.canEdit || 
+
+  if(todo.permissions.canEdit ||
      todo.permissions.canAccept ||
      todo.permissions.canDestroy){
     // render the popout menu for more controls
@@ -32,7 +32,7 @@ const _renderControls = (props) => {
     // Only render the caret to expand/close todo notes
     return (
       <div className="todo-item-controls">
-        <IconButton 
+        <IconButton
           tooltip="Expand/collapse notes"
           onClick={onToggleExpand}
         >
@@ -47,7 +47,7 @@ const _renderControls = (props) => {
   }
 }
 
-const _renderDragHandle = (connectDragSource) => { 
+const _renderDragHandle = (connectDragSource) => {
   return connectDragSource(
     <div className="todo-item-drag-handle">
       <i className="fa fa-arrows-v"></i>
@@ -77,14 +77,14 @@ const _renderMenuItemDestroy = (todo, onTodoDestroyed) => {
 
 const _renderMenuItemEdit = (todo, onTodoEdit) => {
   if(!todo.permissions.canEdit){ return null; }
-  return ( 
+  return (
     <MenuItem leftIcon={_renderEditIcon()} onClick={onTodoEdit} primaryText="Edit" />
   )
 }
 
 const _renderMenuItemToggleExpand = (isExpanded, onToggleExpand) => {
-  return ( 
-    <MenuItem 
+  return (
+    <MenuItem
       leftIcon={_renderTextFileIcon()}
       onClick={onToggleExpand}
       primaryText={isExpanded ? "Collapse notes" : "Expand notes"}
@@ -96,7 +96,7 @@ const _renderNotes = (todo, isExpanded) => {
   let notes_class;
   notes_class = "todo-item-notes";
   notes_class += (isExpanded ? null : " todo-item-notes-truncated")
-  return ( 
+  return (
     <div className={notes_class}>
       { todo.notes }
     </div>
