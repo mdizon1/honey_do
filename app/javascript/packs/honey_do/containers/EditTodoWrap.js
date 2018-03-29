@@ -58,21 +58,10 @@ class EditTodoWrap extends Component {
 
     todo = this.state.todo;
 
-//    switch(evt.target.name){
-//      case 'title':
-//        console.log("DEBUG: the title field changed... ")
-//        todo.title = this._formatTitle(evt.target.value);
-//        break;
-//      default:
-//        field_name = evt.target.name;
-//        field_value = evt.target.value;
-//        todo[field_name] = field_value;
-//    }
     field_name = evt.target.name;
     field_value = evt.target.value;
     todo[field_name] = field_value;
 
-//    console.log(`DEBUG: handleChange, field_name: ${field_name}, field_value: ${field_value}`);
     this.setState({todo: todo})
   }
 
