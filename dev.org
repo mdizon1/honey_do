@@ -4,7 +4,8 @@
 ** TODO Try refactoring the way I'm handling state and dispatch
    Gonna try doing it the redux way where we use `connect` everywhere
    Just let redux/react handle the re-rendering and batching
-*** TODO Upgrade babel
+*** DONE Upgrade babel
+    CLOSED: [2018-03-28 Wed 18:02]
 *** TODO Install react hot loader (latest)
 ** TODO Separate syncing from client
    This is bringing me back to the syncing concept. Thinking about it freshly

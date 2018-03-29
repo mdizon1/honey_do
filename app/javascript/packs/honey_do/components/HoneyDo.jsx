@@ -3,6 +3,7 @@ import React from 'react'
 import TodoTabs from './TodoTabs'
 import NewTodoWrap from '../containers/NewTodoWrap'
 import EditTodoWrap from '../containers/EditTodoWrap'
+import { hot } from "react-hot-loader";
 import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab, loadTagSuccess } from './../actions/HoneyDoActions';
 import { apiSyncTodos, apiLoadTags } from '../util/Api'
 import { UiTabToType } from '../constants/TodoTypes'
@@ -10,7 +11,7 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import CircularProgress from 'material-ui/CircularProgress/CircularProgress'
 
-export default class HoneyDo extends React.Component {
+class HoneyDo extends React.Component {
   componentWillMount() {
     this.initAppConfig();
     this.initialTagLoad();
@@ -156,3 +157,4 @@ const getUiState = (store) => {
   return store.getState().getIn(['uiState']).toJS();
 }
 
+export default hot(module)(HoneyDo)

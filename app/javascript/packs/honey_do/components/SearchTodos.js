@@ -12,7 +12,7 @@ const renderSearchLabel = () => {
 
 const SearchTodos = (props) => {
   return (
-    <TextField 
+    <TextField
       className="todo-search"
       floatingLabelText={renderSearchLabel()}
       floatingLabelStyle={{paddingLeft: "10px"}}

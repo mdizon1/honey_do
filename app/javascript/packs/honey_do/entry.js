@@ -36,7 +36,8 @@ $(function (){
           store={store}
           />
       </Provider>,
-    document.getElementById("honey-do"));
+      document.getElementById("honey-do")
+    );
   }
 
   // Just some dev debug javascripts to ensure libs are loaded and working correctly
