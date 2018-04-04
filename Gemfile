@@ -29,13 +29,12 @@ group :development do
   gem 'awesome_print'
   #gem 'better_errors'
   gem 'byebug'
+  #gem 'spring' # TODO: incorporate me
 end
 
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
-#  gem 'guard'
-#  gem 'guard-spork'
   gem 'pry'
   gem 'pry-rails'
   gem 'rspec-rails'
@@ -45,8 +44,7 @@ group :test do
   gem 'cucumber-rails', :require => false
   gem 'database_cleaner'
   gem 'selenium-webdriver'
-  gem 'shoulda-matchers', :require => false # :require => false seems to be needed for spork
-#  gem 'spork-rails'
+  gem 'shoulda-matchers'
 end
 
 group :production do
