@@ -42,10 +42,10 @@ const TodoTabs = function (props) {
   )
 }
 
-TodoTabs.propTypes = {
-  onChangeTab: PropTypes.func,
-  currentTab: PropTypes.string
-}
+//TodoTabs.propTypes = {
+//  onChangeTab: PropTypes.func,
+//  currentTab: PropTypes.string
+//}
 
 export default TodoTabs
 
