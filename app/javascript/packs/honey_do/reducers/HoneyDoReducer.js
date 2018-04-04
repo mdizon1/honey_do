@@ -59,6 +59,7 @@ import {
   apiCompleteTodo,
   apiCreateTodo,
   apiDeleteTodo,
+  apiRemoveTag,
   apiSyncTodos,
   apiTodoReorder,
   apiUncompleteTodo,
@@ -113,8 +114,8 @@ function honeyDoReducer(state, action) {
     case DELETE_TODO_FAILURE:
      return deactivateSpinner(state);
 
-    case DELETE_TODO_TAG_REQUEST:
-      // find the given todo and remove it's tag
+    case DELETE_TODO_TAG_REQUEST: // find the given todo and remove it's tag
+      requestRemoveTodoTagOnServer(state, action);
       return removeTag(state, action.todo, action.tag);
     case DELETE_TODO_TAG_SUCCESS:
       return state;
@@ -239,6 +240,9 @@ const obtainTodosFromServer = (state, action) => {
   });
 }
 
+// TODO: Here a problem lies with the way I'm handling state in Todo components
+// removing a tag doesn't update the todo display when I expand the notes.
+// Something up the tree should be using connect to grab it's state from the store
 const removeTag = (state, todo, tag) => {
   var todo_from_state, tag_list;
 
@@ -311,6 +315,15 @@ const requestDeleteTodoOnServer = (state, action) => {
     onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
       //action.asyncDispatch(syncTodosRequest()); // don't sync all the time, it's expensive
     }
+  });
+}
+
+const requestRemoveTodoTagOnServer = (state, action) => {
+  apiRemoveTag({
+    endpoint: state.getIn(['configState', 'apiEndpoint']),
+    authToken: state.getIn(['configState', 'identity', 'authToken']),
+    todo: action.todo,
+    tag: action.tag
   });
 }
 

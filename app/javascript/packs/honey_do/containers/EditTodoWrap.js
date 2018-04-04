@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { editTodoCanceled, editTodoSuccess, editTodoFailure, deleteTodoTagRequest, updateTodoRequest } from './../actions/HoneyDoActions';
 import EditTodo from '../components/EditTodo'
-import { apiRemoveTag } from '../util/Api'
 import { TodoTypeToKlass } from '../constants/TodoTypes'
 
 
@@ -45,12 +44,6 @@ class EditTodoWrap extends Component {
 
     this.setState({todo: todo});
     this.props.dispatch(deleteTodoTagRequest(todo, tag));
-    apiRemoveTag({
-      endpoint: this.props.appConfig.apiEndpoint,
-      authToken: this.props.appConfig.identity.authToken,
-      todo: todo,
-      tag: tag
-    });
   }
 
   handleChange(evt) {
