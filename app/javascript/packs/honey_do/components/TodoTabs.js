@@ -53,10 +53,10 @@ export default TodoTabs
 
 // OLD CODE/NOTES BELOW
 
-// DEV_NOTE: This syntax seems to be part of PropTypes.  I'm not sure if it's an es6 
-// thing but the items listed inside the {} are the valid prop keys declared 
-// below in the .propTypes declaration. 
-// DEV_NOTE: An update, yeah this syntax is es6 not redux specific.  If the 
+// DEV_NOTE: This syntax seems to be part of PropTypes.  I'm not sure if it's an es6
+// thing but the items listed inside the {} are the valid prop keys declared
+// below in the .propTypes declaration.
+// DEV_NOTE: An update, yeah this syntax is es6 not redux specific.  If the
 // argument to a function is an object, you can expand it's properties into
 // some variables with the ({foo, bar, baz}) syntax
 //const TodoTabs = ({onClickTodoTab, onClickShoppingTab, currentTab}) => (
@@ -80,7 +80,7 @@ export default TodoTabs
 //    >
 //      <Tab label="Todo list" value="SHOW_TODOS">
 //        <div>
-//          <VisibleTodoList 
+//          <VisibleTodoList
 //            apiEndpoint={props.appConfig.apiEndpoint}
 //            authToken={props.appConfig.identity.authToken}
 //          />
