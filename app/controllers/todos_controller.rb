@@ -77,8 +77,14 @@ class TodosController < ApplicationController
   def reorder
     return unauthorized_response unless can?(:reorder, @todo)
     begin
-      new_position = @todo.position + params[:positions_jumped].to_i
-      @todo.insert_at(new_position)
+      moves = params[:positions_jumped].to_i
+      if(moves > 0)
+        moves.times { |num_times| @todo.move_lower }
+      elsif(moves < 0)
+        moves.abs.times { |num_times| @todo.move_higher }
+      elsif(moves == 0)
+        #do nothing
+      end
       status = :ok
     rescue
       status = 500

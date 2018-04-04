@@ -95,7 +95,6 @@ export const apiLoadTags = (args) => {
 
 export const apiSyncTodos = (args) => {
   const { endpoint, authToken, onSuccess, onFailure, onComplete } = args;
-
   let promise = $.ajax({
     type: 'GET',
     url: endpoint + '/todos',
@@ -108,9 +107,8 @@ export const apiSyncTodos = (args) => {
   return promise;
 }
 
-export const apiTodoDropped = (args) => {
+export const apiTodoReorder = (args) => {
   const { endpoint, todo, positionsJumped, authToken, onSuccess, onFailure, onComplete } = args;
-
   let promise = $.ajax({
     type: "PUT",
     url: endpoint + '/todos/' + todo.id + '/reorder',
@@ -128,7 +126,6 @@ export const apiTodoDropped = (args) => {
 
 export const apiUncompleteTodo = (args) => {
   const { endpoint, todo, authToken, onSuccess, onFailure, onComplete } = args;
-
   let promise = $.ajax({
     type: "PUT",
     url: endpoint + '/todos/' +todo.id+ '/uncomplete',
@@ -143,7 +140,6 @@ export const apiUncompleteTodo = (args) => {
 
 export const apiUpdateTodo = (args) => {
   const { endpoint, todo, authToken, onSuccess, onFailure, onComplete } = args;
-
   let promise = $.ajax({
     type: "PUT", // TODO: make this PATCH i suppose
     url: endpoint + '/todos/' + todo.id,

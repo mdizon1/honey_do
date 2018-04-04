@@ -35,6 +35,9 @@
     CLOSED: [2018-04-03 Tue 22:17]
 *** TODO Refactor each action which makes api call
     To use the new async middleware and pattern.
+** TODO Figure out why onTodoClicked is triggering so many times
+*** TODO There's also the problem of getTodosFromStore being called 4 times on startup
+    2 times it's called with empty todos
 ** TODO Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
@@ -53,6 +56,14 @@
    Since the endpoint and auth token are always the same I'm sure we can DRY 
    that up
 ** TODO Accept todo icon broken
+** TODO Make specs pass
+** TODO Error with todo reordering
+   So there were a number of issues, both with my logic and with some disparity
+   between the client and server. I've plugged all the problems but 1 remains:
+   if a todo is at position 1, and the next todo is at position 3, using
+   move_lower (acts as list) puts it at position 2 rather than actually moving
+   it down the list. This is in contradiction to the documentation which says
+   that case has been fixed.
 * Backlog
 ** TODO Change the way sync works
 *** TODO Change the way todos are stored

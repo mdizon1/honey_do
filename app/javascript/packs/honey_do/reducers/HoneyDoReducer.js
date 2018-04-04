@@ -47,6 +47,8 @@ import { INITIALIZE,
   deleteTodoFailure,
   syncTodosRequest,
   syncTodosSuccess,
+  todoReorderSuccess,
+  todoReorderFailure,
   uncompleteTodoSuccess,
   uncompleteTodoFailure
 } from '../actions/HoneyDoActions'
@@ -54,10 +56,11 @@ import { INITIALIZE,
 import {
   apiAcceptTodo,
   apiCompleteTodo,
-  apiDeleteTodo,
-  apiUncompleteTodo,
   apiCreateTodo,
-  apiSyncTodos
+  apiDeleteTodo,
+  apiSyncTodos,
+  apiTodoReorder,
+  apiUncompleteTodo
 } from '../util/Api'
 
 import { TodoKlassToDataState, TodoTypeToDataState, TodoKlassToType, UiTabs } from '../constants/TodoTypes'
@@ -146,7 +149,9 @@ function honeyDoReducer(state, action) {
       return state.setIn(["uiState", "isEditing"], false);
 
     case TODO_REORDER_REQUEST:
-      return reorderTodos(activateSpinner(state), action.todoType, action.todosList);
+      if(action.positionsJumped == 0) { return state; }
+      requestReorderTodoOnServer(state, action);
+      return reorderTodos(activateSpinner(state), action.todoType, action.todoList);
     case TODO_REORDER_SUCCESS:
     case TODO_REORDER_FAILURE:
       // TODO: Ok, some refactoring is in order here later.
@@ -248,10 +253,10 @@ const retrieveTodo = (state, todo) => {
   return state.getIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()]);
 }
 
-const reorderTodos = (state, todoType, todosList) => {
+const reorderTodos = (state, todoType, todoList) => {
   var curr_todo_from_store;
 
-  _.each(todosList, (curr_todo, index) => {
+  _.each(todoList, (curr_todo, index) => {
     curr_todo_from_store = state.getIn(['dataState', TodoTypeToDataState[todoType], curr_todo.id.toString()]);
     if(Immutable.Map.isMap(curr_todo_from_store)){ curr_todo_from_store = curr_todo_from_store.toJS()}
     curr_todo_from_store.position = index;
@@ -302,6 +307,24 @@ const requestDeleteTodoOnServer = (state, action) => {
     },
     onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
       //action.asyncDispatch(syncTodosRequest()); // don't sync all the time, it's expensive
+    }
+  });
+}
+
+const requestReorderTodoOnServer = (state, action) => {
+  apiTodoReorder({
+    endpoint: state.getIn(['configState', 'apiEndpoint']),
+    authToken: state.getIn(['configState', 'identity', 'authToken']),
+    todo: action.todo,
+    positionsJumped: action.positionsJumped,
+    onSuccess: (data, textStatus, jqXHR) => {
+      action.asyncDispatch(todoReorderSuccess(action.todo.id, action.todoType, data));
+    },
+    onFailure: (jqXHR, textStatus, errorThrown) => {
+      action.asyncDispatch(todoReorderFailure(action.todo.id, action.todoType, jqXHR));
+    },
+    onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
+      action.asyncDispatch(syncTodosRequest()); // don't sync all the time, it's expensive
     }
   });
 }

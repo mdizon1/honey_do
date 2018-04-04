@@ -202,12 +202,14 @@ export function closeCreateForm() {
 }
 
 // TODO: Rename todosList to todoList
-export function todoReorderRequest(todosList, todoType) {
+export function todoReorderRequest(todo, positionsJumped, todoType, todoList) {
   return {
     type: TODO_REORDER_REQUEST,
     description: 'Todo was dragged and dropped into a new position',
-    todosList: todosList,
-    todoType: todoType
+    todo: todo,
+    todoList: todoList,
+    todoType: todoType,
+    positionsJumped: positionsJumped
   }
 }
 

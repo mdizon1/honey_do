@@ -11,16 +11,14 @@ import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure
 } from '../actions/HoneyDoActions'
 
-import {
-  apiTodoDropped 
-} from '../util/Api'
-
 import { TodoTypeToDataState } from '../constants/TodoTypes'
 
 const getTodosFromStore = (store, dataStatePath) => {
   // TODO: (hurrr) Might be able to avoid the toJS call here and use Immutable
   // map method rather than converting to hash first then array...
+
   let todos = store.getState().getIn(dataStatePath).toJS();
+
   todos = Object.keys(todos).map(key => todos[key]); // convert todos into array
   // filter out completed todos if the config is set to such
   if(store.getState().getIn(["uiState", "isCompletedHidden"])){
@@ -28,6 +26,7 @@ const getTodosFromStore = (store, dataStatePath) => {
   }
   todos = _.sortBy(todos, (curr_todo) => { return curr_todo.position }); // sort by position
   _.forEach(todos, (curr_todo, index) => { curr_todo.index = index; }); // renumber todo indices by their array index
+
   return todos;
 }
 
@@ -96,23 +95,7 @@ export default class TodoListWrap extends Component {
     todo_data_path = ['dataState', TodoTypeToDataState[this.props.todoType], droppedId.toString()]
     temp_todo = this.props.store.getState().getIn(todo_data_path);
     if(Map.isMap(temp_todo)) { temp_todo = temp_todo.toJS(); }
-    dispatch(todoReorderRequest(this.state.todos, todo_type));
-
-    apiTodoDropped({
-      endpoint: this.props.apiEndpoint,
-      authToken: this.props.authToken,
-      todo: temp_todo,
-      positionsJumped: positionsJumped,
-      onSuccess: (data, textStatus, jqXHR) => {
-        dispatch(todoReorderSuccess(temp_todo.id, todo_type, positionsJumped));
-      },
-      onFailure: (jqXHR, textStatus, errorThrown) => {
-        dispatch(todoReorderFailure(temp_todo.id, todo_type, jqXHR));
-      },
-      onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
-        this.props.onSync();
-      }
-    });
+    dispatch(todoReorderRequest(temp_todo, positionsJumped, todo_type, this.state.todos));
   }
 
   handleTodoReorder(id, newIndex) {

@@ -27,7 +27,7 @@ $(function (){
   var store = createStore(
     honeyDoReducer,
     applyMiddleware(asyncDispatchMiddleware)
-  ); // 2nd arg is initial state
+  );
   var honey_do_container = $("#honey-do");
 
   if(honey_do_container.length == 1){
