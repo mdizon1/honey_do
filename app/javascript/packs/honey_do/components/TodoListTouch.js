@@ -9,7 +9,7 @@ class TodoListTouch extends Component {
     return (
       <div>
         <TodoDragLayer />
-        <TodoList 
+        <TodoList
           todos={this.props.todos}
           onTodoAccepted={this.props.onTodoAccepted}
           onTodoClicked={this.props.onTodoClicked}

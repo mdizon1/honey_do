@@ -10,10 +10,6 @@
 
 //require("../../../styles/application.scss");
 
-
-// deprecated?
-//require("./setup/initTapEventPlugin");
-
 import React from "react";
 import ReactDOM from "react-dom";
 import HoneyDo from "./components/HoneyDo.jsx";
