@@ -43,6 +43,8 @@ import { INITIALIZE,
   closeCreateForm,
   completeTodoSuccess,
   completeTodoFailure,
+  deleteTodoSuccess,
+  deleteTodoFailure,
   syncTodosRequest,
   syncTodosSuccess,
   uncompleteTodoSuccess,
@@ -52,6 +54,7 @@ import { INITIALIZE,
 import {
   apiAcceptTodo,
   apiCompleteTodo,
+  apiDeleteTodo,
   apiUncompleteTodo,
   apiCreateTodo,
   apiSyncTodos
@@ -99,6 +102,7 @@ function honeyDoReducer(state, action) {
       return closeNewTodoForm(activateSpinner(state));
 
     case DELETE_TODO_REQUEST:
+      requestDeleteTodoOnServer(state, action);
       return dropTodo(activateSpinner(state), action.todo);
     case DELETE_TODO_SUCCESS:
     case DELETE_TODO_FAILURE:
@@ -282,6 +286,23 @@ const requestCreateTodoOnServer = (state, action) => {
       action.asyncDispatch(syncTodosRequest());
     },
     onFailure: (jqXHR, textStatus, errorThrown) => { }, // TODO: handle fail case ...
+  });
+}
+
+const requestDeleteTodoOnServer = (state, action) => {
+  apiDeleteTodo({
+    endpoint: state.getIn(['configState', 'apiEndpoint']),
+    authToken: state.getIn(['configState', 'identity', 'authToken']),
+    todo: action.todo,
+    onSuccess: (data, textStatus, jqXHR) => {
+      action.asyncDispatch(deleteTodoSuccess(action.todo));
+    },
+    onFailure: (jqXHR, textStatus, errorThrown) => {
+      action.asyncDispatch(deleteTodoFailure(action.todo));
+    },
+    onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
+      //action.asyncDispatch(syncTodosRequest()); // don't sync all the time, it's expensive
+    }
   });
 }
 

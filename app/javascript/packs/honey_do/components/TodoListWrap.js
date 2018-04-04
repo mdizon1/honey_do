@@ -12,7 +12,6 @@ import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
 } from '../actions/HoneyDoActions'
 
 import {
-  apiDeleteTodo,
   apiTodoDropped 
 } from '../util/Api'
 
@@ -86,23 +85,7 @@ export default class TodoListWrap extends Component {
   }
 
   handleTodoDestroyed(todo) {
-    var dispatch = this.props.store.dispatch;
-
-    dispatch(deleteTodoRequest(todo));
-    apiDeleteTodo({
-      endpoint: this.props.apiEndpoint,
-      authToken: this.props.authToken,
-      todo: todo,
-      onSuccess: (data, textStatus, jqXHR) => {
-        dispatch(deleteTodoSuccess(todo));
-      },
-      onFailure: (jqXHR, textStatus, errorThrown) => {
-        dispatch(deleteTodoFailure(todo));
-      },
-      onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
-        this.props.onSync();
-      }
-    });
+    this.props.store.dispatch(deleteTodoRequest(todo));
   }
 
   handleTodoDropped(droppedId, positionsJumped) {

@@ -54,6 +54,17 @@
    that up
 ** TODO Accept todo icon broken
 * Backlog
+** TODO Change the way sync works
+*** TODO Change the way todos are stored
+    Rather than two arrays, they shoudl be 2 objects where the keys are IDs
+    And the order of the todos are dictated by the position value of each todo
+*** TODO Sync reconciles what comes from server
+    Rather than sync just replacing the state of the data, it'll only update the
+    todos on the client which have changed, it'll also only add todos which are
+    new. This is so that if the server sends data to the client which matches
+    (nothing changed) then the client doesn't have to rerender at all
+** TODO When user clicks on notes that are truncated, expand them
+   So you dont have to use the little ... menu
 ** TODO Move the spinner somewhere more obvious
    Also make it more obvious
 ** TODO Move TodoItem.js (component) to containers folder

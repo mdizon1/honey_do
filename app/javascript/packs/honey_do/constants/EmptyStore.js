@@ -15,7 +15,7 @@ export const EmptyStore = {
   },
   dataState: {
     shoppingItems: {},
-    todos: {} 
+    todos: {}
   },
   configState: {
     apiEndpoint: null,
