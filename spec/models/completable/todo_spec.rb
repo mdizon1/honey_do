@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Completable::Todo do
   describe "validations" do
@@ -446,6 +446,17 @@ describe Completable::Todo do
             it "should set the acceptor_id on the todo" do
               todo.accept! :accepted_by => valid_acceptor
               todo.reload.acceptor.should == valid_acceptor
+            end
+
+            context "when the household has some other todos" do
+              before do
+                3.times { FactoryGirl.create(:todo, :household => todo.household) }
+              end
+
+              it "moves to the bottom of the list" do
+                todo.accept! :accepted_by => valid_acceptor
+                todo.household.todos.unscoped.order('position ASC').last.should == todo
+              end
             end
           end
         end

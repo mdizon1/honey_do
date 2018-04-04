@@ -22,13 +22,13 @@ class Completable < ApplicationRecord
     state :completed
     state :accepted
 
-    event :complete do
-      transitions :from => :active, :to => :completed, :after => [:rec_complete_event, :rec_completor] 
+    event :complete, :after => :move_to_bottom do
+      transitions :from => :active, :to => :completed, :after => [:rec_complete_event, :rec_completor]
     end
     event :uncomplete do
       transitions :from => :completed, :to => :active, :after => [:rec_uncomplete_event, :clear_completed_timestamps]
     end
-    event :accept do
+    event :accept, :after => :move_to_bottom do
       transitions :from => :completed, :to => :accepted, :after => [:rec_accept_event, :rec_acceptor]
     end
   end
@@ -51,7 +51,7 @@ class Completable < ApplicationRecord
 
   def remove_tag(tag_string)
     output = false
-    tags.each do |t| 
+    tags.each do |t|
       if(t.tag_title.title == tag_string)
         t.destroy
         output = true
@@ -97,7 +97,7 @@ class Completable < ApplicationRecord
   def rec_accept_event(transition_options)
     self.accepted_at = Time.now
     Event::TodoAccepted.create(
-      :target => self, 
+      :target => self,
       :actor  => transition_options[:accepted_by])
     save
   end
