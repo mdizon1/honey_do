@@ -7,22 +7,27 @@ import { INITIALIZE,
   ACCEPT_TODO_REQUEST,
   ACCEPT_TODO_SUCCESS,
   ACCEPT_TODO_FAILURE,
+  CLOSE_CREATE_FORM,
   COMPLETE_TODO_REQUEST,
   COMPLETE_TODO_SUCCESS,
   COMPLETE_TODO_FAILURE,
+  CREATE_TODO_REQUEST,
+  CREATE_TODO_SUCCESS,
+  CREATE_TODO_FAILURE,
   DELETE_TODO_REQUEST,
   DELETE_TODO_SUCCESS,
   DELETE_TODO_FAILURE,
   DELETE_TODO_TAG_REQUEST,
   DELETE_TODO_TAG_SUCCESS,
   DELETE_TODO_TAG_FAILURE,
+  EDIT_TODO_CANCELED,
+  EDIT_TODO_REQUEST,
+  LOAD_TAG_SUCCESS,
+  OPEN_CREATE_FORM,
   SWITCH_TAB,
   SYNC_TODOS_REQUEST,
   SYNC_TODOS_SUCCESS,
   SYNC_TODOS_FAILURE,
-  EDIT_TODO_CANCELED,
-  EDIT_TODO_REQUEST,
-  LOAD_TAG_SUCCESS,
   TODO_REORDER_REQUEST,
   TODO_REORDER_SUCCESS,
   TODO_REORDER_FAILURE,
@@ -33,13 +38,16 @@ import { INITIALIZE,
   UNCOMPLETE_TODO_REQUEST,
   UNCOMPLETE_TODO_SUCCESS,
   UNCOMPLETE_TODO_FAILURE,
+  closeCreateForm,
   completeTodoSuccess,
   completeTodoFailure,
+  syncTodosRequest,
+  syncTodosSuccess,
   uncompleteTodoSuccess,
   uncompleteTodoFailure
 } from '../actions/HoneyDoActions'
 
-import { apiCompleteTodo } from '../util/Api'
+import { apiCompleteTodo, apiUncompleteTodo, apiCreateTodo, apiSyncTodos } from '../util/Api'
 import { TodoKlassToDataState, TodoTypeToDataState, TodoKlassToType, UiTabs } from '../constants/TodoTypes'
 import { EmptyStore } from '../constants/EmptyStore'
 
@@ -76,6 +84,11 @@ function honeyDoReducer(state, action) {
     case COMPLETE_TODO_FAILURE:
       return setTodoCompletedState(deactivateSpinner(state), action.todo, false);
 
+    case CREATE_TODO_REQUEST:
+      temp_state = activateSpinner(state);
+      requestCreateTodoOnServer(temp_state, action);
+      return closeNewTodoForm(temp_state);
+
     case DELETE_TODO_REQUEST:
       return dropTodo(activateSpinner(state), action.todo);
     case DELETE_TODO_SUCCESS:
@@ -93,11 +106,18 @@ function honeyDoReducer(state, action) {
     case LOAD_TAG_SUCCESS:
       return loadTags(state, action.tags);
 
+    case OPEN_CREATE_FORM:
+      return openNewTodoForm(state);
+    case CLOSE_CREATE_FORM:
+      return closeNewTodoForm(state);
+
     case SWITCH_TAB:
       if(!_.includes(UiTabs, action.tab)){ return state; } // ensure the tab given (action.tab) is one of UiTabs
       return state.setIn(["uiState", "currentTab"], action.tab);
 
     case SYNC_TODOS_REQUEST:
+      obtainTodosFromServer(state, action);
+
       return uiSyncingOn(state);
     case SYNC_TODOS_SUCCESS:
       temp_state = uiSyncingOff(state);
@@ -108,7 +128,7 @@ function honeyDoReducer(state, action) {
       return uiSyncingOff(state);
 
     case EDIT_TODO_REQUEST:
-      return state.setIn(["uiState", "isEditing"], {todo: action.todo});
+      return state.setIn(["uiState", "isEditing"], {todo: action.todo}); // TODO: Make this say Immutable.fromJS
     case EDIT_TODO_CANCELED:
       return state.setIn(["uiState", "isEditing"], false);
 
@@ -136,7 +156,7 @@ function honeyDoReducer(state, action) {
 
     case UNCOMPLETE_TODO_REQUEST:
       temp_state = setTodoCompletedState(activateSpinner(state), action.todo, false);
-      uncompleteTodoOnServer(action);
+      uncompleteTodoOnServer(state, action);
       return temp_state;
     case UNCOMPLETE_TODO_SUCCESS:
       return setTodoState(deactivateSpinner(state), action.todo, action.data);
@@ -152,6 +172,13 @@ function honeyDoReducer(state, action) {
 
 const activateSpinner = (state) => {
   return state.setIn(['uiState', 'isSpinning'], true);
+}
+
+const closeNewTodoForm = (state) => {
+  return state.setIn(['uiState', 'isCreating'], false);
+}
+const openNewTodoForm = (state) => {
+  return state.setIn(['uiState', 'isCreating'], true);
 }
 
 const completeTodoOnServer = (state, action) => {
@@ -179,6 +206,17 @@ const dropTodo = (state, todo) => {
 
 const loadTags = (state, tags) => {
   return state.setIn(['dataState', 'tags'], tags);
+}
+
+const obtainTodosFromServer = (state, action) => {
+  apiSyncTodos({
+    endpoint: state.getIn(['configState', 'apiEndpoint']),
+    authToken: state.getIn(['configState', 'identity', 'authToken']),
+    onSuccess: (data, textStatus, jqXHR) => {
+      action.asyncDispatch(syncTodosSuccess(data));
+    },
+    onFailure: (jqXHR, textStatus, errorThrown) => { } // TODO: implement onFailure for this....
+  });
 }
 
 const removeTag = (state, todo, tag) => {
@@ -210,6 +248,18 @@ const reorderTodos = (state, todoType, todosList) => {
   return state;
 }
 
+const requestCreateTodoOnServer = (state, action) => {
+  apiCreateTodo({
+    endpoint: state.getIn(['configState', 'apiEndpoint']),
+    authToken: state.getIn(['configState', 'identity', 'authToken']),
+    params: action.params,
+    onSuccess: (data, textStatus, jqXHR) => {
+      action.asyncDispatch(syncTodosRequest());
+    },
+    onFailure: (jqXHR, textStatus, errorThrown) => { }, // TODO: handle fail case ...
+  });
+}
+
 const setTodoCompletedState = (state, todo, isCompleted) => {
   return state.setIn(
     ['dataState', TodoKlassToDataState[todo.klass], todo.id.toString(), 'isCompleted'],
@@ -228,12 +278,12 @@ const toggleHideCompletedTodos = (state) => {
 }
 
 const uiSyncingOn = (state) => {
-  let temp_state = state.set('uiState', state.get('uiState').set('isSyncing', true));
+  let temp_state = state.setIn(['uiState', 'isSyncing'], true);
   return activateSpinner(temp_state);
 }
 
 const uiSyncingOff = (state) => {
-  let temp_state = state.set('uiState', state.get('uiState').set('isSyncing', false));
+  let temp_state = state.setIn(['uiState', 'isSyncing'], false);
   return deactivateSpinner(temp_state);
 }
 

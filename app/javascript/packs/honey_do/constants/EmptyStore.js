@@ -6,6 +6,7 @@ export const EmptyStore = {
   uiState: {
     currentTab: UiTabs.TODOS,
     isEditing: false,
+    isCreating: false,
     isReady: false,
     isShuffling: false,
     isSpinning: false,

@@ -4,8 +4,8 @@ import TodoTabs from './TodoTabs'
 import NewTodoWrap from '../containers/NewTodoWrap'
 import EditTodoWrap from '../containers/EditTodoWrap'
 import { hot } from "react-hot-loader";
-import { init, syncTodosRequest, syncTodosRequestSuccess, syncTodosRequestFailure, switchTab, loadTagSuccess } from './../actions/HoneyDoActions';
-import { apiSyncTodos, apiLoadTags } from '../util/Api'
+import { init, syncTodosRequest, syncTodosSuccess, syncTodosFailure, switchTab, loadTagSuccess } from './../actions/HoneyDoActions';
+import { apiLoadTags } from '../util/Api'
 import { UiTabToType } from '../constants/TodoTypes'
 import getMuiTheme from 'material-ui/styles/getMuiTheme'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
@@ -82,14 +82,6 @@ class HoneyDo extends React.Component {
 
   syncTodos() {
     this.props.store.dispatch(syncTodosRequest());
-    apiSyncTodos({
-      endpoint: this.props.config.apiEndpoint,
-      authToken: this.props.config.identity.authToken,
-      onSuccess: (data, textStatus, jqXHR) => {
-        this.props.store.dispatch(syncTodosRequestSuccess(data));
-      }
-      // TODO: implement onFailure for this....
-    });
   }
 
   renderLoading() {
@@ -107,7 +99,6 @@ class HoneyDo extends React.Component {
         todoType={UiTabToType[this.state.currentTab]}
         store={this.props.store}
         appConfig={this.props.config}
-        onSync={this.syncTodos.bind(this)}
       />
     )
   }

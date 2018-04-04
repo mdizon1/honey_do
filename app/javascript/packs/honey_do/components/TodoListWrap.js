@@ -82,7 +82,6 @@ export default class TodoListWrap extends Component {
         curr_todo.tags.join(" ").match(search_regex)
       );
     });
-
   }
 
   handleSearchChanged(evt, newVal) {
@@ -95,7 +94,7 @@ export default class TodoListWrap extends Component {
 
   handleTodoClicked(todo) {
     if(todo.isCompleted) {
-      this.props.store.dispatch(uncompleteTodoRequest(todo);
+      this.props.store.dispatch(uncompleteTodoRequest(todo));
     }else{
       this.props.store.dispatch(completeTodoRequest(todo));
     }

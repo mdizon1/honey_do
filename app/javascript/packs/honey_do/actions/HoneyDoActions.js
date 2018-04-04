@@ -1,6 +1,7 @@
 export const ACCEPT_TODO_REQUEST = 'ACCEPT_TODO_REQUEST'
 export const ACCEPT_TODO_SUCCESS = 'ACCEPT_TODO_SUCCESS'
 export const ACCEPT_TODO_FAILURE = 'ACCEPT_TODO_FAILURE'
+export const CLOSE_CREATE_FORM = 'CLOSE_CREATE_FORM'
 export const COMPLETE_TODO_REQUEST = 'COMPLETE_TODO_REQUEST'
 export const COMPLETE_TODO_SUCCESS = 'COMPLETE_TODO_SUCCESS'
 export const COMPLETE_TODO_FAILURE = 'COMPLETE_TODO_FAILURE'
@@ -17,6 +18,7 @@ export const EDIT_TODO_CANCELED = 'EDIT_TODO_CANCELED'
 export const EDIT_TODO_REQUEST  = 'EDIT_TODO_REQUEST'
 export const INITIALIZE = 'INITIALIZE'
 export const LOAD_TAG_SUCCESS = 'LOAD_TAG_SUCCESS'
+export const OPEN_CREATE_FORM = 'OPEN_CREATE_FORM'
 export const SWITCH_TAB = 'SWITCH_TAB'
 export const SYNC_TODOS_REQUEST = 'SYNC_TODOS_REQUEST'
 export const SYNC_TODOS_SUCCESS = 'SYNC_TODOS_SUCCESS'
@@ -151,7 +153,7 @@ export function syncTodosRequest() {
   }
 }
 
-export function syncTodosRequestSuccess(json) {
+export function syncTodosSuccess(json) {
   return {
     type: SYNC_TODOS_SUCCESS,
     description: 'Make todo data in store match the passed in data',
@@ -160,7 +162,7 @@ export function syncTodosRequestSuccess(json) {
   }
 }
 
-export function syncTodosRequestFailure(json, error) {
+export function syncTodosFailure(json, error) {
   return {
     type: SYNC_TODOS_FAILURE,
     description: 'Got a failure response from the server while attempting to sync todos',
@@ -185,6 +187,19 @@ export function editTodoRequest(todo) {
 }
 export function editTodoSuccess(todo) { }
 export function editTodoFailure(todo) { }
+
+export function openCreateForm() {
+  return {
+    type: OPEN_CREATE_FORM,
+    description: 'Open the new todo form',
+  }
+}
+export function closeCreateForm() {
+  return {
+    type: CLOSE_CREATE_FORM,
+    description: 'Close the new todo form'
+  }
+}
 
 // TODO: Rename todosList to todoList
 export function todoReorderRequest(todosList, todoType) {

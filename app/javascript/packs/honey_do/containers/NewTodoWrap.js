@@ -1,14 +1,20 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import NewTodo from '../components/NewTodo'
-import { createTodoRequest, createTodoSuccess, createTodoFailure } from './../actions/HoneyDoActions'
-import { apiCreateTodo } from '../util/Api'
+import { openCreateForm, closeCreateForm, createTodoRequest, createTodoSuccess, createTodoFailure } from './../actions/HoneyDoActions'
 import { TodoTypeToKlass } from '../constants/TodoTypes'
 
-export default class NewTodoWrap extends Component {
+const mapStateToProps = (state, ownProps) => {
+  return {
+    isFormOpen: state.getIn(['uiState', 'isCreating']),
+    form_values: {}
+  }
+}
+
+class NewTodoWrap extends Component {
   constructor(props){
     super(props);
     this.state = {
-      isFormOpen: false,
       form_values: {}
     }
   }
@@ -24,11 +30,11 @@ export default class NewTodoWrap extends Component {
   }
 
   handleClose() {
-    this.setState({isFormOpen: false});
+    this.props.store.dispatch(closeCreateForm());
   }
 
   handleOpen() {
-    this.setState({isFormOpen: true});
+    this.props.store.dispatch(openCreateForm());
   }
 
   handleSubmit() {
@@ -37,28 +43,22 @@ export default class NewTodoWrap extends Component {
     self = this;
     params = this.state.form_values;
     params.type = TodoTypeToKlass[this.props.todoType];
+
     this.props.store.dispatch(createTodoRequest(params));
-    apiCreateTodo({
-      endpoint: this.props.appConfig.apiEndpoint,
-      authToken: this.props.appConfig.identity.authToken,
-      params: params,
-      onSuccess: (data, textStatus, jqXHR) => { this.props.onSync(); },
-      // TODO: handle fail case ...
-      onFailure: (jqXHR, textStatus, errorThrown) => { },
-      onComplete: () => { self.handleClose(); }
-    });
   }
 
   render() {
     return (
-      <NewTodo 
+      <NewTodo
         onOpen={this.handleOpen.bind(this)}
         onClose={this.handleClose.bind(this)}
         onSubmit={this.handleSubmit.bind(this)}
         onValueChange={this.handleChange.bind(this)}
-        isFormOpen={this.state.isFormOpen}
+        isFormOpen={this.props.isFormOpen}
         todoType={this.props.todoType}
       />
     )
   }
 }
+
+export default connect(mapStateToProps)(NewTodoWrap)

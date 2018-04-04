@@ -8,7 +8,7 @@ import ContentAdd from 'material-ui/svg-icons/content/add'
 import Dialog from 'material-ui/Dialog/Dialog'
 
 const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
-  var actions;
+  var actions, title;
  
   actions = [
     <FlatButton
@@ -22,10 +22,12 @@ const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
       onMouseUp={onSubmit}
     />,
   ];
+
+  title = `Create a new ${TodoTypeToFriendlyString[todoType]}.`;
  
   return (
     <Dialog
-      title={`Create a new ${TodoTypeToFriendlyString[todoType]}.`}
+      title={title}
       actions={actions}
       modal={false}
       open={isFormOpen}
