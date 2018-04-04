@@ -121,13 +121,12 @@ class HoneyDo extends React.Component {
       <MuiThemeProvider muiTheme={getMuiTheme()}>
         <div className="honey-do-app-wrap">
           { this.renderSpinner() }
-          <EditTodoWrap onSync={this.syncTodos.bind(this)} />
+          <EditTodoWrap />
           <TodoTabs
             store={this.props.store}
             currentTab={this.state.currentTab}
             appConfig={this.state.configState}
             onChangeTab={this.handleChangeTab.bind(this)}
-            onSync={this.syncTodos.bind(this)}
             isTouch={this.interfaceIsTouch()}
           />
           { this.renderNewTodo() }

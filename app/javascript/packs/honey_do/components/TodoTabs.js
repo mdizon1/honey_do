@@ -13,7 +13,6 @@ const renderTabContent = (props, tabType) => {
       isTouch={props.isTouch}
       apiEndpoint={props.appConfig.apiEndpoint}
       authToken={props.appConfig.identity.authToken}
-      onSync={props.onSync}
     />
   );
 }

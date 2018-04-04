@@ -1,46 +1,20 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Separate syncing from client
-   This is bringing me back to the syncing concept. Thinking about it freshly
-   again, I think one possibility is to have the concept of "commands" or api
-   calls go into a buffer which empties out on sync. So if you create 3 todo's,
-   move 2 todo's, edit 1 todo, and delete a todo, then those actions get saved
-   in a command buffer. When a sync is triggered, those commands get flushed to
-   the server which then resolves them based on whatever state is currently
-   canonical. So syncing happens asynchronously (doesn't happen on each action)
-   and the state of the app is completely contained within the client. When the
-   sync happens, then the app is refreshed and whatever status changes come down
-   from upstream (server side) will be displayed to the user. Ultimately a
-   service worker should handle the syncing but even without that I can just
-   mock it by having the sync happen at some arbitrary interval
-
-   Looks like perhaps I've been using redux wrong(?) Rather than try to cleverly
-   organize things to attempt to prevent cascading rerenders, I guess you're
-   just supposed to subscribe things to the store as needed and redux/react
-   should just do the right thing. And if not, then use redux-batched-updates
-   which should supposedly handle it.
-
-   So step 1, stop using x.state and anything that depends on state should
-   instead subscribe to the store. Otherwise, things just get rendered based on
-   their props(?).  Do this, then see how the performance looks
-
-   After working on the redux refactor a bit as described it doesn't seem like
-   that is the problem. That still might be a path to fix some things but either
-   way, this task I believe is more necessary. In order to make this a
-   progressive web app, I'll need to handle the syncing issue and I think this
-   is the way to do it.
-
-*** DONE Pull out a single api call
-    CLOSED: [2018-04-03 Tue 22:17]
-*** TODO Refactor each action which makes api call
-    To use the new async middleware and pattern.
 ** TODO Figure out why onTodoClicked is triggering so many times
 *** TODO There's also the problem of getTodosFromStore being called 4 times on startup
     2 times it's called with empty todos
+
+    Ok, looks like it's getting called once for each tab
+
+    I think there's a problem with the way I'm handling rendering of each of the
+    tabs. Rather than have stuff in both tabs, maybe it should only render
+    whichever tab is active. The other tab goes away when switched off of.
 ** TODO Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
+** TODO Accept todo icon broken
+** TODO Make specs pass
 ** TODO Try refactoring the way I'm handling state and dispatch
    Gonna try doing it the redux way where we use `connect` everywhere
    Just let redux/react handle the re-rendering and batching
@@ -55,8 +29,7 @@
 ** TODO Refactor those api calls in the reducer
    Since the endpoint and auth token are always the same I'm sure we can DRY 
    that up
-** TODO Accept todo icon broken
-** TODO Make specs pass
+* Backlog
 ** TODO Error with todo reordering
    So there were a number of issues, both with my logic and with some disparity
    between the client and server. I've plugged all the problems but 1 remains:
@@ -64,7 +37,6 @@
    move_lower (acts as list) puts it at position 2 rather than actually moving
    it down the list. This is in contradiction to the documentation which says
    that case has been fixed.
-* Backlog
 ** TODO Do some more with responsiveness
    On larger screens, we can fully expand notes and/or show tags
 ** TODO Change the way sync works
@@ -268,6 +240,42 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Separate syncing from client
+   CLOSED: [2018-04-04 Wed 04:45]
+   This is bringing me back to the syncing concept. Thinking about it freshly
+   again, I think one possibility is to have the concept of "commands" or api
+   calls go into a buffer which empties out on sync. So if you create 3 todo's,
+   move 2 todo's, edit 1 todo, and delete a todo, then those actions get saved
+   in a command buffer. When a sync is triggered, those commands get flushed to
+   the server which then resolves them based on whatever state is currently
+   canonical. So syncing happens asynchronously (doesn't happen on each action)
+   and the state of the app is completely contained within the client. When the
+   sync happens, then the app is refreshed and whatever status changes come down
+   from upstream (server side) will be displayed to the user. Ultimately a
+   service worker should handle the syncing but even without that I can just
+   mock it by having the sync happen at some arbitrary interval
+
+   Looks like perhaps I've been using redux wrong(?) Rather than try to cleverly
+   organize things to attempt to prevent cascading rerenders, I guess you're
+   just supposed to subscribe things to the store as needed and redux/react
+   should just do the right thing. And if not, then use redux-batched-updates
+   which should supposedly handle it.
+
+   So step 1, stop using x.state and anything that depends on state should
+   instead subscribe to the store. Otherwise, things just get rendered based on
+   their props(?).  Do this, then see how the performance looks
+
+   After working on the redux refactor a bit as described it doesn't seem like
+   that is the problem. That still might be a path to fix some things but either
+   way, this task I believe is more necessary. In order to make this a
+   progressive web app, I'll need to handle the syncing issue and I think this
+   is the way to do it.
+
+*** DONE Pull out a single api call
+    CLOSED: [2018-04-03 Tue 22:17]
+*** DONE Refactor each action which makes api call
+    CLOSED: [2018-04-04 Wed 04:45]
+    To use the new async middleware and pattern.
 ** DONE Upgrade nokogiri (why am i using it anyway?)
    CLOSED: [2018-03-28 Wed 11:44]
    Seems to be a security error

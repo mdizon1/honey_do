@@ -398,15 +398,16 @@ const updateTodo = (state, todo) => { // Look for given todo in state and replac
 
 const uncompleteTodoOnServer = (state, action) => {
   let todo = action.todo
+
   apiUncompleteTodo({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
-    todo: action.todo,
+    todo: todo,
     onSuccess: (data, textStatus, jqXHR) => {
-      action.asyncDispatch(uncompleteTodoSuccess(action.todo, data));
+      action.asyncDispatch(uncompleteTodoSuccess(todo, data));
     },
     onFailure: (jqXHR, textStatus, errorThrown) => {
-      action.asyncDispatch(uncompleteTodoFailure(action.todo, errorThrown));
+      action.asyncDispatch(uncompleteTodoFailure(todo, errorThrown));
     }
   });
 }
