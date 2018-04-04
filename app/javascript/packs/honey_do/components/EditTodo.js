@@ -4,7 +4,7 @@ import TodoForm from './TodoForm'
 
 import Chip from 'material-ui/Chip/Chip'
 import Dialog from 'material-ui/Dialog/Dialog'
-import FlatButton from 'material-ui/FlatButton/FlatButton'
+import Button from 'material-ui/Button'
 
 const renderTag = (todo, tag, onDestroyTag) => {
   return (
@@ -33,12 +33,12 @@ const renderTags = (todo, onDestroyTag) => {
 const EditTodo = (props) => {
   const { todo, isFormOpen, onClose, onChange, onSubmit, onDestroyTag } = props;
   var actions = [
-    <FlatButton
+    <Button
       label="Cancel"
       secondary={true}
       onMouseUp={onClose}
     />,
-    <FlatButton
+    <Button
       label="Submit"
       primary={true}
       onMouseUp={onSubmit}

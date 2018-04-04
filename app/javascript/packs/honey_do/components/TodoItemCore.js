@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import Checkbox from 'material-ui/Checkbox/Checkbox'
 import Chip from 'material-ui/Chip/Chip'
-import IconMenu from 'material-ui/IconMenu/IconMenu'
+import Menu, { MenuItem } from 'material-ui/Menu'
 import IconButton from 'material-ui/IconButton/IconButton'
-import FontIcon from 'material-ui/FontIcon/FontIcon'
-import MenuItem from 'material-ui/MenuItem/MenuItem'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import Icon from 'material-ui/Icon'
 
 const _renderControls = (props) => {
   const {todo, isExpanded, onToggleExpand, onTodoEdit, onTodoAccepted, onTodoDestroyed} = props;
@@ -16,16 +14,17 @@ const _renderControls = (props) => {
     // render the popout menu for more controls
     return (
       <div className="todo-item-controls">
-        <IconMenu
-          iconButtonElement={<IconButton><MoreVertIcon /></IconButton>}
+        <Menu
+          iconButtonElement={<IconButton><Icon>chevron-down</Icon></IconButton>}
           anchorOrigin={{horizontal: 'right', vertical: 'top'}}
           targetOrigin={{horizontal: 'right', vertical: 'top'}}
+          open={false}
         >
           { _renderMenuItemEdit(todo, onTodoEdit) }
           { _renderMenuItemAccept(todo, onTodoAccepted) }
           { _renderMenuItemDestroy(todo, onTodoDestroyed) }
           { _renderMenuItemToggleExpand(isExpanded, onToggleExpand) }
-        </IconMenu>
+        </Menu>
       </div>
     );
   }else{
@@ -36,11 +35,11 @@ const _renderControls = (props) => {
           tooltip="Expand/collapse notes"
           onClick={onToggleExpand}
         >
-          <FontIcon>
+          <Icon>
             { isExpanded ? (<i className='fa fa-chevron-up'></i>)
               : (<i className='fa fa-chevron-down'></i>)
             }
-          </FontIcon>
+          </Icon>
         </IconButton>
       </div>
     )
@@ -164,7 +163,7 @@ const TodoItemCore = (props) => {
           <div className={"todo-item-checkbox" + (todo.isCompleted ? ' checkbox-checked' : '')}>
             <Checkbox
               checked={todo.isCompleted}
-              onCheck={() => onTodoClicked(todo)}
+              onChange={() => onTodoClicked(todo)}
               disabled={todo.isCompleted && !todo.permissions.canUncomplete}
             />
           </div>

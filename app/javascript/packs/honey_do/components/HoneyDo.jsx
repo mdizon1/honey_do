@@ -1,5 +1,5 @@
-//TODO: Rename this file to HoneyDo.js .. no need for jsx anymore
 import React from 'react'
+import { connect } from 'react-redux'
 import TodoTabs from './TodoTabs'
 import NewTodoWrap from '../containers/NewTodoWrap'
 import EditTodoWrap from '../containers/EditTodoWrap'
@@ -7,44 +7,24 @@ import { hot } from "react-hot-loader";
 import { init, syncTodosRequest, syncTodosSuccess, syncTodosFailure, switchTab, loadTagSuccess } from './../actions/HoneyDoActions';
 import { apiLoadTags } from '../util/Api'
 import { UiTabToType } from '../constants/TodoTypes'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import CircularProgress from 'material-ui/CircularProgress/CircularProgress'
+import CircularProgress from 'material-ui/Progress/CircularProgress'
+
+
+const mapStateToProps = (state, ownProps) => {
+
+  var new_props;
+  new_props = {
+    'interface': state.getIn(['configState', 'interface']),
+    configState: getConfigState(state),
+    currentTab: getCurrentTab(state),
+    uiState: getUiState(state)
+  }
+  return new_props;
+}
 
 class HoneyDo extends React.Component {
-  componentWillMount() {
-    this.initAppConfig();
-    this.initialTagLoad();
-    this.initialTodoLoad();
-    this.setState({
-      isReady: false,
-      'interface': this.props.store.getState().getIn(['configState', 'interface']),
-      unsubscribe: this.props.store.subscribe(this.onStateChange.bind(this)),
-    });
-  }
-
-  componentWillUnmount() {
-    this.state.unsubscribe();
-  }
-
-  initAppConfig() {
-    this.props.store.dispatch(init({
-      config: this.props.config
-    }));
-  }
-
-  initialTagLoad() {
-    apiLoadTags({
-      endpoint: this.props.config.apiEndpoint,
-      authToken: this.props.config.identity.authToken,
-      onSuccess: (data, textStatus, jqXHR) => {
-        this.props.store.dispatch(loadTagSuccess(data));
-      }
-    });
-  }
-
-  initialTodoLoad() {
-    this.syncTodos();
+  componentDidMount() {
+    this.props.store.dispatch(syncTodosRequest());
   }
 
   handleChangeTab(tabVal){
@@ -52,51 +32,14 @@ class HoneyDo extends React.Component {
   }
 
   interfaceIsTouch() {
-    return (this.state['interface'] == 'touch' ? true : false);
-  }
-
-  isComponentReady(){
-    return this.state.isReady;
-  }
-
-  isLoading(){
-    return false;
-  }
-
-  onStateChange(){
-    const store = this.props.store
-    const new_state = {};
-
-    if(!this.state.isReady) {
-      new_state.isReady = true;
-      new_state.configState = getConfigState(store);
-    }
-    if(!this.state.uiState || !_.isEqual(this.state.uiState, store.getState(['uiState']).toJS())){
-      new_state.uiState = getUiState(store);
-    }
-
-    let curr_tab = getCurrentTab(store);
-    if(this.state.currentTab != curr_tab){ new_state.currentTab = curr_tab }
-    this.setState(new_state);
-  }
-
-  syncTodos() {
-    this.props.store.dispatch(syncTodosRequest());
-  }
-
-  renderLoading() {
-    return (
-      <div className="honey-do-app-wrap">
-        <h1> Loading... </h1>
-      </div>
-    )
+    return (this.props.interface === 'touch');
   }
 
   renderNewTodo() {
-    if(!this.state.configState.identity.permissions.canCreateTodo) { return null; }
+    if(!this.props.configState.identity.permissions.canCreateTodo) { return null; }
     return (
       <NewTodoWrap
-        todoType={UiTabToType[this.state.currentTab]}
+        todoType={UiTabToType[this.props.currentTab]}
         store={this.props.store}
         appConfig={this.props.config}
       />
@@ -104,7 +47,7 @@ class HoneyDo extends React.Component {
   }
 
   renderSpinner() {
-    if(!this.state.uiState.isSpinning) { return null; }
+    if(!this.props.uiState.isSpinning) { return null; }
     return (
       <div className="honey-do-spinner">
         <CircularProgress />
@@ -113,38 +56,32 @@ class HoneyDo extends React.Component {
   }
 
   render() {
-    if(!this.isComponentReady() || this.isLoading()){
-      return this.renderLoading();
-    }
-
     return (
-      <MuiThemeProvider muiTheme={getMuiTheme()}>
-        <div className="honey-do-app-wrap">
-          { this.renderSpinner() }
-          <EditTodoWrap />
-          <TodoTabs
-            store={this.props.store}
-            currentTab={this.state.currentTab}
-            appConfig={this.state.configState}
-            onChangeTab={this.handleChangeTab.bind(this)}
-            isTouch={this.interfaceIsTouch()}
-          />
-          { this.renderNewTodo() }
-        </div>
-      </MuiThemeProvider>
+      <div className="honey-do-app-wrap">
+        { this.renderSpinner() }
+        <EditTodoWrap />
+        <TodoTabs
+          store={this.props.store}
+          currentTab={this.props.currentTab}
+          appConfig={this.props.configState}
+          onChangeTab={this.handleChangeTab.bind(this)}
+          isTouch={this.interfaceIsTouch()}
+        />
+        { this.renderNewTodo() }
+      </div>
     )
   }
 }
 
 // private
-const getConfigState = (store) => {
-  return store.getState().get('configState').toJS();
+const getConfigState = (storeState) => {
+  return storeState.get('configState').toJS();
 }
-const getCurrentTab = (store) => {
-  return store.getState().getIn(['uiState', 'currentTab']);
+const getCurrentTab = (storeState) => {
+  return storeState.getIn(['uiState', 'currentTab']);
 }
-const getUiState = (store) => {
-  return store.getState().getIn(['uiState']).toJS();
+const getUiState = (storeState) => {
+  return storeState.getIn(['uiState']).toJS();
 }
 
-export default hot(module)(HoneyDo)
+export default connect(mapStateToProps)(hot(module)(HoneyDo))

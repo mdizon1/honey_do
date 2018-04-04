@@ -10,24 +10,36 @@
 
 //require("../../../styles/application.scss");
 
-import React from "react";
-import ReactDOM from "react-dom";
-import HoneyDo from "./components/HoneyDo.jsx";
+import React from "react"
+import ReactDOM from "react-dom"
+import * as Immutable from 'immutable'
+import HoneyDo from "./components/HoneyDo.jsx"
 import { Provider } from "react-redux"
-
-import { createStore, applyMiddleware } from "redux";
-import honeyDoReducer from "./reducers/HoneyDoReducer";
+import { createStore, applyMiddleware } from "redux"
+import honeyDoReducer from "./reducers/HoneyDoReducer"
 import asyncDispatchMiddleware from "./util/AsyncDispatchMiddleware"
+import { EmptyStore } from "./constants/EmptyStore"
 
-$(function (){
-  var store = createStore(
+const prepareStore = (options) => {
+  var store, initial_store_data, empty_state;
+
+  empty_state = Immutable.fromJS(EmptyStore);
+  initial_store_data = empty_state.set('configState', empty_state.get('configState').mergeDeep(options.config));
+
+  return createStore(
     honeyDoReducer,
+    initial_store_data,
     applyMiddleware(asyncDispatchMiddleware)
   );
+}
+
+$(function (){
   var honey_do_container = $("#honey-do");
 
   if(honey_do_container.length == 1){
     let honey_do_options = honey_do_container.data();
+
+    let store = prepareStore(honey_do_options);
 
     ReactDOM.render(
       <Provider store={store}>

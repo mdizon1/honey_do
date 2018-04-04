@@ -3,7 +3,7 @@
 // Doing that up front will be confusing as I'm just getting started on redux
 // For now I'll build all reducers into this file and later split as necessary
 
-import { INITIALIZE,
+import {
   ACCEPT_TODO_REQUEST,
   ACCEPT_TODO_SUCCESS,
   ACCEPT_TODO_FAILURE,
@@ -22,7 +22,6 @@ import { INITIALIZE,
   DELETE_TODO_TAG_FAILURE,
   EDIT_TODO_CANCELED,
   EDIT_TODO_REQUEST,
-  LOAD_TAG_SUCCESS,
   OPEN_CREATE_FORM,
   SWITCH_TAB,
   SYNC_TODOS_REQUEST,
@@ -74,7 +73,6 @@ import {List, Map} from 'immutable'
 
 import * as Logger from "../util/Logger"
 
-const emptyState = Immutable.fromJS(EmptyStore);
 
 function honeyDoReducer(state, action) {
   var temp_state;
@@ -83,9 +81,6 @@ function honeyDoReducer(state, action) {
   Logger.debug("action ------------> ", action);
 
   switch (action.type) {
-    case INITIALIZE:
-      return emptyState
-        .set('configState', emptyState.get('configState').mergeDeep(action.data.config));
 
     case ACCEPT_TODO_REQUEST:
       requestAcceptTodoFromServer(state, action);
@@ -121,9 +116,6 @@ function honeyDoReducer(state, action) {
       return state;
     case DELETE_TODO_TAG_FAILURE: // TODO: In this case we should reload the todo
       return state;
-
-    case LOAD_TAG_SUCCESS:
-      return loadTags(state, action.tags);
 
     case OPEN_CREATE_FORM:
       return openNewTodoForm(state);
@@ -223,10 +215,6 @@ const deactivateSpinner = (state) => {
 
 const dropTodo = (state, todo) => {
   return state.deleteIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], null);
-}
-
-const loadTags = (state, tags) => {
-  return state.setIn(['dataState', 'tags'], tags);
 }
 
 const obtainTodosFromServer = (state, action) => {

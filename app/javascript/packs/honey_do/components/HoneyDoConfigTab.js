@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react'
-import Toggle from "material-ui/Toggle/Toggle"
+import Switch from "material-ui/Switch/Switch"
 
 const renderCompletedTodoToggler = (props) => {
   var btn_state, lbl;
@@ -7,9 +7,9 @@ const renderCompletedTodoToggler = (props) => {
   btn_state = !props.uiProps.isCompletedHidden;
   lbl = btn_state ? "Completed todos are visible" : "Completed todos are hidden";
   return (
-    <Toggle
+    <Switch
       label={lbl}
-      toggled={btn_state}
+      checked={btn_state}
       onToggle={props.onToggleIsCompletedHidden}
     />
   )

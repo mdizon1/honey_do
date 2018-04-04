@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import {Map} from 'immutable'
 import TodoListMouse from './TodoListMouse'
 import TodoListTouch from './TodoListTouch'
@@ -13,15 +14,30 @@ import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
 
 import { TodoTypeToDataState } from '../constants/TodoTypes'
 
+
+const mapStateToProps = (state, ownProps) => {
+  let dataStatePath = ['dataState', TodoTypeToDataState[ownProps.todoType]]
+
+  let currState = state.getIn(dataStatePath);
+  if(ownProps.prevState && ownProps.prevState.equals(currState)){ return; }
+
+  return {
+    dataStatePath: dataStatePath,
+    searchValue: "", // TODO: This needs to wire up to some value in the store probably
+    todos: getTodosFromStore(state, dataStatePath),
+    prevState: currState
+  }
+}
+
 const getTodosFromStore = (store, dataStatePath) => {
   // TODO: (hurrr) Might be able to avoid the toJS call here and use Immutable
   // map method rather than converting to hash first then array...
 
-  let todos = store.getState().getIn(dataStatePath).toJS();
+  let todos = store.getIn(dataStatePath).toJS();
 
   todos = Object.keys(todos).map(key => todos[key]); // convert todos into array
   // filter out completed todos if the config is set to such
-  if(store.getState().getIn(["uiState", "isCompletedHidden"])){
+  if(store.getIn(["uiState", "isCompletedHidden"])){
     todos = _.filter(todos, (curr_todo) => { return !curr_todo.isCompleted });
   }
   todos = _.sortBy(todos, (curr_todo) => { return curr_todo.position }); // sort by position
@@ -30,23 +46,7 @@ const getTodosFromStore = (store, dataStatePath) => {
   return todos;
 }
 
-export default class TodoListWrap extends Component {
-  componentWillMount() {
-    let dataStatePath = ['dataState', TodoTypeToDataState[this.props.todoType]]
-
-    this.setState({
-      unsubscribe: this.props.store.subscribe(this.handleStateChange.bind(this)),
-      dataStatePath: dataStatePath,
-      searchValue: "",
-      todos: getTodosFromStore(this.props.store, dataStatePath),
-      stateCache: this.props.store.getState().getIn(dataStatePath)
-    });
-  }
-
-  componentWillUnmount() {
-    this.state.unsubscribe();
-  }
-
+class TodoListWrap extends Component {
   acceptTodo(todo) {
     this.props.store.dispatch(acceptTodoRequest(todo));
   }
@@ -55,7 +55,7 @@ export default class TodoListWrap extends Component {
     var all_todos, new_todo_state, sanitized_searchval, search_regex;
 
     sanitized_searchval = _.trim(filterVal);
-    all_todos = getTodosFromStore(this.props.store, this.state.dataStatePath);
+    all_todos = getTodosFromStore(this.props.store, this.props.dataStatePath);
 
     if(sanitized_searchval.size < 1) { return all_todos; };
     search_regex = new RegExp(sanitized_searchval, "i");
@@ -69,11 +69,13 @@ export default class TodoListWrap extends Component {
   }
 
   handleSearchChanged(evt, newVal) {
-    this.setState({todos: this.filterTodos(newVal), searchValue: newVal});
+//    this.setState({todos: this.filterTodos(newVal), searchValue: newVal});
+    //    TODO: REPLACE THIS
   }
 
   handleSearchCleared(evt) {
-    this.setState({searchValue: ""});
+//    this.setState({searchValue: ""});
+    //    TODO: REPLACE THIS
   }
 
   handleTodoClicked(todo) {
@@ -96,13 +98,13 @@ export default class TodoListWrap extends Component {
     todo_data_path = ['dataState', TodoTypeToDataState[this.props.todoType], droppedId.toString()]
     temp_todo = this.props.store.getState().getIn(todo_data_path);
     if(Map.isMap(temp_todo)) { temp_todo = temp_todo.toJS(); }
-    dispatch(todoReorderRequest(temp_todo, positionsJumped, todo_type, this.state.todos));
+    dispatch(todoReorderRequest(temp_todo, positionsJumped, todo_type, this.props.todos));
   }
 
   handleTodoReorder(id, newIndex) {
     var local_todo_state, todo, prev_index;
 
-    local_todo_state = this.state.todos;
+    local_todo_state = this.props.todos;
     todo = _.find(local_todo_state, (curr) => { return curr.id == id; });
     prev_index = todo.index;
 
@@ -136,29 +138,16 @@ export default class TodoListWrap extends Component {
     this.setState({todos: local_todo_state});
   }
 
-  handleStateChange() {
-    let new_state = this.props.store.getState().getIn(this.state.dataStatePath);
-    if(this.state.stateCache.equals(new_state)){ return; }
-
-    let new_todo_state = getTodosFromStore(this.props.store, this.state.dataStatePath);
-    if(!_.isEqual(this.state.todos, new_todo_state)){
-      this.setState({
-        todos: new_todo_state,
-        stateCache: new_state
-      });
-    }
-  }
-
   renderTodoListMouse() {
     return (
       <div>
         <SearchTodos
           onChange={this.handleSearchChanged.bind(this)}
           onClear={this.handleSearchCleared.bind(this)}
-          value={this.state.searchValue}
+          value={this.props.searchValue}
         />
         <TodoListMouse
-          todos={this.state.todos}
+          todos={this.props.todos}
           dispatch={this.props.store.dispatch}
           onTodoAccepted={this.acceptTodo.bind(this)}
           onTodoClicked={this.handleTodoClicked.bind(this)}
@@ -176,10 +165,10 @@ export default class TodoListWrap extends Component {
         <SearchTodos
           onChange={this.handleSearchChanged.bind(this)}
           onClear={this.handleSearchCleared.bind(this)}
-          value={this.state.searchValue}
+          value={this.props.searchValue}
         />
         <TodoListTouch
-          todos={this.state.todos}
+          todos={this.props.todos}
           dispatch={this.props.store.dispatch}
           onTodoAccepted={this.acceptTodo.bind(this)}
           onTodoClicked={this.handleTodoClicked.bind(this)}
@@ -199,3 +188,5 @@ export default class TodoListWrap extends Component {
     )
   }
 }
+
+export default connect(mapStateToProps)(TodoListWrap)

@@ -31,9 +31,14 @@ class EditTodoWrap extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(nextProps.todo) {
-      this.setState({todo: nextProps.todo});
+  static getDerivedStateFromProps(nextProps, prevState){
+    if(
+      (nextProps.todo && prevState.todo)
+      && _.isEqual(nextProps.todo, prevState.todo)
+    ) { return }
+
+    return {
+      todo: nextProps.todo
     }
   }
 

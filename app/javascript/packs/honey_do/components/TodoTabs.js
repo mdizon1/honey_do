@@ -1,53 +1,55 @@
 import React, { PropTypes } from 'react'
-import Tabs from 'material-ui/Tabs/Tabs'
-import Tab from 'material-ui/Tabs/Tab'
+import AppBar from 'material-ui/AppBar'
+import Tabs, { Tab } from 'material-ui/Tabs'
 import TodoListWrap from './TodoListWrap'
 import HoneyDoConfigWrap from "../containers/HoneyDoConfigWrap"
 import { UiTabs, UiTabToType } from '../constants/TodoTypes'
 
-const renderTabContent = (props, tabType) => {
-  return (
-    <TodoListWrap
-      store={props.store}
-      todoType={UiTabToType[tabType]}
-      isTouch={props.isTouch}
-      apiEndpoint={props.appConfig.apiEndpoint}
-      authToken={props.appConfig.identity.authToken}
-    />
-  );
+const renderTabContent = (currTab, props) => {
+  switch(currTab){
+    case UiTabs.CONFIG:
+    case UiTabs.TODOS:
+      return (
+        <TodoListWrap
+          store={props.store}
+          todoType={UiTabToType[currTab]}
+          isTouch={props.isTouch}
+          apiEndpoint={props.appConfig.apiEndpoint}
+          authToken={props.appConfig.identity.authToken}
+        />
+      );
+    case UiTabs.SHOPPING_LIST:
+      return (
+        <HoneyDoConfigWrap store={props.store}/>
+      );
+  };
 }
 
 const TodoTabs = function (props) {
   return (
-    <Tabs
-      value={props.currentTab}
-      onChange={props.onChangeTab}
-    >
-      <Tab label="Configuration" value={UiTabs.CONFIG}>
-        <div>
-          <HoneyDoConfigWrap store={props.store}/>
-        </div>
-      </Tab>
-      <Tab label="Todo list" value={UiTabs.TODOS}>
-        <div>
-          { renderTabContent(props, UiTabs.TODOS) }
-        </div>
-      </Tab>
-      <Tab label="Shopping list" value={UiTabs.SHOPPING_LIST}>
-        <div>
-          { renderTabContent(props, UiTabs.SHOPPING_LIST) }
-        </div>
-      </Tab>
-    </Tabs>
+    <div className="">
+      <AppBar>
+        <Tabs
+          value={props.currentTab}
+          onChange={props.onChangeTab}
+        >
+          <Tab label="Configuration" value={UiTabs.CONFIG} />
+          <Tab label="Todo list" value={UiTabs.TODOS}/ >
+          <Tab label="Shopping list" value={UiTabs.SHOPPING_LIST} />
+        </Tabs>
+      </AppBar>
+      { renderTabContent(props.currentTab, props) }
+    </div>
   )
 }
+
+export default TodoTabs
 
 //TodoTabs.propTypes = {
 //  onChangeTab: PropTypes.func,
 //  currentTab: PropTypes.string
 //}
 
-export default TodoTabs
 
 
 // OLD CODE/NOTES BELOW

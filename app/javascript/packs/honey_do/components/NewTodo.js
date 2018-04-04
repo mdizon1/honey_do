@@ -2,21 +2,20 @@ import React, { PropTypes } from 'react'
 import { TodoTypeToFriendlyString} from '../constants/TodoTypes'
 import { Colors } from '../constants/Colors'
 import TodoForm from './TodoForm'
-import FloatingActionButton from 'material-ui/FloatingActionButton/FloatingActionButton'
-import FlatButton from 'material-ui/FlatButton/FlatButton'
-import ContentAdd from 'material-ui/svg-icons/content/add'
+import Button from 'material-ui/Button'
+import Icon from 'material-ui/Icon/Icon'
 import Dialog from 'material-ui/Dialog/Dialog'
 
 const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
   var actions, title;
- 
+
   actions = [
-    <FlatButton
+    <Button
       label="Cancel"
       secondary={true}
       onMouseUp={onClose}
     />,
-    <FlatButton
+    <Button
       label="Submit"
       primary={true}
       onMouseUp={onSubmit}
@@ -24,7 +23,7 @@ const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
   ];
 
   title = `Create a new ${TodoTypeToFriendlyString[todoType]}.`;
- 
+
   return (
     <Dialog
       title={title}
@@ -44,13 +43,16 @@ const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
 
 const renderNewTodoButton = (onOpen) => {
   return (
-    <FloatingActionButton 
+    <Button
       className="new-todo-button"
       onMouseUp={onOpen}
-      backgroundColor={Colors.BOOTSTRAP_GREEN}
+      color="primary"
+      variant="fab"
     >
-      <ContentAdd />
-    </FloatingActionButton>
+      <Icon>
+        add_circle
+      </Icon>
+    </Button>
   )
 }
 

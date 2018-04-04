@@ -14,8 +14,8 @@ const SearchTodos = (props) => {
   return (
     <TextField
       className="todo-search"
-      floatingLabelText={renderSearchLabel()}
-      floatingLabelStyle={{paddingLeft: "10px"}}
+      label={renderSearchLabel()}
+      multiline
       fullWidth={true}
       onChange={props.onChange}
       value={props.value}

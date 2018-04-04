@@ -16,8 +16,6 @@ export const DELETE_TODO_TAG_SUCCESS = 'DELETE_TODO_TAG_SUCCESS'
 export const DELETE_TODO_TAG_FAILURE = 'DELETE_TODO_TAG_FAILURE'
 export const EDIT_TODO_CANCELED = 'EDIT_TODO_CANCELED'
 export const EDIT_TODO_REQUEST  = 'EDIT_TODO_REQUEST'
-export const INITIALIZE = 'INITIALIZE'
-export const LOAD_TAG_SUCCESS = 'LOAD_TAG_SUCCESS'
 export const OPEN_CREATE_FORM = 'OPEN_CREATE_FORM'
 export const SWITCH_TAB = 'SWITCH_TAB'
 export const SYNC_TODOS_REQUEST = 'SYNC_TODOS_REQUEST'
@@ -33,14 +31,6 @@ export const UPDATE_TODO_FAILURE = 'UPDATE_TODO_FAILURE'
 export const UNCOMPLETE_TODO_REQUEST = 'UNCOMPLETE_TODO_REQUEST'
 export const UNCOMPLETE_TODO_SUCCESS = 'UNCOMPLETE_TODO_SUCCESS'
 export const UNCOMPLETE_TODO_FAILURE = 'UNCOMPLETE_TODO_FAILURE'
-
-export function init(options) {
-  return {
-    type: INITIALIZE,
-    description: 'Initialize the application/store to a default state',
-    data: options
-  }
-}
 
 export function acceptTodoRequest(todo) {
   return {
@@ -129,12 +119,6 @@ export function deleteTodoTagFailure(todo, tag) {
     type: DELETE_TODO_TAG_FAILURE,
     todo: todo,
     tag: tag
-  }
-}
-export function loadTagSuccess(data) {
-  return {
-    tags: data,
-    type: LOAD_TAG_SUCCESS
   }
 }
 

@@ -10,14 +10,14 @@ import flow from 'lodash/flow'
 import TodoItemWrap from '../containers/TodoItemWrap'
 import ListItem from 'material-ui/List/ListItem'
 import Checkbox from 'material-ui/Checkbox/Checkbox'
-import IconMenu from 'material-ui/IconMenu/IconMenu'
 import IconButton from 'material-ui/IconButton/IconButton'
-import MenuItem from 'material-ui/MenuItem/MenuItem'
-import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
+import Icon from 'material-ui/Icon/Icon'
 
 const iconButtonElement = (
   <IconButton touch={true}>
-    <MoreVertIcon color={"#333"} />
+    <Icon color="primary">
+      chevron_down
+    </Icon>
   </IconButton>
 );
 
@@ -132,7 +132,7 @@ class TodoItem extends Component {
   }
 
   renderTodoItemWrap() {
-    const { 
+    const {
       todo,
       onTodoClicked,
       onTodoDestroyed,

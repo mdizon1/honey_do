@@ -1,8 +1,10 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Figure out why onTodoClicked is triggering so many times
-*** TODO There's also the problem of getTodosFromStore being called 4 times on startup
+** DONE Figure out why onTodoClicked is triggering so many times
+   CLOSED: [2018-04-04 Wed 10:27]
+*** DONE There's also the problem of getTodosFromStore being called 4 times on startup
+    CLOSED: [2018-04-04 Wed 10:27]
     2 times it's called with empty todos
 
     Ok, looks like it's getting called once for each tab
@@ -12,11 +14,40 @@
     whichever tab is active. The other tab goes away when switched off of.
 
     Not sure why it's triggering twice either way. 4 times, twice for each tab.
-    Seems like it fires on todo click either way.  Ohhhh! got it! Since it
-    triggers on every action, onTodoClick fires one action completeTodoRequest
-    then the async action for completeTodoSuccess.
+    Seems like it fires on todo click either way.  
 
-** TODO Test performance on mobile on a remote server
+    Ohhhh! got it! Since it triggers on every action, onTodoClick fires one
+    action completeTodoRequest then the async action for completeTodoSuccess.
+** DONE Upgrade react
+   CLOSED: [2018-04-04 Wed 10:28]
+** DONE Upgrade react-dnd
+   CLOSED: [2018-04-04 Wed 10:28]
+** DONE Test performance on mobile on a remote server
+   CLOSED: [2018-04-04 Wed 10:29]
+   Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
+   from my phone
+** TODO Upgrade material ui
+*** DONE Remove all use of componentWillMount
+    CLOSED: [2018-04-04 Wed 12:04]
+*** DONE Remove all use of componentWillReceiveProps
+    CLOSED: [2018-04-04 Wed 12:04]
+*** DONE In HoneyDo.jsx, use mapStateToProps rather than subscribe()
+    CLOSED: [2018-04-04 Wed 12:04]
+*** TODO Render the side menus
+*** TODO Fix search field
+**** TODO Fix it's display
+**** TODO Make the style work right
+**** TODO Wiring up the search field to the TodoListWrap
+     Where the actual todo items are rendered. Need to smartly figure out how to
+     handle the search value, propogating that down to the todolistwrap, and
+     avoiding rerenders where possible.
+*** TODO Fix new todo modal
+**** TODO New Modal update after upgrade of material ui?
+**** TODO Fix the form in the modal
+*** TODO Fix new todo button
+    Right now it's using a button with an icon inside but I think it's just
+    supposed to be an icon by itself, or maybe a paper with an icon in it..?
+** Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
 ** TODO Accept todo icon broken
