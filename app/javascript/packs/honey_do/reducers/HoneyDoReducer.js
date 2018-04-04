@@ -45,6 +45,7 @@ import { INITIALIZE,
   completeTodoFailure,
   deleteTodoSuccess,
   deleteTodoFailure,
+  editTodoCanceled,
   syncTodosRequest,
   syncTodosSuccess,
   todoReorderSuccess,
@@ -60,7 +61,8 @@ import {
   apiDeleteTodo,
   apiSyncTodos,
   apiTodoReorder,
-  apiUncompleteTodo
+  apiUncompleteTodo,
+  apiUpdateTodo
 } from '../util/Api'
 
 import { TodoKlassToDataState, TodoTypeToDataState, TodoKlassToType, UiTabs } from '../constants/TodoTypes'
@@ -167,6 +169,7 @@ function honeyDoReducer(state, action) {
       return toggleHideCompletedTodos(state);
 
     case UPDATE_TODO_REQUEST:
+      requestUpdateTodoFromServer(state, action);
       return updateTodo(state, action.todo);
     case UPDATE_TODO_SUCCESS:
     case UPDATE_TODO_FAILURE:
@@ -329,6 +332,21 @@ const requestReorderTodoOnServer = (state, action) => {
   });
 }
 
+const requestUpdateTodoFromServer = (state, action) => {
+  apiUpdateTodo({
+    endpoint: state.getIn(['configState', 'apiEndpoint']),
+    authToken: state.getIn(['configState', 'identity', 'authToken']),
+    todo: action.todo,
+    onSuccess: (data, textStatus, jqXHR) => { },
+    onFailure: (jqXHR, textStatus, errorThrown) => {
+      action.asyncDispatch(syncTodosRequest());
+    },
+    onComplete: () => {
+      action.asyncDispatch(editTodoCanceled());
+    }
+  });
+}
+
 const setTodoCompletedState = (state, todo, isCompleted) => {
   return state.setIn(
     ['dataState', TodoKlassToDataState[todo.klass], todo.id.toString(), 'isCompleted'],
@@ -370,12 +388,12 @@ const uncompleteTodoOnServer = (state, action) => {
   apiUncompleteTodo({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
-    todo: todo,
+    todo: action.todo,
     onSuccess: (data, textStatus, jqXHR) => {
-      action.asyncDispatch(uncompleteTodoSuccess(todo, data));
+      action.asyncDispatch(uncompleteTodoSuccess(action.todo, data));
     },
     onFailure: (jqXHR, textStatus, errorThrown) => {
-      action.asyncDispatch(uncompleteTodoFailure(todo, errorThrown));
+      action.asyncDispatch(uncompleteTodoFailure(action.todo, errorThrown));
     }
   });
 }

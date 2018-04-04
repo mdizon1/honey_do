@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { editTodoCanceled, editTodoSuccess, editTodoFailure, deleteTodoTagRequest, updateTodoRequest } from './../actions/HoneyDoActions';
 import EditTodo from '../components/EditTodo'
-import { apiRemoveTag, apiUpdateTodo } from '../util/Api'
+import { apiRemoveTag } from '../util/Api'
 import { TodoTypeToKlass } from '../constants/TodoTypes'
 
 
@@ -33,7 +33,7 @@ class EditTodoWrap extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if(nextProps.todo) { 
+    if(nextProps.todo) {
       this.setState({todo: nextProps.todo});
     }
   }
@@ -70,23 +70,7 @@ class EditTodoWrap extends Component {
   }
 
   handleSubmit() {
-    var todo = this.state.todo;
-
-    this.props.dispatch(updateTodoRequest(todo));
-    apiUpdateTodo({
-      endpoint: this.props.appConfig.apiEndpoint,
-      authToken: this.props.appConfig.identity.authToken, 
-      todo: todo,
-      onSuccess: (data, textStatus, jqXHR) => {
-        this.props.onSync();
-      },
-      onFailure: (jqXHR, textStatus, errorThrown) => {
-        this.props.onSync();
-      },
-      onComplete: () => {
-        this.handleClose();
-      }
-    });
+    this.props.dispatch(updateTodoRequest(this.state.todo));
   }
 
   render() {

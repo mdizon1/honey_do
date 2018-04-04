@@ -65,6 +65,8 @@
    it down the list. This is in contradiction to the documentation which says
    that case has been fixed.
 * Backlog
+** TODO Do some more with responsiveness
+   On larger screens, we can fully expand notes and/or show tags
 ** TODO Change the way sync works
 *** TODO Change the way todos are stored
     Rather than two arrays, they shoudl be 2 objects where the keys are IDs
