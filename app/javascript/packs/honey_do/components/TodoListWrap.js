@@ -13,10 +13,8 @@ import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
 
 import {
   apiAcceptTodo,
-  apiCompleteTodo,
   apiDeleteTodo,
-  apiTodoDropped,
-  apiUncompleteTodo } from '../util/Api'
+  apiTodoDropped } from '../util/Api'
 import { TodoTypeToDataState } from '../constants/TodoTypes'
 
 const getTodosFromStore = (store, dataStatePath) => {
@@ -69,27 +67,6 @@ export default class TodoListWrap extends Component {
     });
   }
 
-  completeTodo(todo) {
-    this.props.store.dispatch(completeTodoRequest(todo));
-  }
-
-  uncompleteTodo(todo) {
-    var dispatch = this.props.store.dispatch;
-
-    dispatch(uncompleteTodoRequest(todo));
-    apiUncompleteTodo({
-      endpoint: this.props.apiEndpoint,
-      authToken: this.props.authToken,
-      todo: todo,
-      onSuccess: (data, textStatus, jqXHR) => {
-        dispatch(uncompleteTodoSuccess(todo, data));
-      },
-      onFailure: (jqXHR, textStatus, errorThrown) => {
-        dispatch(uncompleteTodoFailure(todo, errorThrown));
-      }
-    });
-  }
-
   filterTodos(filterVal) {
     var all_todos, new_todo_state, sanitized_searchval, search_regex;
 
@@ -118,9 +95,9 @@ export default class TodoListWrap extends Component {
 
   handleTodoClicked(todo) {
     if(todo.isCompleted) {
-      this.uncompleteTodo(todo)
+      this.props.store.dispatch(uncompleteTodoRequest(todo);
     }else{
-      this.completeTodo(todo)
+      this.props.store.dispatch(completeTodoRequest(todo));
     }
   }
 

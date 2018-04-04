@@ -33,8 +33,10 @@ import { INITIALIZE,
   UNCOMPLETE_TODO_REQUEST,
   UNCOMPLETE_TODO_SUCCESS,
   UNCOMPLETE_TODO_FAILURE,
-  FLUSH_SYNC_BUFFER,
-  completeTodoSuccess
+  completeTodoSuccess,
+  completeTodoFailure,
+  uncompleteTodoSuccess,
+  uncompleteTodoFailure
 } from '../actions/HoneyDoActions'
 
 import { apiCompleteTodo } from '../util/Api'
@@ -133,7 +135,9 @@ function honeyDoReducer(state, action) {
       return state;
 
     case UNCOMPLETE_TODO_REQUEST:
-      return setTodoCompletedState(activateSpinner(state), action.todo, false);
+      temp_state = setTodoCompletedState(activateSpinner(state), action.todo, false);
+      uncompleteTodoOnServer(action);
+      return temp_state;
     case UNCOMPLETE_TODO_SUCCESS:
       return setTodoState(deactivateSpinner(state), action.todo, action.data);
     case UNCOMPLETE_TODO_FAILURE:
@@ -242,4 +246,18 @@ const updateTodo = (state, todo) => { // Look for given todo in state and replac
   return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], todo);
 }
 
+const uncompleteTodoOnServer = (state, action) => {
+  let todo = action.todo
+  apiUncompleteTodo({
+    endpoint: state.getIn(['configState', 'apiEndpoint']),
+    authToken: state.getIn(['configState', 'identity', 'authToken']),
+    todo: todo,
+    onSuccess: (data, textStatus, jqXHR) => {
+      action.asyncDispatch(uncompleteTodoSuccess(todo, data));
+    },
+    onFailure: (jqXHR, textStatus, errorThrown) => {
+      action.asyncDispatch(uncompleteTodoFailure(todo, errorThrown));
+    }
+  });
+}
 export default honeyDoReducer
