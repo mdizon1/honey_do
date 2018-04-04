@@ -54,6 +54,8 @@
    that up
 ** TODO Accept todo icon broken
 * Backlog
+** TODO Move the spinner somewhere more obvious
+   Also make it more obvious
 ** TODO Move TodoItem.js (component) to containers folder
    It's actually a container component
 ** TODO Docker image build performance

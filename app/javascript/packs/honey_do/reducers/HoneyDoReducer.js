@@ -38,6 +38,8 @@ import { INITIALIZE,
   UNCOMPLETE_TODO_REQUEST,
   UNCOMPLETE_TODO_SUCCESS,
   UNCOMPLETE_TODO_FAILURE,
+  acceptTodoSuccess,
+  acceptTodoFailure,
   closeCreateForm,
   completeTodoSuccess,
   completeTodoFailure,
@@ -47,7 +49,14 @@ import { INITIALIZE,
   uncompleteTodoFailure
 } from '../actions/HoneyDoActions'
 
-import { apiCompleteTodo, apiUncompleteTodo, apiCreateTodo, apiSyncTodos } from '../util/Api'
+import {
+  apiAcceptTodo,
+  apiCompleteTodo,
+  apiUncompleteTodo,
+  apiCreateTodo,
+  apiSyncTodos
+} from '../util/Api'
+
 import { TodoKlassToDataState, TodoTypeToDataState, TodoKlassToType, UiTabs } from '../constants/TodoTypes'
 import { EmptyStore } from '../constants/EmptyStore'
 
@@ -70,24 +79,24 @@ function honeyDoReducer(state, action) {
         .set('configState', emptyState.get('configState').mergeDeep(action.data.config));
 
     case ACCEPT_TODO_REQUEST:
+      requestAcceptTodoFromServer(state, action);
       return dropTodo(activateSpinner(state), action.todo);
+
     case ACCEPT_TODO_SUCCESS:
     case ACCEPT_TODO_FAILURE:
       return deactivateSpinner(state);
 
     case COMPLETE_TODO_REQUEST: //make the api call
-      temp_state = setTodoCompletedState(activateSpinner(state), action.todo, true);
-      completeTodoOnServer(temp_state, action);
-      return temp_state
+      completeTodoOnServer(state, action);
+      return setTodoCompletedState(activateSpinner(state), action.todo, true);
     case COMPLETE_TODO_SUCCESS:
       return setTodoState(deactivateSpinner(state), action.todo, action.data);
     case COMPLETE_TODO_FAILURE:
       return setTodoCompletedState(deactivateSpinner(state), action.todo, false);
 
     case CREATE_TODO_REQUEST:
-      temp_state = activateSpinner(state);
-      requestCreateTodoOnServer(temp_state, action);
-      return closeNewTodoForm(temp_state);
+      requestCreateTodoOnServer(state, action);
+      return closeNewTodoForm(activateSpinner(state));
 
     case DELETE_TODO_REQUEST:
       return dropTodo(activateSpinner(state), action.todo);
@@ -155,9 +164,8 @@ function honeyDoReducer(state, action) {
       return state;
 
     case UNCOMPLETE_TODO_REQUEST:
-      temp_state = setTodoCompletedState(activateSpinner(state), action.todo, false);
       uncompleteTodoOnServer(state, action);
-      return temp_state;
+      return setTodoCompletedState(activateSpinner(state), action.todo, false);
     case UNCOMPLETE_TODO_SUCCESS:
       return setTodoState(deactivateSpinner(state), action.todo, action.data);
     case UNCOMPLETE_TODO_FAILURE:
@@ -246,6 +254,23 @@ const reorderTodos = (state, todoType, todosList) => {
     state = state.setIn(['dataState', TodoTypeToDataState[todoType], curr_todo.id.toString()], curr_todo_from_store);
   });
   return state;
+}
+
+const requestAcceptTodoFromServer = (state, action) => {
+  apiAcceptTodo({
+    endpoint: state.getIn(['configState', 'apiEndpoint']),
+    authToken: state.getIn(['configState', 'identity', 'authToken']),
+    todo: action.todo,
+    onSuccess: (data, textStatus, jqXHR) => {
+      action.asyncDispatch(acceptTodoSuccess(action.todo, data));
+    },
+    onFailure: (jqXHR, textStatus, errorThrown) => {
+      action.asyncDispatch(acceptTodoFailure(action.todo, errorThrown));
+    },
+    onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
+      action.asyncDispatch(syncTodosRequest());
+    }
+  });
 }
 
 const requestCreateTodoOnServer = (state, action) => {

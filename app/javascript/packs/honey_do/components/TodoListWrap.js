@@ -9,12 +9,13 @@ import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
   deleteTodoRequest, deleteTodoSuccess, deleteTodoFailure,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure
-  } from '../actions/HoneyDoActions'
+} from '../actions/HoneyDoActions'
 
 import {
-  apiAcceptTodo,
   apiDeleteTodo,
-  apiTodoDropped } from '../util/Api'
+  apiTodoDropped 
+} from '../util/Api'
+
 import { TodoTypeToDataState } from '../constants/TodoTypes'
 
 const getTodosFromStore = (store, dataStatePath) => {
@@ -48,23 +49,7 @@ export default class TodoListWrap extends Component {
   }
 
   acceptTodo(todo) {
-    var dispatch = this.props.store.dispatch;
-
-    dispatch(acceptTodoRequest(todo));
-    apiAcceptTodo({
-      endpoint: this.props.apiEndpoint,
-      authToken: this.props.authToken,
-      todo: todo,
-      onSuccess: (data, textStatus, jqXHR) => {
-        dispatch(acceptTodoSuccess(todo, data));
-      },
-      onFailure: (jqXHR, textStatus, errorThrown) => {
-        dispatch(acceptTodoFailure(todo, errorThrown));
-      },
-      onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
-        this.props.onSync();
-      }
-    });
+    this.props.store.dispatch(acceptTodoRequest(todo));
   }
 
   filterTodos(filterVal) {
