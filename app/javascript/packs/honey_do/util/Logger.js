@@ -13,11 +13,9 @@ function _output(msg, logLevel, outObjects){
     window.logLevel = 0;
   }
 
-  if(window.logLevel < logLevel) {
-    return;
-  }
+  if(window.logLevel < logLevel) { return; }
 
-  if(outObjects != null && outObjects.length !== 0) { 
+  if(outObjects != null && outObjects.length !== 0) {
     console.log(msg, outObjects);
     return;
   }

@@ -63,7 +63,7 @@ export function acceptTodoFailure(todo) {
 export function completeTodoRequest(todo) {
   return {
     type: COMPLETE_TODO_REQUEST,
-    description: 'Complete the todo item given by id',
+    description: 'Make api call to complete the todo item given by id',
     todo: todo
   }
 }
@@ -129,7 +129,6 @@ export function deleteTodoTagFailure(todo, tag) {
     tag: tag
   }
 }
-
 export function loadTagSuccess(data) {
   return {
     tags: data,

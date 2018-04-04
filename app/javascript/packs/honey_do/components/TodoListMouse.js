@@ -8,7 +8,7 @@ class TodoListMouse extends Component {
   render() {
     return (
       <div>
-        <TodoList 
+        <TodoList
           todos={this.props.todos}
           onTodoAccepted={this.props.onTodoAccepted}
           onTodoClicked={this.props.onTodoClicked}

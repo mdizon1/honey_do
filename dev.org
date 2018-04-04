@@ -1,17 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Try refactoring the way I'm handling state and dispatch
-   Gonna try doing it the redux way where we use `connect` everywhere
-   Just let redux/react handle the re-rendering and batching
-*** DONE Upgrade babel
-    CLOSED: [2018-03-28 Wed 18:02]
-*** DONE Install react hot loader (latest)
-    CLOSED: [2018-03-28 Wed 18:51]
-*** TODO use redux connect on some component (replace use of store.subscribe())
-*** TODO use redux connect on the lowest level component that should have it
-    Test that it works.
-*** TODO Restructure which components need to use connect
 ** TODO Separate syncing from client
    This is bringing me back to the syncing concept. Thinking about it freshly
    again, I think one possibility is to have the concept of "commands" or api
@@ -36,8 +25,33 @@
    instead subscribe to the store. Otherwise, things just get rendered based on
    their props(?).  Do this, then see how the performance looks
 
----
+   After working on the redux refactor a bit as described it doesn't seem like
+   that is the problem. That still might be a path to fix some things but either
+   way, this task I believe is more necessary. In order to make this a
+   progressive web app, I'll need to handle the syncing issue and I think this
+   is the way to do it.
+*** TODO Pull out a single api call
+**** TODO Create sync buffer
+**** TODO Where api call is made, instead push a command (action) into the sync buffer
+**** TODO Create sync buffer class which exposes an api to push commands into the buffer and flushes the sync
+** TODO Try refactoring the way I'm handling state and dispatch
+   Gonna try doing it the redux way where we use `connect` everywhere
+   Just let redux/react handle the re-rendering and batching
+*** DONE Upgrade babel
+    CLOSED: [2018-03-28 Wed 18:02]
+*** DONE Install react hot loader (latest)
+    CLOSED: [2018-03-28 Wed 18:51]
+*** TODO use redux connect on some component (replace use of store.subscribe())
+*** TODO use redux connect on the lowest level component that should have it
+    Test that it works.
+*** TODO Restructure which components need to use connect
 * Backlog
+** TODO Move TodoItem.js (component) to containers folder
+   It's actually a container component
+** TODO Docker image build performance
+   Runs slow, I don't think I need that Bundler image anymore
+** TODO Hide old completed todos
+   Older than x days, let this be configurable from the config tab as well
 ** TODO Switching tabs (from todo to shopping) should trigger a sweep in/out animation
    Like the current todos slide out and the newly chosen ones slide in
 ** TODO Install react loader

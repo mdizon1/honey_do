@@ -4,7 +4,7 @@
 //require("font-awesome-sass-loader");
 //var _ = require("lodash");
 
-// DEV_NOTE: This works.  I can move some of this off to the loaders section of 
+// DEV_NOTE: This works.  I can move some of this off to the loaders section of
 // configuration which allows me to omit the !style!css!sass bit
 //var css = require("!style!css!sass!./../../assets/stylesheets/foo.scss");
 
@@ -13,17 +13,21 @@
 
 // deprecated?
 //require("./setup/initTapEventPlugin");
- 
+
 import React from "react";
 import ReactDOM from "react-dom";
 import HoneyDo from "./components/HoneyDo.jsx";
 import { Provider } from "react-redux"
 
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import honeyDoReducer from "./reducers/HoneyDoReducer";
+import asyncDispatchMiddleware from "./util/AsyncDispatchMiddleware"
 
 $(function (){
-  var store = createStore(honeyDoReducer, {});
+  var store = createStore(
+    honeyDoReducer,
+    applyMiddleware(asyncDispatchMiddleware)
+  ); // 2nd arg is initial state
   var honey_do_container = $("#honey-do");
 
   if(honey_do_container.length == 1){
@@ -31,7 +35,7 @@ $(function (){
 
     ReactDOM.render(
       <Provider store={store}>
-        <HoneyDo 
+        <HoneyDo
           config={honey_do_options.config}
           store={store}
           />

@@ -148,7 +148,14 @@ const _renderTrashIcon = () => {
 
 const TodoItemCore = (props) => {
 
-  const {todo, isExpanded, onTodoClicked, onTodoTagDestroyed, onToggleExpand, connectDragSource} = props;
+  const {
+    todo,
+    isExpanded,
+    onTodoClicked,
+    onTodoTagDestroyed,
+    onToggleExpand,
+    connectDragSource
+  } = props;
 
   return (
     <div className="todo-item">

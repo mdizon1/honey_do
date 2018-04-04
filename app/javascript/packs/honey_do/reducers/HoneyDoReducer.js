@@ -1,15 +1,15 @@
-// Stub for reducers for now.  This will eventually be split into multiple 
-// files which should be recombined into a top level reducer.  
+// Stub for reducers for now.  This will eventually be split into multiple
+// files which should be recombined into a top level reducer.
 // Doing that up front will be confusing as I'm just getting started on redux
 // For now I'll build all reducers into this file and later split as necessary
 
-import { INITIALIZE, 
+import { INITIALIZE,
   ACCEPT_TODO_REQUEST,
   ACCEPT_TODO_SUCCESS,
   ACCEPT_TODO_FAILURE,
-  COMPLETE_TODO_REQUEST, 
-  COMPLETE_TODO_SUCCESS, 
-  COMPLETE_TODO_FAILURE, 
+  COMPLETE_TODO_REQUEST,
+  COMPLETE_TODO_SUCCESS,
+  COMPLETE_TODO_FAILURE,
   DELETE_TODO_REQUEST,
   DELETE_TODO_SUCCESS,
   DELETE_TODO_FAILURE,
@@ -30,10 +30,14 @@ import { INITIALIZE,
   UPDATE_TODO_REQUEST,
   UPDATE_TODO_SUCCESS,
   UPDATE_TODO_FAILURE,
-  UNCOMPLETE_TODO_REQUEST, 
-  UNCOMPLETE_TODO_SUCCESS, 
-  UNCOMPLETE_TODO_FAILURE
+  UNCOMPLETE_TODO_REQUEST,
+  UNCOMPLETE_TODO_SUCCESS,
+  UNCOMPLETE_TODO_FAILURE,
+  FLUSH_SYNC_BUFFER,
+  completeTodoSuccess
 } from '../actions/HoneyDoActions'
+
+import { apiCompleteTodo } from '../util/Api'
 import { TodoKlassToDataState, TodoTypeToDataState, TodoKlassToType, UiTabs } from '../constants/TodoTypes'
 import { EmptyStore } from '../constants/EmptyStore'
 
@@ -61,8 +65,10 @@ function honeyDoReducer(state, action) {
     case ACCEPT_TODO_FAILURE:
       return deactivateSpinner(state);
 
-    case COMPLETE_TODO_REQUEST:
-      return setTodoCompletedState(activateSpinner(state), action.todo, true);
+    case COMPLETE_TODO_REQUEST: //make the api call
+      temp_state = setTodoCompletedState(activateSpinner(state), action.todo, true);
+      completeTodoOnServer(temp_state, action);
+      return temp_state
     case COMPLETE_TODO_SUCCESS:
       return setTodoState(deactivateSpinner(state), action.todo, action.data);
     case COMPLETE_TODO_FAILURE:
@@ -99,7 +105,7 @@ function honeyDoReducer(state, action) {
     case SYNC_TODOS_FAILURE:
       return uiSyncingOff(state);
 
-    case EDIT_TODO_REQUEST: 
+    case EDIT_TODO_REQUEST:
       return state.setIn(["uiState", "isEditing"], {todo: action.todo});
     case EDIT_TODO_CANCELED:
       return state.setIn(["uiState", "isEditing"], false);
@@ -144,6 +150,21 @@ const activateSpinner = (state) => {
   return state.setIn(['uiState', 'isSpinning'], true);
 }
 
+const completeTodoOnServer = (state, action) => {
+  let todo = action.todo
+  apiCompleteTodo({
+    endpoint: state.getIn(['configState', 'apiEndpoint']),
+    authToken: state.getIn(['configState', 'identity', 'authToken']),
+    todo: todo,
+    onSuccess: (data, textStatus, jqXHR) => {
+      action.asyncDispatch(completeTodoSuccess(todo, data));
+    },
+    onFailure: (jqXHR, textStatus, errorThrown) => {
+      action.asyncDispatch(completeTodoFailure(todo, errorThrown));
+    }
+  });
+}
+
 const deactivateSpinner = (state) => {
   return state.setIn(['uiState', 'isSpinning'], false);
 }
@@ -162,9 +183,11 @@ const removeTag = (state, todo, tag) => {
   todo_from_state = retrieveTodo(state, todo);
   tag_list = todo_from_state.tags;
   tag_list = _.without(tag_list, tag);
-  tag_list = Immutable.fromJS(tag_list);
 
-  return state.setIn(['dataState', TodoTypeToDataState[todo.klass], todo.id.toString, 'tags'], tag_list);
+  return state.setIn(
+    ['dataState', TodoTypeToDataState[todo.klass], todo.id.toString, 'tags'],
+    Immutable.fromJS(tag_list)
+  );
 }
 
 const retrieveTodo = (state, todo) => {
@@ -184,13 +207,14 @@ const reorderTodos = (state, todoType, todosList) => {
 }
 
 const setTodoCompletedState = (state, todo, isCompleted) => {
-  let updated_todo = state.getIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()]);
-  updated_todo.isCompleted = isCompleted
-  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], updated_todo);
+  return state.setIn(
+    ['dataState', TodoKlassToDataState[todo.klass], todo.id.toString(), 'isCompleted'],
+    isCompleted
+  );
 }
 
 const setTodoState = (state, todo, todoState) => {
-  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], todoState);
+  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], Immutable.fromJS(todoState));
 }
 
 const toggleHideCompletedTodos = (state) => {

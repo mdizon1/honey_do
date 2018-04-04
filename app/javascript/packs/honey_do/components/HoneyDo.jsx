@@ -35,7 +35,7 @@ class HoneyDo extends React.Component {
 
   initialTagLoad() {
     apiLoadTags({
-      endpoint: this.props.config.apiEndpoint, 
+      endpoint: this.props.config.apiEndpoint,
       authToken: this.props.config.identity.authToken,
       onSuccess: (data, textStatus, jqXHR) => {
         this.props.store.dispatch(loadTagSuccess(data));
@@ -67,7 +67,7 @@ class HoneyDo extends React.Component {
     const store = this.props.store
     const new_state = {};
 
-    if(!this.state.isReady) { 
+    if(!this.state.isReady) {
       new_state.isReady = true;
       new_state.configState = getConfigState(store);
     }
@@ -83,7 +83,7 @@ class HoneyDo extends React.Component {
   syncTodos() {
     this.props.store.dispatch(syncTodosRequest());
     apiSyncTodos({
-      endpoint: this.props.config.apiEndpoint, 
+      endpoint: this.props.config.apiEndpoint,
       authToken: this.props.config.identity.authToken,
       onSuccess: (data, textStatus, jqXHR) => {
         this.props.store.dispatch(syncTodosRequestSuccess(data));
@@ -103,7 +103,7 @@ class HoneyDo extends React.Component {
   renderNewTodo() {
     if(!this.state.configState.identity.permissions.canCreateTodo) { return null; }
     return (
-      <NewTodoWrap 
+      <NewTodoWrap
         todoType={UiTabToType[this.state.currentTab]}
         store={this.props.store}
         appConfig={this.props.config}
@@ -131,7 +131,7 @@ class HoneyDo extends React.Component {
         <div className="honey-do-app-wrap">
           { this.renderSpinner() }
           <EditTodoWrap onSync={this.syncTodos.bind(this)} />
-          <TodoTabs 
+          <TodoTabs
             store={this.props.store}
             currentTab={this.state.currentTab}
             appConfig={this.state.configState}

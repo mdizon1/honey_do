@@ -6,7 +6,7 @@ class TodosController < ApplicationController
   before_action :prepare_completable_form, :only => [:create, :update]
 
   def index
-    # TODO: (ha ha ha...) this must be heavily optimized, mapping over the 
+    # TODO: (ha ha ha...) this must be heavily optimized, mapping over the
     # todos to get permissions per item will be costly
     @todos = @household.todos.includes([{:household => :members}, :creator, :completor, :acceptor, :tags]).decorate.map{|td| [td.id, td.to_json(current_user)] }.to_h
 
@@ -35,7 +35,7 @@ class TodosController < ApplicationController
   end
 
   def update
-    return render :status => 400 unless @todo 
+    return render :status => 400 unless @todo
     return render :status => 500 unless @completable_form.submit(todo_params)
     @todo = @completable_form.resource.decorate
     render_todo_to_json(:ok)
@@ -108,8 +108,8 @@ class TodosController < ApplicationController
   end
 
   def load_todo
-    @todo = Completable.find(params[:id] || 
-                             params[:todo_id] || 
+    @todo = Completable.find(params[:id] ||
+                             params[:todo_id] ||
                              params[:todo][:id])
                        .decorate
   end

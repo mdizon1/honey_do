@@ -19,7 +19,6 @@ import {
   apiUncompleteTodo } from '../util/Api'
 import { TodoTypeToDataState } from '../constants/TodoTypes'
 
-
 const getTodosFromStore = (store, dataStatePath) => {
   // TODO: (hurrr) Might be able to avoid the toJS call here and use Immutable
   // map method rather than converting to hash first then array...
@@ -71,20 +70,7 @@ export default class TodoListWrap extends Component {
   }
 
   completeTodo(todo) {
-    var dispatch = this.props.store.dispatch;
-
-    dispatch(completeTodoRequest(todo))
-    apiCompleteTodo({
-      endpoint: this.props.apiEndpoint,
-      authToken: this.props.authToken,
-      todo: todo,
-      onSuccess: (data, textStatus, jqXHR) => {
-        dispatch(completeTodoSuccess(todo, data));
-      },
-      onFailure: (jqXHR, textStatus, errorThrown) => {
-        dispatch(completeTodoFailure(todo, errorThrown));
-      }
-    });
+    this.props.store.dispatch(completeTodoRequest(todo));
   }
 
   uncompleteTodo(todo) {

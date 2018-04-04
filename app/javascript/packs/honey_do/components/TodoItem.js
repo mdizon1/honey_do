@@ -1,3 +1,5 @@
+// TODO: hah
+// Move me to the containers folder
 import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
@@ -46,7 +48,7 @@ const todoTarget = {
     const dragIndex = dragged.index;
     const hoverIndex = props.todo.index;
 
-    if((!dragIndex && dragIndex != 0) || (!hoverIndex && hoverIndex != 0)) { 
+    if((!dragIndex && dragIndex != 0) || (!hoverIndex && hoverIndex != 0)) {
       throw new Error("No draggable or target index found during drag operation");
     }
 
@@ -92,11 +94,10 @@ const todoTarget = {
   }
 };
 
-const renderCheckbox = (todo, handleClick) => {
+const renderCheckbox = (todo) => {
   return (
-    <Checkbox 
+    <Checkbox
       checked={todo.isCompleted}
-      onCheck={() => handleClick(todo)}
       disabled={todo.isCompleted && !todo.permissions.canUncomplete}
     />
   )
@@ -109,7 +110,7 @@ const renderDraggingPlaceholder = (props) => {
       <ListItem
         primaryText={todo.title}
         secondaryText={todo.notes}
-        leftCheckbox={renderCheckbox(todo, onTodoClicked)}
+        leftCheckbox={renderCheckbox(todo)}
       />
     </div>
   ));
@@ -118,6 +119,9 @@ const renderDraggingPlaceholder = (props) => {
 
 class TodoItem extends Component {
 // TODO: add propTypes back in .. ?
+//  no. proptypes aren't a thing in the latest react, instead I should use
+//  typescript
+//
 //  static propTypes = {
 //    todo: PropTypes.object.isRequired,
 //    onTodoClicked: PropTypes.func.isRequired
@@ -127,27 +131,22 @@ class TodoItem extends Component {
     this.state = { isNestedExpanded: false };
   }
 
-  toggleNotes() {
-    this.setState({isNestedExpanded: !this.state.isNestedExpanded});
-  }
-
-  triggerDestroy() {
-    this.props.onTodoDestroyed(this.props.todo);
-  }
-
-  triggerEdit() {
-    this.props.dispatch(editTodoRequest(this.props.todo));
-  }
-
-
   renderTodoItemWrap() {
-    const { todo, onTodoClicked, onTodoDestroyed, onTodoAccepted, connectDragSource, connectDropTarget } = this.props;
+    const { 
+      todo,
+      onTodoClicked,
+      onTodoDestroyed,
+      onTodoAccepted,
+      connectDragSource,
+      connectDropTarget
+    } = this.props;
+
     return connectDropTarget(
       <div className='todo-item-drag-wrap'>
         <TodoItemWrap
           todo={todo}
           connectDragSource={connectDragSource}
-          onTodoClicked={onTodoClicked}
+          onTodoClicked={() => onTodoClicked(todo)}
           onTodoDestroyed={() => onTodoDestroyed(todo)}
           onTodoAccepted={() => onTodoAccepted(todo)}
         />
@@ -166,8 +165,8 @@ class TodoItem extends Component {
   }
 }
 
-// DEV_NOTE: looks like flow was the secret sauce here.  Since es7 decorators 
-//   aren't yet available, if I want to apply multiple decorators in es6, I 
+// DEV_NOTE: looks like flow was the secret sauce here.  Since es7 decorators
+//   aren't yet available, if I want to apply multiple decorators in es6, I
 //   need lodash's flow to apply them in chain
 export default flow(
   DragSource(ItemTypes.TODO_ITEM, todoSource, (connect, monitor) => ({
