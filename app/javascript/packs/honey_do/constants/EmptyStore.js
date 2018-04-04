@@ -10,7 +10,7 @@ export const EmptyStore = {
     isShuffling: false,
     isSpinning: false,
     isSyncing: false,
-    isCompletedHidden: true
+    isCompletedHidden: false
   },
   dataState: {
     shoppingItems: {},
