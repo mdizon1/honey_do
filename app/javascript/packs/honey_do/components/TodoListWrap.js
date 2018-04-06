@@ -38,7 +38,8 @@ export default class TodoListWrap extends Component {
       unsubscribe: this.props.store.subscribe(this.handleStateChange.bind(this)),
       dataStatePath: dataStatePath,
       searchValue: "",
-      todos: getTodosFromStore(this.props.store, dataStatePath)
+      todos: getTodosFromStore(this.props.store, dataStatePath),
+      stateCache: this.props.store.getState().getIn(dataStatePath)
     });
   }
 
@@ -136,10 +137,15 @@ export default class TodoListWrap extends Component {
   }
 
   handleStateChange() {
-    let new_todo_state = getTodosFromStore(this.props.store, this.state.dataStatePath);
+    let new_state = this.props.store.getState().getIn(this.state.dataStatePath);
+    if(this.state.stateCache.equals(new_state)){ return; }
 
+    let new_todo_state = getTodosFromStore(this.props.store, this.state.dataStatePath);
     if(!_.isEqual(this.state.todos, new_todo_state)){
-      this.setState({ todos: new_todo_state});
+      this.setState({
+        todos: new_todo_state,
+        stateCache: new_state
+      });
     }
   }
 
