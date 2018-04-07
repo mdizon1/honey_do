@@ -5,6 +5,7 @@ import { UiTabs } from './TodoTypes'
 export const EmptyStore = {
   uiState: {
     currentTab: UiTabs.TODOS,
+    filterValue: '',
     isEditing: false,
     isCreating: false,
     isReady: false,

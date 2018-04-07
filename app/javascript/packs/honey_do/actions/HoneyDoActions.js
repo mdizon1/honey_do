@@ -16,6 +16,7 @@ export const DELETE_TODO_TAG_SUCCESS = 'DELETE_TODO_TAG_SUCCESS'
 export const DELETE_TODO_TAG_FAILURE = 'DELETE_TODO_TAG_FAILURE'
 export const EDIT_TODO_CANCELED = 'EDIT_TODO_CANCELED'
 export const EDIT_TODO_REQUEST  = 'EDIT_TODO_REQUEST'
+export const FILTER_TODOS = 'FILTER_TODOS'
 export const OPEN_CREATE_FORM = 'OPEN_CREATE_FORM'
 export const SWITCH_TAB = 'SWITCH_TAB'
 export const SYNC_TODOS_REQUEST = 'SYNC_TODOS_REQUEST'
@@ -119,6 +120,14 @@ export function deleteTodoTagFailure(todo, tag) {
     type: DELETE_TODO_TAG_FAILURE,
     todo: todo,
     tag: tag
+  }
+}
+
+export function filterTodos(filterVal) {
+  return {
+    type: FILTER_TODOS,
+    filterValue: filterVal,
+    description: 'Filter todos by the given value'
   }
 }
 

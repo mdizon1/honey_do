@@ -22,6 +22,7 @@ import {
   DELETE_TODO_TAG_FAILURE,
   EDIT_TODO_CANCELED,
   EDIT_TODO_REQUEST,
+  FILTER_TODOS,
   OPEN_CREATE_FORM,
   SWITCH_TAB,
   SYNC_TODOS_REQUEST,
@@ -116,6 +117,9 @@ function honeyDoReducer(state, action) {
       return state;
     case DELETE_TODO_TAG_FAILURE: // TODO: In this case we should reload the todo
       return state;
+
+    case FILTER_TODOS:
+      return updateFilterState(state, action.filterValue);
 
     case OPEN_CREATE_FORM:
       return openNewTodoForm(state);
@@ -373,6 +377,10 @@ const uiSyncingOn = (state) => {
 const uiSyncingOff = (state) => {
   let temp_state = state.setIn(['uiState', 'isSyncing'], false);
   return deactivateSpinner(temp_state);
+}
+
+const updateFilterState = (state, filterVal) => {
+  return state.setIn(['uiState', 'filterValue'], filterVal);
 }
 
 const updateTodo = (state, todo) => { // Look for given todo in state and replace with given todo

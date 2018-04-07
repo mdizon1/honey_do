@@ -33,36 +33,55 @@
     CLOSED: [2018-04-04 Wed 12:04]
 *** DONE In HoneyDo.jsx, use mapStateToProps rather than subscribe()
     CLOSED: [2018-04-04 Wed 12:04]
-*** TODO Render the side menus
 *** TODO Fix search field
-**** TODO Fix it's display
-**** TODO Make the style work right
+**** DONE Fix it's display
+     CLOSED: [2018-04-07 Sat 13:55]
+**** DONE Make the style work right
+     CLOSED: [2018-04-07 Sat 13:55]
 **** TODO Wiring up the search field to the TodoListWrap
      Where the actual todo items are rendered. Need to smartly figure out how to
      handle the search value, propogating that down to the todolistwrap, and
      avoiding rerenders where possible.
+*** TODO Render the side menus
+*** TODO Fix dragging
+**** TODO Preview/placeholder doesn't show
+**** TODO New drag/reorder logic
+     Now that todolistwrap doesn't maintain it's own state anymore, we'll have
+     to rely on the store I guess, but that could mean firing actions for every
+     space dragged? that could get really inefficient...
+
+---
 *** TODO Fix new todo modal
 **** TODO New Modal update after upgrade of material ui?
 **** TODO Fix the form in the modal
 *** TODO Fix new todo button
     Right now it's using a button with an icon inside but I think it's just
     supposed to be an icon by itself, or maybe a paper with an icon in it..?
+    Also needs to get position: fixed again
 ** Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
 ** TODO Accept todo icon broken
 ** TODO Make specs pass
-** TODO Try refactoring the way I'm handling state and dispatch
+** DONE Try refactoring the way I'm handling state and dispatch
+   CLOSED: [2018-04-07 Sat 13:53]
    Gonna try doing it the redux way where we use `connect` everywhere
    Just let redux/react handle the re-rendering and batching
 *** DONE Upgrade babel
     CLOSED: [2018-03-28 Wed 18:02]
 *** DONE Install react hot loader (latest)
     CLOSED: [2018-03-28 Wed 18:51]
-*** TODO use redux connect on some component (replace use of store.subscribe())
-*** TODO use redux connect on the lowest level component that should have it
+*** DONE use redux connect on some component (replace use of store.subscribe())
+    CLOSED: [2018-04-07 Sat 13:53]
+*** DONE use redux connect on the lowest level component that should have it
+    CLOSED: [2018-04-07 Sat 13:53]
     Test that it works.
-*** TODO Restructure which components need to use connect
+*** DONE Restructure which components need to use connect
+    CLOSED: [2018-04-07 Sat 13:53]
+** TODO Refactor use of dispatch in components using connect
+   I refactored some components to use connect rather than subscribe but i need
+   to use mapdispatchtoprops as well as mapstatetoprops, then remove calls to
+   this.props.store.dispatch
 ** TODO Refactor those api calls in the reducer
    Since the endpoint and auth token are always the same I'm sure we can DRY 
    that up

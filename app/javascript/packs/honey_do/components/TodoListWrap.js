@@ -8,6 +8,7 @@ import SearchTodos from './SearchTodos'
 import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
   completeTodoRequest, completeTodoSuccess, completeTodoFailure,
   deleteTodoRequest, deleteTodoSuccess, deleteTodoFailure,
+  filterTodos,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure
 } from '../actions/HoneyDoActions'
@@ -19,12 +20,17 @@ const mapStateToProps = (state, ownProps) => {
   let dataStatePath = ['dataState', TodoTypeToDataState[ownProps.todoType]]
 
   let currState = state.getIn(dataStatePath);
-  if(ownProps.prevState && ownProps.prevState.equals(currState)){ return; }
+  let newSearchValue = state.getIn(['uiState', 'filterValue']);
+  if(
+    ownProps.prevState &&
+    ownProps.prevState.equals(currState) &&
+    ownProps.searchValue == newSearchValue
+  ){ return; }
 
   return {
     dataStatePath: dataStatePath,
-    searchValue: "", // TODO: This needs to wire up to some value in the store probably
-    todos: getTodosFromStore(state, dataStatePath),
+    searchValue: newSearchValue,
+    todos: filterList(getTodosFromStore(state, dataStatePath), newSearchValue),
     prevState: currState
   }
 }
@@ -46,36 +52,34 @@ const getTodosFromStore = (store, dataStatePath) => {
   return todos;
 }
 
+const filterList = (todoList, filterVal) => {
+  var sanitized_searchval, search_regex;
+
+  sanitized_searchval = _.trim(filterVal);
+  if(sanitized_searchval.size < 1) { return todoList; };
+  search_regex = new RegExp(sanitized_searchval, "i");
+
+  return _.filter(todoList, (curr_todo) => {
+    return (
+      curr_todo.title.match(search_regex) ||
+      curr_todo.tags.join(" ").match(search_regex)
+    );
+  });
+}
+
 class TodoListWrap extends Component {
   acceptTodo(todo) {
     this.props.store.dispatch(acceptTodoRequest(todo));
   }
 
-  filterTodos(filterVal) {
-    var all_todos, new_todo_state, sanitized_searchval, search_regex;
-
-    sanitized_searchval = _.trim(filterVal);
-    all_todos = getTodosFromStore(this.props.store, this.props.dataStatePath);
-
-    if(sanitized_searchval.size < 1) { return all_todos; };
-    search_regex = new RegExp(sanitized_searchval, "i");
-
-    return _.filter(all_todos, (curr_todo) => {
-      return (
-        curr_todo.title.match(search_regex) ||
-        curr_todo.tags.join(" ").match(search_regex)
-      );
-    });
-  }
-
-  handleSearchChanged(evt, newVal) {
-//    this.setState({todos: this.filterTodos(newVal), searchValue: newVal});
-    //    TODO: REPLACE THIS
-  }
+  handleSearchChanged(name){
+    return (evt) => {
+      let newVal = evt.target.value;
+      this.props.store.dispatch(filterTodos(newVal));
+  }}
 
   handleSearchCleared(evt) {
-//    this.setState({searchValue: ""});
-    //    TODO: REPLACE THIS
+    this.props.store.dispatch(filterTodos(''));
   }
 
   handleTodoClicked(todo) {

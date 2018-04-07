@@ -17,7 +17,7 @@ const SearchTodos = (props) => {
       label={renderSearchLabel()}
       multiline
       fullWidth={true}
-      onChange={props.onChange}
+      onChange={props.onChange('searchValue')}
       value={props.value}
     >
     </TextField>
