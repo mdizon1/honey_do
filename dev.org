@@ -33,16 +33,19 @@
     CLOSED: [2018-04-04 Wed 12:04]
 *** DONE In HoneyDo.jsx, use mapStateToProps rather than subscribe()
     CLOSED: [2018-04-04 Wed 12:04]
-*** TODO Fix search field
+*** DONE Fix search field
+    CLOSED: [2018-04-07 Sat 14:32]
 **** DONE Fix it's display
      CLOSED: [2018-04-07 Sat 13:55]
 **** DONE Make the style work right
      CLOSED: [2018-04-07 Sat 13:55]
-**** TODO Wiring up the search field to the TodoListWrap
+**** DONE Wiring up the search field to the TodoListWrap
+     CLOSED: [2018-04-07 Sat 14:32]
      Where the actual todo items are rendered. Need to smartly figure out how to
      handle the search value, propogating that down to the todolistwrap, and
      avoiding rerenders where possible.
-*** TODO Render the side menus
+*** DONE Render the side menus
+    CLOSED: [2018-04-07 Sat 17:27]
 *** TODO Fix dragging
 **** TODO Preview/placeholder doesn't show
 **** TODO New drag/reorder logic
@@ -58,6 +61,13 @@
     Right now it's using a button with an icon inside but I think it's just
     supposed to be an icon by itself, or maybe a paper with an icon in it..?
     Also needs to get position: fixed again
+*** TODO Fix edit todo
+    Modal and form doesn't work
+    Doesn't dismiss
+*** TODO Fix Tag display
+*** TODO Fix side menu for normal user with just expand control
+    They don't get the ellipsis menu with accept, edit, delete etc, just the 
+    expand button.  That component needs to be updated for material ui
 ** Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
@@ -85,7 +95,9 @@
 ** TODO Refactor those api calls in the reducer
    Since the endpoint and auth token are always the same I'm sure we can DRY 
    that up
+** TODO Change config tab into a drawer
 * Backlog
+** TODO Replace $.ajax with http.get and put etc
 ** TODO Error with todo reordering
    So there were a number of issues, both with my logic and with some disparity
    between the client and server. I've plugged all the problems but 1 remains:
@@ -93,6 +105,8 @@
    move_lower (acts as list) puts it at position 2 rather than actually moving
    it down the list. This is in contradiction to the documentation which says
    that case has been fixed.
+** TODO Consider removing font awesome since we're using material icons
+** TODO Add a clear search button
 ** TODO Do some more with responsiveness
    On larger screens, we can fully expand notes and/or show tags
 ** TODO Change the way sync works

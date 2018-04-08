@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react'
+import TodoItemControls from './TodoItemControls'
 import Checkbox from 'material-ui/Checkbox/Checkbox'
 import Chip from 'material-ui/Chip/Chip'
 import Menu, { MenuItem } from 'material-ui/Menu'
@@ -6,29 +7,33 @@ import IconButton from 'material-ui/IconButton/IconButton'
 import Icon from 'material-ui/Icon'
 
 const _renderControls = (props) => {
-  const {todo, isExpanded, onToggleExpand, onTodoEdit, onTodoAccepted, onTodoDestroyed} = props;
+  const {
+    todo,
+    isExpanded,
+    onToggleExpand,
+    onTodoEdit,
+    onTodoAccepted,
+    onTodoDestroyed
+  } = props;
 
   if(todo.permissions.canEdit ||
      todo.permissions.canAccept ||
-     todo.permissions.canDestroy){
+     todo.permissions.canDestroy
+  ){
     // render the popout menu for more controls
     return (
-      <div className="todo-item-controls">
-        <Menu
-          iconButtonElement={<IconButton><Icon>chevron-down</Icon></IconButton>}
-          anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-          targetOrigin={{horizontal: 'right', vertical: 'top'}}
-          open={false}
-        >
-          { _renderMenuItemEdit(todo, onTodoEdit) }
-          { _renderMenuItemAccept(todo, onTodoAccepted) }
-          { _renderMenuItemDestroy(todo, onTodoDestroyed) }
-          { _renderMenuItemToggleExpand(isExpanded, onToggleExpand) }
-        </Menu>
-      </div>
-    );
+      <TodoItemControls
+        todo            ={todo}
+        isExpanded      ={isExpanded}
+        onToggleExpand  ={onToggleExpand}
+        onTodoEdit      ={onTodoEdit}
+        onTodoAccepted  ={onTodoAccepted}
+        onTodoDestroyed ={onTodoDestroyed}
+      />
+    )
   }else{
     // Only render the caret to expand/close todo notes
+    // TODO: This needs to be reworked to work with material ui upgrade, see <TodoItemControls>
     return (
       <div className="todo-item-controls">
         <IconButton
@@ -52,43 +57,6 @@ const _renderDragHandle = (connectDragSource) => {
       <i className="fa fa-arrows-v"></i>
     </div>
   );
-}
-
-const _renderEditIcon = () => {
-  return (
-    <i className="todo-item-controls-icon fa fa-pencil-square-o"></i>
-  )
-}
-
-const _renderMenuItemAccept = (todo, onTodoAccepted) => {
-  if(!todo.permissions.canAccept){ return null; }
-  return (
-    <MenuItem onClick={onTodoAccepted} primaryText="Accept" />
-  )
-}
-
-const _renderMenuItemDestroy = (todo, onTodoDestroyed) => {
-  if(!todo.permissions.canDestroy){ return null; }
-  return (
-    <MenuItem leftIcon={_renderTrashIcon()} onClick={onTodoDestroyed} primaryText="Destroy" />
-  )
-}
-
-const _renderMenuItemEdit = (todo, onTodoEdit) => {
-  if(!todo.permissions.canEdit){ return null; }
-  return (
-    <MenuItem leftIcon={_renderEditIcon()} onClick={onTodoEdit} primaryText="Edit" />
-  )
-}
-
-const _renderMenuItemToggleExpand = (isExpanded, onToggleExpand) => {
-  return (
-    <MenuItem
-      leftIcon={_renderTextFileIcon()}
-      onClick={onToggleExpand}
-      primaryText={isExpanded ? "Collapse notes" : "Expand notes"}
-    />
-  )
 }
 
 const _renderNotes = (todo, isExpanded) => {
@@ -125,23 +93,11 @@ const _renderTags = (todo, onTodoTagDestroyed) => {
   )
 }
 
-const _renderTextFileIcon = () => {
-  return (
-    <i className="todo-item-controls-icon fa fa-file-text-o"></i>
-  )
-}
-
 const _renderTitle = (todo) => {
   return (
     <div className='todo-item-title'>
       <h4> { todo.title } </h4>
     </div>
-  )
-}
-
-const _renderTrashIcon = () => {
-  return (
-    <i className="todo-item-controls-icon fa fa-trash"></i>
   )
 }
 
