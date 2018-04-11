@@ -3,8 +3,8 @@ import { TodoTypeToFriendlyString} from '../constants/TodoTypes'
 import { Colors } from '../constants/Colors'
 import TodoForm from './TodoForm'
 import Button from 'material-ui/Button'
-import Icon from 'material-ui/Icon/Icon'
-import Dialog from 'material-ui/Dialog/Dialog'
+import Icon from 'material-ui/Icon'
+import Dialog, { DialogTitle } from 'material-ui/Dialog'
 
 const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
   var actions, title;
@@ -28,13 +28,15 @@ const renderDialog = (onClose, onChange, onSubmit, isFormOpen, todoType) => {
     <Dialog
       title={title}
       actions={actions}
-      modal={false}
       open={isFormOpen}
-      onRequestClose={onClose}
-      autoScrollBodyContent={true}
+      onClose={onClose}
     >
+      <DialogTitle>
+        Create a new todo
+      </DialogTitle>
       <TodoForm
         onChange={onChange}
+        onClose={onClose}
         onSubmit={onSubmit}
       />
     </Dialog>

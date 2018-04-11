@@ -46,18 +46,21 @@
      avoiding rerenders where possible.
 *** DONE Render the side menus
     CLOSED: [2018-04-07 Sat 17:27]
-*** TODO Fix dragging
+*** DONE Fix dragging
+    CLOSED: [2018-04-10 Tue 18:51]
 **** DONE Preview/placeholder doesn't show
      CLOSED: [2018-04-07 Sat 20:02]
-**** TODO New drag/reorder logic
+**** DONE New drag/reorder logic
+     CLOSED: [2018-04-10 Tue 18:49]
      Now that todolistwrap doesn't maintain it's own state anymore, we'll have
      to rely on the store I guess, but that could mean firing actions for every
      space dragged? that could get really inefficient...
-
----
-*** TODO Fix new todo modal
-**** TODO New Modal update after upgrade of material ui?
-**** TODO Fix the form in the modal
+*** DONE Fix new todo modal
+    CLOSED: [2018-04-10 Tue 19:18]
+**** DONE New Modal update after upgrade of material ui?
+     CLOSED: [2018-04-10 Tue 19:18]
+**** DONE Fix the form in the modal
+     CLOSED: [2018-04-10 Tue 19:18]
 *** TODO Fix new todo button
     Right now it's using a button with an icon inside but I think it's just
     supposed to be an icon by itself, or maybe a paper with an icon in it..?
