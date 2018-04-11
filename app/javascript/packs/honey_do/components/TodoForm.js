@@ -26,7 +26,7 @@ const TodoForm = (props) => {
             <TextField
               label="Title"
               multiline
-              autofocus
+              autoFocus
               fullWidth
               name="title"
               value={todo.title}
@@ -35,7 +35,7 @@ const TodoForm = (props) => {
             />
             <TextField
               label="Notes"
-              multiLine
+              multiline
               fullWidth
               name="notes"
               value={todo.notes}

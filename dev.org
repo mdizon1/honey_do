@@ -61,14 +61,24 @@
      CLOSED: [2018-04-10 Tue 19:18]
 **** DONE Fix the form in the modal
      CLOSED: [2018-04-10 Tue 19:18]
-*** TODO Fix new todo button
+*** DONE Fix new todo button
+    CLOSED: [2018-04-10 Tue 20:06]
     Right now it's using a button with an icon inside but I think it's just
     supposed to be an icon by itself, or maybe a paper with an icon in it..?
     Also needs to get position: fixed again
-*** TODO Fix edit todo
+*** DONE Fix edit todo
+    CLOSED: [2018-04-10 Tue 20:13]
     Modal and form doesn't work
     Doesn't dismiss
-*** TODO Fix Tag display
+*** DONE Fix Tag display
+    CLOSED: [2018-04-10 Tue 22:06]
+**** DONE Tags in expanded display
+     CLOSED: [2018-04-10 Tue 22:06]
+**** DONE Tags in Edit todo
+     CLOSED: [2018-04-10 Tue 21:41]
+**** DONE Tag in edit todo should have an x that allows deletion
+     CLOSED: [2018-04-10 Tue 22:06]
+*** TODO Tags are having spaces consumed when parsing
 *** TODO Fix side menu for normal user with just expand control
     They don't get the ellipsis menu with accept, edit, delete etc, just the 
     expand button.  That component needs to be updated for material ui
@@ -286,6 +296,7 @@
 ** TODO Make flash animate out fade rather than blink out
 ** TODO See if I can make the configuration tab small (just an icon)
 * Icebox
+** TODO In edit todo, when deleting tags, if you hit cancel, don't commit the delete
 ** TODO Make search/filter field display with error style if no results found
    To give the user a hint that they have no todos because of whats been typed
    into that field, not that it's broken or something

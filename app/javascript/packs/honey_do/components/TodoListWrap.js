@@ -128,7 +128,7 @@ class TodoListWrap extends Component {
 
   renderTodoListMouse() {
     return (
-      <div>
+      <div className="todo-list-wrap">
         <SearchTodos
           onChange={this.handleSearchChanged.bind(this)}
           onClear={this.handleSearchCleared.bind(this)}
@@ -151,7 +151,7 @@ class TodoListWrap extends Component {
 
   renderTodoListTouch() {
     return (
-      <div>
+      <div className="todo-list-wrap">
         <SearchTodos
           onChange={this.handleSearchChanged.bind(this)}
           onClear={this.handleSearchCleared.bind(this)}

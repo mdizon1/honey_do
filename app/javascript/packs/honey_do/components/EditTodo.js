@@ -1,26 +1,20 @@
 import React, { PropTypes } from 'react'
 import { TodoKlassToFriendlyString } from '../constants/TodoTypes'
-import TodoForm from './TodoForm'
 
-import Chip from 'material-ui/Chip/Chip'
-import Dialog from 'material-ui/Dialog/Dialog'
+import Dialog, { DialogTitle } from 'material-ui/Dialog'
 import Button from 'material-ui/Button'
-
-const renderTag = (todo, tag, onDestroyTag) => {
-  return (
-    <Chip
-      onRequestDelete={((evt) => onDestroyTag(tag))}
-      key={_.uniqueId('tag_on_edit_todo_')}
-      style={{margin: "0 0.25em 0 0"}}
-    >
-      { tag }
-    </Chip>
-  )
-}
+import TodoForm from './TodoForm'
+import TodoTag from './TodoTag'
 
 const renderTags = (todo, onDestroyTag) => {
   var tags = _.map(todo.tags, (tag) => {
-    return renderTag(todo, tag, onDestroyTag) 
+    return (
+      <TodoTag 
+        key={_.uniqueId('tag_on_edit_todo_')}
+        tag={tag} 
+        onDelete={onDestroyTag} 
+      />
+    )
   });
 
   return (
@@ -32,31 +26,23 @@ const renderTags = (todo, onDestroyTag) => {
 
 const EditTodo = (props) => {
   const { todo, isFormOpen, onClose, onChange, onSubmit, onDestroyTag } = props;
-  var actions = [
-    <Button
-      label="Cancel"
-      secondary={true}
-      onMouseUp={onClose}
-    />,
-    <Button
-      label="Submit"
-      primary={true}
-      onMouseUp={onSubmit}
-    />,
-  ];
+  var title;
+
+  title = `Editing ${TodoKlassToFriendlyString[todo.klass]} "${todo.title}".`
   return (
     <Dialog
-      title={`Editing ${TodoKlassToFriendlyString[todo.klass]} "${todo.title}".`}
-      actions={actions}
-      modal={false}
+      title={title}
       open={isFormOpen}
-      onRequestClose={onClose}
-      autoScrollBodyContent={true}
+      onClose={onClose}
     >
+      <DialogTitle>
+        Edit this todo
+      </DialogTitle>
       { renderTags(todo, onDestroyTag) }
       <TodoForm
         todo={todo}
         onChange={onChange}
+        onClose={onClose}
         onSubmit={onSubmit}
       />
     </Dialog>

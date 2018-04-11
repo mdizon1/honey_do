@@ -33,9 +33,9 @@ class EditTodoWrap extends Component {
 
   static getDerivedStateFromProps(nextProps, prevState){
     if(
-      (nextProps.todo && prevState.todo)
-      && _.isEqual(nextProps.todo, prevState.todo)
-    ) { return }
+      (nextProps.todo && prevState.todo) &&
+      _.isEqual(nextProps.todo, prevState.todo)
+    ) { return null; }
 
     return {
       todo: nextProps.todo

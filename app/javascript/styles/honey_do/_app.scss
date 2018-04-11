@@ -13,6 +13,10 @@
   }
 }
 
+.todo-list-wrap {
+  margin-bottom: 4rem;
+}
+
 button.new-todo-button {
   position: fixed;
   bottom: 1rem;
@@ -84,10 +88,14 @@ button.new-todo-button {
 }
 
 .todo-item-controls-icon { font-size: 1.5em; }
+.todo-tag {
+  margin: 0 1rem 0 0;
+}
 
 .edit-todo-tag-list {
-  display: flex;
-  flex-wrap: wrap;
+  .todo-tag {
+    margin: 0 0 0 1rem;
+  }
 }
 
 .honey-do-spinner {

@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react'
-import TodoItemControls from './TodoItemControls'
 import Checkbox from 'material-ui/Checkbox/Checkbox'
 import Chip from 'material-ui/Chip/Chip'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import IconButton from 'material-ui/IconButton/IconButton'
 import Icon from 'material-ui/Icon'
+import TodoItemControls from './TodoItemControls'
+import TodoTag from './TodoTag'
 
 const _renderControls = (props) => {
   const {
@@ -70,20 +71,16 @@ const _renderNotes = (todo, isExpanded) => {
   )
 }
 
-const _renderTag = (tag, todo, onTodoTagDestroyed) => {
-  return (
-    <Chip
-      style={{margin: "0 0.25em 0 0"}}
-      key={_.uniqueId()}
-    >
-      { tag }
-    </Chip>
-  )
-}
-
 const _renderTags = (todo, onTodoTagDestroyed) => {
   var tags = _.map(todo.tags, (tag) => {
-    return _renderTag(tag, todo, onTodoTagDestroyed);
+    return (
+      <TodoTag
+        key={_.uniqueId('tag_on_todo_')}
+        tag={tag}
+        onDelete={onTodoTagDestroyed}
+      />
+        
+    )
   });
 
   return (

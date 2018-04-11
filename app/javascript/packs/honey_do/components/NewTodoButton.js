@@ -2,6 +2,7 @@ import React, { PropTypes } from 'react'
 import { withStyles } from 'material-ui/styles'
 import Button from 'material-ui/Button'
 
+// NOTE: This doesn't work
 const styles = theme => ({
   button: {
     position: "fixed",
