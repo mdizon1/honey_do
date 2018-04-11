@@ -78,11 +78,12 @@
      CLOSED: [2018-04-10 Tue 21:41]
 **** DONE Tag in edit todo should have an x that allows deletion
      CLOSED: [2018-04-10 Tue 22:06]
-*** TODO Tags are having spaces consumed when parsing
+*** DONE Tags are having spaces consumed when parsing
+    CLOSED: [2018-04-10 Tue 22:29]
+*** TODO Track down those warning messages
 *** TODO Fix side menu for normal user with just expand control
     They don't get the ellipsis menu with accept, edit, delete etc, just the 
     expand button.  That component needs to be updated for material ui
-*** TODO Track down those warning messages
 ** Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
@@ -112,6 +113,18 @@
    that up
 ** TODO Change config tab into a drawer
 * Backlog
+** TODO Tagging todo not working server side
+   Expected behavior:
+   some title #tag #tag #tag with space
+   result:
+   some title
+   tags -> [tag, tag with space]
+   Ensure we have tests that cover this. It's working client side so far
+
+   Also seeing:
+   Completed 422 Unprocessable entity
+   ActiveRecord::RecordInvalid (Validation failed: Title has already been taken)
+   for tags..
 ** TODO Upgrade immutable js
 ** TODO Ditch calls to bind(this)
 ** TODO Replace $.ajax with http.get and put etc

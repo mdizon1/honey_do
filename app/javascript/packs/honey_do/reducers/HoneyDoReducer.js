@@ -443,8 +443,10 @@ const updateFilterState = (state, filterVal) => {
 }
 
 const updateTodo = (state, todo) => { // Look for given todo in state and replace with given todo
-  let tags_in_title = _.words(todo.title, /#.*/g);
-  tags_in_title = _.map(tags_in_title, (tag_in_title) => { return _.replace(tag_in_title, /#/g, '')});
+  let tags_in_title = _.words(todo.title, /#[\w\s]+\b/g);
+  tags_in_title = _.map(tags_in_title, (tag_in_title) => {
+    return _.trim(_.replace(tag_in_title, /#/g, ''));
+  });
   todo.tags = _.uniq(_.concat(todo.tags, tags_in_title));
   let new_title = _.trim(_.replace(todo.title, /#.*/g, ''));
   todo.title = new_title;
