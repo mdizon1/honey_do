@@ -22,6 +22,7 @@ export const SWITCH_TAB = 'SWITCH_TAB'
 export const SYNC_TODOS_REQUEST = 'SYNC_TODOS_REQUEST'
 export const SYNC_TODOS_SUCCESS = 'SYNC_TODOS_SUCCESS'
 export const SYNC_TODOS_FAILURE = 'SYNC_TODOS_FAILURE'
+export const TODO_CANCEL_DRAG = 'TODO_CANCEL_DRAG'
 export const TODO_REORDER_REQUEST = 'TODO_REORDER_REQUEST'
 export const TODO_REORDER_SUCCESS = 'TODO_REORDER_SUCCESS'
 export const TODO_REORDER_FAILURE = 'TODO_REORDER_FAILURE'
@@ -29,6 +30,7 @@ export const TOGGLE_HIDE_COMPLETED = "TOGGLE_HIDE_COMPLETED"
 export const UPDATE_TODO_REQUEST = 'UPDATE_TODO_REQUEST'
 export const UPDATE_TODO_SUCCESS = 'UPDATE_TODO_SUCCESS'
 export const UPDATE_TODO_FAILURE = 'UPDATE_TODO_FAILURE'
+export const UPDATE_TODO_DRAG = 'UPDATE_TODO_DRAG'
 export const UNCOMPLETE_TODO_REQUEST = 'UNCOMPLETE_TODO_REQUEST'
 export const UNCOMPLETE_TODO_SUCCESS = 'UNCOMPLETE_TODO_SUCCESS'
 export const UNCOMPLETE_TODO_FAILURE = 'UNCOMPLETE_TODO_FAILURE'
@@ -50,6 +52,13 @@ export function acceptTodoSuccess(todo) {
 export function acceptTodoFailure(todo) {
   return {
     type: ACCEPT_TODO_FAILURE
+  }
+}
+
+export function cancelDragTodo() {
+  return {
+    type: TODO_CANCEL_DRAG,
+    description: "Canceled a drag and drop action"
   }
 }
 
@@ -228,6 +237,16 @@ export function toggleHideCompleted(){
   return {
     type: TOGGLE_HIDE_COMPLETED,
     description: "Show/Hide todos which were already completed"
+  }
+}
+
+export function updateTodoDrag(todo, newPos, klass){
+  return {
+    type: UPDATE_TODO_DRAG,
+    description: "Todo item was dragged to a new position",
+    todo: todo,
+    newPosition: newPos,
+    todoKlass: klass
   }
 }
 

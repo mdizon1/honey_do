@@ -12,7 +12,13 @@ export const EmptyStore = {
     isShuffling: false,
     isSpinning: false,
     isSyncing: false,
-    isCompletedHidden: false
+    isCompletedHidden: false,
+    dragState: {
+      isDragActive: false,
+      currentDragPosition: null,
+      currentDragTodoId: null,
+      currentDragTodo: null
+    }
   },
   dataState: {
     shoppingItems: {},

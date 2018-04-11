@@ -47,7 +47,8 @@
 *** DONE Render the side menus
     CLOSED: [2018-04-07 Sat 17:27]
 *** TODO Fix dragging
-**** TODO Preview/placeholder doesn't show
+**** DONE Preview/placeholder doesn't show
+     CLOSED: [2018-04-07 Sat 20:02]
 **** TODO New drag/reorder logic
      Now that todolistwrap doesn't maintain it's own state anymore, we'll have
      to rely on the store I guess, but that could mean firing actions for every
@@ -68,6 +69,7 @@
 *** TODO Fix side menu for normal user with just expand control
     They don't get the ellipsis menu with accept, edit, delete etc, just the 
     expand button.  That component needs to be updated for material ui
+*** TODO Track down those warning messages
 ** Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
@@ -97,6 +99,8 @@
    that up
 ** TODO Change config tab into a drawer
 * Backlog
+** TODO Upgrade immutable js
+** TODO Ditch calls to bind(this)
 ** TODO Replace $.ajax with http.get and put etc
 ** TODO Error with todo reordering
    So there were a number of issues, both with my logic and with some disparity

@@ -6,10 +6,12 @@ import TodoListTouch from './TodoListTouch'
 import SearchTodos from './SearchTodos'
 
 import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
+  cancelDragTodo,
   completeTodoRequest, completeTodoSuccess, completeTodoFailure,
   deleteTodoRequest, deleteTodoSuccess, deleteTodoFailure,
   filterTodos,
   todoReorderRequest, todoReorderSuccess, todoReorderFailure,
+  updateTodoDrag,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure
 } from '../actions/HoneyDoActions'
 
@@ -21,17 +23,22 @@ const mapStateToProps = (state, ownProps) => {
 
   let currState = state.getIn(dataStatePath);
   let newSearchValue = state.getIn(['uiState', 'filterValue']);
+
+  let dragState = state.getIn(['uiState', 'dragState']);
+
   if(
     ownProps.prevState &&
     ownProps.prevState.equals(currState) &&
-    ownProps.searchValue == newSearchValue
+    ownProps.searchValue == newSearchValue &&
+    ownProps.dragState.equals(dragState)
   ){ return; }
 
   return {
     dataStatePath: dataStatePath,
     searchValue: newSearchValue,
     todos: filterList(getTodosFromStore(state, dataStatePath), newSearchValue),
-    prevState: currState
+    prevState: currState,
+    dragState: dragState
   }
 }
 
@@ -82,6 +89,10 @@ class TodoListWrap extends Component {
     this.props.store.dispatch(filterTodos(''));
   }
 
+  handleTodoCancelDrop(evt) {
+    this.props.store.dispatch(cancelDragTodo());
+  }
+
   handleTodoClicked(todo) {
     if(todo.isCompleted) {
       this.props.store.dispatch(uncompleteTodoRequest(todo));
@@ -105,41 +116,14 @@ class TodoListWrap extends Component {
     dispatch(todoReorderRequest(temp_todo, positionsJumped, todo_type, this.props.todos));
   }
 
-  handleTodoReorder(id, newIndex) {
+  handleTodoDragged(id, newIndex, klass) {
     var local_todo_state, todo, prev_index;
 
     local_todo_state = this.props.todos;
     todo = _.find(local_todo_state, (curr) => { return curr.id == id; });
     prev_index = todo.index;
 
-    // change it's index
-    todo.index = newIndex;
-
-    // update other indices
-    _.forEach(local_todo_state, (curr, index) => {
-      if(curr.id == id) { return; }
-      // moving down
-      if(newIndex >= prev_index) {
-        if(curr.index >= newIndex) { return curr.index-=1; }
-      }
-      // moving up
-      if(newIndex <= prev_index) {
-        if(curr.index >= newIndex) { return curr.index+=1; }
-      }
-    });
-
-    // reorder by index
-
-    local_todo_state = _.sortBy(local_todo_state, (curr) => {
-      return curr.index;
-    });
-
-    // renumber indices
-    _.forEach(local_todo_state, (curr, index) => {
-      curr.index = index;
-    });
-
-    this.setState({todos: local_todo_state});
+    this.props.store.dispatch(updateTodoDrag(todo, newIndex, klass));
   }
 
   renderTodoListMouse() {
@@ -153,11 +137,13 @@ class TodoListWrap extends Component {
         <TodoListMouse
           todos={this.props.todos}
           dispatch={this.props.store.dispatch}
+          todoDragState={this.props.dragState}
           onTodoAccepted={this.acceptTodo.bind(this)}
           onTodoClicked={this.handleTodoClicked.bind(this)}
           onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
+          onTodoReorder={this.handleTodoDragged.bind(this)}
           onTodoDropped={this.handleTodoDropped.bind(this)}
-          onTodoReorder={this.handleTodoReorder.bind(this)}
+          onTodoCancelDrag={this.handleTodoCancelDrop.bind(this)}
         />
       </div>
     )
@@ -174,11 +160,13 @@ class TodoListWrap extends Component {
         <TodoListTouch
           todos={this.props.todos}
           dispatch={this.props.store.dispatch}
+          todoDragState={this.props.dragState}
           onTodoAccepted={this.acceptTodo.bind(this)}
           onTodoClicked={this.handleTodoClicked.bind(this)}
           onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
+          onTodoReorder={this.handleTodoDragged.bind(this)}
           onTodoDropped={this.handleTodoDropped.bind(this)}
-          onTodoReorder={this.handleTodoReorder.bind(this)}
+          onTodoCancelDrag={this.handleTodoCancelDrag.bind(this)}
         />
       </div>
     )

@@ -28,10 +28,12 @@ import {
   SYNC_TODOS_REQUEST,
   SYNC_TODOS_SUCCESS,
   SYNC_TODOS_FAILURE,
+  TODO_CANCEL_DRAG,
   TODO_REORDER_REQUEST,
   TODO_REORDER_SUCCESS,
   TODO_REORDER_FAILURE,
   TOGGLE_HIDE_COMPLETED,
+  UPDATE_TODO_DRAG,
   UPDATE_TODO_REQUEST,
   UPDATE_TODO_SUCCESS,
   UPDATE_TODO_FAILURE,
@@ -147,10 +149,14 @@ function honeyDoReducer(state, action) {
     case EDIT_TODO_CANCELED:
       return state.setIn(["uiState", "isEditing"], false);
 
+    case TODO_CANCEL_DRAG:
+      return resetDragState(state);
+
     case TODO_REORDER_REQUEST:
-      if(action.positionsJumped == 0) { return state; }
-      requestReorderTodoOnServer(state, action);
-      return reorderTodos(activateSpinner(state), action.todoType, action.todoList);
+      temp_state = resetDragState(state);
+      if(action.positionsJumped == 0) { return temp_state; }
+      requestReorderTodoOnServer(temp_state, action);
+      return reorderTodos(activateSpinner(temp_state), action.todo, action.positionsJumped);
     case TODO_REORDER_SUCCESS:
     case TODO_REORDER_FAILURE:
       // TODO: Ok, some refactoring is in order here later.
@@ -164,6 +170,9 @@ function honeyDoReducer(state, action) {
 
     case TOGGLE_HIDE_COMPLETED:
       return toggleHideCompletedTodos(state);
+
+    case UPDATE_TODO_DRAG:
+      return setTodoDragState(state, action.todo.id, action.newPosition, action.todoKlass);
 
     case UPDATE_TODO_REQUEST:
       requestUpdateTodoFromServer(state, action);
@@ -252,16 +261,45 @@ const retrieveTodo = (state, todo) => {
   return state.getIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()]);
 }
 
-const reorderTodos = (state, todoType, todoList) => {
-  var curr_todo_from_store;
+const reorderTodos = (state, todo, positionsJumped) => {
+  var temp_state, temp_data, target_position;
 
-  _.each(todoList, (curr_todo, index) => {
-    curr_todo_from_store = state.getIn(['dataState', TodoTypeToDataState[todoType], curr_todo.id.toString()]);
-    if(Immutable.Map.isMap(curr_todo_from_store)){ curr_todo_from_store = curr_todo_from_store.toJS()}
-    curr_todo_from_store.position = index;
-    state = state.setIn(['dataState', TodoTypeToDataState[todoType], curr_todo.id.toString()], curr_todo_from_store);
+  // pull store data into a js object
+  temp_data = state.getIn(['dataState', TodoKlassToDataState[todo.klass]]).toJS();
+
+  // order by position
+  temp_data = _.sortBy(temp_data, (curr_todo) => {
+    return curr_todo.position;
   });
-  return state;
+
+  let temp_index = _.findIndex(temp_data, (curr_todo) => {
+    return curr_todo.id === todo.id
+  });
+
+  // remove the todo from list
+  temp_data.splice(temp_index, 1);
+
+
+  // insert it at the desired position
+  temp_data.splice(temp_index + positionsJumped, 0, todo);
+
+
+  // renumber positions
+  let itor=0;
+  _.each(temp_data, (curr_todo) => {
+    curr_todo.position = itor++;
+  });
+
+  // put the data back into a hash structure by id
+  let output = {}
+  _.each(temp_data, (curr_todo) => {
+    output[curr_todo.id.toString()] = curr_todo;
+  });
+
+  return state.setIn(
+    ['dataState', TodoKlassToDataState[todo.klass]],
+    Immutable.fromJS(temp_data)
+  );
 }
 
 const requestAcceptTodoFromServer = (state, action) => {
@@ -350,6 +388,27 @@ const requestUpdateTodoFromServer = (state, action) => {
       action.asyncDispatch(editTodoCanceled());
     }
   });
+}
+
+const resetDragState = (state) => {
+  let temp_state = state;
+
+  temp_state = temp_state.setIn(["uiState", "dragState", "isDragActive"], false);
+  temp_state = temp_state.setIn(["uiState", "dragState", "currentDragPosition"], null);
+  temp_state = temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], null);
+  return temp_state.setIn(["uiState", "dragState", "currentDragTodo"], null);
+}
+
+const setTodoDragState = (state, id, position, klass) => {
+  let temp_state = state;
+
+  temp_state = temp_state.setIn(["uiState", "dragState", "isDragActive"], true);
+  temp_state = temp_state.setIn(["uiState", "dragState", "currentDragPosition"], position);
+  temp_state = temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], id);
+  return temp_state.setIn(
+    ["uiState", "dragState", "currentDragTodo"],
+    temp_state.getIn(["dataState", TodoKlassToDataState[klass], id.toString()])
+  );
 }
 
 const setTodoCompletedState = (state, todo, isCompleted) => {

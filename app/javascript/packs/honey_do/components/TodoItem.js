@@ -7,24 +7,18 @@ import { ItemTypes } from '../constants/ItemTypes'
 import { editTodoRequest } from '../actions/HoneyDoActions'
 import flow from 'lodash/flow'
 
+import TodoItemDragPlaceholder from './TodoItemDragPlaceholder'
 import TodoItemWrap from '../containers/TodoItemWrap'
-import ListItem from 'material-ui/List/ListItem'
-import Checkbox from 'material-ui/Checkbox/Checkbox'
+import List, { ListItem, ListItemText } from 'material-ui/List'
+import Checkbox from 'material-ui/Checkbox'
 import IconButton from 'material-ui/IconButton/IconButton'
 import Icon from 'material-ui/Icon/Icon'
-
-const iconButtonElement = (
-  <IconButton touch={true}>
-    <Icon color="primary">
-      chevron_down
-    </Icon>
-  </IconButton>
-);
 
 const todoSource = {
   beginDrag(props, monitor) {
     return {
       id: props.todo.id,
+      klass: props.todo.klass,
       index: props.todo.index,
       position: props.todo.position,
       startIndex: props.todo.index
@@ -34,9 +28,11 @@ const todoSource = {
   endDrag(props, monitor) {
     const item = monitor.getItem();
     const drop_result = monitor.getDropResult();
-    const positions_jumped = monitor.getItem().index - monitor.getItem().startIndex;
+    const positions_jumped = (item.startIndex < item.index ? item.index - 1 : item.index) - item.startIndex;
     if(drop_result) {
-      props.onTodoDropped(item.id, positions_jumped)
+      props.onTodoDropped(item.id, positions_jumped);
+    }else{
+      props.onTodoCancelDrag();
     }
   },
 };
@@ -82,7 +78,7 @@ const todoTarget = {
     // but it's good here for the sake of performance
     // to avoid expensive index searches.
     dragged.index = hoverIndex;
-    props.onTodoReorder(dragged.id, hoverIndex);
+    props.onTodoReorder(dragged.id, hoverIndex, dragged.klass);
   },
 
   drop(props, monitor) {
@@ -103,15 +99,10 @@ const renderCheckbox = (todo) => {
   )
 }
 
-const renderDraggingPlaceholder = (props) => {
-  const { todo, onTodoClicked, connectDragSource, connectDropTarget } = props;
+const renderDraggingPlaceholder = (todo, connectDragSource, connectDropTarget) => {
   return connectDropTarget(connectDragSource(
-    <div className="todo-item todo-item-drag-placeholder">
-      <ListItem
-        primaryText={todo.title}
-        secondaryText={todo.notes}
-        leftCheckbox={renderCheckbox(todo)}
-      />
+    <div className='todo-item-drag-wrap'>
+      <TodoItemDragPlaceholder todo={todo} />
     </div>
   ));
 }
@@ -134,6 +125,7 @@ class TodoItem extends Component {
   renderTodoItemWrap() {
     const {
       todo,
+      todoDragState,
       onTodoClicked,
       onTodoDestroyed,
       onTodoAccepted,
@@ -155,12 +147,24 @@ class TodoItem extends Component {
   }
 
   render() {
-    const { todo, isDragging } = this.props;
+    const { todo, currentIndex, todoDragState } = this.props;
 
+    const isDragging = todoDragState.get('isDragActive');
     if(isDragging) {
-      return renderDraggingPlaceholder(this.props);
+      const currentDragTodoId = todoDragState.get('currentDragTodoId');
+      const currentDragPosition = todoDragState.get('currentDragPosition');
+      if(currentDragTodoId == todo.id) {
+        return null;
+      }else if(currentDragPosition == currentIndex){
+        const draggedTodo = todoDragState.get('currentDragTodo').toJS();
+        return (
+          <div>
+            { renderDraggingPlaceholder(draggedTodo, this.props.connectDragSource, this.props.connectDropTarget)}
+            {this.renderTodoItemWrap()}
+          </div>
+        )
+      }
     }
-
     return this.renderTodoItemWrap();
   }
 }
