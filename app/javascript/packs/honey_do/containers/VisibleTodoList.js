@@ -17,6 +17,12 @@ const mapStateToProps = (state) => {
   return { todos: todos }
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onTodoClicked: (id, isChecked) => { handleTodoClicked(id, isChecked, dispatch, ownProps); }
+  }
+}
+
 const completeTodo = (id, dispatch, ownProps) => {
   dispatch(completeTodoRequest(id)) 
   $.ajax({
@@ -55,12 +61,6 @@ const handleTodoClicked = (id, isChecked, dispatch, ownProps) => {
     completeTodo(id, dispatch, ownProps)
   }
 
-}
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onTodoClicked: (id, isChecked) => { handleTodoClicked(id, isChecked, dispatch, ownProps); }
-  }
 }
 
 const VisibleTodoList = connect(

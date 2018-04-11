@@ -7,11 +7,19 @@ import { TodoTypeToKlass } from '../constants/TodoTypes'
 
 const mapStateToProps = (state, ownProps) => {
   let editing = state.getIn(['uiState', 'isEditing']);
+  if(editing) { editing = editing.toJS(); }
 
   return {
     todo: editing ? editing.todo : null,
     appConfig: state.get('configState').toJS(),
-    isFormOpen: !!editing
+  }
+}
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onClose: () => dispatch(editTodoCanceled()),
+    onSubmit: (todo) => dispatch(updateTodoRequest(todo)),
+    onDestroyTag: (todo, tag) => dispatch(deleteTodoTagRequest(todo, tag))
   }
 }
 
@@ -27,18 +35,7 @@ class EditTodoWrap extends Component {
   constructor(props){
     super(props);
     this.state = {
-      todo: this.props.todo
-    }
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState){
-    if(
-      (nextProps.todo && prevState.todo) &&
-      _.isEqual(nextProps.todo, prevState.todo)
-    ) { return null; }
-
-    return {
-      todo: nextProps.todo
+      todo: this.props.todo || buildBlankTodo()
     }
   }
 
@@ -48,7 +45,7 @@ class EditTodoWrap extends Component {
     todo.tags = new_tags;
 
     this.setState({todo: todo});
-    this.props.dispatch(deleteTodoTagRequest(todo, tag));
+    this.props.onDestroyTag(todo, tag);
   }
 
   handleChange(evt) {
@@ -63,28 +60,17 @@ class EditTodoWrap extends Component {
     this.setState({todo: todo})
   }
 
-  handleClose() {
-    this.props.dispatch(editTodoCanceled());
-  }
-
-  handleSubmit() {
-    this.props.dispatch(updateTodoRequest(this.state.todo));
-  }
-
   render() {
-    var todo = this.state.todo;
-
-    if(!todo) {
-      todo = buildBlankTodo();
-    }
+    const {open, onClose, onSubmit} = this.props;
+    var todo = this.props.todo;
 
     return (
       <EditTodo
         todo={todo}
-        isFormOpen={this.props.isFormOpen}
+        isOpen={open}
         onChange={this.handleChange.bind(this)}
-        onClose={this.handleClose.bind(this)}
-        onSubmit={this.handleSubmit.bind(this)}
+        onClose={onClose}
+        onSubmit={() => onSubmit(this.state.todo)}
         onDestroyTag={this.handleDestroyTag.bind(this)}
       />
     )
@@ -96,4 +82,4 @@ class EditTodoWrap extends Component {
   }
 }
 
-export default connect(mapStateToProps)(EditTodoWrap)
+export default connect(mapStateToProps, mapDispatchToProps)(EditTodoWrap)

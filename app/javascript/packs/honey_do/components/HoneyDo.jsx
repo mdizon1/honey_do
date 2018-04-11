@@ -35,6 +35,15 @@ class HoneyDo extends React.Component {
     return (this.props.interface === 'touch');
   }
 
+  renderEditTodo() {
+    return (
+      <EditTodoWrap
+        open={!!this.props.uiState.isEditing}
+        todo={this.props.uiState.isEditing.todo}
+      />
+    )
+  }
+
   renderNewTodo() {
     if(!this.props.configState.identity.permissions.canCreateTodo) { return null; }
     return (
@@ -59,7 +68,7 @@ class HoneyDo extends React.Component {
     return (
       <div className="honey-do-app-wrap">
         { this.renderSpinner() }
-        <EditTodoWrap />
+        { this.renderEditTodo() }
         <TodoTabs
           store={this.props.store}
           currentTab={this.props.currentTab}

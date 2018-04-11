@@ -80,14 +80,21 @@
      CLOSED: [2018-04-10 Tue 22:06]
 *** DONE Tags are having spaces consumed when parsing
     CLOSED: [2018-04-10 Tue 22:29]
-*** TODO Track down those warning messages
+*** DONE Track down those warning messages
+    CLOSED: [2018-04-11 Wed 15:07]
+    Looks like they're built in to material ui and the reason they're raising
+    errors is because of the use of withStyles and react-hot-loader
+**** DONE In EditTodoWrap, stop using getDerivedStateFromProps
+     CLOSED: [2018-04-11 Wed 15:07]
+     Use mapDispatchToProps where appropriate and remove getDerivedStateFromProps
 *** TODO Fix side menu for normal user with just expand control
     They don't get the ellipsis menu with accept, edit, delete etc, just the 
     expand button.  That component needs to be updated for material ui
 ** Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
-** TODO Accept todo icon broken
+** DONE Accept todo icon broken
+   CLOSED: [2018-04-10 Tue 22:57]
 ** TODO Make specs pass
 ** DONE Try refactoring the way I'm handling state and dispatch
    CLOSED: [2018-04-07 Sat 13:53]
@@ -111,8 +118,8 @@
 ** TODO Refactor those api calls in the reducer
    Since the endpoint and auth token are always the same I'm sure we can DRY 
    that up
-** TODO Change config tab into a drawer
 * Backlog
+** TODO Change config tab into a drawer
 ** TODO Tagging todo not working server side
    Expected behavior:
    some title #tag #tag #tag with space

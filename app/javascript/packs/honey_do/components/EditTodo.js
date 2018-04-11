@@ -6,7 +6,7 @@ import Button from 'material-ui/Button'
 import TodoForm from './TodoForm'
 import TodoTag from './TodoTag'
 
-const renderTags = (todo, onDestroyTag) => {
+const _renderTags = (todo, onDestroyTag) => {
   var tags = _.map(todo.tags, (tag) => {
     return (
       <TodoTag 
@@ -24,21 +24,51 @@ const renderTags = (todo, onDestroyTag) => {
   )
 }
 
-const EditTodo = (props) => {
-  const { todo, isFormOpen, onClose, onChange, onSubmit, onDestroyTag } = props;
-  var title;
+const _renderEmptyForm = (props) => {
+  return (
+    <Dialog
+      title=''
+      open={props.isOpen}
+      onClose={props.onClose}
+    >
+      <DialogTitle>
+        Edit this todo
+      </DialogTitle>
+      <TodoForm
+        todo={null}
+        onChange={props.onChange}
+        onClose={props.onClose}
+        onSubmit={props.onSubmit}
+      />
+    </Dialog>
+  )
+}
 
-  title = `Editing ${TodoKlassToFriendlyString[todo.klass]} "${todo.title}".`
+const EditTodo = (props) => {
+  const { 
+    todo,
+    isOpen,
+    onClose,
+    onChange,
+    onSubmit,
+    onDestroyTag
+  } = props;
+
+  var title = '';
+
+  if(!todo){ return _renderEmptyForm(props); }
+
+  title = `Editing ${TodoKlassToFriendlyString[todo.klass]} "${todo.title}".`;
   return (
     <Dialog
       title={title}
-      open={isFormOpen}
+      open={isOpen}
       onClose={onClose}
     >
       <DialogTitle>
         Edit this todo
       </DialogTitle>
-      { renderTags(todo, onDestroyTag) }
+      { _renderTags(todo, onDestroyTag) }
       <TodoForm
         todo={todo}
         onChange={onChange}
