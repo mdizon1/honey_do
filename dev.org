@@ -87,9 +87,11 @@
 **** DONE In EditTodoWrap, stop using getDerivedStateFromProps
      CLOSED: [2018-04-11 Wed 15:07]
      Use mapDispatchToProps where appropriate and remove getDerivedStateFromProps
-*** TODO Fix side menu for normal user with just expand control
+*** DONE Fix side menu for normal user with just expand control
+    CLOSED: [2018-04-11 Wed 16:53]
     They don't get the ellipsis menu with accept, edit, delete etc, just the 
     expand button.  That component needs to be updated for material ui
+*** TODO Remove/delete tag from expanded view not working
 ** Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
@@ -119,6 +121,7 @@
    Since the endpoint and auth token are always the same I'm sure we can DRY 
    that up
 * Backlog
+** TODO Redo navbar
 ** TODO Change config tab into a drawer
 ** TODO Tagging todo not working server side
    Expected behavior:

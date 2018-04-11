@@ -4,7 +4,6 @@ import React, { Component, PropTypes } from 'react'
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
 import { ItemTypes } from '../constants/ItemTypes'
-import { editTodoRequest } from '../actions/HoneyDoActions'
 import flow from 'lodash/flow'
 
 import TodoItemDragPlaceholder from './TodoItemDragPlaceholder'
@@ -129,6 +128,7 @@ class TodoItem extends Component {
       onTodoClicked,
       onTodoDestroyed,
       onTodoAccepted,
+      onTodoTagDestroyed,
       connectDragSource,
       connectDropTarget
     } = this.props;
@@ -141,6 +141,8 @@ class TodoItem extends Component {
           onTodoClicked={() => onTodoClicked(todo)}
           onTodoDestroyed={() => onTodoDestroyed(todo)}
           onTodoAccepted={() => onTodoAccepted(todo)}
+          onDestroyTag={onTodoTagDestroyed}
+
         />
       </div>
     );

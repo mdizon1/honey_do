@@ -4,7 +4,6 @@ import { editTodoCanceled, editTodoSuccess, editTodoFailure, deleteTodoTagReques
 import EditTodo from '../components/EditTodo'
 import { TodoTypeToKlass } from '../constants/TodoTypes'
 
-
 const mapStateToProps = (state, ownProps) => {
   let editing = state.getIn(['uiState', 'isEditing']);
   if(editing) { editing = editing.toJS(); }
@@ -39,6 +38,12 @@ class EditTodoWrap extends Component {
     }
   }
 
+  static getDerivedStateFromProps(nextProps, prevState){
+    return {
+      todo: nextProps.todo
+    }
+  }
+
   handleDestroyTag(tag){
     let todo = this.state.todo;
     let new_tags = _.without(todo.tags, tag);
@@ -60,9 +65,14 @@ class EditTodoWrap extends Component {
     this.setState({todo: todo})
   }
 
+  handleSubmit(evt) {
+    this.props.onSubmit(this.state.todo);
+    this.props.onClose();
+  }
+
   render() {
     const {open, onClose, onSubmit} = this.props;
-    var todo = this.props.todo;
+    var todo = this.state.todo;
 
     return (
       <EditTodo
@@ -70,7 +80,7 @@ class EditTodoWrap extends Component {
         isOpen={open}
         onChange={this.handleChange.bind(this)}
         onClose={onClose}
-        onSubmit={() => onSubmit(this.state.todo)}
+        onSubmit={this.handleSubmit.bind(this)}
         onDestroyTag={this.handleDestroyTag.bind(this)}
       />
     )

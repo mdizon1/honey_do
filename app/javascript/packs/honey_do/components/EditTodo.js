@@ -9,10 +9,10 @@ import TodoTag from './TodoTag'
 const _renderTags = (todo, onDestroyTag) => {
   var tags = _.map(todo.tags, (tag) => {
     return (
-      <TodoTag 
+      <TodoTag
         key={_.uniqueId('tag_on_edit_todo_')}
-        tag={tag} 
-        onDelete={onDestroyTag} 
+        tag={tag}
+        onDelete={onDestroyTag}
       />
     )
   });
@@ -45,7 +45,7 @@ const _renderEmptyForm = (props) => {
 }
 
 const EditTodo = (props) => {
-  const { 
+  const {
     todo,
     isOpen,
     onClose,

@@ -77,9 +77,9 @@ const _renderTags = (todo, onTodoTagDestroyed) => {
       <TodoTag
         key={_.uniqueId('tag_on_todo_')}
         tag={tag}
+        todo={todo}
         onDelete={onTodoTagDestroyed}
       />
-        
     )
   });
 

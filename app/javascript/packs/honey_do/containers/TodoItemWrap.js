@@ -1,10 +1,16 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import TodoItemCore from '../components/TodoItemCore'
-import { editTodoRequest} from '../actions/HoneyDoActions'
+import { deleteTodoTagRequest, editTodoRequest} from '../actions/HoneyDoActions'
 
 const mapStateToProps = (state, ownProps) => {
   return { appConfig: state.get('configState').toJS() };
+}
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onTodoTagDestroyed: (todo, tag) => dispatch(deleteTodoTagRequest(todo, tag)),
+    onTodoEdit: (todo) => dispatch(editTodoRequest(todo))
+  }
 }
 
 class TodoItemWrap extends Component {
@@ -17,24 +23,32 @@ class TodoItemWrap extends Component {
     this.setState({isExpanded: !this.state.isExpanded});
   }
 
-  handleTodoEdit(evt){
-    this.props.dispatch(editTodoRequest(this.props.todo));
-  }
-
   render() {
+    const {
+      todo,
+      connectDragSource,
+      isExpanded,
+      onTodoClicked,
+      onTodoDestroyed,
+      onTodoAccepted,
+      onTodoTagDestroyed,
+      onTodoEdit,
+    } = this.props;
+
     return (
       <TodoItemCore
-        todo={this.props.todo}
-        connectDragSource={this.props.connectDragSource}
+        todo={todo}
+        connectDragSource={connectDragSource}
         isExpanded={this.state.isExpanded}
-        onTodoClicked={this.props.onTodoClicked}
+        onTodoClicked={onTodoClicked}
         onToggleExpand={this.handleToggleExpand.bind(this)}
-        onTodoEdit={this.handleTodoEdit.bind(this)}
-        onTodoDestroyed={this.props.onTodoDestroyed}
-        onTodoAccepted={this.props.onTodoAccepted}
+        onTodoEdit={(evt) => onTodoEdit(todo)}
+        onTodoDestroyed={onTodoDestroyed}
+        onTodoAccepted={onTodoAccepted}
+        onTodoTagDestroyed={onTodoTagDestroyed}
       />
     )
   }
 }
 
-export default connect(mapStateToProps)(TodoItemWrap)
+export default connect(mapStateToProps, mapDispatchToProps)(TodoItemWrap)
