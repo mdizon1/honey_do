@@ -138,7 +138,7 @@ class TodoItem extends Component {
         <TodoItemWrap
           todo={todo}
           connectDragSource={connectDragSource}
-          onTodoClicked={() => onTodoClicked(todo)}
+          onTodoClicked={onTodoClicked}
           onTodoDestroyed={() => onTodoDestroyed(todo)}
           onTodoAccepted={() => onTodoAccepted(todo)}
         />

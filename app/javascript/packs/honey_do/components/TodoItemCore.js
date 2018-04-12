@@ -116,7 +116,7 @@ const TodoItemCore = (props) => {
           <div className={"todo-item-checkbox" + (todo.isCompleted ? ' checkbox-checked' : '')}>
             <Checkbox
               checked={todo.isCompleted}
-              onChange={() => onTodoClicked(todo)}
+              onChange={(evt) => onTodoClicked(todo)}
               disabled={todo.isCompleted && !todo.permissions.canUncomplete}
             />
           </div>
