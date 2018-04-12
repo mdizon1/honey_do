@@ -4,6 +4,13 @@
 ** Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
+** TODO Mobile performance issues:
+*** TODO Avoid toJS() in mapStateToProps
+*** TODO Use shouldComponentUpdate where I want to restrict re-rendering
+**** TodoListWrap
+*** TODO Big lag between check todo and todo getting checked
+    First let's see if there's a big delay between the actual touch and the action being triggered
+** TODO Switching to shopping list doesn't work                         :bug:
 ** DONE Accept todo icon broken
    CLOSED: [2018-04-10 Tue 22:57]
 ** TODO Make specs pass
