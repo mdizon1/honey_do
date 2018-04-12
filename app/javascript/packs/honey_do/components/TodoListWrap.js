@@ -26,37 +26,33 @@ const mapStateToProps = (state, ownProps) => {
 
   let dragState = state.getIn(['uiState', 'dragState']);
 
-  if(
-    ownProps.prevState &&
-    ownProps.prevState.equals(currState) &&
-    ownProps.searchValue == newSearchValue &&
-    ownProps.dragState.equals(dragState)
-  ){ return; }
 
   return {
     dataStatePath: dataStatePath,
     searchValue: newSearchValue,
-    todos: filterList(getTodosFromStore(state, dataStatePath), newSearchValue),
+    todos: state.getIn(dataStatePath),
     prevState: currState,
-    dragState: dragState
+    dragState: dragState,
+    isCompletedHidden: state.getIn(['uiState', 'isCompletedHidden'])
   }
 }
 
-const getTodosFromStore = (store, dataStatePath) => {
-  // TODO: (hurrr) Might be able to avoid the toJS call here and use Immutable
-  // map method rather than converting to hash first then array...
+const prepareTodosForRender = (todos, isCompletedHidden, filterVal) => {
+  let output = todos.toJS();
 
-  let todos = store.getIn(dataStatePath).toJS();
-
-  todos = Object.keys(todos).map(key => todos[key]); // convert todos into array
+  output = Object.keys(output).map(key => output[key]); // convert todos into array
   // filter out completed todos if the config is set to such
-  if(store.getIn(["uiState", "isCompletedHidden"])){
-    todos = _.filter(todos, (curr_todo) => { return !curr_todo.isCompleted });
+  if(isCompletedHidden){
+    output = _.filter(output, (curr_todo) => { return !curr_todo.isCompleted });
   }
-  todos = _.sortBy(todos, (curr_todo) => { return curr_todo.position }); // sort by position
-  _.forEach(todos, (curr_todo, index) => { curr_todo.index = index; }); // renumber todo indices by their array index
+  if(filterVal){
+    output = filterList(output, filterVal);
+  }
+  output = _.sortBy(output, (curr_todo) => { return curr_todo.position }); // sort by position
+  _.forEach(output, (curr_todo, index) => { curr_todo.index = index; }); // renumber todo indices by their array index
 
-  return todos;
+  return output;
+
 }
 
 const filterList = (todoList, filterVal) => {
@@ -75,6 +71,15 @@ const filterList = (todoList, filterVal) => {
 }
 
 class TodoListWrap extends Component {
+  shouldComponentUpdate(nextProps){
+    return (
+      this.props.searchValue !== nextProps.searchValue ||
+      this.props.todos !== nextProps.todos ||
+      this.props.isCompletedHidden !== nextProps.isCompletedHidden
+    );
+
+  }
+
   acceptTodo(todo) {
     this.props.store.dispatch(acceptTodoRequest(todo));
   }
@@ -126,7 +131,7 @@ class TodoListWrap extends Component {
     this.props.store.dispatch(updateTodoDrag(todo, newIndex, klass));
   }
 
-  renderTodoListMouse() {
+  renderTodoListMouse(todoList) {
     return (
       <div className="todo-list-wrap">
         <SearchTodos
@@ -135,7 +140,7 @@ class TodoListWrap extends Component {
           value={this.props.searchValue}
         />
         <TodoListMouse
-          todos={this.props.todos}
+          todos={todoList}
           dispatch={this.props.store.dispatch}
           todoDragState={this.props.dragState}
           onTodoAccepted={this.acceptTodo.bind(this)}
@@ -149,7 +154,7 @@ class TodoListWrap extends Component {
     )
   }
 
-  renderTodoListTouch() {
+  renderTodoListTouch(todoList) {
     return (
       <div className="todo-list-wrap">
         <SearchTodos
@@ -158,7 +163,7 @@ class TodoListWrap extends Component {
           value={this.props.searchValue}
         />
         <TodoListTouch
-          todos={this.props.todos}
+          todos={todoList}
           dispatch={this.props.store.dispatch}
           todoDragState={this.props.dragState}
           onTodoAccepted={this.acceptTodo.bind(this)}
@@ -173,9 +178,10 @@ class TodoListWrap extends Component {
   }
 
   render() {
+    let todos = prepareTodosForRender(this.props.todos, this.props.isCompletedHidden, this.props.searchValue);
     return (
       <div>
-        { this.props.isTouch ? this.renderTodoListTouch() : this.renderTodoListMouse() }
+        { this.props.isTouch ? this.renderTodoListTouch(todos) : this.renderTodoListMouse(todos) }
       </div>
     )
   }

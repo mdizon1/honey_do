@@ -97,7 +97,7 @@ function honeyDoReducer(state, action) {
       completeTodoOnServer(state, action);
       return setTodoCompletedState(activateSpinner(state), action.todo, true);
     case COMPLETE_TODO_SUCCESS:
-      return setTodoState(deactivateSpinner(state), action.todo, action.data);
+      return deactivateSpinner(state);
     case COMPLETE_TODO_FAILURE:
       return setTodoCompletedState(deactivateSpinner(state), action.todo, false);
 

@@ -7,7 +7,7 @@
 ** TODO Mobile performance issues:
 *** TODO Avoid toJS() in mapStateToProps
 *** TODO Use shouldComponentUpdate where I want to restrict re-rendering
-**** TodoListWrap
+**** TODO TodoListWrap
 *** TODO Big lag between check todo and todo getting checked
     First let's see if there's a big delay between the actual touch and the action being triggered
 ** TODO Switching to shopping list doesn't work                         :bug:
