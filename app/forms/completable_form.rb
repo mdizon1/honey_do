@@ -26,7 +26,7 @@ class CompletableForm
     handle_tags_in_title_param
     tag_titles_to_bind = handle_tag_params
     resource.attributes = @params
-    resource.position = 1
+    resource.position = 1 if resource.new_record?
     output = resource.save
     if output
       bind_tags(tag_titles_to_bind)

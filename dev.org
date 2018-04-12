@@ -94,12 +94,13 @@
 *** DONE I broke edit todo
     CLOSED: [2018-04-12 Thu 11:36]
     Or maybe it wasn't ever really working?
+*** DONE Change the way uistate.isEditing works
+    CLOSED: [2018-04-12 Thu 12:05]
+    Instead of storing the todo it shoudl just store the id and type
+    Duplicating data within the store seems to get me into trouble
+*** DONE When a todo is edited and saved, it moves to position 1        :bug:
+    CLOSED: [2018-04-12 Thu 12:08]
 *** TODO Remove/delete tag from expanded view not working
-**** DONE Change the way uistate.isEditing works
-     CLOSED: [2018-04-12 Thu 12:05]
-     Instead of storing the todo it shoudl just store the id and type
-     Duplicating data within the store seems to get me into trouble
-*** TODO When a todo is edited and saved, it moves to position 1 :bug:
 ** Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
