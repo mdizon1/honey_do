@@ -8,6 +8,11 @@ const dev = (msg, outArgs=[]) => {
   _output("DEV_DEBUG: "+msg, 3, outArgs);
 }
 
+const rlog = BaseComponent => props => {
+  console.log(`Rendering ${BaseComponent.name}`);
+  return <BaseComponent {...props} />;
+}
+
 function _output(msg, logLevel, outObjects){
   if(!window.logLevel) {
     window.logLevel = 0;
@@ -22,4 +27,4 @@ function _output(msg, logLevel, outObjects){
   console.log(msg);
 }
 
-export { log, debug, dev };
+export { log, rlog, debug, dev };
