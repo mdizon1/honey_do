@@ -4,7 +4,7 @@ import TodoItemCore from '../components/TodoItemCore'
 import { deleteTodoTagRequest, editTodoRequest} from '../actions/HoneyDoActions'
 
 const mapStateToProps = (state, ownProps) => {
-  return { appConfig: state.get('configState').toJS() };
+  return {};
 }
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {

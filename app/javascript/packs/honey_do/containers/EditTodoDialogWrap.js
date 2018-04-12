@@ -19,7 +19,6 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     todo: isEditing ? editingTodo : null,
-//    appConfig: state.get('configState').toJS(),
   }
 }
 

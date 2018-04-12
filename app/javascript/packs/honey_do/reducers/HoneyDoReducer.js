@@ -120,7 +120,6 @@ function honeyDoReducer(state, action) {
       requestRemoveTodoTagOnServer(state, action);
       return temp_state
     case DELETE_TODO_TAG_SUCCESS:
-      return state;
     case DELETE_TODO_TAG_FAILURE: // TODO: In this case we should reload the todo
       return state;
 
@@ -265,7 +264,7 @@ const removeTag = (state, todo, tag) => {
   tag_list = _.without(tag_list, tag);
 
   return state.setIn(
-    ['dataState', TodoTypeToDataState[todo.klass], todo.id.toString, 'tags'],
+    ['dataState', TodoKlassToDataState[todo.klass], todo.id.toString(), 'tags'],
     Immutable.fromJS(tag_list)
   );
 }
