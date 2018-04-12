@@ -149,7 +149,13 @@ function honeyDoReducer(state, action) {
       return uiSyncingOff(state);
 
     case EDIT_TODO_REQUEST:
-      return state.setIn(["uiState", "isEditing"], Immutable.fromJS({todo: action.todo})); // TODO: Make this say Immutable.fromJS
+      return state.setIn(
+        ["uiState", "isEditing"],
+        Immutable.fromJS({
+          id: action.todo.id,
+          type: TodoKlassToDataState[action.todo.klass]
+        })
+      );
     case EDIT_TODO_CANCELED:
       return state.setIn(["uiState", "isEditing"], false);
 

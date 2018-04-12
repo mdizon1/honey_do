@@ -1,16 +1,19 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import Dialog, { DialogTitle } from 'material-ui/Dialog'
 
-import { editTodoCanceled } from './../actions/HoneyDoActions';
+import { TodoKlassToDataState } from '../constants/TodoTypes';
+import { editTodoCanceled } from '../actions/HoneyDoActions';
+
+import Dialog, { DialogTitle } from 'material-ui/Dialog'
 import EditTodoWrap from './EditTodoWrap'
 
 const mapStateToProps = (state, ownProps) => {
   var isEditing, editingTodo;
 
   isEditing = state.getIn(['uiState', 'isEditing']);
-  if(isEditing) { 
-    editingTodo = isEditing.toJS().todo; 
+  if(isEditing) {
+    isEditing = isEditing.toJS();
+    editingTodo = state.getIn(['dataState', isEditing.type, isEditing.id.toString()]);
     isEditing = !!isEditing;
   }
 
