@@ -52,7 +52,7 @@ class CompletableForm
     @params[:tags] ||= []
     @params[:tags] += tags
   end
-  
+
   def bind_tags(tag_titles)
     resource.update_attributes(:tag_titles => tag_titles) unless tag_titles.empty?
   end

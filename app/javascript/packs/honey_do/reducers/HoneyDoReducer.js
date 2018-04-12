@@ -102,19 +102,23 @@ function honeyDoReducer(state, action) {
       return setTodoCompletedState(deactivateSpinner(state), action.todo, false);
 
     case CREATE_TODO_REQUEST:
+      // TODO: The closing of the form should probably happen in the component
+      temp_state = closeNewTodoForm(activateSpinner(state));
       requestCreateTodoOnServer(state, action);
-      return closeNewTodoForm(activateSpinner(state));
+      return temp_state;
 
     case DELETE_TODO_REQUEST:
+      temp_state = dropTodo(activateSpinner(state), action.todo);
       requestDeleteTodoOnServer(state, action);
-      return dropTodo(activateSpinner(state), action.todo);
+      return temp_state;
     case DELETE_TODO_SUCCESS:
     case DELETE_TODO_FAILURE:
      return deactivateSpinner(state);
 
     case DELETE_TODO_TAG_REQUEST: // find the given todo and remove it's tag
+      temp_state = removeTag(state, action.todo, action.tag);
       requestRemoveTodoTagOnServer(state, action);
-      return removeTag(state, action.todo, action.tag);
+      return temp_state
     case DELETE_TODO_TAG_SUCCESS:
       return state;
     case DELETE_TODO_TAG_FAILURE: // TODO: In this case we should reload the todo
@@ -155,8 +159,9 @@ function honeyDoReducer(state, action) {
     case TODO_REORDER_REQUEST:
       temp_state = resetDragState(state);
       if(action.positionsJumped == 0) { return temp_state; }
+      temp_state = reorderTodos(activateSpinner(temp_state), action.todo, action.positionsJumped);
       requestReorderTodoOnServer(temp_state, action);
-      return reorderTodos(activateSpinner(temp_state), action.todo, action.positionsJumped);
+      return temp_state;
     case TODO_REORDER_SUCCESS:
     case TODO_REORDER_FAILURE:
       // TODO: Ok, some refactoring is in order here later.
@@ -175,15 +180,17 @@ function honeyDoReducer(state, action) {
       return setTodoDragState(state, action.todo.id, action.newPosition, action.todoKlass);
 
     case UPDATE_TODO_REQUEST:
+      temp_state = updateTodo(state, action.todo);
       requestUpdateTodoFromServer(state, action);
-      return updateTodo(state, action.todo);
+      return temp_state;
     case UPDATE_TODO_SUCCESS:
     case UPDATE_TODO_FAILURE:
       return state;
 
     case UNCOMPLETE_TODO_REQUEST:
+      temp_state = setTodoCompletedState(activateSpinner(state), action.todo, false);
       uncompleteTodoOnServer(state, action);
-      return setTodoCompletedState(activateSpinner(state), action.todo, false);
+      return temp_state
     case UNCOMPLETE_TODO_SUCCESS:
       return setTodoState(deactivateSpinner(state), action.todo, action.data);
     case UNCOMPLETE_TODO_FAILURE:
@@ -442,7 +449,9 @@ const updateFilterState = (state, filterVal) => {
   return state.setIn(['uiState', 'filterValue'], filterVal);
 }
 
+// TODO: Separate tag processing into own function
 const updateTodo = (state, todo) => { // Look for given todo in state and replace with given todo
+  console.log("DEBUG: updateTodos, in reducer...");
   let tags_in_title = _.words(todo.title, /#[\w\s]+\b/g);
   tags_in_title = _.map(tags_in_title, (tag_in_title) => {
     return _.trim(_.replace(tag_in_title, /#/g, ''));
@@ -450,7 +459,7 @@ const updateTodo = (state, todo) => { // Look for given todo in state and replac
   todo.tags = _.uniq(_.concat(todo.tags, tags_in_title));
   let new_title = _.trim(_.replace(todo.title, /#.*/g, ''));
   todo.title = new_title;
-  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], todo);
+  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], Immutable.fromJS(todo));
 }
 
 const uncompleteTodoOnServer = (state, action) => {

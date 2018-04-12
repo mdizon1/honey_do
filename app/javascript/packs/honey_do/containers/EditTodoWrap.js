@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { editTodoCanceled, editTodoSuccess, editTodoFailure, deleteTodoTagRequest, updateTodoRequest } from './../actions/HoneyDoActions';
+import { deleteTodoTagRequest, updateTodoRequest } from './../actions/HoneyDoActions';
 import EditTodo from '../components/EditTodo'
 import { TodoTypeToKlass } from '../constants/TodoTypes'
 
@@ -10,23 +10,13 @@ const mapStateToProps = (state, ownProps) => {
 
   return {
     todo: editing ? editing.todo : null,
-    appConfig: state.get('configState').toJS(),
   }
 }
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onClose: () => dispatch(editTodoCanceled()),
     onSubmit: (todo) => dispatch(updateTodoRequest(todo)),
     onDestroyTag: (todo, tag) => dispatch(deleteTodoTagRequest(todo, tag))
-  }
-}
-
-const buildBlankTodo = () => {
-  return {
-    title: '',
-    notes: '',
-    klass: ''
   }
 }
 
@@ -34,22 +24,16 @@ class EditTodoWrap extends Component {
   constructor(props){
     super(props);
     this.state = {
-      todo: this.props.todo || buildBlankTodo()
+      todo: this.props.todo
     }
   }
 
-  static getDerivedStateFromProps(nextProps, prevState){
-    return {
-      todo: nextProps.todo
-    }
-  }
-
-  handleDestroyTag(tag){
-    let todo = this.state.todo;
+  handleDestroyTag(todo, tag){
+    let own_todo = this.state.todo;
     let new_tags = _.without(todo.tags, tag);
-    todo.tags = new_tags;
+    own_todo.tags = new_tags;
 
-    this.setState({todo: todo});
+    this.setState({todo: own_todo});
     this.props.onDestroyTag(todo, tag);
   }
 
@@ -71,13 +55,12 @@ class EditTodoWrap extends Component {
   }
 
   render() {
-    const {open, onClose, onSubmit} = this.props;
+    const {onClose, onSubmit, onDestroyTag} = this.props;
     var todo = this.state.todo;
 
     return (
       <EditTodo
         todo={todo}
-        isOpen={open}
         onChange={this.handleChange.bind(this)}
         onClose={onClose}
         onSubmit={this.handleSubmit.bind(this)}
@@ -85,11 +68,3 @@ class EditTodoWrap extends Component {
       />
     )
   }
-
-  //private
-  _formatTitle(title){
-    return _.trim(title.replace(/#.*/g, ''));
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditTodoWrap)

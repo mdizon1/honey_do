@@ -1,7 +1,9 @@
 import React, { PropTypes } from 'react'
-import Chip from 'material-ui/Chip/Chip'
+import Chip from 'material-ui/Chip'
 
 const canEdit = (todo) => {
+  if(!todo) { throw new Error("No todo supplied to TodoTag")}
+  if(!todo.permissions) { return false; }
   return todo.permissions.canEdit
 }
 
@@ -11,7 +13,7 @@ const TodoTag = (props) => {
     return (
       <Chip
         className="todo-tag"
-        onDelete={onDelete(todo, tag)}
+        onDelete={evt => onDelete(todo, tag)}
         label={tag}
       />
     )

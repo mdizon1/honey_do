@@ -141,8 +141,6 @@ class TodoItem extends Component {
           onTodoClicked={() => onTodoClicked(todo)}
           onTodoDestroyed={() => onTodoDestroyed(todo)}
           onTodoAccepted={() => onTodoAccepted(todo)}
-          onDestroyTag={onTodoTagDestroyed}
-
         />
       </div>
     );

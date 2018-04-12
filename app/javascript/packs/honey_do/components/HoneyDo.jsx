@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import TodoTabs from './TodoTabs'
 import NewTodoWrap from '../containers/NewTodoWrap'
-import EditTodoWrap from '../containers/EditTodoWrap'
+import EditTodoDialogWrap from '../containers/EditTodoDialogWrap'
 import { hot } from "react-hot-loader";
 import { init, syncTodosRequest, syncTodosSuccess, syncTodosFailure, switchTab, loadTagSuccess } from './../actions/HoneyDoActions';
 import { apiLoadTags } from '../util/Api'
@@ -11,7 +11,6 @@ import CircularProgress from 'material-ui/Progress/CircularProgress'
 
 
 const mapStateToProps = (state, ownProps) => {
-
   var new_props;
   new_props = {
     'interface': state.getIn(['configState', 'interface']),
@@ -37,10 +36,7 @@ class HoneyDo extends React.Component {
 
   renderEditTodo() {
     return (
-      <EditTodoWrap
-        open={!!this.props.uiState.isEditing}
-        todo={this.props.uiState.isEditing.todo}
-      />
+      <EditTodoDialogWrap />
     )
   }
 
@@ -68,7 +64,6 @@ class HoneyDo extends React.Component {
     return (
       <div className="honey-do-app-wrap">
         { this.renderSpinner() }
-        { this.renderEditTodo() }
         <TodoTabs
           store={this.props.store}
           currentTab={this.props.currentTab}
@@ -76,6 +71,7 @@ class HoneyDo extends React.Component {
           onChangeTab={this.handleChangeTab.bind(this)}
           isTouch={this.interfaceIsTouch()}
         />
+        { this.renderEditTodo() }
         { this.renderNewTodo() }
       </div>
     )
