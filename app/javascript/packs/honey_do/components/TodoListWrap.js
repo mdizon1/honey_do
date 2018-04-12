@@ -89,7 +89,7 @@ class TodoListWrap extends Component {
     this.props.store.dispatch(filterTodos(''));
   }
 
-  handleTodoCancelDrop(evt) {
+  handleTodoCancelDrag(evt) {
     this.props.store.dispatch(cancelDragTodo());
   }
 
@@ -143,7 +143,7 @@ class TodoListWrap extends Component {
           onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
           onTodoReorder={this.handleTodoDragged.bind(this)}
           onTodoDropped={this.handleTodoDropped.bind(this)}
-          onTodoCancelDrag={this.handleTodoCancelDrop.bind(this)}
+          onTodoCancelDrag={this.handleTodoCancelDrag.bind(this)}
         />
       </div>
     )
