@@ -1,108 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** DONE Figure out why onTodoClicked is triggering so many times
-   CLOSED: [2018-04-04 Wed 10:27]
-*** DONE There's also the problem of getTodosFromStore being called 4 times on startup
-    CLOSED: [2018-04-04 Wed 10:27]
-    2 times it's called with empty todos
-
-    Ok, looks like it's getting called once for each tab
-
-    I think there's a problem with the way I'm handling rendering of each of the
-    tabs. Rather than have stuff in both tabs, maybe it should only render
-    whichever tab is active. The other tab goes away when switched off of.
-
-    Not sure why it's triggering twice either way. 4 times, twice for each tab.
-    Seems like it fires on todo click either way.  
-
-    Ohhhh! got it! Since it triggers on every action, onTodoClick fires one
-    action completeTodoRequest then the async action for completeTodoSuccess.
-** DONE Upgrade react
-   CLOSED: [2018-04-04 Wed 10:28]
-** DONE Upgrade react-dnd
-   CLOSED: [2018-04-04 Wed 10:28]
-** DONE Test performance on mobile on a remote server
-   CLOSED: [2018-04-04 Wed 10:29]
-   Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
-   from my phone
-** DONE Upgrade material ui
-   CLOSED: [2018-04-12 Thu 12:32]
-*** DONE Remove all use of componentWillMount
-    CLOSED: [2018-04-04 Wed 12:04]
-*** DONE Remove all use of componentWillReceiveProps
-    CLOSED: [2018-04-04 Wed 12:04]
-*** DONE In HoneyDo.jsx, use mapStateToProps rather than subscribe()
-    CLOSED: [2018-04-04 Wed 12:04]
-*** DONE Fix search field
-    CLOSED: [2018-04-07 Sat 14:32]
-**** DONE Fix it's display
-     CLOSED: [2018-04-07 Sat 13:55]
-**** DONE Make the style work right
-     CLOSED: [2018-04-07 Sat 13:55]
-**** DONE Wiring up the search field to the TodoListWrap
-     CLOSED: [2018-04-07 Sat 14:32]
-     Where the actual todo items are rendered. Need to smartly figure out how to
-     handle the search value, propogating that down to the todolistwrap, and
-     avoiding rerenders where possible.
-*** DONE Render the side menus
-    CLOSED: [2018-04-07 Sat 17:27]
-*** DONE Fix dragging
-    CLOSED: [2018-04-10 Tue 18:51]
-**** DONE Preview/placeholder doesn't show
-     CLOSED: [2018-04-07 Sat 20:02]
-**** DONE New drag/reorder logic
-     CLOSED: [2018-04-10 Tue 18:49]
-     Now that todolistwrap doesn't maintain it's own state anymore, we'll have
-     to rely on the store I guess, but that could mean firing actions for every
-     space dragged? that could get really inefficient...
-*** DONE Fix new todo modal
-    CLOSED: [2018-04-10 Tue 19:18]
-**** DONE New Modal update after upgrade of material ui?
-     CLOSED: [2018-04-10 Tue 19:18]
-**** DONE Fix the form in the modal
-     CLOSED: [2018-04-10 Tue 19:18]
-*** DONE Fix new todo button
-    CLOSED: [2018-04-10 Tue 20:06]
-    Right now it's using a button with an icon inside but I think it's just
-    supposed to be an icon by itself, or maybe a paper with an icon in it..?
-    Also needs to get position: fixed again
-*** DONE Fix edit todo
-    CLOSED: [2018-04-10 Tue 20:13]
-    Modal and form doesn't work
-    Doesn't dismiss
-*** DONE Fix Tag display
-    CLOSED: [2018-04-10 Tue 22:06]
-**** DONE Tags in expanded display
-     CLOSED: [2018-04-10 Tue 22:06]
-**** DONE Tags in Edit todo
-     CLOSED: [2018-04-10 Tue 21:41]
-**** DONE Tag in edit todo should have an x that allows deletion
-     CLOSED: [2018-04-10 Tue 22:06]
-*** DONE Tags are having spaces consumed when parsing
-    CLOSED: [2018-04-10 Tue 22:29]
-*** DONE Track down those warning messages
-    CLOSED: [2018-04-11 Wed 15:07]
-    Looks like they're built in to material ui and the reason they're raising
-    errors is because of the use of withStyles and react-hot-loader
-**** DONE In EditTodoWrap, stop using getDerivedStateFromProps
-     CLOSED: [2018-04-11 Wed 15:07]
-     Use mapDispatchToProps where appropriate and remove getDerivedStateFromProps
-*** DONE Fix side menu for normal user with just expand control
-    CLOSED: [2018-04-11 Wed 16:53]
-    They don't get the ellipsis menu with accept, edit, delete etc, just the 
-    expand button.  That component needs to be updated for material ui
-*** DONE I broke edit todo
-    CLOSED: [2018-04-12 Thu 11:36]
-    Or maybe it wasn't ever really working?
-*** DONE Change the way uistate.isEditing works
-    CLOSED: [2018-04-12 Thu 12:05]
-    Instead of storing the todo it shoudl just store the id and type
-    Duplicating data within the store seems to get me into trouble
-*** DONE When a todo is edited and saved, it moves to position 1        :bug:
-    CLOSED: [2018-04-12 Thu 12:08]
-*** DONE Remove/delete tag from expanded view not working
-    CLOSED: [2018-04-12 Thu 12:32]
 ** Test performance on mobile on a remote server
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
    from my phone
@@ -362,6 +260,108 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Figure out why onTodoClicked is triggering so many times
+   CLOSED: [2018-04-04 Wed 10:27]
+*** DONE There's also the problem of getTodosFromStore being called 4 times on startup
+    CLOSED: [2018-04-04 Wed 10:27]
+    2 times it's called with empty todos
+
+    Ok, looks like it's getting called once for each tab
+
+    I think there's a problem with the way I'm handling rendering of each of the
+    tabs. Rather than have stuff in both tabs, maybe it should only render
+    whichever tab is active. The other tab goes away when switched off of.
+
+    Not sure why it's triggering twice either way. 4 times, twice for each tab.
+    Seems like it fires on todo click either way.  
+
+    Ohhhh! got it! Since it triggers on every action, onTodoClick fires one
+    action completeTodoRequest then the async action for completeTodoSuccess.
+** DONE Upgrade react
+   CLOSED: [2018-04-04 Wed 10:28]
+** DONE Upgrade react-dnd
+   CLOSED: [2018-04-04 Wed 10:28]
+** DONE Test performance on mobile on a remote server
+   CLOSED: [2018-04-04 Wed 10:29]
+   Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
+   from my phone
+** DONE Upgrade material ui
+   CLOSED: [2018-04-12 Thu 12:32]
+*** DONE Remove all use of componentWillMount
+    CLOSED: [2018-04-04 Wed 12:04]
+*** DONE Remove all use of componentWillReceiveProps
+    CLOSED: [2018-04-04 Wed 12:04]
+*** DONE In HoneyDo.jsx, use mapStateToProps rather than subscribe()
+    CLOSED: [2018-04-04 Wed 12:04]
+*** DONE Fix search field
+    CLOSED: [2018-04-07 Sat 14:32]
+**** DONE Fix it's display
+     CLOSED: [2018-04-07 Sat 13:55]
+**** DONE Make the style work right
+     CLOSED: [2018-04-07 Sat 13:55]
+**** DONE Wiring up the search field to the TodoListWrap
+     CLOSED: [2018-04-07 Sat 14:32]
+     Where the actual todo items are rendered. Need to smartly figure out how to
+     handle the search value, propogating that down to the todolistwrap, and
+     avoiding rerenders where possible.
+*** DONE Render the side menus
+    CLOSED: [2018-04-07 Sat 17:27]
+*** DONE Fix dragging
+    CLOSED: [2018-04-10 Tue 18:51]
+**** DONE Preview/placeholder doesn't show
+     CLOSED: [2018-04-07 Sat 20:02]
+**** DONE New drag/reorder logic
+     CLOSED: [2018-04-10 Tue 18:49]
+     Now that todolistwrap doesn't maintain it's own state anymore, we'll have
+     to rely on the store I guess, but that could mean firing actions for every
+     space dragged? that could get really inefficient...
+*** DONE Fix new todo modal
+    CLOSED: [2018-04-10 Tue 19:18]
+**** DONE New Modal update after upgrade of material ui?
+     CLOSED: [2018-04-10 Tue 19:18]
+**** DONE Fix the form in the modal
+     CLOSED: [2018-04-10 Tue 19:18]
+*** DONE Fix new todo button
+    CLOSED: [2018-04-10 Tue 20:06]
+    Right now it's using a button with an icon inside but I think it's just
+    supposed to be an icon by itself, or maybe a paper with an icon in it..?
+    Also needs to get position: fixed again
+*** DONE Fix edit todo
+    CLOSED: [2018-04-10 Tue 20:13]
+    Modal and form doesn't work
+    Doesn't dismiss
+*** DONE Fix Tag display
+    CLOSED: [2018-04-10 Tue 22:06]
+**** DONE Tags in expanded display
+     CLOSED: [2018-04-10 Tue 22:06]
+**** DONE Tags in Edit todo
+     CLOSED: [2018-04-10 Tue 21:41]
+**** DONE Tag in edit todo should have an x that allows deletion
+     CLOSED: [2018-04-10 Tue 22:06]
+*** DONE Tags are having spaces consumed when parsing
+    CLOSED: [2018-04-10 Tue 22:29]
+*** DONE Track down those warning messages
+    CLOSED: [2018-04-11 Wed 15:07]
+    Looks like they're built in to material ui and the reason they're raising
+    errors is because of the use of withStyles and react-hot-loader
+**** DONE In EditTodoWrap, stop using getDerivedStateFromProps
+     CLOSED: [2018-04-11 Wed 15:07]
+     Use mapDispatchToProps where appropriate and remove getDerivedStateFromProps
+*** DONE Fix side menu for normal user with just expand control
+    CLOSED: [2018-04-11 Wed 16:53]
+    They don't get the ellipsis menu with accept, edit, delete etc, just the 
+    expand button.  That component needs to be updated for material ui
+*** DONE I broke edit todo
+    CLOSED: [2018-04-12 Thu 11:36]
+    Or maybe it wasn't ever really working?
+*** DONE Change the way uistate.isEditing works
+    CLOSED: [2018-04-12 Thu 12:05]
+    Instead of storing the todo it shoudl just store the id and type
+    Duplicating data within the store seems to get me into trouble
+*** DONE When a todo is edited and saved, it moves to position 1        :bug:
+    CLOSED: [2018-04-12 Thu 12:08]
+*** DONE Remove/delete tag from expanded view not working
+    CLOSED: [2018-04-12 Thu 12:32]
 ** DONE Separate syncing from client
    CLOSED: [2018-04-04 Wed 04:45]
    This is bringing me back to the syncing concept. Thinking about it freshly
