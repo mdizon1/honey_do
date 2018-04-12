@@ -68,3 +68,6 @@ class EditTodoWrap extends Component {
       />
     )
   }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditTodoWrap)
