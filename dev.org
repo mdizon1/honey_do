@@ -6,6 +6,14 @@
    from my phone
 ** TODO Mobile performance issues:
 *** TODO Avoid toJS() in mapStateToProps
+*** TODO Try having each todo item grab itself from store
+    Rather than have todolist pass todos down to them, it just passes the todo
+    id which then each todo item retrieves itself from storage Needs more
+    restructuring, let's get rid of todos and shopping list as separate. Instead
+    the current tab would set an additional filter value which grabs out only
+    the relevant todos
+**** TODO consolidate todo data state
+**** TODO
 *** TODO Use shouldComponentUpdate where I want to restrict re-rendering
 **** TODO TodoListWrap
 *** TODO Big lag between check todo and todo getting checked
