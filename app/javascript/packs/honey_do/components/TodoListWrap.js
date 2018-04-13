@@ -23,6 +23,7 @@ const typeSelector = (state, props) => props.todoType;
 const isCompletedHiddenSelector = (state, props) => state.getIn(['uiState', 'isCompletedHidden'])
 const searchValueSelector = (state, props) => state.getIn(['uiState', 'filterValue'])
 
+
 const todosFilterSelector = createSelector(
   [todosSelector, typeSelector, isCompletedHiddenSelector, searchValueSelector],
   (todosFromStore, todoType, isCompletedHidden, searchValue) => {
@@ -30,11 +31,16 @@ const todosFilterSelector = createSelector(
   }
 );
 
+const todoIdsSelector = createSelector([todosFilterSelector], (todos) => {
+  return _.map(todos, (curr_todo) => curr_todo.id)
+});
+
 const mapStateToProps = (state, ownProps) => {
   return {
     searchValue: searchValueSelector(state, ownProps),
     isCompletedHidden: isCompletedHiddenSelector(state, ownProps),
     todos: todosFilterSelector(state, ownProps),
+    todoIds: todoIdsSelector(state, ownProps)
   }
 }
 
@@ -82,11 +88,12 @@ const mapTodosToIds = (list) => {
 }
 class TodoListWrap extends Component {
   shouldComponentUpdate(nextProps){
-    return (
+    let should_update = (
       this.props.searchValue !== nextProps.searchValue ||
-      this.props.todos !== nextProps.todos ||
+      !_.isEqual(this.props.todoIds, nextProps.todoIds) ||
       this.props.isCompletedHidden !== nextProps.isCompletedHidden
     );
+    return should_update;
   }
 
   acceptTodo(todo) {

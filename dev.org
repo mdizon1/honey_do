@@ -34,6 +34,7 @@
      CLOSED: [2018-04-13 Fri 08:49]
 **** TODO Remove old todo drag data from wherever it's used
      action, ondrag(dnd code thingy), reducer, etc
+**** TODO Ensure todolist is rerendered after drop
 **** TODO Update server handling of drag n drop
      Should work along the same lines as the client logic
 **** TODO update specs around drag n drop (if there are any)
