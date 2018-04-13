@@ -11,7 +11,6 @@ class TodoListTouch extends Component {
         <TodoDragLayer />
         <TodoList
           todoIds={this.props.todoIds}
-          todoDragState={this.props.todoDragState}
           onTodoAccepted={this.props.onTodoAccepted}
           onTodoClicked={this.props.onTodoClicked}
           onTodoDestroyed={this.props.onTodoDestroyed}

@@ -18,9 +18,36 @@ import Icon from 'material-ui/Icon/Icon'
 
 const todoSelector = (state, props) => state.getIn(['dataState', 'todos', props.todoId.toString()]);
 const todoObjectSelector = createSelector([todoSelector], (immutableTodo) => immutableTodo.toJS() );
+
+const dragStateSelector = (state, props) => state.getIn(['uiState', 'dragState']);
+const draggedTodoSelector = (state, props) => {
+  let isDragActive = state.getIn(['uiState', 'dragState', 'isDragActive']);
+  if(!isDragActive) { return null; }
+  let dragged_id = state.getIn(['uiState', 'dragState', 'currentDragTodoId'])
+  return state.getIn(['dataState', 'todos', dragged_id.toString()]);
+}
+const draggedTodoObjectSelector = createSelector([draggedTodoSelector], (immutableTodo) => { 
+  if(!immutableTodo) { return null; }
+  return immutableTodo.toJS();
+});
+
+const dragStateObjectSelector = createSelector(
+  [dragStateSelector, draggedTodoObjectSelector],
+  (immutableDragState, draggedTodo) => {
+    let output = immutableDragState.toJS();
+    output.draggedTodo = draggedTodo;
+    return output;
+  }
+);
+
 const mapStateToProps = (state, ownProps) => {
+  let todo = todoObjectSelector(state, ownProps);
+  let todoDragState = dragStateObjectSelector(state, ownProps);
+
   return {
-    todo: todoObjectSelector(state, ownProps)
+    todo: todo,
+    todoDragState: todoDragState,
+    isDraggedOver: (todo.id === todoDragState.currentNeighborId)
   }
 }
 
@@ -49,10 +76,12 @@ const todoSource = {
 
 const todoTarget = {
   hover(props, monitor, component) {
+    let isNeighborNorth = false;
     let dragged = monitor.getItem();
 
     const dragIndex = dragged.index;
     const hoverIndex = props.currentIndex;
+    const neighborId = props.todoId;
 
     if((!dragIndex && dragIndex != 0) || (!hoverIndex && hoverIndex != 0)) {
       throw new Error("No draggable or target index found during drag operation");
@@ -73,22 +102,17 @@ const todoTarget = {
     // Get pixels to the top
     const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-    // Only perform the move when the mouse has crossed half of the items height
-    // When dragging downwards, only move when the cursor is below 50%
-    // When dragging upwards, only move when the cursor is above 50%
-
-    // Dragging downwards
-    if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) { return; }
-
-    // Dragging upwards
-    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) { return; }
+    // Hovering over the top half of a todo means the neighbor is to the south
+    // Hovering over the botom half means neighbor to the north
+    if(hoverClientY <= hoverMiddleY) { isNeighborNorth = false; } // upper half of element
+    if(hoverClientY > hoverMiddleY) { isNeighborNorth = true; } // lower half
 
     // Note: we're mutating the monitor item here!
     // Generally it's better to avoid mutations,
     // but it's good here for the sake of performance
     // to avoid expensive index searches.
     dragged.index = hoverIndex;
-    props.onTodoReorder(dragged.id, hoverIndex, dragged.klass);
+    props.onTodoReorder(dragged.id, hoverIndex, neighborId, isNeighborNorth);
   },
 
   drop(props, monitor) {
@@ -99,15 +123,6 @@ const todoTarget = {
     }
   }
 };
-
-const renderCheckbox = (todo) => {
-  return (
-    <Checkbox
-      checked={todo.isCompleted}
-      disabled={todo.isCompleted && !todo.permissions.canUncomplete}
-    />
-  )
-}
 
 const renderDraggingPlaceholder = (todo, connectDragSource, connectDropTarget) => {
   return connectDropTarget(connectDragSource(
@@ -130,6 +145,15 @@ class TodoItem extends Component {
   constructor(props) {
     super(props);
     this.state = { isNestedExpanded: false };
+  }
+
+  shouldComponentUpdate(nextProps) {
+    let output = (
+      !_.isEqual(this.props.todo, nextProps.todo)
+      || this.props.isDraggedOver
+      || this.props.isDraggedOver != nextProps.isDraggedOver
+    )
+    return output
   }
 
   renderTodoItemWrap() {
@@ -160,20 +184,25 @@ class TodoItem extends Component {
   render() {
     const { todo, currentIndex, todoDragState } = this.props;
 
-    const isDragging = todoDragState.get('isDragActive');
-    if(isDragging) {
-      const currentDragTodoId = todoDragState.get('currentDragTodoId');
-      const currentDragPosition = todoDragState.get('currentDragPosition');
-      if(currentDragTodoId == todo.id) {
-        return null;
-      }else if(currentDragPosition == currentIndex){
-        const draggedTodo = todoDragState.get('currentDragTodo').toJS();
-        return (
-          <div>
-            { renderDraggingPlaceholder(draggedTodo, this.props.connectDragSource, this.props.connectDropTarget)}
-            {this.renderTodoItemWrap()}
-          </div>
-        )
+    if(todoDragState.isDragActive) {
+      if(todoDragState.currentDragTodoId === todo.id) {
+        return null; // don't render the todo that is being dragged
+      }else if(todoDragState.currentNeighborId === todo.id){
+        if(todoDragState.isCurrentNeighborNorth){
+          return (
+            <div>
+              { this.renderTodoItemWrap() }
+              { renderDraggingPlaceholder(todoDragState.draggedTodo, this.props.connectDragSource, this.props.connectDropTarget)}
+            </div>
+          )
+        }else{
+          return (
+            <div>
+              { renderDraggingPlaceholder(todoDragState.draggedTodo, this.props.connectDragSource, this.props.connectDropTarget)}
+              { this.renderTodoItemWrap() }
+            </div>
+          )
+        }
       }
     }
     return this.renderTodoItemWrap();

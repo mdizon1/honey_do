@@ -17,6 +17,8 @@ export const EmptyStore = {
       isDragActive: false,
       currentDragPosition: null,
       currentDragTodoId: null,
+      currentNeighborId: null,
+      isNeighborNorth: null,
       currentDragTodo: null
     }
   },

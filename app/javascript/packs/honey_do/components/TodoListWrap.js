@@ -35,7 +35,6 @@ const mapStateToProps = (state, ownProps) => {
     searchValue: searchValueSelector(state, ownProps),
     isCompletedHidden: isCompletedHiddenSelector(state, ownProps),
     todos: todosFilterSelector(state, ownProps),
-    dragState: state.getIn(['uiState', 'dragState'])
   }
 }
 
@@ -86,8 +85,7 @@ class TodoListWrap extends Component {
     return (
       this.props.searchValue !== nextProps.searchValue ||
       this.props.todos !== nextProps.todos ||
-      this.props.isCompletedHidden !== nextProps.isCompletedHidden ||
-      this.props.dragState !== nextProps.dragState
+      this.props.isCompletedHidden !== nextProps.isCompletedHidden
     );
   }
 
@@ -132,14 +130,10 @@ class TodoListWrap extends Component {
     dispatch(todoReorderRequest(temp_todo, positionsJumped, todo_type, this.props.todos));
   }
 
-  handleTodoDragged(id, newIndex, klass) {
+  handleTodoDragged(draggedId, newPosition, neighborId, isNeighborNorth) {
     var local_todo_state, todo, prev_index;
 
-    local_todo_state = this.props.todos;
-    todo = _.find(local_todo_state, (curr) => { return curr.id == id; });
-    prev_index = todo.index;
-
-    this.props.store.dispatch(updateTodoDrag(todo, newIndex, klass));
+    this.props.store.dispatch(updateTodoDrag(draggedId, newPosition, neighborId, isNeighborNorth));
   }
 
   renderTodoListMouse(todo_ids) {
@@ -153,7 +147,6 @@ class TodoListWrap extends Component {
         <TodoListMouse
           todoIds={todo_ids}
           dispatch={this.props.store.dispatch}
-          todoDragState={this.props.dragState}
           onTodoAccepted={this.acceptTodo.bind(this)}
           onTodoClicked={this.handleTodoClicked.bind(this)}
           onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
@@ -176,7 +169,6 @@ class TodoListWrap extends Component {
         <TodoListTouch
           todoIds={todo_ids}
           dispatch={this.props.store.dispatch}
-          todoDragState={this.props.dragState}
           onTodoAccepted={this.acceptTodo.bind(this)}
           onTodoClicked={this.handleTodoClicked.bind(this)}
           onTodoDestroyed={this.handleTodoDestroyed.bind(this)}

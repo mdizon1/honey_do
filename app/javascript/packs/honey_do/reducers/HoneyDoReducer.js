@@ -183,7 +183,7 @@ function honeyDoReducer(state, action) {
       return toggleHideCompletedTodos(state);
 
     case UPDATE_TODO_DRAG:
-      return setTodoDragState(state, action.todo.id, action.newPosition, action.todoKlass);
+      return setTodoDragState(state, {draggedId: action.draggedId, newPosition: action.newPosition, neighborId: action.neighborId, isNeighborNorth: action.isNeighborNorth});
 
     case UPDATE_TODO_REQUEST:
       temp_state = updateTodo(state, action.todo);
@@ -408,19 +408,24 @@ const resetDragState = (state) => {
 
   temp_state = temp_state.setIn(["uiState", "dragState", "isDragActive"], false);
   temp_state = temp_state.setIn(["uiState", "dragState", "currentDragPosition"], null);
-  temp_state = temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], null);
-  return temp_state.setIn(["uiState", "dragState", "currentDragTodo"], null);
+  temp_state = temp_state.setIn(["uiState", "dragState", "currentNeighborId"], null);
+  temp_state = temp_state.setIn(["uiState", "dragState", "isNeighborNorth"], null);
+  temp_state = temp_state.setIn(["uiState", "dragState", "currentDragTodo"], null);
+  return temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], null);
 }
 
-const setTodoDragState = (state, id, position, klass) => {
+const setTodoDragState = (state, options) => {
+  const {draggedId, position, neighborId, isNeighborNorth} = options;
   let temp_state = state;
 
   temp_state = temp_state.setIn(["uiState", "dragState", "isDragActive"], true);
   temp_state = temp_state.setIn(["uiState", "dragState", "currentDragPosition"], position);
-  temp_state = temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], id);
+  temp_state = temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], draggedId);
+  temp_state = temp_state.setIn(["uiState", "dragState", "currentNeighborId"], neighborId );
+  temp_state = temp_state.setIn(["uiState", "dragState", "isCurrentNeighborNorth"], isNeighborNorth );
   return temp_state.setIn(
     ["uiState", "dragState", "currentDragTodo"],
-    temp_state.getIn(["dataState", 'todos', id.toString()])
+    temp_state.getIn(["dataState", 'todos', draggedId.toString()])
   );
 }
 
@@ -457,7 +462,6 @@ const updateFilterState = (state, filterVal) => {
 
 // TODO: Separate tag processing into own function
 const updateTodo = (state, todo) => { // Look for given todo in state and replace with given todo
-  console.log("DEBUG: updateTodos, in reducer...");
   let tags_in_title = _.words(todo.title, /#[\w\s]+\b/g);
   tags_in_title = _.map(tags_in_title, (tag_in_title) => {
     return _.trim(_.replace(tag_in_title, /#/g, ''));

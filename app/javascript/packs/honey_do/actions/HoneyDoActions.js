@@ -203,7 +203,6 @@ export function closeCreateForm() {
   }
 }
 
-// TODO: Rename todosList to todoList
 export function todoReorderRequest(todo, positionsJumped, todoType, todoList) {
   return {
     type: TODO_REORDER_REQUEST,
@@ -240,13 +239,14 @@ export function toggleHideCompleted(){
   }
 }
 
-export function updateTodoDrag(todo, newPos, klass){
+export function updateTodoDrag(draggedId, newPos, neighborId, isNeighborNorth){
   return {
     type: UPDATE_TODO_DRAG,
     description: "Todo item was dragged to a new position",
-    todo: todo,
+    draggedId: draggedId,
     newPosition: newPos,
-    todoKlass: klass
+    neighborId: neighborId,
+    isNeighborNorth: isNeighborNorth
   }
 }
 

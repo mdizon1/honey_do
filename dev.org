@@ -11,7 +11,8 @@
    I believe the problem has to do with the entire list being rerendered when
    something is checked
 ** TODO Performance improvement attempt
-*** TODO Make TodoListWrap pass down something that may be checked for equality
+*** DONE Make TodoListWrap pass down something that may be checked for equality
+    CLOSED: [2018-04-13 Fri 07:25]
     Passing down an object which was instantiated with toJS() will always result
     in an inequality:
     var foo = store.getIn(...)
@@ -29,6 +30,13 @@
     nearest neighbor. Then in TodoListWrap (or maybe even TodoList), render the
     placeholder next to it's neighbor. This way, the indices of the list don't
     have to update, only the position of the placeholder.
+**** DONE Rather than keep track of indices, keep track of drag neighbor
+     CLOSED: [2018-04-13 Fri 08:49]
+**** TODO Remove old todo drag data from wherever it's used
+     action, ondrag(dnd code thingy), reducer, etc
+**** TODO Update server handling of drag n drop
+     Should work along the same lines as the client logic
+**** TODO update specs around drag n drop (if there are any)
 **** TODO Update Drag n drop UI
      If you drag outside of legal area, it should warn user For dragging to a
      position, if dragOver is the top half, then set above nearest neighbor, if

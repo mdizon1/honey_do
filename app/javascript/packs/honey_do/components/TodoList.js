@@ -4,7 +4,6 @@ import TodoItem from './TodoItem'
 const TodoList = (props) => {
   const {
     todoIds,
-    todoDragState,
     onTodoAccepted,
     onTodoClicked,
     onTodoDestroyed,
@@ -29,7 +28,6 @@ const TodoList = (props) => {
         return (
           <TodoItem
             key={"todo_item_" + curr_todo_id}
-            todoDragState={todoDragState}
             currentIndex={index}
             todoId={curr_todo_id}
             onTodoAccepted={onTodoAccepted}
