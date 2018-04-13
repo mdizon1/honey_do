@@ -23,8 +23,6 @@
     immutables from the store. It'll incur a lot of lookups into the store but
     should ensure that each todo can be checked for equality so long as it
     doesn't change.
-
-672 569 534 ms per click on todo at current performance
 *** TODO Change the way drag/drop works
     Rather than keep track of some new index or position, just keep track of the
     nearest neighbor. Then in TodoListWrap (or maybe even TodoList), render the

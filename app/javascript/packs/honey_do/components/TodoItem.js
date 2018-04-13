@@ -16,6 +16,10 @@ import IconButton from 'material-ui/IconButton/IconButton'
 import Icon from 'material-ui/Icon/Icon'
 
 
+// This whole mess up here is just to try and optimize data loading for this
+// component's props such that these things don't rerender unless they have
+// to.  Especially with respect to drag and drop, which is a huge performance
+// pitfall
 const todoSelector = (state, props) => state.getIn(['dataState', 'todos', props.todoId.toString()]);
 const todoObjectSelector = createSelector([todoSelector], (immutableTodo) => immutableTodo.toJS() );
 
@@ -148,12 +152,12 @@ class TodoItem extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    let output = (
+    let should_update = (
       !_.isEqual(this.props.todo, nextProps.todo)
       || this.props.isDraggedOver
       || this.props.isDraggedOver != nextProps.isDraggedOver
     )
-    return output
+    return should_update;
   }
 
   renderTodoItemWrap() {
