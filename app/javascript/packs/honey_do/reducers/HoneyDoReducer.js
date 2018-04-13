@@ -410,7 +410,6 @@ const resetDragState = (state) => {
   temp_state = temp_state.setIn(["uiState", "dragState", "currentDragPosition"], null);
   temp_state = temp_state.setIn(["uiState", "dragState", "currentNeighborId"], null);
   temp_state = temp_state.setIn(["uiState", "dragState", "isNeighborNorth"], null);
-  temp_state = temp_state.setIn(["uiState", "dragState", "currentDragTodo"], null);
   return temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], null);
 }
 
@@ -422,11 +421,7 @@ const setTodoDragState = (state, options) => {
   temp_state = temp_state.setIn(["uiState", "dragState", "currentDragPosition"], position);
   temp_state = temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], draggedId);
   temp_state = temp_state.setIn(["uiState", "dragState", "currentNeighborId"], neighborId );
-  temp_state = temp_state.setIn(["uiState", "dragState", "isCurrentNeighborNorth"], isNeighborNorth );
-  return temp_state.setIn(
-    ["uiState", "dragState", "currentDragTodo"],
-    temp_state.getIn(["dataState", 'todos', draggedId.toString()])
-  );
+  return temp_state.setIn(["uiState", "dragState", "isCurrentNeighborNorth"], isNeighborNorth );
 }
 
 const setTodoCompletedState = (state, todo, isCompleted) => {

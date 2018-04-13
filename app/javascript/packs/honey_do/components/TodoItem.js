@@ -80,19 +80,19 @@ const todoSource = {
 
 const todoTarget = {
   hover(props, monitor, component) {
-    let isNeighborNorth = false;
+    let is_neighbor_north = false;
     let dragged = monitor.getItem();
 
-    const dragIndex = dragged.index;
-    const hoverIndex = props.currentIndex;
-    const neighborId = props.todoId;
+    const drag_index = dragged.index;
+    const hover_index = props.currentIndex;
+    const neighbor_id = props.todoId;
 
-    if((!dragIndex && dragIndex != 0) || (!hoverIndex && hoverIndex != 0)) {
+    if((!drag_index && drag_index != 0) || (!hover_index && hover_index != 0)) {
       throw new Error("No draggable or target index found during drag operation");
     }
 
     // Don't replace items with themselves
-    if (dragIndex === hoverIndex) { return; }
+    if (drag_index === hover_index) { return; }
 
     // Determine rectangle on screen
     const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
@@ -108,15 +108,15 @@ const todoTarget = {
 
     // Hovering over the top half of a todo means the neighbor is to the south
     // Hovering over the botom half means neighbor to the north
-    if(hoverClientY <= hoverMiddleY) { isNeighborNorth = false; } // upper half of element
-    if(hoverClientY > hoverMiddleY) { isNeighborNorth = true; } // lower half
+    if(hoverClientY <= hoverMiddleY) { is_neighbor_north = false; } // upper half of element
+    if(hoverClientY > hoverMiddleY) { is_neighbor_north = true; } // lower half
 
     // Note: we're mutating the monitor item here!
     // Generally it's better to avoid mutations,
     // but it's good here for the sake of performance
     // to avoid expensive index searches.
-    dragged.index = hoverIndex;
-    props.onTodoReorder(dragged.id, hoverIndex, neighborId, isNeighborNorth);
+    dragged.index = hover_index;
+    props.onTodoReorder(dragged.id, hover_index, neighbor_id, is_neighbor_north);
   },
 
   drop(props, monitor) {

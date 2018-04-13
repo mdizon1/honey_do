@@ -30,7 +30,8 @@
     have to update, only the position of the placeholder.
 **** DONE Rather than keep track of indices, keep track of drag neighbor
      CLOSED: [2018-04-13 Fri 08:49]
-**** TODO Remove old todo drag data from wherever it's used
+**** DONE Remove old todo drag data from wherever it's used
+     CLOSED: [2018-04-13 Fri 10:09]
      action, ondrag(dnd code thingy), reducer, etc
 **** TODO Ensure todolist is rerendered after drop
 **** TODO Update server handling of drag n drop
