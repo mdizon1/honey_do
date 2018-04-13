@@ -75,7 +75,6 @@ import {List, Map} from 'immutable'
 
 import * as Logger from "../util/Logger"
 
-
 function honeyDoReducer(state, action) {
   var temp_state;
 
@@ -94,7 +93,12 @@ function honeyDoReducer(state, action) {
 
     case COMPLETE_TODO_REQUEST: //make the api call
       completeTodoOnServer(state, action);
-      return setTodoCompletedState(activateSpinner(state), action.todo, true);
+      temp_state = setTodoCompletedState(activateSpinner(state), action.todo, true);
+      // If you checked a todo, you can uncheck it until the server says otherwise
+      return temp_state.setIn(
+        ['dataState', 'todos', action.todo.id.toString(), 'permissions', 'canUncomplete'],
+        true
+      );
     case COMPLETE_TODO_SUCCESS:
       return deactivateSpinner(state);
     case COMPLETE_TODO_FAILURE:

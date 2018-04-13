@@ -24,7 +24,10 @@
 ***** DONE TodoTypeToDataStae goes away
       CLOSED: [2018-04-12 Thu 21:20]
 ***** TODO Edit todo should grab the todo from id only
-**** TODO make todolistwrap hold ids instead of todos, it then passes ids down to TodoItem
+***** TODO Try backing out the id thing.
+      Where TodoList passes ids down, instead just pass the whole todo, but as immutables
+**** DONE make todolistwrap hold ids instead of todos, it then passes ids down to TodoItem
+     CLOSED: [2018-04-12 Thu 22:09]
 *** TODO Use shouldComponentUpdate where I want to restrict re-rendering
 **** DONE TodoListWrap
      CLOSED: [2018-04-12 Thu 18:38]
