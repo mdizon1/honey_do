@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { createSelector } from 'reselect'
 import {Map} from 'immutable'
 import TodoListMouse from './TodoListMouse'
 import TodoListTouch from './TodoListTouch'
@@ -17,27 +18,29 @@ import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
 
 import { TodoTypeToKlass } from '../constants/TodoTypes'
 
+const todosSelector = (state, props) => state.getIn(['dataState', 'todos']);
+const typeSelector = (state, props) => props.todoType;
+const isCompletedHiddenSelector = (state, props) => state.getIn(['uiState', 'isCompletedHidden'])
+const searchValueSelector = (state, props) => state.getIn(['uiState', 'filterValue'])
+
+const todosFilterSelector = createSelector(
+  [todosSelector, typeSelector, isCompletedHiddenSelector, searchValueSelector],
+  (todosFromStore, todoType, isCompletedHidden, searchValue) => {
+    return filterTodosForProps(todosFromStore.toJS(), todoType, isCompletedHidden, searchValue)
+  }
+);
+
 const mapStateToProps = (state, ownProps) => {
-  let dataStatePath = ['dataState', 'todos'];
-
-  let currState = state.getIn(dataStatePath);
-  let newSearchValue = state.getIn(['uiState', 'filterValue']);
-
-  let dragState = state.getIn(['uiState', 'dragState']);
-
-
   return {
-    dataStatePath: dataStatePath,
-    searchValue: newSearchValue,
-    todos: state.getIn(dataStatePath),
-    prevState: currState,
-    dragState: dragState,
-    isCompletedHidden: state.getIn(['uiState', 'isCompletedHidden'])
+    searchValue: searchValueSelector(state, ownProps),
+    isCompletedHidden: isCompletedHiddenSelector(state, ownProps),
+    todos: todosFilterSelector(state, ownProps),
+    dragState: state.getIn(['uiState', 'dragState'])
   }
 }
 
-const prepareTodosForRender = (todos, type, isCompletedHidden, filterVal) => {
-  let output = todos.toJS();
+const filterTodosForProps = (todos, type, isCompletedHidden, filterVal) => {
+  let output = todos
 
   output = Object.keys(output).map(key => output[key]); // convert todos into array
   // filter out todos not in the current list
@@ -78,9 +81,9 @@ class TodoListWrap extends Component {
     return (
       this.props.searchValue !== nextProps.searchValue ||
       this.props.todos !== nextProps.todos ||
-      this.props.isCompletedHidden !== nextProps.isCompletedHidden
+      this.props.isCompletedHidden !== nextProps.isCompletedHidden ||
+      this.props.dragState !== nextProps.dragState
     );
-
   }
 
   acceptTodo(todo) {
@@ -134,7 +137,7 @@ class TodoListWrap extends Component {
     this.props.store.dispatch(updateTodoDrag(todo, newIndex, klass));
   }
 
-  renderTodoListMouse(todoList) {
+  renderTodoListMouse() {
     return (
       <div className="todo-list-wrap">
         <SearchTodos
@@ -143,7 +146,7 @@ class TodoListWrap extends Component {
           value={this.props.searchValue}
         />
         <TodoListMouse
-          todos={todoList}
+          todos={this.props.todos}
           dispatch={this.props.store.dispatch}
           todoDragState={this.props.dragState}
           onTodoAccepted={this.acceptTodo.bind(this)}
@@ -157,7 +160,7 @@ class TodoListWrap extends Component {
     )
   }
 
-  renderTodoListTouch(todoList) {
+  renderTodoListTouch() {
     return (
       <div className="todo-list-wrap">
         <SearchTodos
@@ -166,7 +169,7 @@ class TodoListWrap extends Component {
           value={this.props.searchValue}
         />
         <TodoListTouch
-          todos={todoList}
+          todos={this.props.todos}
           dispatch={this.props.store.dispatch}
           todoDragState={this.props.dragState}
           onTodoAccepted={this.acceptTodo.bind(this)}
@@ -181,10 +184,9 @@ class TodoListWrap extends Component {
   }
 
   render() {
-    let todos = prepareTodosForRender(this.props.todos, this.props.todoType, this.props.isCompletedHidden, this.props.searchValue);
     return (
       <div>
-        { this.props.isTouch ? this.renderTodoListTouch(todos) : this.renderTodoListMouse(todos) }
+        { this.props.isTouch ? this.renderTodoListTouch() : this.renderTodoListMouse() }
       </div>
     )
   }

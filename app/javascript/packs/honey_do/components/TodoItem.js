@@ -1,6 +1,7 @@
 // TODO: hah
 // Move me to the containers folder
 import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
 import { ItemTypes } from '../constants/ItemTypes'

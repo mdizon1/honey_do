@@ -6,9 +6,9 @@ import { TodoTypeToKlass } from '../constants/TodoTypes'
 
 const mapStateToProps = (state, ownProps) => {
   let editing = state.getIn(['uiState', 'isEditing']);
-  if(editing) { 
-    editing = editing.toJS(); 
-    editing = state.getIn(['dataState', editing.type, editing.id.toString()]).toJS();
+  if(editing) {
+    editing = editing.toJS();
+    editing = state.getIn(['dataState', 'todos', editing.id.toString()]).toJS();
   }
 
   return {
