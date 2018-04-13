@@ -53,6 +53,7 @@
     "react-hot-loader": "^4.0.0",
     "react-redux": "^4.4.5",
     "redux": "^3.3.1",
+    "reselect": "^3.0.1",
     "resolve-url-loader": "^2.1.0",
     "sass-loader": "^6.0.6",
     "sass-resources-loader": "^1.2.0",
