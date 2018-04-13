@@ -8,7 +8,11 @@ import { UiTabs, UiTabToType } from '../constants/TodoTypes'
 const renderTabContent = (currTab, props) => {
   switch(currTab){
     case UiTabs.CONFIG:
+      return (
+        <HoneyDoConfigWrap store={props.store}/>
+      );
     case UiTabs.TODOS:
+    case UiTabs.SHOPPING_LIST:
       return (
         <TodoListWrap
           store={props.store}
@@ -17,10 +21,6 @@ const renderTabContent = (currTab, props) => {
           apiEndpoint={props.appConfig.apiEndpoint}
           authToken={props.appConfig.identity.authToken}
         />
-      );
-    case UiTabs.SHOPPING_LIST:
-      return (
-        <HoneyDoConfigWrap store={props.store}/>
       );
   };
 }

@@ -1,7 +1,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { TodoKlassToDataState } from '../constants/TodoTypes';
 import { editTodoCanceled } from '../actions/HoneyDoActions';
 
 import Dialog, { DialogTitle } from 'material-ui/Dialog'
@@ -13,7 +12,7 @@ const mapStateToProps = (state, ownProps) => {
   isEditing = state.getIn(['uiState', 'isEditing']);
   if(isEditing) {
     isEditing = isEditing.toJS();
-    editingTodo = state.getIn(['dataState', isEditing.type, isEditing.id.toString()]);
+    editingTodo = state.getIn(['dataState', 'todos', isEditing.id.toString()]);
     isEditing = !!isEditing;
   }
 

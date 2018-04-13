@@ -15,11 +15,10 @@ import { acceptTodoRequest, acceptTodoSuccess, acceptTodoFailure,
   uncompleteTodoRequest, uncompleteTodoSuccess, uncompleteTodoFailure
 } from '../actions/HoneyDoActions'
 
-import { TodoTypeToDataState } from '../constants/TodoTypes'
-
+import { TodoTypeToKlass } from '../constants/TodoTypes'
 
 const mapStateToProps = (state, ownProps) => {
-  let dataStatePath = ['dataState', TodoTypeToDataState[ownProps.todoType]]
+  let dataStatePath = ['dataState', 'todos'];
 
   let currState = state.getIn(dataStatePath);
   let newSearchValue = state.getIn(['uiState', 'filterValue']);
@@ -37,10 +36,14 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
-const prepareTodosForRender = (todos, isCompletedHidden, filterVal) => {
+const prepareTodosForRender = (todos, type, isCompletedHidden, filterVal) => {
   let output = todos.toJS();
 
   output = Object.keys(output).map(key => output[key]); // convert todos into array
+  // filter out todos not in the current list
+
+  output = _.filter(output, (curr_todo) => (curr_todo.klass === TodoTypeToKlass[type]))
+
   // filter out completed todos if the config is set to such
   if(isCompletedHidden){
     output = _.filter(output, (curr_todo) => { return !curr_todo.isCompleted });
@@ -115,7 +118,7 @@ class TodoListWrap extends Component {
 
     dispatch = this.props.store.dispatch;
     todo_type = this.props.todoType;
-    todo_data_path = ['dataState', TodoTypeToDataState[this.props.todoType], droppedId.toString()]
+    todo_data_path = ['dataState', 'todos', droppedId.toString()]
     temp_todo = this.props.store.getState().getIn(todo_data_path);
     if(Map.isMap(temp_todo)) { temp_todo = temp_todo.toJS(); }
     dispatch(todoReorderRequest(temp_todo, positionsJumped, todo_type, this.props.todos));
@@ -178,7 +181,7 @@ class TodoListWrap extends Component {
   }
 
   render() {
-    let todos = prepareTodosForRender(this.props.todos, this.props.isCompletedHidden, this.props.searchValue);
+    let todos = prepareTodosForRender(this.props.todos, this.props.todoType, this.props.isCompletedHidden, this.props.searchValue);
     return (
       <div>
         { this.props.isTouch ? this.renderTodoListTouch(todos) : this.renderTodoListMouse(todos) }

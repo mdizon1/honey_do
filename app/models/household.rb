@@ -1,6 +1,7 @@
 class Household < ApplicationRecord
   has_many :memberships
   has_many :members, :through => :memberships, :source => :user
+  has_many :completables, -> {order('position ASC').where("aasm_state NOT IN ('accepted')")}, :dependent => :destroy
   has_many :todos, -> { order('position ASC').where("aasm_state NOT IN ('accepted')") }, :class_name => 'Completable::Todo', :dependent => :destroy
   has_many :shopping_items, -> { order('position ASC') }, :class_name => 'Completable::ShoppingItem', :dependent => :destroy
 

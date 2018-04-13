@@ -13,9 +13,21 @@
     the current tab would set an additional filter value which grabs out only
     the relevant todos
 **** TODO consolidate todo data state
-**** TODO
+***** DONE Server /todos should return only {todos: {}}
+      CLOSED: [2018-04-12 Thu 19:07]
+***** DONE Sync todos replaces datastate as before
+      CLOSED: [2018-04-12 Thu 19:07]
+***** DONE TodoListWrap starts by grabing all todos: [dataState, todos]
+      CLOSED: [2018-04-12 Thu 21:01]
+***** DONE TodoListWrap filters out todos not of the given type before render
+      CLOSED: [2018-04-12 Thu 21:09]
+***** DONE TodoTypeToDataStae goes away
+      CLOSED: [2018-04-12 Thu 21:20]
+***** TODO Edit todo should grab the todo from id only
+**** TODO make todolistwrap hold ids instead of todos, it then passes ids down to TodoItem
 *** TODO Use shouldComponentUpdate where I want to restrict re-rendering
-**** TODO TodoListWrap
+**** DONE TodoListWrap
+     CLOSED: [2018-04-12 Thu 18:38]
 *** TODO Big lag between check todo and todo getting checked
     First let's see if there's a big delay between the actual touch and the action being triggered
 ** TODO Switching to shopping list doesn't work                         :bug:

@@ -68,7 +68,6 @@ import {
   apiUpdateTodo
 } from '../util/Api'
 
-import { TodoKlassToDataState, TodoTypeToDataState, TodoKlassToType, UiTabs } from '../constants/TodoTypes'
 import { EmptyStore } from '../constants/EmptyStore'
 
 import * as Immutable from 'immutable'
@@ -137,7 +136,6 @@ function honeyDoReducer(state, action) {
 
     case SYNC_TODOS_REQUEST:
       obtainTodosFromServer(state, action);
-
       return uiSyncingOn(state);
     case SYNC_TODOS_SUCCESS:
       temp_state = uiSyncingOff(state);
@@ -152,7 +150,6 @@ function honeyDoReducer(state, action) {
         ["uiState", "isEditing"],
         Immutable.fromJS({
           id: action.todo.id,
-          type: TodoKlassToDataState[action.todo.klass]
         })
       );
     case EDIT_TODO_CANCELED:
@@ -239,7 +236,7 @@ const deactivateSpinner = (state) => {
 }
 
 const dropTodo = (state, todo) => {
-  return state.deleteIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], null);
+  return state.deleteIn(['dataState', 'todos', todo.id.toString()], null);
 }
 
 const obtainTodosFromServer = (state, action) => {
@@ -264,20 +261,20 @@ const removeTag = (state, todo, tag) => {
   tag_list = _.without(tag_list, tag);
 
   return state.setIn(
-    ['dataState', TodoKlassToDataState[todo.klass], todo.id.toString(), 'tags'],
+    ['dataState', 'todos', todo.id.toString(), 'tags'],
     Immutable.fromJS(tag_list)
   );
 }
 
 const retrieveTodo = (state, todo) => {
-  return state.getIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()]);
+  return state.getIn(['dataState', 'todos', todo.id.toString()]);
 }
 
 const reorderTodos = (state, todo, positionsJumped) => {
   var temp_state, temp_data, target_position;
 
   // pull store data into a js object
-  temp_data = state.getIn(['dataState', TodoKlassToDataState[todo.klass]]).toJS();
+  temp_data = state.getIn(['dataState', 'todos']).toJS();
 
   // order by position
   temp_data = _.sortBy(temp_data, (curr_todo) => {
@@ -309,7 +306,7 @@ const reorderTodos = (state, todo, positionsJumped) => {
   });
 
   return state.setIn(
-    ['dataState', TodoKlassToDataState[todo.klass]],
+    ['dataState', 'todos'],
     Immutable.fromJS(temp_data)
   );
 }
@@ -419,19 +416,19 @@ const setTodoDragState = (state, id, position, klass) => {
   temp_state = temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], id);
   return temp_state.setIn(
     ["uiState", "dragState", "currentDragTodo"],
-    temp_state.getIn(["dataState", TodoKlassToDataState[klass], id.toString()])
+    temp_state.getIn(["dataState", 'todos', id.toString()])
   );
 }
 
 const setTodoCompletedState = (state, todo, isCompleted) => {
   return state.setIn(
-    ['dataState', TodoKlassToDataState[todo.klass], todo.id.toString(), 'isCompleted'],
+    ['dataState', 'todos', todo.id.toString(), 'isCompleted'],
     isCompleted
   );
 }
 
 const setTodoState = (state, todo, todoState) => {
-  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], Immutable.fromJS(todoState));
+  return state.setIn(['dataState', 'todos', todo.id.toString()], Immutable.fromJS(todoState));
 }
 
 const toggleHideCompletedTodos = (state) => {
@@ -464,7 +461,7 @@ const updateTodo = (state, todo) => { // Look for given todo in state and replac
   todo.tags = _.uniq(_.concat(todo.tags, tags_in_title));
   let new_title = _.trim(_.replace(todo.title, /#.*/g, ''));
   todo.title = new_title;
-  return state.setIn(['dataState', TodoKlassToDataState[todo.klass], todo.id.toString()], Immutable.fromJS(todo));
+  return state.setIn(['dataState', 'todos', todo.id.toString()], Immutable.fromJS(todo));
 }
 
 const uncompleteTodoOnServer = (state, action) => {

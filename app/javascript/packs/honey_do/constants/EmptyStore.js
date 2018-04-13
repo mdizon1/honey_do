@@ -21,7 +21,6 @@ export const EmptyStore = {
     }
   },
   dataState: {
-    shoppingItems: {},
     todos: {}
   },
   configState: {
