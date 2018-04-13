@@ -1,11 +1,9 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import TodoItemCore from '../components/TodoItemCore'
-import { deleteTodoTagRequest, editTodoRequest} from '../actions/HoneyDoActions'
+import { deleteTodoTagRequest, editTodoRequest } from '../actions/HoneyDoActions'
 
-const mapStateToProps = (state, ownProps) => {
-  return {};
-}
+const mapStateToProps = (state, ownProps) => { return {}; }
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onTodoTagDestroyed: (todo, tag) => dispatch(deleteTodoTagRequest(todo, tag)),

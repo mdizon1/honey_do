@@ -40,7 +40,8 @@ const mapStateToProps = (state, ownProps) => {
     searchValue: searchValueSelector(state, ownProps),
     isCompletedHidden: isCompletedHiddenSelector(state, ownProps),
     todos: todosFilterSelector(state, ownProps),
-    todoIds: todoIdsSelector(state, ownProps)
+    todoIds: todoIdsSelector(state, ownProps),
+    isDragActive: state.getIn(['uiState', 'dragState', 'isDragActive'])
   }
 }
 
@@ -91,7 +92,8 @@ class TodoListWrap extends Component {
     let should_update = (
       this.props.searchValue !== nextProps.searchValue ||
       !_.isEqual(this.props.todoIds, nextProps.todoIds) ||
-      this.props.isCompletedHidden !== nextProps.isCompletedHidden
+      this.props.isCompletedHidden !== nextProps.isCompletedHidden ||
+      (this.props.isDragActive && !nextProps.isDragActive) // was dragging, now not dragging
     );
     return should_update;
   }
