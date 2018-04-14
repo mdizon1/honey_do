@@ -4,8 +4,9 @@ import { createSelector } from 'reselect'
 import TodoTabs from './TodoTabs'
 import NewTodoWrap from '../containers/NewTodoWrap'
 import EditTodoDialogWrap from '../containers/EditTodoDialogWrap'
+import HoneyDoSpinner from '../containers/HoneyDoSpinner'
 import { hot } from "react-hot-loader";
-import { init, syncTodosRequest, syncTodosSuccess, syncTodosFailure, switchTab, loadTagSuccess } from './../actions/HoneyDoActions';
+import { init, syncTodosRequest, switchTab } from './../actions/HoneyDoActions';
 import { apiLoadTags } from '../util/Api'
 import { UiTabToType } from '../constants/TodoTypes'
 import CircularProgress from 'material-ui/Progress/CircularProgress'
@@ -56,11 +57,8 @@ class HoneyDo extends React.Component {
   }
 
   renderSpinner() {
-    if(!this.props.uiState.isSpinning) { return null; }
     return (
-      <div className="honey-do-spinner">
-        <CircularProgress />
-      </div>
+      <HoneyDoSpinner />
     )
   }
 
