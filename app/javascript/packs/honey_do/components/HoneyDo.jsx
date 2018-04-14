@@ -14,14 +14,14 @@ import CircularProgress from 'material-ui/Progress/CircularProgress'
 const configSelector = (state, props) => state.get('configState')
 const configConversionSelector = createSelector([configSelector], (config) => config.toJS())
 
-const uiSelector = (state, props) => state.get('uiState')
-const uiConversionSelector = createSelector([uiSelector], (uiState) => uiState.toJS())
+//const uiSelector = (state, props) => state.get('uiState')
+//const uiConversionSelector = createSelector([uiSelector], (uiState) => uiState.toJS())
 
 const mapStateToProps = (state, ownProps) => {
   return {
     configState: configConversionSelector(state, ownProps),
     'interface': state.getIn(['configState', 'interface']),
-    uiState: uiConversionSelector(state, ownProps),
+    //    uiState: uiConversionSelector(state, ownProps),
     currentTab: state.getIn(['uiState', 'currentTab'])
   }
 }
