@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { createSelector } from 'reselect'
 import TodoTabs from './TodoTabs'
 import NewTodoWrap from '../containers/NewTodoWrap'
 import EditTodoDialogWrap from '../containers/EditTodoDialogWrap'
@@ -9,16 +10,19 @@ import { apiLoadTags } from '../util/Api'
 import { UiTabToType } from '../constants/TodoTypes'
 import CircularProgress from 'material-ui/Progress/CircularProgress'
 
+const configSelector = (state, props) => state.get('configState')
+const configConversionSelector = createSelector([configSelector], (config) => config.toJS())
+
+const uiSelector = (state, props) => state.get('uiState')
+const uiConversionSelector = createSelector([uiSelector], (uiState) => uiState.toJS())
 
 const mapStateToProps = (state, ownProps) => {
-  var new_props;
-  new_props = {
+  return {
+    configState: configConversionSelector(state, ownProps),
     'interface': state.getIn(['configState', 'interface']),
-    configState: getConfigState(state),
-    currentTab: getCurrentTab(state),
-    uiState: getUiState(state)
+    uiState: uiConversionSelector(state, ownProps),
+    currentTab: state.getIn(['uiState', 'currentTab'])
   }
-  return new_props;
 }
 
 class HoneyDo extends React.Component {
@@ -78,15 +82,7 @@ class HoneyDo extends React.Component {
   }
 }
 
-// private
-const getConfigState = (storeState) => {
-  return storeState.get('configState').toJS();
-}
-const getCurrentTab = (storeState) => {
-  return storeState.getIn(['uiState', 'currentTab']);
-}
-const getUiState = (storeState) => {
-  return storeState.getIn(['uiState']).toJS();
-}
 
+// TODO: try this:
+// hot(module)(connect(mapStateToProps)(HoneyDo))
 export default connect(mapStateToProps)(hot(module)(HoneyDo))

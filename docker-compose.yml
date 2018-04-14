@@ -38,7 +38,8 @@ services:
       - "8080:8080"
     volumes:
       - .:/myapp
-    command: ./bin/webpack-dev-server --inline true --hot true --port 8080 --public localhost:8080
+    #command: ./bin/webpack-dev-server --inline true --hot true --port 8080 --public localhost:8080
+    command: ./bin/webpack-dev-server --inline true --hot true --port 8080 --public 0.0.0.0:8080
 
   bundle:
     image: honeydo_web

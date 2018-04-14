@@ -9,7 +9,7 @@ class TodoListMouse extends Component {
     return (
       <div>
         <TodoList
-          todos={this.props.todos}
+          todoIds={this.props.todoIds}
           todoDragState={this.props.todoDragState}
           onTodoAccepted={this.props.onTodoAccepted}
           onTodoClicked={this.props.onTodoClicked}

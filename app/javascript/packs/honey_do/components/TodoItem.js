@@ -2,6 +2,7 @@
 // Move me to the containers folder
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { createSelector } from 'reselect'
 import { findDOMNode } from 'react-dom'
 import { DragSource, DropTarget } from 'react-dnd'
 import { ItemTypes } from '../constants/ItemTypes'
@@ -14,12 +15,21 @@ import Checkbox from 'material-ui/Checkbox'
 import IconButton from 'material-ui/IconButton/IconButton'
 import Icon from 'material-ui/Icon/Icon'
 
+
+const todoSelector = (state, props) => state.getIn(['dataState', 'todos', props.todoId.toString()]);
+const todoObjectSelector = createSelector([todoSelector], (immutableTodo) => immutableTodo.toJS() );
+const mapStateToProps = (state, ownProps) => {
+  return {
+    todo: todoObjectSelector(state, ownProps)
+  }
+}
+
 const todoSource = {
   beginDrag(props, monitor) {
     return {
       id: props.todo.id,
       klass: props.todo.klass,
-      index: props.todo.index,
+      index: props.currentIndex,
       position: props.todo.position,
       startIndex: props.todo.index
     };
@@ -42,7 +52,7 @@ const todoTarget = {
     let dragged = monitor.getItem();
 
     const dragIndex = dragged.index;
-    const hoverIndex = props.todo.index;
+    const hoverIndex = props.currentIndex;
 
     if((!dragIndex && dragIndex != 0) || (!hoverIndex && hoverIndex != 0)) {
       throw new Error("No draggable or target index found during drag operation");
@@ -170,10 +180,7 @@ class TodoItem extends Component {
   }
 }
 
-// DEV_NOTE: looks like flow was the secret sauce here.  Since es7 decorators
-//   aren't yet available, if I want to apply multiple decorators in es6, I
-//   need lodash's flow to apply them in chain
-export default flow(
+export default connect(mapStateToProps)(flow(
   DragSource(ItemTypes.TODO_ITEM, todoSource, (connect, monitor) => ({
     connectDragSource: connect.dragSource(),
     isDragging: monitor.isDragging()
@@ -182,7 +189,9 @@ export default flow(
     connectDropTarget: connect.dropTarget(),
     isOver: monitor.isOver()
   }))
-)(TodoItem)
+)(TodoItem))
+
+
 
 // DEV_NOTE: This is the es7 decorator syntax.  Apparently the @Blah thing
 // 'decorates' the class declaration that comes afterwards

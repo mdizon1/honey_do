@@ -58,7 +58,6 @@ const filterTodosForProps = (todos, type, isCompletedHidden, filterVal) => {
   _.forEach(output, (curr_todo, index) => { curr_todo.index = index; }); // renumber todo indices by their array index
 
   return output;
-
 }
 
 const filterList = (todoList, filterVal) => {
@@ -76,6 +75,12 @@ const filterList = (todoList, filterVal) => {
   });
 }
 
+const mapTodosToIds = (list) => {
+  return _.map(
+    list,
+    (curr_todo) => curr_todo.id
+  );
+}
 class TodoListWrap extends Component {
   shouldComponentUpdate(nextProps){
     return (
@@ -137,7 +142,7 @@ class TodoListWrap extends Component {
     this.props.store.dispatch(updateTodoDrag(todo, newIndex, klass));
   }
 
-  renderTodoListMouse() {
+  renderTodoListMouse(todo_ids) {
     return (
       <div className="todo-list-wrap">
         <SearchTodos
@@ -146,7 +151,7 @@ class TodoListWrap extends Component {
           value={this.props.searchValue}
         />
         <TodoListMouse
-          todos={this.props.todos}
+          todoIds={todo_ids}
           dispatch={this.props.store.dispatch}
           todoDragState={this.props.dragState}
           onTodoAccepted={this.acceptTodo.bind(this)}
@@ -160,7 +165,7 @@ class TodoListWrap extends Component {
     )
   }
 
-  renderTodoListTouch() {
+  renderTodoListTouch(todo_ids) {
     return (
       <div className="todo-list-wrap">
         <SearchTodos
@@ -169,7 +174,7 @@ class TodoListWrap extends Component {
           value={this.props.searchValue}
         />
         <TodoListTouch
-          todos={this.props.todos}
+          todoIds={todo_ids}
           dispatch={this.props.store.dispatch}
           todoDragState={this.props.dragState}
           onTodoAccepted={this.acceptTodo.bind(this)}
@@ -184,9 +189,10 @@ class TodoListWrap extends Component {
   }
 
   render() {
+    let todo_ids = mapTodosToIds(this.props.todos);
     return (
       <div>
-        { this.props.isTouch ? this.renderTodoListTouch() : this.renderTodoListMouse() }
+        { this.props.isTouch ? this.renderTodoListTouch(todo_ids) : this.renderTodoListMouse(todo_ids) }
       </div>
     )
   }

@@ -1,9 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** Test performance on mobile on a remote server
-   Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
-   from my phone
 ** TODO Big lag between check todo and todo getting checked
    First let's see if there's a big delay between the actual touch and the
    action being triggered
@@ -15,15 +12,27 @@
    something is checked
 ** TODO Performance improvement attempt
 *** TODO Make TodoListWrap pass down something that may be checked for equality
-    Passing down an object which was instantiated with toJS() will always result in an inequality
+    Passing down an object which was instantiated with toJS() will always result
+    in an inequality:
     var foo = store.getIn(...)
     foo.toJS() === foo.toJS() is false
     ensure whatever I do pass down would evaluate to true if it hasn't changed.
+
+    Going to try mapping the todos in props (from mapStateToProps) into their
+    immutables from the store. It'll incur a lot of lookups into the store but
+    should ensure that each todo can be checked for equality so long as it
+    doesn't change.
+
+672 569 534 ms per click on todo at current performance
 *** TODO Change the way drag/drop works
     Rather than keep track of some new index or position, just keep track of the
     nearest neighbor. Then in TodoListWrap (or maybe even TodoList), render the
     placeholder next to it's neighbor. This way, the indices of the list don't
     have to update, only the position of the placeholder.
+**** TODO Update Drag n drop UI
+     If you drag outside of legal area, it should warn user For dragging to a
+     position, if dragOver is the top half, then set above nearest neighbor, if
+     dragOver is bottom half, set below
 ** TODO Mobile performance issues:
 *** TODO Avoid toJS() in mapStateToProps
 *** DONE Try having each todo item grab itself from store
@@ -83,6 +92,14 @@
    Server side, rather than do places jumped, pass in either the top neighbor or
    bottom neighbor (if you're at the top of the list, there'll only be a bottom
    neighbor). Then make the move accordingly
+** TODO If you check a todo, then drag it, it runs away
+   Problem is, when you check it, on the server side, it's moving to the bottom.
+   Client side leave it in place so the user knows what happened. Then after a
+   drag, there's a sync and the server then updates the client with the position
+   of the checked todo. Since the drag operation only gives the server the
+   number of positions jumped, they're jumping from a location which is much
+   different from what the client thinks it's at. This may be fixed by the
+   change to drag behavior that I'm envisioning.
 ** TODO Make specs pass
 ** DONE Try refactoring the way I'm handling state and dispatch
    CLOSED: [2018-04-07 Sat 13:53]
@@ -337,6 +354,10 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Test performance on mobile on a remote server
+   CLOSED: [2018-04-13 Fri 15:18]
+   Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
+   from my phone
 ** DONE Figure out why onTodoClicked is triggering so many times
    CLOSED: [2018-04-04 Wed 10:27]
 *** DONE There's also the problem of getTodosFromStore being called 4 times on startup

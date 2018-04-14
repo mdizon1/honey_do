@@ -3,7 +3,7 @@ import List from 'material-ui/List/List'
 import TodoItem from './TodoItem'
 const TodoList = (props) => {
   const {
-    todos,
+    todoIds,
     todoDragState,
     onTodoAccepted,
     onTodoClicked,
@@ -15,7 +15,7 @@ const TodoList = (props) => {
   } = props;
 
   // TODO: I think we can do todos == null means loading and todos == [] means no items
-  if(!todos || (todos.length < 1)) {
+  if(!todoIds || (todoIds.length < 1)) {
     return (
       <List className='honey-do-todo-list'>
         No items...
@@ -25,13 +25,13 @@ const TodoList = (props) => {
 
   return (
     <List className='honey-do-todo-list'>
-      {_.map(todos, (todo, index) => {
+      {_.map(todoIds, (curr_todo_id, index) => {
         return (
           <TodoItem
-            key={"todo_item_" + todo.id}
+            key={"todo_item_" + curr_todo_id}
             todoDragState={todoDragState}
             currentIndex={index}
-            todo={todo}
+            todoId={curr_todo_id}
             onTodoAccepted={onTodoAccepted}
             onTodoClicked={onTodoClicked}
             onTodoDestroyed={onTodoDestroyed}
