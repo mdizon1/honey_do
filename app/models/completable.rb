@@ -49,6 +49,27 @@ class Completable < ApplicationRecord
     }
   end
 
+  def reorder_near(target, is_target_above=true)
+
+    return false if(target == self)
+
+    if( # see if target todo would move at all
+      (is_target_above && self == target.lower_item) ||
+      (!is_target_above && self == target.higher_item)
+    )
+      return false
+    end
+
+    # if moving upwards, account for target shifting downwards
+    if(higher_items.include?(target))
+      target_position = target.position.to_i + (is_target_above ? 1 : 0)
+    else
+      target_position = target.position.to_i + (is_target_above ? 0 : -1)
+    end
+
+    insert_at(target_position <= 0 ? 1 : target_position)
+  end
+
   def remove_tag(tag_string)
     output = false
     tags.each do |t|

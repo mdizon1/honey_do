@@ -128,21 +128,12 @@ class TodoListWrap extends Component {
     this.props.store.dispatch(deleteTodoRequest(todo));
   }
 
-  handleTodoDropped(droppedId, positionsJumped) {
-    var dispatch, todo_type, todo_data_path, temp_todo;
-
-    dispatch = this.props.store.dispatch;
-    todo_type = this.props.todoType;
-    todo_data_path = ['dataState', 'todos', droppedId.toString()]
-    temp_todo = this.props.store.getState().getIn(todo_data_path);
-    if(Map.isMap(temp_todo)) { temp_todo = temp_todo.toJS(); }
-    dispatch(todoReorderRequest(temp_todo, positionsJumped, todo_type, this.props.todos));
+  handleTodoDropped(args) {
+    this.props.store.dispatch(todoReorderRequest());
   }
 
-  handleTodoDragged(draggedId, newPosition, neighborId, isNeighborNorth) {
-    var local_todo_state, todo, prev_index;
-
-    this.props.store.dispatch(updateTodoDrag(draggedId, newPosition, neighborId, isNeighborNorth));
+  handleTodoDragged(draggedId, neighborId, isNeighborNorth) {
+    this.props.store.dispatch(updateTodoDrag(draggedId, neighborId, isNeighborNorth));
   }
 
   renderTodoListMouse(todo_ids) {

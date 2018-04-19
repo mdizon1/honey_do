@@ -33,7 +33,8 @@
 **** DONE Remove old todo drag data from wherever it's used
      CLOSED: [2018-04-13 Fri 10:09]
      action, ondrag(dnd code thingy), reducer, etc
-**** TODO Ensure todolist is rerendered after drop
+**** DONE Ensure todolist is rerendered after drop
+     CLOSED: [2018-04-13 Fri 10:21]
 **** TODO Update server handling of drag n drop
      Should work along the same lines as the client logic
 **** TODO update specs around drag n drop (if there are any)

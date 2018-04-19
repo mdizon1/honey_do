@@ -28,7 +28,7 @@ describe Completable::Todo do
         it "should not be valid" do
           expect(todo.valid?).to eq false
         end
-        
+
         it "should set the correct error message" do
           todo.valid?
           expect(todo.errors.full_messages.join).to include('is not a member of the household')
@@ -41,7 +41,7 @@ describe Completable::Todo do
     describe "tagging" do
       context "with a todo" do
         let(:todo) { FactoryGirl.create(:todo) }
-        
+
         context "that has no tags" do
           it "should return an empty set when asking for tags" do
             todo.tags.should be_empty
@@ -117,7 +117,7 @@ describe Completable::Todo do
 
       context "with an accepted todo" do
         let(:accepted_todo) { FactoryGirl.build(:accepted_todo) }
-        let(:acceptor) { m = FactoryGirl.create(:household_admin, :household => accepted_todo.household); m.user } 
+        let(:acceptor) { m = FactoryGirl.create(:household_admin, :household => accepted_todo.household); m.user }
         it "should not be allowed" do
           a = Ability.new(acceptor)
           expect(a.can?(:accept, accepted_todo)).to eq false
@@ -159,7 +159,7 @@ describe Completable::Todo do
       context "with an accepted todo" do
         let(:todo) { FactoryGirl.create(:accepted_todo) }
         let(:completor) { u = FactoryGirl.build(:user); u.household = todo.household; u; }
-        
+
         it "should not be allowed" do
           a = Ability.new(completor)
           expect(a.can?(:complete, todo)).to eq false
@@ -390,7 +390,7 @@ describe Completable::Todo do
         let(:todo) { FactoryGirl.create(:todo) }
 
         context "with a valid acceptor" do
-          let!(:valid_acceptor) { 
+          let!(:valid_acceptor) {
             u = FactoryGirl.create(:user)
             m = FactoryGirl.create(:household_admin, :household => todo.household, :member_id => u.id)
             u
@@ -405,7 +405,7 @@ describe Completable::Todo do
           end
 
           context "when the todo is already accepted" do
-            let(:acceptor) { 
+            let(:acceptor) {
               m = FactoryGirl.create(:household_head_admin, :household => todo.household)
               m.user
             }
@@ -602,6 +602,198 @@ describe Completable::Todo do
       end
     end
 
+    describe "#reorder_near" do
+      context "with a todo within a household" do
+        let(:household) { FactoryGirl.create(:household) }
+        let!(:todo) { FactoryGirl.create(:todo, :household => household) }
+        context "with another todo" do
+          let!(:second_todo) { FactoryGirl.create(:todo, :household => household) }
+
+          context "reordering by itself" do
+            context "above" do
+              it "doesn't move" do
+                expect {
+                  todo.reorder_near(todo, false)
+                }.not_to change(todo, :position)
+              end
+            end
+            context "below" do
+              it "doesn't move" do
+                expect {
+                  todo.reorder_near(todo)
+                }.not_to change(todo, :position)
+              end
+            end
+          end
+
+          context "reordering below the second todo" do
+            it "changes the todo's position" do
+              expect {
+                todo.reorder_near(second_todo)
+              }.to change(todo, :position)
+            end
+          end
+          context "reordering above the second todo" do
+            it "doesn't change the todo's position" do
+              expect {
+                todo.reorder_near(second_todo, false)
+              }.not_to change(todo, :position)
+            end
+          end
+        end
+
+        context "with 2 other todos" do
+          let!(:second_todo) { FactoryGirl.create(:todo, :household => household) }
+          let!(:third_todo) { FactoryGirl.create(:todo, :household => household) }
+
+          context "reordering above the second" do
+            it "doesn't change the todo's position" do
+              expect {
+                todo.reorder_near(second_todo, false)
+              }.not_to change(todo, :position)
+            end
+          end
+
+          context "reordering below the second" do
+            it "changes the todo's position" do
+              expect {
+                todo.reorder_near(second_todo)
+              }.to change(todo, :position)
+            end
+            it "moves the todo to position 2" do
+              todo.reorder_near(second_todo)
+              expect(todo.reload.position).to eq(2)
+              expect(todo.higher_item).to eq(second_todo)
+              expect(todo.lower_item).to eq(third_todo)
+            end
+            it "sets the second todo to be in position 1" do
+              todo.reorder_near(second_todo)
+              expect(second_todo.reload.position).to eq(1)
+              expect(second_todo.lower_item).to eq(todo)
+            end
+          end
+
+          context "reordering above the third" do
+            it "changes the todo's position" do
+              expect {
+                todo.reorder_near(third_todo, false)
+              }.to change(todo, :position)
+            end
+            it "moves the todo to position 2" do
+              todo.reorder_near(third_todo, false)
+              expect(todo.reload.position).to eq(2)
+              expect(todo.higher_item).to eq(second_todo)
+              expect(todo.lower_item).to eq(third_todo)
+            end
+            it "sets the second todo to be in position 1" do
+              todo.reorder_near(third_todo, false)
+              expect(second_todo.reload.position).to eq(1)
+              expect(second_todo.lower_item).to eq(todo)
+            end
+          end
+
+          context "reordering below the third" do
+            it "moves the todo below the third" do
+              todo.reorder_near(third_todo)
+              expect(third_todo.reload.lower_item).to eq(todo.reload)
+            end
+            it "sets the todo as the last in the list" do
+              todo.reorder_near(third_todo)
+              expect(household.todos.last).to eq(todo.reload)
+            end
+          end
+        end
+
+        context "with many todos" do
+          before do
+            (1+rand(20)).times do |t|
+              FactoryGirl.create(:todo, :household => household)
+            end
+            expect(household.todos.first).to eq(todo)
+          end
+          context "moving it to the top of the list" do
+            before do
+              todo.reorder_near(household.todos.first)
+            end
+            it "should be at the top of the list" do
+              expect(household.todos.first).to eq(todo.reload)
+            end
+            it "should be at position 1" do
+              expect(todo.reload.position).to eq(1)
+            end
+          end
+          context "moving it after the first element" do
+            it "should not move" do
+              expect{
+                todo.reorder_near(household.todos.first, false)
+              }.not_to change(todo, :position)
+            end
+          end
+          context "moving it before the second element" do
+            it "should not move" do
+              expect{
+                todo.reorder_near(household.todos.first.lower_item, false)
+              }.not_to change(todo, :position)
+            end
+          end
+          context "moving it after the second element" do
+            it "should move the todo" do
+              expect{
+                todo.reorder_near(household.todos.first.lower_item)
+              }.to change(todo, :position)
+            end
+            it "should move to the second slot in the household list" do
+              todo.reorder_near(household.todos.first.lower_item)
+              expect(household.todos.to_a[1]).to eq(todo.reload)
+            end
+          end
+          context "moving it to the bottom of the list" do
+            before do
+              todo.reorder_near(household.todos.last)
+            end
+            it "should be at the bottom of the list" do
+              expect(household.todos.last).to eq(todo.reload)
+            end
+            it "should be at the last position" do
+              expect(todo.reload.position).to eq(household.todos.size)
+            end
+          end
+          context "moving upwards in the list" do
+            let(:last_todo) { household.todos.last }
+            let(:second_todo) { household.todos[1] }
+            context "above the first todo" do
+              it "takes it's place at the head of the list" do
+                last_todo.reorder_near(todo, false)
+                expect(last_todo.reload).to eq(household.todos.first)
+              end
+            end
+            context "below the first todo" do
+              it "becomes the second todo in the list" do
+                last_todo.reorder_near(todo)
+                expect(last_todo.reload.position).to eq(2)
+                expect(last_todo).not_to eq(household.todos.first)
+              end
+            end
+            context "above the second todo" do
+              it "becomes the second todo in the list" do
+                last_todo.reorder_near(second_todo, false)
+                expect(last_todo.reload.position).to eq(2)
+                expect(last_todo).not_to eq(household.todos.first)
+              end
+            end
+            context "below the second todo" do
+              it "becomes the third todo in the list" do
+                last_todo.reorder_near(second_todo)
+                expect(last_todo.reload.position).to eq(3)
+                expect(last_todo).not_to eq(household.todos.first)
+                expect(last_todo).not_to eq(household.todos[1])
+              end
+            end
+          end
+        end
+      end
+    end
+
     describe "#tag_with" do
       context "with a todo" do
         let(:todo) { FactoryGirl.create(:todo) }
@@ -651,7 +843,7 @@ describe Completable::Todo do
 
           context "when adding multiple tags" do
             let(:multiple_new_tags) { "foo, bar,baz" }
-            
+
             it "should create 3 new tags" do
               expect {
                 todo.tag_with(multiple_new_tags)

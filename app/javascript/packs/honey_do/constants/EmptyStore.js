@@ -15,7 +15,6 @@ export const EmptyStore = {
     isCompletedHidden: false,
     dragState: {
       isDragActive: false,
-      currentDragPosition: null,
       currentDragTodoId: null,
       currentNeighborId: null,
       isNeighborNorth: null

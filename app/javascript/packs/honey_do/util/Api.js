@@ -107,15 +107,26 @@ export const apiSyncTodos = (args) => {
   return promise;
 }
 
-export const apiTodoReorder = (args) => {
-  const { endpoint, todo, positionsJumped, authToken, onSuccess, onFailure, onComplete } = args;
+export const apiReorderTodo = (args) => {
+  const {
+    endpoint,
+    todo,
+    todoNeighborId,
+    isTodoNeighborNorth,
+    authToken,
+    onSuccess,
+    onFailure,
+    onComplete
+  } = args;
+
   let promise = $.ajax({
     type: "PUT",
     url: endpoint + '/todos/' + todo.id + '/reorder',
     data: {
       authentication_token: authToken,
       todo: todo,
-      positions_jumped: positionsJumped
+      todo_neighbor_id: todoNeighborId,
+      is_todo_neighbor_north: isTodoNeighborNorth
     }
   });
   promise = handleSuccess(promise, onSuccess);

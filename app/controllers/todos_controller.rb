@@ -74,16 +74,11 @@ class TodosController < ApplicationController
   def reorder
     return unauthorized_response unless can?(:reorder, @todo)
     begin
-      moves = params[:positions_jumped].to_i
-      if(moves > 0)
-        moves.times { |num_times| @todo.move_lower }
-      elsif(moves < 0)
-        moves.abs.times { |num_times| @todo.move_higher }
-      elsif(moves == 0)
-        #do nothing
-      end
+      neighboring_todo = Completable.find(params[:todo_neighbor_id])
+      is_todo_neighbor_north = params[:is_todo_neighbor_north]
+      @todo.reorder_near(neighboring_todo, is_todo_neighbor_north=='true')
       status = :ok
-    rescue
+    rescue Exception => e
       status = 500
     end
     render_todo_to_json(status)

@@ -30,7 +30,7 @@ const draggedTodoSelector = (state, props) => {
   let dragged_id = state.getIn(['uiState', 'dragState', 'currentDragTodoId'])
   return state.getIn(['dataState', 'todos', dragged_id.toString()]);
 }
-const draggedTodoObjectSelector = createSelector([draggedTodoSelector], (immutableTodo) => { 
+const draggedTodoObjectSelector = createSelector([draggedTodoSelector], (immutableTodo) => {
   if(!immutableTodo) { return null; }
   return immutableTodo.toJS();
 });
@@ -51,7 +51,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     todo: todo,
     todoDragState: todoDragState,
-    isDraggedOver: (todo.id === todoDragState.currentNeighborId)
+    isDraggedOver: (ownProps.todoId === todoDragState.currentNeighborId)
   }
 }
 
@@ -60,21 +60,14 @@ const todoSource = {
     return {
       id: props.todo.id,
       klass: props.todo.klass,
-      index: props.currentIndex,
-      position: props.todo.position,
-      startIndex: props.todo.index
+      neighborId: null,
+      isNeighborNorth: null
     };
   },
 
-  endDrag(props, monitor) {
+  endDrag(props, monitor, component) {
     const item = monitor.getItem();
-    const drop_result = monitor.getDropResult();
-    const positions_jumped = (item.startIndex < item.index ? item.index - 1 : item.index) - item.startIndex;
-    if(drop_result) {
-      props.onTodoDropped(item.id, positions_jumped);
-    }else{
-      props.onTodoCancelDrag();
-    }
+    props.onTodoDropped();
   },
 };
 
@@ -87,15 +80,14 @@ const todoTarget = {
     const hover_index = props.currentIndex;
     const neighbor_id = props.todoId;
 
-    if((!drag_index && drag_index != 0) || (!hover_index && hover_index != 0)) {
-      throw new Error("No draggable or target index found during drag operation");
+    let componentNode = findDOMNode(component);
+    const drag_placeholder = $(componentNode).find('.todo-item-drag-placeholder');
+    let hoverBoundingRect;
+    if(drag_placeholder.length > 0) {
+      hoverBoundingRect = drag_placeholder.parent().siblings()[0].getBoundingClientRect();
+    }else{
+      hoverBoundingRect = componentNode.getBoundingClientRect();
     }
-
-    // Don't replace items with themselves
-    if (drag_index === hover_index) { return; }
-
-    // Determine rectangle on screen
-    const hoverBoundingRect = findDOMNode(component).getBoundingClientRect();
 
     // Get vertical middle
     const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
@@ -106,34 +98,41 @@ const todoTarget = {
     // Get pixels to the top
     const hoverClientY = clientOffset.y - hoverBoundingRect.top;
 
-    // Hovering over the top half of a todo means the neighbor is to the south
-    // Hovering over the botom half means neighbor to the north
-    if(hoverClientY <= hoverMiddleY) { is_neighbor_north = false; } // upper half of element
-    if(hoverClientY > hoverMiddleY) { is_neighbor_north = true; } // lower half
+    if(hoverClientY <= hoverMiddleY) { is_neighbor_north = true; } // upper half of element
+    if(hoverClientY > hoverMiddleY) { is_neighbor_north = false; } // lower half
 
-    // Note: we're mutating the monitor item here!
-    // Generally it's better to avoid mutations,
-    // but it's good here for the sake of performance
-    // to avoid expensive index searches.
-    dragged.index = hover_index;
-    props.onTodoReorder(dragged.id, hover_index, neighbor_id, is_neighbor_north);
+    if(
+      dragged.neighborId === neighbor_id &&
+      dragged.isNeighborNorth === is_neighbor_north
+    ){ return; }
+    dragged.isNeighborNorth = is_neighbor_north;
+    dragged.neighborId = neighbor_id;
+
+    props.onTodoReorder(dragged.id, neighbor_id, is_neighbor_north);
   },
 
-  drop(props, monitor) {
+  drop(props, monitor, component) {
+
+    // It doesn't appear that this is reliable, endDrag always gets called but
+    // this one doesn't
+
+//    const drop_result = monitor.getDropResult();
+//    if(!drop_result) { props.onTodoCancelDrag(); }
+//    props.onTodoDropped();
     return {
       id: props.todo.id,
-      index: props.todo.index,
-      position: props.todo.position,
+//      index: props.todo.index,
+//      position: props.todo.position,
     }
   }
 };
 
-const renderDraggingPlaceholder = (todo, connectDragSource, connectDropTarget) => {
-  return connectDropTarget(connectDragSource(
+const renderDraggingPlaceholder = (todo, connectDropTarget) => {
+  return (
     <div className='todo-item-drag-wrap'>
       <TodoItemDragPlaceholder todo={todo} />
     </div>
-  ));
+  );
 }
 
 
@@ -154,9 +153,13 @@ class TodoItem extends Component {
   shouldComponentUpdate(nextProps) {
     let should_update = (
       !_.isEqual(this.props.todo, nextProps.todo)
+      || (this.props.todoDragState.isDragActive && !nextProps.todoDragState.isDragActive) // rerender all when stop dragging
       || this.props.isDraggedOver
       || this.props.isDraggedOver != nextProps.isDraggedOver
+      || ( this.props.isDraggedOver
+        && this.props.todoDragState.isNeighborNorth != nextProps.todoDragState.isNeighborNorth)
     )
+
     return should_update;
   }
 
@@ -186,17 +189,17 @@ class TodoItem extends Component {
   }
 
   render() {
-    const { todo, currentIndex, todoDragState } = this.props;
+    const { todo, todoDragState } = this.props;
 
     if(todoDragState.isDragActive) {
       if(todoDragState.currentDragTodoId === todo.id) {
         return null; // don't render the todo that is being dragged
       }else if(todoDragState.currentNeighborId === todo.id){
-        if(todoDragState.isCurrentNeighborNorth){
+        if(todoDragState.isNeighborNorth){
           return (
             <div>
               { this.renderTodoItemWrap() }
-              { renderDraggingPlaceholder(todoDragState.draggedTodo, this.props.connectDragSource, this.props.connectDropTarget)}
+              { renderDraggingPlaceholder(todoDragState.draggedTodo, this.props.connectDropTarget)}
             </div>
           )
         }else{

@@ -28,12 +28,12 @@ import {
   SYNC_TODOS_REQUEST,
   SYNC_TODOS_SUCCESS,
   SYNC_TODOS_FAILURE,
-  TODO_CANCEL_DRAG,
   TODO_REORDER_REQUEST,
   TODO_REORDER_SUCCESS,
   TODO_REORDER_FAILURE,
   TOGGLE_HIDE_COMPLETED,
   UPDATE_TODO_DRAG,
+  CANCEL_TODO_DRAG,
   UPDATE_TODO_REQUEST,
   UPDATE_TODO_SUCCESS,
   UPDATE_TODO_FAILURE,
@@ -63,7 +63,7 @@ import {
   apiDeleteTodo,
   apiRemoveTag,
   apiSyncTodos,
-  apiTodoReorder,
+  apiReorderTodo,
   apiUncompleteTodo,
   apiUpdateTodo
 } from '../util/Api'
@@ -159,31 +159,22 @@ function honeyDoReducer(state, action) {
     case EDIT_TODO_CANCELED:
       return state.setIn(["uiState", "isEditing"], false);
 
-    case TODO_CANCEL_DRAG:
-      return resetDragState(state);
-
     case TODO_REORDER_REQUEST:
-      temp_state = resetDragState(state);
-      if(action.positionsJumped == 0) { return temp_state; }
-      temp_state = reorderTodos(activateSpinner(temp_state), action.todo, action.positionsJumped);
+      let temp_state = reorderTodos(activateSpinner(state));
       requestReorderTodoOnServer(temp_state, action);
-      return temp_state;
+      return resetDragState(temp_state);
     case TODO_REORDER_SUCCESS:
     case TODO_REORDER_FAILURE:
-      // TODO: Ok, some refactoring is in order here later.
-      // Right now these do nothing, although error should spit out an error
-      // message.
-      // Eventually, these should use either react-thunk or react-promise and
-      // after these actions complete, there is a trigger to sync.
-      // For now, we'll just let this do nothing and sync immediately after
-      // we get a success or failure back.
       return deactivateSpinner(state);
 
     case TOGGLE_HIDE_COMPLETED:
       return toggleHideCompletedTodos(state);
 
     case UPDATE_TODO_DRAG:
-      return setTodoDragState(state, {draggedId: action.draggedId, newPosition: action.newPosition, neighborId: action.neighborId, isNeighborNorth: action.isNeighborNorth});
+      return setTodoDragState(state, {draggedId: action.draggedId, neighborId: action.neighborId, isNeighborNorth: action.isNeighborNorth});
+    case CANCEL_TODO_DRAG:
+      return resetDragState(state);
+
 
     case UPDATE_TODO_REQUEST:
       temp_state = updateTodo(state, action.todo);
@@ -274,8 +265,14 @@ const retrieveTodo = (state, todo) => {
   return state.getIn(['dataState', 'todos', todo.id.toString()]);
 }
 
-const reorderTodos = (state, todo, positionsJumped) => {
-  var temp_state, temp_data, target_position;
+const reorderTodos = (state) => {
+  var temp_data;
+
+  const drag_state = state.getIn(['uiState', 'dragState']);
+  const todo_id = drag_state.get('currentDragTodoId');
+  const neighbor_id = drag_state.get('currentNeighborId');
+  const is_neighbor_north = drag_state.get('isNeighborNorth');
+  let todo = state.getIn(['dataState', 'todos', todo_id.toString()]).toJS();
 
   // pull store data into a js object
   temp_data = state.getIn(['dataState', 'todos']).toJS();
@@ -285,20 +282,24 @@ const reorderTodos = (state, todo, positionsJumped) => {
     return curr_todo.position;
   });
 
+  // get the index of the chosen todo
   let temp_index = _.findIndex(temp_data, (curr_todo) => {
-    return curr_todo.id === todo.id
+    return curr_todo.id === todo_id
   });
 
   // remove the todo from list
   temp_data.splice(temp_index, 1);
 
+  // find the index of the target todo
+  let target_index = _.findIndex(temp_data, (curr_todo) => {
+    return curr_todo.id === neighbor_id;
+  });
 
   // insert it at the desired position
-  temp_data.splice(temp_index + positionsJumped, 0, todo);
-
+  temp_data.splice((is_neighbor_north ? target_index+1 : target_index), 0, todo);
 
   // renumber positions
-  let itor=0;
+  let itor=1;
   _.each(temp_data, (curr_todo) => {
     curr_todo.position = itor++;
   });
@@ -311,7 +312,7 @@ const reorderTodos = (state, todo, positionsJumped) => {
 
   return state.setIn(
     ['dataState', 'todos'],
-    Immutable.fromJS(temp_data)
+    Immutable.fromJS(output)
   );
 }
 
@@ -371,16 +372,23 @@ const requestRemoveTodoTagOnServer = (state, action) => {
 }
 
 const requestReorderTodoOnServer = (state, action) => {
-  apiTodoReorder({
+  const drag_state = state.getIn(['uiState', 'dragState']);
+  const todo_id = drag_state.get('currentDragTodoId');
+  let todo = state.getIn(['dataState', 'todos', todo_id.toString()]).toJS();
+  let neighbor_id = drag_state.get('currentNeighborId');
+  let is_neighbor_north = drag_state.get('isNeighborNorth');
+
+  apiReorderTodo({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
-    todo: action.todo,
-    positionsJumped: action.positionsJumped,
+    todo: todo,
+    todoNeighborId: neighbor_id,
+    isTodoNeighborNorth: is_neighbor_north,
     onSuccess: (data, textStatus, jqXHR) => {
-      action.asyncDispatch(todoReorderSuccess(action.todo.id, action.todoType, data));
+      action.asyncDispatch(todoReorderSuccess(todo_id, action.todoType, data));
     },
     onFailure: (jqXHR, textStatus, errorThrown) => {
-      action.asyncDispatch(todoReorderFailure(action.todo.id, action.todoType, jqXHR));
+      action.asyncDispatch(todoReorderFailure(todo_id, action.todoType, jqXHR));
     },
     onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
       action.asyncDispatch(syncTodosRequest()); // don't sync all the time, it's expensive
@@ -407,21 +415,19 @@ const resetDragState = (state) => {
   let temp_state = state;
 
   temp_state = temp_state.setIn(["uiState", "dragState", "isDragActive"], false);
-  temp_state = temp_state.setIn(["uiState", "dragState", "currentDragPosition"], null);
   temp_state = temp_state.setIn(["uiState", "dragState", "currentNeighborId"], null);
   temp_state = temp_state.setIn(["uiState", "dragState", "isNeighborNorth"], null);
   return temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], null);
 }
 
 const setTodoDragState = (state, options) => {
-  const {draggedId, position, neighborId, isNeighborNorth} = options;
+  const {draggedId, neighborId, isNeighborNorth} = options;
   let temp_state = state;
 
   temp_state = temp_state.setIn(["uiState", "dragState", "isDragActive"], true);
-  temp_state = temp_state.setIn(["uiState", "dragState", "currentDragPosition"], position);
   temp_state = temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], draggedId);
   temp_state = temp_state.setIn(["uiState", "dragState", "currentNeighborId"], neighborId );
-  return temp_state.setIn(["uiState", "dragState", "isCurrentNeighborNorth"], isNeighborNorth );
+  return temp_state.setIn(["uiState", "dragState", "isNeighborNorth"], isNeighborNorth );
 }
 
 const setTodoCompletedState = (state, todo, isCompleted) => {
