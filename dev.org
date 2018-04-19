@@ -1,7 +1,7 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Test performance on mobile 
+** TODO Create todo should create/add the todo client side immediately
 ** TODO Switching to shopping list doesn't work                         :bug:
 ** TODO Refactor use of dispatch in components using connect
    I refactored some components to use connect rather than subscribe but i need
@@ -16,6 +16,9 @@
    dragOver is bottom half, set below
 ** TODO Make specs pass
 * Backlog
+** TODO Fix drag n drop on mobile
+** TODO app doesn't fix perfectly on phone
+   Theres a little wiggle room as you scroll side to side.
 ** TODO Redo navbar
 ** TODO Change config tab into a drawer
 ** TODO Tagging todo not working server side
@@ -246,6 +249,9 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Test performance on mobile 
+   CLOSED: [2018-04-19 Thu 16:50]
+   Performance is decent and everything works except drag n drop
 ** DONE Try refactoring the way I'm handling state and dispatch
    CLOSED: [2018-04-07 Sat 13:53]
    Gonna try doing it the redux way where we use `connect` everywhere
