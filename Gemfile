@@ -29,7 +29,9 @@ group :development do
   gem 'awesome_print'
   #gem 'better_errors'
   gem 'byebug'
-  #gem 'spring' # TODO: incorporate me
+  gem 'spring'
+  gem 'spring-commands-rspec'
+  # TODO: Install and setup guard so specs re-run when i change them
 end
 
 group :development, :test do
