@@ -10,38 +10,6 @@
 
    I believe the problem has to do with the entire list being rerendered when
    something is checked
-** TODO Performance improvement attempt
-*** DONE Make TodoListWrap pass down something that may be checked for equality
-    CLOSED: [2018-04-13 Fri 07:25]
-    Passing down an object which was instantiated with toJS() will always result
-    in an inequality:
-    var foo = store.getIn(...)
-    foo.toJS() === foo.toJS() is false
-    ensure whatever I do pass down would evaluate to true if it hasn't changed.
-
-    Going to try mapping the todos in props (from mapStateToProps) into their
-    immutables from the store. It'll incur a lot of lookups into the store but
-    should ensure that each todo can be checked for equality so long as it
-    doesn't change.
-*** TODO Change the way drag/drop works
-    Rather than keep track of some new index or position, just keep track of the
-    nearest neighbor. Then in TodoListWrap (or maybe even TodoList), render the
-    placeholder next to it's neighbor. This way, the indices of the list don't
-    have to update, only the position of the placeholder.
-**** DONE Rather than keep track of indices, keep track of drag neighbor
-     CLOSED: [2018-04-13 Fri 08:49]
-**** DONE Remove old todo drag data from wherever it's used
-     CLOSED: [2018-04-13 Fri 10:09]
-     action, ondrag(dnd code thingy), reducer, etc
-**** DONE Ensure todolist is rerendered after drop
-     CLOSED: [2018-04-13 Fri 10:21]
-**** TODO Update server handling of drag n drop
-     Should work along the same lines as the client logic
-**** TODO update specs around drag n drop (if there are any)
-**** TODO Update Drag n drop UI
-     If you drag outside of legal area, it should warn user For dragging to a
-     position, if dragOver is the top half, then set above nearest neighbor, if
-     dragOver is bottom half, set below
 ** TODO Mobile performance issues:
 *** TODO Avoid toJS() in mapStateToProps
 *** DONE Try having each todo item grab itself from store
@@ -132,6 +100,10 @@
 ** TODO Refactor those api calls in the reducer
    Since the endpoint and auth token are always the same I'm sure we can DRY 
    that up
+** TODO Update Drag n drop UI
+   If you drag outside of legal area, it should warn user For dragging to a
+   position, if dragOver is the top half, then set above nearest neighbor, if
+   dragOver is bottom half, set below
 * Backlog
 ** TODO Redo navbar
 ** TODO Change config tab into a drawer
@@ -363,6 +335,38 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Performance improvement attempt
+   CLOSED: [2018-04-19 Thu 15:36]
+*** DONE Make TodoListWrap pass down something that may be checked for equality
+    CLOSED: [2018-04-13 Fri 07:25]
+    Passing down an object which was instantiated with toJS() will always result
+    in an inequality:
+    var foo = store.getIn(...)
+    foo.toJS() === foo.toJS() is false
+    ensure whatever I do pass down would evaluate to true if it hasn't changed.
+
+    Going to try mapping the todos in props (from mapStateToProps) into their
+    immutables from the store. It'll incur a lot of lookups into the store but
+    should ensure that each todo can be checked for equality so long as it
+    doesn't change.
+*** DONE Change the way drag/drop works
+    CLOSED: [2018-04-19 Thu 15:36]
+    Rather than keep track of some new index or position, just keep track of the
+    nearest neighbor. Then in TodoListWrap (or maybe even TodoList), render the
+    placeholder next to it's neighbor. This way, the indices of the list don't
+    have to update, only the position of the placeholder.
+**** DONE Rather than keep track of indices, keep track of drag neighbor
+     CLOSED: [2018-04-13 Fri 08:49]
+**** DONE Remove old todo drag data from wherever it's used
+     CLOSED: [2018-04-13 Fri 10:09]
+     action, ondrag(dnd code thingy), reducer, etc
+**** DONE Ensure todolist is rerendered after drop
+     CLOSED: [2018-04-13 Fri 10:21]
+**** DONE Update server handling of drag n drop
+     CLOSED: [2018-04-19 Thu 15:36]
+     Should work along the same lines as the client logic
+**** DONE update specs around drag n drop (if there are any)
+     CLOSED: [2018-04-19 Thu 15:36]
 ** DONE Test performance on mobile on a remote server
    CLOSED: [2018-04-13 Fri 15:18]
    Fire up the amazon ec2 dev machine, pull the code, run and try to use the app
