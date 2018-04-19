@@ -41,9 +41,9 @@ COPY . $APP_HOME
 # Bundle ruby gems
 COPY Gemfile $APP_HOME/Gemfile
 COPY Gemfile.lock $APP_HOME/Gemfile.lock
-ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
-  BUNDLE_JOBS=2 \
-  BUNDLE_PATH=/bundle
+#ENV BUNDLE_GEMFILE=$APP_HOME/Gemfile \
+#  BUNDLE_JOBS=2 \
+#  BUNDLE_PATH=/bundle
 
 RUN bundle install
 

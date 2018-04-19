@@ -6,25 +6,25 @@ services:
   web:
     build: .
     volumes:
-      #      - .:/myapp
+      - .:/myapp
       #      - /bundle
       #- type: bind
       #  source: .
       #  target: /myapp
-      - .:/myapp
-      - type: volume
-        source: bundle
-        target: /bundle
-        volume: 
-          nocopy: true
+
+#      - type: volume
+#        source: bundle
+#        target: /bundle
+#        volume:
+#          nocopy: true
 
     ports:
       - "3000:3000"
     depends_on:
       - db
-      - bundle 
+#      - bundle
       - webpack-dev
-    command: ./bin/rails s -p 3000 -b '0.0.0.0' 
+    command: ./bin/rails s -p 3000 -b '0.0.0.0'
     tty: true
     stdin_open: true
 
@@ -41,13 +41,27 @@ services:
     #command: ./bin/webpack-dev-server --inline true --hot true --port 8080 --public localhost:8080
     command: ./bin/webpack-dev-server --inline true --hot true --port 8080 --public 0.0.0.0:8080
 
-  bundle:
-    image: honeydo_web
-    command: echo bundling ruby gems??
-    volumes:
-      - type: volume
-        source: bundle
-        target: /bundle
+# Whenever I want to use spring to run specs, I'll just do 
+# docker-compose run web bash, then bin/rspec blahblah, I think that'll do it, if not, reenable this
+#  spring:
+#    build: .
+#    volumes:
+#      - .:/myapp
+#    command: spring server
+
+    # This ensures that the pid namespace is shared between the host
+    # and the container. It's not necessary to be able to run spring
+    # commands, but it is necessary for "spring status" and "spring stop"
+    # to work properly.
+    #pid: host
+
+#  bundle:
+#    image: honeydo_web
+#    command: echo bundling ruby gems??
+#    volumes:
+#      - type: volume
+#        source: bundle
+#        target: /bundle
 
       #  cucumber:
       #    build:
@@ -62,8 +76,8 @@ services:
 #  node_modules:
 #    image: honey_do_web
 #    command: echo building node modules??
-#    volumes: 
+#    volumes:
 #      - /node_modules
 
-volumes: 
-  bundle:
+#volumes:
+#  bundle:
