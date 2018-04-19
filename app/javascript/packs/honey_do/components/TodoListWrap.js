@@ -81,12 +81,6 @@ const filterList = (todoList, filterVal) => {
   });
 }
 
-const mapTodosToIds = (list) => {
-  return _.map(
-    list,
-    (curr_todo) => curr_todo.id
-  );
-}
 class TodoListWrap extends Component {
   shouldComponentUpdate(nextProps){
     let should_update = (
@@ -181,10 +175,9 @@ class TodoListWrap extends Component {
   }
 
   render() {
-    let todo_ids = mapTodosToIds(this.props.todos);
     return (
       <div>
-        { this.props.isTouch ? this.renderTodoListTouch(todo_ids) : this.renderTodoListMouse(todo_ids) }
+        { this.props.isTouch ? this.renderTodoListTouch(this.props.todoIds) : this.renderTodoListMouse(this.props.todoIds) }
       </div>
     )
   }
