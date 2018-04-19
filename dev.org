@@ -1,98 +1,8 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Big lag between check todo and todo getting checked
-   First let's see if there's a big delay between the actual touch and the
-   action being triggered
-
-   No big delay between when touch activated and when event fires nor when the
-   action is dispatched.
-
-   I believe the problem has to do with the entire list being rerendered when
-   something is checked
-** TODO Mobile performance issues:
-*** TODO Avoid toJS() in mapStateToProps
-*** DONE Try having each todo item grab itself from store
-    CLOSED: [2018-04-12 Thu 23:10]
-    Rather than have todolist pass todos down to them, it just passes the todo
-    id which then each todo item retrieves itself from storage Needs more
-    restructuring, let's get rid of todos and shopping list as separate. Instead
-    the current tab would set an additional filter value which grabs out only
-    the relevant todos
-
-    This wasn't the right course of action. It's possible to prevent each todo
-    from rerendering without doing this. They should either use
-    shouldComponentUpdate or just properly block out mapStateToProps..
-**** DONE consolidate todo data state
-     CLOSED: [2018-04-12 Thu 23:20]
-***** DONE Server /todos should return only {todos: {}}
-      CLOSED: [2018-04-12 Thu 19:07]
-***** DONE Sync todos replaces datastate as before
-      CLOSED: [2018-04-12 Thu 19:07]
-***** DONE TodoListWrap starts by grabing all todos: [dataState, todos]
-      CLOSED: [2018-04-12 Thu 21:01]
-***** DONE TodoListWrap filters out todos not of the given type before render
-      CLOSED: [2018-04-12 Thu 21:09]
-***** DONE TodoTypeToDataStae goes away
-      CLOSED: [2018-04-12 Thu 21:20]
-***** DONE Try backing out the id thing.
-      CLOSED: [2018-04-12 Thu 22:36]
-      Where TodoList passes ids down, instead just pass the whole todo, but as
-      immutables. No we can't do that, have to turn them into js objects for
-      filtering
-***** DONE Try using reselect within TodoListWrap mapStateToProps
-      CLOSED: [2018-04-12 Thu 23:05]
-      If performance is still an issue.
-***** DONE Edit todo should grab the todo from id only
-      CLOSED: [2018-04-12 Thu 23:20]
-**** DONE make todolistwrap hold ids instead of todos, it then passes ids down to TodoItem
-     CLOSED: [2018-04-12 Thu 22:09]
-*** TODO Use shouldComponentUpdate where I want to restrict re-rendering
-**** DONE TodoListWrap
-     CLOSED: [2018-04-12 Thu 18:38]
+** TODO Test performance on mobile 
 ** TODO Switching to shopping list doesn't work                         :bug:
-** DONE Accept todo icon broken
-   CLOSED: [2018-04-10 Tue 22:57]
-** TODO Drag n drop still not accurate
-   Heres what I did:
-   Filter todos so only 4 or so appear
-   Grab the lowest one
-   Drag it to the #2 spot
-   It appears in the #3 spot
-
-   There's probably some quirks with redordering while the list is being
-   filtered.  I think i'll have to revisit the reordering algorithm perhaps
-   instead of places jumped, I go by adjacency. That is, when you drag
-   something, it looks at the nearby ones and moves to the appropriate space
-   next to them, reordering the rest.
-
-   Server side, rather than do places jumped, pass in either the top neighbor or
-   bottom neighbor (if you're at the top of the list, there'll only be a bottom
-   neighbor). Then make the move accordingly
-** TODO If you check a todo, then drag it, it runs away
-   Problem is, when you check it, on the server side, it's moving to the bottom.
-   Client side leave it in place so the user knows what happened. Then after a
-   drag, there's a sync and the server then updates the client with the position
-   of the checked todo. Since the drag operation only gives the server the
-   number of positions jumped, they're jumping from a location which is much
-   different from what the client thinks it's at. This may be fixed by the
-   change to drag behavior that I'm envisioning.
-** TODO Make specs pass
-** DONE Try refactoring the way I'm handling state and dispatch
-   CLOSED: [2018-04-07 Sat 13:53]
-   Gonna try doing it the redux way where we use `connect` everywhere
-   Just let redux/react handle the re-rendering and batching
-*** DONE Upgrade babel
-    CLOSED: [2018-03-28 Wed 18:02]
-*** DONE Install react hot loader (latest)
-    CLOSED: [2018-03-28 Wed 18:51]
-*** DONE use redux connect on some component (replace use of store.subscribe())
-    CLOSED: [2018-04-07 Sat 13:53]
-*** DONE use redux connect on the lowest level component that should have it
-    CLOSED: [2018-04-07 Sat 13:53]
-    Test that it works.
-*** DONE Restructure which components need to use connect
-    CLOSED: [2018-04-07 Sat 13:53]
 ** TODO Refactor use of dispatch in components using connect
    I refactored some components to use connect rather than subscribe but i need
    to use mapdispatchtoprops as well as mapstatetoprops, then remove calls to
@@ -104,6 +14,7 @@
    If you drag outside of legal area, it should warn user For dragging to a
    position, if dragOver is the top half, then set above nearest neighbor, if
    dragOver is bottom half, set below
+** TODO Make specs pass
 * Backlog
 ** TODO Redo navbar
 ** TODO Change config tab into a drawer
@@ -335,6 +246,102 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Try refactoring the way I'm handling state and dispatch
+   CLOSED: [2018-04-07 Sat 13:53]
+   Gonna try doing it the redux way where we use `connect` everywhere
+   Just let redux/react handle the re-rendering and batching
+*** DONE Upgrade babel
+    CLOSED: [2018-03-28 Wed 18:02]
+*** DONE Install react hot loader (latest)
+    CLOSED: [2018-03-28 Wed 18:51]
+*** DONE use redux connect on some component (replace use of store.subscribe())
+    CLOSED: [2018-04-07 Sat 13:53]
+*** DONE use redux connect on the lowest level component that should have it
+    CLOSED: [2018-04-07 Sat 13:53]
+    Test that it works.
+*** DONE Restructure which components need to use connect
+    CLOSED: [2018-04-07 Sat 13:53]
+** DONE Accept todo icon broken
+   CLOSED: [2018-04-10 Tue 22:57]
+** DONE Drag n drop still not accurate
+   CLOSED: [2018-04-19 Thu 16:19]
+   Heres what I did:
+   Filter todos so only 4 or so appear
+   Grab the lowest one
+   Drag it to the #2 spot
+   It appears in the #3 spot
+
+   There's probably some quirks with redordering while the list is being
+   filtered.  I think i'll have to revisit the reordering algorithm perhaps
+   instead of places jumped, I go by adjacency. That is, when you drag
+   something, it looks at the nearby ones and moves to the appropriate space
+   next to them, reordering the rest.
+
+   Server side, rather than do places jumped, pass in either the top neighbor or
+   bottom neighbor (if you're at the top of the list, there'll only be a bottom
+   neighbor). Then make the move accordingly
+** DONE If you check a todo, then drag it, it runs away
+   CLOSED: [2018-04-19 Thu 16:19]
+   Problem is, when you check it, on the server side, it's moving to the bottom.
+   Client side leave it in place so the user knows what happened. Then after a
+   drag, there's a sync and the server then updates the client with the position
+   of the checked todo. Since the drag operation only gives the server the
+   number of positions jumped, they're jumping from a location which is much
+   different from what the client thinks it's at. This may be fixed by the
+   change to drag behavior that I'm envisioning.
+** DONE Big lag between check todo and todo getting checked
+   CLOSED: [2018-04-19 Thu 16:19]
+   First let's see if there's a big delay between the actual touch and the
+   action being triggered
+
+   No big delay between when touch activated and when event fires nor when the
+   action is dispatched.
+
+   I believe the problem has to do with the entire list being rerendered when
+   something is checked
+** DONE Mobile performance issues:
+   CLOSED: [2018-04-19 Thu 16:19]
+*** DONE Avoid toJS() in mapStateToProps
+    CLOSED: [2018-04-19 Thu 16:19]
+*** DONE Try having each todo item grab itself from store
+    CLOSED: [2018-04-12 Thu 23:10]
+    Rather than have todolist pass todos down to them, it just passes the todo
+    id which then each todo item retrieves itself from storage Needs more
+    restructuring, let's get rid of todos and shopping list as separate. Instead
+    the current tab would set an additional filter value which grabs out only
+    the relevant todos
+
+    This wasn't the right course of action. It's possible to prevent each todo
+    from rerendering without doing this. They should either use
+    shouldComponentUpdate or just properly block out mapStateToProps..
+**** DONE consolidate todo data state
+     CLOSED: [2018-04-12 Thu 23:20]
+***** DONE Server /todos should return only {todos: {}}
+      CLOSED: [2018-04-12 Thu 19:07]
+***** DONE Sync todos replaces datastate as before
+      CLOSED: [2018-04-12 Thu 19:07]
+***** DONE TodoListWrap starts by grabing all todos: [dataState, todos]
+      CLOSED: [2018-04-12 Thu 21:01]
+***** DONE TodoListWrap filters out todos not of the given type before render
+      CLOSED: [2018-04-12 Thu 21:09]
+***** DONE TodoTypeToDataStae goes away
+      CLOSED: [2018-04-12 Thu 21:20]
+***** DONE Try backing out the id thing.
+      CLOSED: [2018-04-12 Thu 22:36]
+      Where TodoList passes ids down, instead just pass the whole todo, but as
+      immutables. No we can't do that, have to turn them into js objects for
+      filtering
+***** DONE Try using reselect within TodoListWrap mapStateToProps
+      CLOSED: [2018-04-12 Thu 23:05]
+      If performance is still an issue.
+***** DONE Edit todo should grab the todo from id only
+      CLOSED: [2018-04-12 Thu 23:20]
+**** DONE make todolistwrap hold ids instead of todos, it then passes ids down to TodoItem
+     CLOSED: [2018-04-12 Thu 22:09]
+*** DONE Use shouldComponentUpdate where I want to restrict re-rendering
+    CLOSED: [2018-04-19 Thu 16:19]
+**** DONE TodoListWrap
+     CLOSED: [2018-04-12 Thu 18:38]
 ** DONE Performance improvement attempt
    CLOSED: [2018-04-19 Thu 15:36]
 *** DONE Make TodoListWrap pass down something that may be checked for equality
