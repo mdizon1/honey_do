@@ -41,7 +41,7 @@ class CompletableForm
 
   private
 
-  TAG_IN_TITLE_REGEX = /(#\w+)\b/
+  TAG_IN_TITLE_REGEX = /(#[\w \t]+)\b/
 
   def add_existing_tags_to_tag_params!
     @params[:tags] ||= []
@@ -66,7 +66,7 @@ class CompletableForm
       tag_titles_to_create = tag_values - existing_tag_titles.map(&:title)
       new_tag_titles = []
       tag_titles_to_create.each do |new_title|
-        new_tag_titles << TagTitle.create(:title => new_title)
+        new_tag_titles << TagTitle.find_or_create_by(:title => new_title)
       end
       output = existing_tag_titles + new_tag_titles
     end
@@ -86,7 +86,6 @@ class CompletableForm
     tagged_words = []
     @params[:title].gsub(TAG_IN_TITLE_REGEX) do |match|
       tagged_words << match.sub('#', '')
-      ''
     end
     tagged_words
   end

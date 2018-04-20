@@ -13,6 +13,7 @@
    Completed 422 Unprocessable entity
    ActiveRecord::RecordInvalid (Validation failed: Title has already been taken)
    for tags..
+** TODO Handle tags in forms client side as well
 * Backlog
 ** TODO Make specs pass
 ** TODO app doesn't fix perfectly on phone

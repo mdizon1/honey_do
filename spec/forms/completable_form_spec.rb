@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe CompletableForm do
   describe '.new' do
@@ -20,7 +20,7 @@ describe CompletableForm do
 
     context "with a completable" do
       let(:completable) { FactoryGirl.create(:todo) }
-      
+
       it "should not raise an error" do
         expect { CompletableForm.new(completable) }.not_to raise_error
       end
@@ -44,7 +44,7 @@ describe CompletableForm do
       let!(:membership) { FactoryGirl.create(:membership, :household => household, :user => user) }
       let(:completable) { nil }
       let(:completable_form) { CompletableForm.new(completable) }
-      
+
       context "creating" do
         context "with no params" do
           it "should raise an argument error" do
@@ -130,6 +130,51 @@ describe CompletableForm do
               it "attaches the TagTitle to the new completable" do
                 completable_form.submit(params)
                 expect(completable_form.resource.tag_titles.map(&:title)).to eq ['Safeway']
+              end
+
+              context "that has a space in it" do
+                let(:expected_tag) { 'farmer marker' }
+                let(:expected_tag_in_title) { "##{expected_tag}" }
+
+                it "creates a single TagTitle" do
+                  expect {
+                    completable_form.submit(params)
+                  }.to change(TagTitle, :count).by(1)
+                end
+                it "creates a single Tag" do
+                  expect {
+                    completable_form.submit(params)
+                  }.to change(Tag, :count).by(1)
+                end
+                it "creates a todo with just the title" do
+                  completable_form.submit(params)
+                  expect(Completable.order(:created_at).last.title).to eq(expected_title)
+                end
+                it "sets the new TagTitle appropriately" do
+                  completable_form.submit(params)
+                  expect(TagTitle.order(:created_at).last.title).to eq(expected_tag)
+                end
+
+                context "followed by another tag with spaces" do
+                  let(:last_tag) { "kibbles and bits" }
+                  let(:last_tag_in_title) { "##{last_tag}" }
+                  let(:new_title) { "#{expected_title} #{expected_tag_in_title} #{last_tag_in_title}" }
+
+                  it "creates two TagTitles" do
+                    expect {
+                      completable_form.submit(params)
+                    }.to change(TagTitle, :count).by(2)
+                  end
+                  it "creates two Tags" do
+                    expect {
+                      completable_form.submit(params)
+                    }.to change(Tag, :count).by(2)
+                  end
+                  it "creates a todo with title omitting the tags" do
+                    completable_form.submit(params)
+                    expect(Completable.order(:created_at).last.title).to eq(expected_title)
+                  end
+                end
               end
             end
 
@@ -526,7 +571,7 @@ describe CompletableForm do
                     completable_form.submit(params)
                     expect(completable_form.resource.tag_titles.map(&:title)).to eq tag_titles_to_add
                   end
-                  
+
                   context "and is already attached to the completable" do
                     let!(:existing_tag) { FactoryGirl.create(:tag, :tag_title => existing_tag_title, :taggable => completable) }
 
@@ -591,7 +636,7 @@ describe CompletableForm do
                       completable_form.submit(params)
                     }.to change(Tag, :count).by(2)
                   end
-                  
+
                   it "attaches two Tags to the completable" do
                     expect{
                       completable_form.submit(params)
