@@ -1,24 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Refactor use of dispatch in components using connect
-   I refactored some components to use connect rather than subscribe but i need
-   to use mapdispatchtoprops as well as mapstatetoprops, then remove calls to
-   this.props.store.dispatch
-** TODO Refactor those api calls in the reducer
-   Since the endpoint and auth token are always the same I'm sure we can DRY 
-   that up
-** TODO Update Drag n drop UI
-   If you drag outside of legal area, it should warn user For dragging to a
-   position, if dragOver is the top half, then set above nearest neighbor, if
-   dragOver is bottom half, set below
-** TODO Make specs pass
-* Backlog
-** TODO Fix drag n drop on mobile
-** TODO app doesn't fix perfectly on phone
-   Theres a little wiggle room as you scroll side to side.
-** TODO Redo navbar
-** TODO Change config tab into a drawer
 ** TODO Tagging todo not working server side
    Expected behavior:
    some title #tag #tag #tag with space
@@ -31,47 +13,61 @@
    Completed 422 Unprocessable entity
    ActiveRecord::RecordInvalid (Validation failed: Title has already been taken)
    for tags..
-** TODO Upgrade immutable js
+* Backlog
+** TODO Refactor use of dispatch in components using connect
+   I refactored some components to use connect rather than subscribe but i need
+   to use mapdispatchtoprops as well as mapstatetoprops, then remove calls to
+   this.props.store.dispatch
+** TODO Refactor those api calls in the reducer
+   Since the endpoint and auth token are always the same I'm sure we can DRY 
+   that up
+** TODO Update Drag n drop UI
+   If you drag outside of legal area, it should warn user For dragging to a
+   position, if dragOver is the top half, then set above nearest neighbor, if
+   dragOver is bottom half, set below
+** TODO Make specs pass
+** TODO Fix drag n drop on mobile
+** TODO app doesn't fix perfectly on phone
+   Theres a little wiggle room as you scroll side to side.
+** TODO Redo navbar
+** TODO Change config tab into a drawer
 ** TODO Ditch calls to bind(this)
-** TODO Replace $.ajax with http.get and put etc
-** TODO Error with todo reordering
-   So there were a number of issues, both with my logic and with some disparity
-   between the client and server. I've plugged all the problems but 1 remains:
-   if a todo is at position 1, and the next todo is at position 3, using
-   move_lower (acts as list) puts it at position 2 rather than actually moving
-   it down the list. This is in contradiction to the documentation which says
-   that case has been fixed.
-** TODO Consider removing font awesome since we're using material icons
+** TODO Make specs pass
+** TODO Upgrade immutable js
+** TODO Fix configuration panel
+** TODO Change config tab into a drawer
+** TODO Remove bootstrap-loader
+   Apparently bootstrap doesn't need it anymore with v4.0.0
+** TODO Redo navbar
+   For newer bootstrap
 ** TODO Add a clear search button
-** TODO Do some more with responsiveness
-   On larger screens, we can fully expand notes and/or show tags
-** TODO Change the way sync works
-*** TODO Change the way todos are stored
-    Rather than two arrays, they shoudl be 2 objects where the keys are IDs
-    And the order of the todos are dictated by the position value of each todo
-*** TODO Sync reconciles what comes from server
-    Rather than sync just replacing the state of the data, it'll only update the
-    todos on the client which have changed, it'll also only add todos which are
-    new. This is so that if the server sends data to the client which matches
-    (nothing changed) then the client doesn't have to rerender at all
-** TODO When user clicks on notes that are truncated, expand them
-   So you dont have to use the little ... menu
-** TODO Move the spinner somewhere more obvious
-   Also make it more obvious
 ** TODO Move TodoItem.js (component) to containers folder
    It's actually a container component
-** TODO Docker image build performance
-   Runs slow, I don't think I need that Bundler image anymore
+** TODO Create a workflow for signup -> using the app
+** TODO Build landing page
+** TODO Refactor use of dispatch in components using connect
+   I refactored some components to use connect rather than subscribe but i need
+   to use mapdispatchtoprops as well as mapstatetoprops, then remove calls to
+   this.props.store.dispatch
+** TODO Replace $.ajax with http.get and put etc
+** TODO Refactor those api calls in the reducer
+   Since the endpoint and auth token are always the same I'm sure we can DRY
+   that up. Probably want to create an api instance that stores the endpoint and
+   token. Also would allow for turning the api off so the ap works fully locally
+** TODO Update Drag n drop UI
+   If you drag outside of legal area, it should warn user 
+** TODO Determine whether to use font awesome or material icons
+   And go with one only
+** TODO When user clicks on notes that are truncated, expand them
+   So you dont have to use the little ... menu
+** TODO Do some more with responsiveness
+   On larger screens, we can fully expand notes and/or show tags
+** TODO Move the spinner somewhere more obvious
+   Also make it more obvious
 ** TODO Hide old completed todos
    Older than x days, let this be configurable from the config tab as well
 ** TODO Switching tabs (from todo to shopping) should trigger a sweep in/out animation
    Like the current todos slide out and the newly chosen ones slide in
-** TODO Install react loader
-** TODO Upgrade immutable js
-** TODO Design a landing page (logged out)
-*** TODO Fix bootstrap styles for navbar
-    Maybe upgrade bootstrap first
-** TODO Build landing page
 ** TODO Design a sandbox implementation
    That can be used when logged out, so from the home/landing page you can start
    dicking around with what the actual app looks like. I might need to do a
@@ -79,7 +75,6 @@
    decouple the API component which talks to the server with the pure javascript
    app interactivity. This way you could run a version of the app whicih doesn't
    talk to the server at all and has no persistent state (or maybe it does..)
-** TODO Create a workflow for signup -> using the app
 ** TODO Create a seed list of tags for production
 *** Costco
 *** Target
@@ -93,11 +88,6 @@
 *** Vehicle
 *** Errand
 *** etc.
-** TODO Integrate service workers (initial)
-*** Set up a file as the service worker entry point (not webpack entry point, at least not yet)
-*** Get the service worker to register into the page
-** TODO Remove bootstrap-loader
-   Apparently bootstrap doesn't need it anymore with v4.0.0
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
     CLOSED: [2017-09-27 Wed 18:09]
@@ -129,10 +119,91 @@
     acquire the placeholder would be updated.
 
 *** TODO When you drag, don't scroll unless hitting the bottom/top of the viewport
-** TODO Performance issues
+** TODO Tags can have icons or avatars (not sure which yet, probably both)
+** TODO Get cukes working
+   At least some basic workflow like cucumber/selenium can run and look at the
+   starting page
+
+   Where I left off, I was attempting to get PhantomJS/poltergeist working
+   within the cucumber container. I got stuck yak shaving all day so screw that.
+   Even downloading phantom js was problematic. It worked fine the first 2 or 3
+   times now it just get's stuck in a 302 loop and bails out during the wget of
+   the zip file. WTF???
+** TODO :design: Make tags clearer/more visible
+   Right now, they show above the title when you're editing a todo but it's not
+   very clear what they are. Even I was confused after coming back to the app
+   after a while. They should also be shown on the top level list without having
+   to expand the edit modal. There probably won't be space on a phone but it
+   could show conditionally if the window/device is wide enough.
+** TODO Add an x button to the search/filter field to easily clear it.
+   Tried doing this before but was having difficulty wrangling material ui to
+   give the result I want. The spec for material ui specifies that X buttons in
+   fields should live WITHIN the field. However, there is no built in mechanism
+   to do so with <TextField> in the react lib. I figured I could mimic that
+   behavior by adding it as a child component but that prevented me from
+   clicking on the TextField at all.
+** TODO Integrate service workers (initial)
+*** Set up a file as the service worker entry point (not webpack entry point, at least not yet)
+*** Get the service worker to register into the page
+** TODO Can add/edit tags to a todo
+   Tags can currently be added/edited through the title field but there should
+   also be a distinct tag section for clarity
+** TODO Docker image build performance
+   It takes a long time to build
+*** DONE Remove bundler image
+    CLOSED: [2018-04-19 Thu 19:05]
+* Icebox
+** TODO In edit todo, when deleting tags, if you hit cancel, don't commit the delete
+** TODO Make search/filter field display with error style if no results found
+   To give the user a hint that they have no todos because of whats been typed
+   into that field, not that it's broken or something
+** TODO Fix navbar style
+** TODO Add icons for each tab
+   Ideally it'd show text + icon for med-up and only icon for mobile
+** TODO Develop keyboard shortcuts
+*** TODO Determine what commands should have shortcuts
+*** TODO Get some kind of keystroke catcher working
+*** TODO map keystrokes to commands (actions)
+** TODO when dragging an item, render seems to be triggered 4 times
+** TODO Add HTTPS
+** TODO Integrate service workers
+*** TODO Research how to use service workers
+** TODO remove uses of type check
+** TODO use typescript conventions
+** TODO Add foreign key constraints
+** TODO Add additional validations on todocontroller for permission verification
+** TODO User can have an avatar (MARTY)
+** TODO Handle error on todo creation
+** TODO Take picture of item to add to todo (or any uploaded image)
+** TODO Household 'make head admin' command must remove other head admin
+** TODO Household admin can invite other members
+** TODO Create UI for choosing colors for tags (premium feature?)
+** TODO Allow user to edit their profile
+** TODO Completed todos hidden by default except for admins
+** TODO Show user name in navbar when logged in
+** TODO Switch to Thin server
+** TODO Admin can assign tasks to members
+* Done
+** DONE Test performance on mobile 
+   CLOSED: [2018-04-19 Thu 16:50]
+   Performance is decent and everything works except drag n drop
+** DONE :bug: If search/filter todo, then edit todo, then dismiss modal, it stops filtering but the search field doesn't clear
+   CLOSED: [2018-04-19 Thu 19:07]
+   I think it has to do with the way the TodoList is rerendered when the UI
+   state changes. So the UI state changes causing a rerender up in the todo
+   list, but the search/filter only happens when the search field changes.
+   Either make the filtering happen intrinsically based on whatever value is in
+   the search field, or clear the filter field when the modal goes away or on
+   any rerender up the tree
+** DONE Upgrade material ui
+   CLOSED: [2018-04-19 Thu 19:06]
+** DONE Performance issues
+   CLOSED: [2018-04-19 Thu 19:06]
 *** TODO 2 taps to drag on mobile
-*** TODO Slow drag performance esp on mobile
-*** TODO Performance of sync operation
+*** DONE Slow drag performance esp on mobile
+    CLOSED: [2018-04-19 Thu 19:06]
+*** DONE Performance of sync operation
+    CLOSED: [2018-04-19 Thu 19:06]
     The actual timing of sync isn't too important, the problem lies in that
     syncing blocks the app from doing anything else. Syncing should happen in
     the background. The app should maintain it's own state and then periodically
@@ -178,78 +249,12 @@
     need to think on this problem some first
 
 *** TODO TodosController#index is slow
-** TODO Tags can have icons or avatars (not sure which yet, probably both)
-** TODO Get tests working
-   At least some basic workflow like cucumber/selenium can run and look at the
-   starting page
-
-   Where I left off, I was attempting to get PhantomJS/poltergeist working
-   within the cucumber container. I got stuck yak shaving all day so screw that.
-   Even downloading phantom js was problematic. It worked fine the first 2 or 3
-   times now it just get's stuck in a 302 loop and bails out during the wget of
-   the zip file. WTF???
-** TODO :design: Make tags clearer/more visible
-   Right now, they show above the title when you're editing a todo but it's not
-   very clear what they are. Even I was confused after coming back to the app
-   after a while. They should also be shown on the top level list without having
-   to expand the edit modal. There probably won't be space on a phone but it
-   could show conditionally if the window/device is wide enough.
-** TODO :bug: If search/filter todo, then edit todo, then dismiss modal, it stops filtering but the search field doesn't clear
-   I think it has to do with the way the TodoList is rerendered when the UI
-   state changes. So the UI state changes causing a rerender up in the todo
-   list, but the search/filter only happens when the search field changes.
-   Either make the filtering happen intrinsically based on whatever value is in
-   the search field, or clear the filter field when the modal goes away or on
-   any rerender up the tree
-** TODO Add an x button to the search/filter field to easily clear it.
-   Tried doing this before but was having difficulty wrangling material ui to
-   give the result I want. The spec for material ui specifies that X buttons in
-   fields should live WITHIN the field. However, there is no built in mechanism
-   to do so with <TextField> in the react lib. I figured I could mimic that
-   behavior by adding it as a child component but that prevented me from
-   clicking on the TextField at all.
-** TODO Upgrade material ui
-** TODO Can add/edit tags to a todo
-   Tags can currently be added/edited through the title field but there should
-   also be a distinct tag section for clarity
-** TODO Make flash animate out fade rather than blink out
-** TODO See if I can make the configuration tab small (just an icon)
-* Icebox
-** TODO In edit todo, when deleting tags, if you hit cancel, don't commit the delete
-** TODO Make search/filter field display with error style if no results found
-   To give the user a hint that they have no todos because of whats been typed
-   into that field, not that it's broken or something
-** TODO Fix navbar style
-** TODO Add icons for each tab
-   Ideally it'd show text + icon for med-up and only icon for mobile
-** TODO Develop keyboard shortcuts
-*** TODO Determine what commands should have shortcuts
-*** TODO Get some kind of keystroke catcher working
-*** TODO map keystrokes to commands (actions)
-** TODO when dragging an item, render seems to be triggered 4 times
-** TODO Add HTTPS
-** TODO Integrate service workers
-*** TODO Research how to use service workers
-** TODO remove uses of type check
-** TODO use typescript conventions
-** TODO Iron out the signup flow
-** TODO Add foreign key constraints
-** TODO Add additional validations on todocontroller for permission verification
-** TODO User can have an avatar (MARTY)
-** TODO Handle error on todo creation
-** TODO Take picture of item to add to todo (or any uploaded image)
-** TODO Household 'make head admin' command must remove other head admin
-** TODO Household admin can invite other members
-** TODO Create UI for choosing colors for tags (premium feature?)
-** TODO Allow user to edit their profile
-** TODO Completed todos hidden by default except for admins
-** TODO Show user name in navbar when logged in
-** TODO Switch to Thin server
-** TODO Admin can assign tasks to members
-* Done
-** DONE Test performance on mobile 
-   CLOSED: [2018-04-19 Thu 16:50]
-   Performance is decent and everything works except drag n drop
+** DONE Change the way sync works
+   CLOSED: [2018-04-19 Thu 19:04]
+*** DONE Change the way todos are stored
+    CLOSED: [2018-04-19 Thu 19:04]
+    Rather than two arrays, they shoudl be 2 objects where the keys are IDs
+    And the order of the todos are dictated by the position value of each todo
 ** DONE Switching to shopping list doesn't work                         :bug:
    CLOSED: [2018-04-19 Thu 18:52]
 ** DONE Create todo should happen in client immediately
