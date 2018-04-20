@@ -14,19 +14,7 @@
    ActiveRecord::RecordInvalid (Validation failed: Title has already been taken)
    for tags..
 * Backlog
-** TODO Refactor use of dispatch in components using connect
-   I refactored some components to use connect rather than subscribe but i need
-   to use mapdispatchtoprops as well as mapstatetoprops, then remove calls to
-   this.props.store.dispatch
-** TODO Refactor those api calls in the reducer
-   Since the endpoint and auth token are always the same I'm sure we can DRY 
-   that up
-** TODO Update Drag n drop UI
-   If you drag outside of legal area, it should warn user For dragging to a
-   position, if dragOver is the top half, then set above nearest neighbor, if
-   dragOver is bottom half, set below
 ** TODO Make specs pass
-** TODO Fix drag n drop on mobile
 ** TODO app doesn't fix perfectly on phone
    Theres a little wiggle room as you scroll side to side.
 ** TODO Redo navbar
