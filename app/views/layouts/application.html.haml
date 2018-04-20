@@ -6,7 +6,6 @@
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, user-scalable=no'}
     = javascript_pack_tag 'application'
     = stylesheet_pack_tag 'application'
-    -#%link{:rel=>"stylesheet", :href => "https://fonts.googleapis.com/icon?family=Material+Icons"}
 
   %body
     = render 'layouts/navbar'
@@ -18,4 +17,6 @@
     -#= webpack_javascript_include_helper
 
     = yield :javascripts
-    -#<link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+    - unless Rails.env.development?
+      <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>
+      %link{:rel=>"stylesheet", :href => "https://fonts.googleapis.com/icon?family=Material+Icons"}
