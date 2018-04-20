@@ -107,7 +107,8 @@ function honeyDoReducer(state, action) {
     case CREATE_TODO_REQUEST:
       // TODO: The closing of the form should probably happen in the component
       temp_state = closeNewTodoForm(activateSpinner(state));
-      requestCreateTodoOnServer(state, action);
+      temp_state = createTodo(temp_state, action.params);
+      requestCreateTodoOnServer(temp_state, action);
       return temp_state;
 
     case DELETE_TODO_REQUEST:
@@ -224,6 +225,30 @@ const completeTodoOnServer = (state, action) => {
       action.asyncDispatch(completeTodoFailure(todo, errorThrown));
     }
   });
+}
+
+const createTodo = (state, params) => {
+
+  let new_todo = {
+    id: _.uniqueId('placeholder_new_todo_'),
+    klass: params.type,
+    title: params.title,
+    notes: params.notes,
+    position: 0,
+    state: 'active',
+    isActive: true,
+    isCompleted: false,
+    permissions: {
+      canAccept: false,
+      canComplete: false,
+      canDestroy: false,
+      canEdit: false,
+      canTag: false,
+      canUncomplete: false
+    }
+  };
+
+  return state.setIn(['dataState', 'todos', new_todo.id.toString()], Immutable.fromJS(new_todo));
 }
 
 const deactivateSpinner = (state) => {
