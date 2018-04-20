@@ -69,6 +69,7 @@ import {
 } from '../util/Api'
 
 import { EmptyStore } from '../constants/EmptyStore'
+import { UiTabs } from '../constants/TodoTypes'
 
 import * as Immutable from 'immutable'
 import {List, Map} from 'immutable'

@@ -30,7 +30,7 @@ class HoneyDo extends React.Component {
     this.props.store.dispatch(syncTodosRequest());
   }
 
-  handleChangeTab(tabVal){
+  handleChangeTab(evt, tabVal){
     this.props.store.dispatch(switchTab(tabVal));
   }
 

@@ -1,8 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Create todo should create/add the todo client side immediately
-** TODO Switching to shopping list doesn't work                         :bug:
 ** TODO Refactor use of dispatch in components using connect
    I refactored some components to use connect rather than subscribe but i need
    to use mapdispatchtoprops as well as mapstatetoprops, then remove calls to
@@ -252,6 +250,10 @@
 ** DONE Test performance on mobile 
    CLOSED: [2018-04-19 Thu 16:50]
    Performance is decent and everything works except drag n drop
+** DONE Switching to shopping list doesn't work                         :bug:
+   CLOSED: [2018-04-19 Thu 18:52]
+** DONE Create todo should happen in client immediately
+   CLOSED: [2018-04-19 Thu 18:44]
 ** DONE Try refactoring the way I'm handling state and dispatch
    CLOSED: [2018-04-07 Sat 13:53]
    Gonna try doing it the redux way where we use `connect` everywhere
