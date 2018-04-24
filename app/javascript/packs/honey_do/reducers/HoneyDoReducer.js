@@ -229,12 +229,21 @@ const completeTodoOnServer = (state, action) => {
 }
 
 const createTodo = (state, params) => {
+  var match, tags;
+  const TAG_IN_TITLE_REGEX = /#[\w \t]+\b/g
+
+  tags = [];
+  match = params.title.match(TAG_IN_TITLE_REGEX);
+  _.each(match, (v, k) => {
+    tags.push(_.replace(v, '#', ''));
+  });
 
   let new_todo = {
     id: _.uniqueId('placeholder_new_todo_'),
     klass: params.type,
-    title: params.title,
+    title: params.title.replace(TAG_IN_TITLE_REGEX, ''),
     notes: params.notes,
+    tags: tags,
     position: 0,
     state: 'active',
     isActive: true,
@@ -248,7 +257,6 @@ const createTodo = (state, params) => {
       canUncomplete: false
     }
   };
-
   return state.setIn(['dataState', 'todos', new_todo.id.toString()], Immutable.fromJS(new_todo));
 }
 
@@ -271,9 +279,6 @@ const obtainTodosFromServer = (state, action) => {
   });
 }
 
-// TODO: Here a problem lies with the way I'm handling state in Todo components
-// removing a tag doesn't update the todo display when I expand the notes.
-// Something up the tree should be using connect to grab it's state from the store
 const removeTag = (state, todo, tag) => {
   var todo_from_state, tag_list;
 
