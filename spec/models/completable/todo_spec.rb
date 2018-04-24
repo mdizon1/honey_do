@@ -447,24 +447,13 @@ describe Completable::Todo do
               todo.accept! :accepted_by => valid_acceptor
               todo.reload.acceptor.should == valid_acceptor
             end
-
-            context "when the household has some other todos" do
-              before do
-                3.times { FactoryGirl.create(:todo, :household => todo.household) }
-              end
-
-              it "moves to the bottom of the list" do
-                todo.accept! :accepted_by => valid_acceptor
-                todo.household.todos.unscoped.order('position ASC').last.should == todo
-              end
-            end
           end
         end
 
         context "with an invalid acceptor" do
           let(:invalid_acceptor) {
             u = FactoryGirl.create(:user)
-            m = FactoryGirl.create(:membership, :household => todo.household, :member_id => u)
+            FactoryGirl.create(:membership, :household => todo.household, :member_id => u)
           }
         end
 
