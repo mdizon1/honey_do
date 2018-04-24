@@ -1,9 +1,10 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** DONE Handle tags in forms client side as well
-   CLOSED: [2018-04-24 Tue 11:40]
 * Backlog
+** TODO When removing a todo tag, all todo tags get removed from view :bug:
+   Click on (x) in tag while in edit todo modal
+   the todo shown in the list will lose all tags
 ** TODO Make specs pass
 ** TODO app doesn't fix perfectly on phone
    Theres a little wiggle room as you scroll side to side.
@@ -123,6 +124,17 @@
 ** TODO Integrate service workers (initial)
 *** Set up a file as the service worker entry point (not webpack entry point, at least not yet)
 *** Get the service worker to register into the page
+** TODO On create todo, don't sync.
+   This is referring to a larger issue:
+
+   After user submits the form, the client will create a todo as a placeholder
+   (essentially) and the server will later respond with a sync action. Instead
+   of sync, the client should just take the response of teh create and update
+   the local todo accordingly. On the other hand, instead of doing that, we
+   should have a more sophisticated syncing process where differences are
+   reconciled neatly and efficiently
+
+   The switch to service workers will likely be part of the solution to this problem
 ** TODO Can add/edit tags to a todo
    Tags can currently be added/edited through the title field but there should
    also be a distinct tag section for clarity
@@ -162,6 +174,12 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Handle tags in forms client side as well
+   CLOSED: [2018-04-24 Tue 11:52]
+*** DONE ON create
+    CLOSED: [2018-04-24 Tue 11:42]
+*** DONE on edit/update
+    CLOSED: [2018-04-24 Tue 11:52]
 ** DONE Tagging todo not working server side
    CLOSED: [2018-04-19 Thu 21:04]
    Expected behavior:

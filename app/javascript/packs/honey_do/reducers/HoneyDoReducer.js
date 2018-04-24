@@ -76,6 +76,8 @@ import {List, Map} from 'immutable'
 
 import * as Logger from "../util/Logger"
 
+const TAG_IN_TITLE_REGEX = /#[\w \t]+\b/g
+
 function honeyDoReducer(state, action) {
   var temp_state;
 
@@ -230,7 +232,6 @@ const completeTodoOnServer = (state, action) => {
 
 const createTodo = (state, params) => {
   var match, tags;
-  const TAG_IN_TITLE_REGEX = /#[\w \t]+\b/g
 
   tags = [];
   match = params.title.match(TAG_IN_TITLE_REGEX);
@@ -494,13 +495,14 @@ const updateFilterState = (state, filterVal) => {
 
 // TODO: Separate tag processing into own function
 const updateTodo = (state, todo) => { // Look for given todo in state and replace with given todo
-  let tags_in_title = _.words(todo.title, /#[\w\s]+\b/g);
-  tags_in_title = _.map(tags_in_title, (tag_in_title) => {
-    return _.trim(_.replace(tag_in_title, /#/g, ''));
+  let match = todo.title.match(TAG_IN_TITLE_REGEX);
+  let tags_in_title = [];
+  _.each(match, (v, k) => {
+    tags_in_title.push(_.replace(v, '#', ''));
   });
+
   todo.tags = _.uniq(_.concat(todo.tags, tags_in_title));
-  let new_title = _.trim(_.replace(todo.title, /#.*/g, ''));
-  todo.title = new_title;
+  todo.title = todo.title.replace(TAG_IN_TITLE_REGEX, '');
   return state.setIn(['dataState', 'todos', todo.id.toString()], Immutable.fromJS(todo));
 }
 
