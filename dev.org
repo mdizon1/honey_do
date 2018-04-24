@@ -1,10 +1,8 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** DONE Upgrade immutable js
-   CLOSED: [2018-04-24 Tue 14:45]
-* Backlog
 ** TODO Redo navbar
+* Backlog
 ** TODO Change config tab into a drawer
 ** TODO Ditch calls to bind(this)
 ** TODO app doesn't fix perfectly on phone
@@ -173,6 +171,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Upgrade immutable js
+   CLOSED: [2018-04-24 Tue 14:45]
 ** DONE Make specs pass
    CLOSED: [2018-04-24 Tue 14:17]
 ** DONE Fix hot-reload problem on mac os
