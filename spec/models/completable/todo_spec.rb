@@ -129,7 +129,7 @@ describe Completable::Todo do
       context "with an active todo" do
         let(:todo) { FactoryGirl.create(:todo) }
         let(:completor_from_house) { u = FactoryGirl.build(:user); u.household = todo.household; u; }
-        let(:completor_not_from_house) { u = FactoryGirl.build(:user) }
+        let(:completor_not_from_house) { FactoryGirl.build(:user) }
 
         context "when the user is a member of the household" do
           it "should be allowed" do
@@ -392,7 +392,7 @@ describe Completable::Todo do
         context "with a valid acceptor" do
           let!(:valid_acceptor) {
             u = FactoryGirl.create(:user)
-            m = FactoryGirl.create(:household_admin, :household => todo.household, :member_id => u.id)
+            FactoryGirl.create(:household_admin, :household => todo.household, :member_id => u.id)
             u
           }
 
