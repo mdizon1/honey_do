@@ -4,6 +4,7 @@
 
 const webpack = require('webpack')
 const merge = require('webpack-merge')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const CompressionPlugin = require('compression-webpack-plugin')
 const sharedConfig = require('./shared.js')
 
@@ -13,6 +14,7 @@ module.exports = merge(sharedConfig, {
   stats: 'normal',
 
   plugins: [
+    new ExtractTextPlugin('[name]-[hash].css'),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
       sourceMap: true,

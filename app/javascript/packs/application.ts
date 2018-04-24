@@ -12,17 +12,15 @@ require("expose-loader?$!expose-loader?jQuery!jquery"); // adds $ to window so w
 require("jquery-ujs");
 require("bootstrap-loader");
 require("font-awesome-sass-loader");
+//var process = require("process");
 var _ = require("lodash");
 
-import "../styles/application"
 
 
 console.log('Hello World from Webpacker');
-
-
-
-
-
+if(process.env.NODE_ENV != 'production') {
+  require("../styles/application.scss");
+}
 
 
 
