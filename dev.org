@@ -1,7 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Make specs pass
 * Backlog
 ** TODO app doesn't fix perfectly on phone
    Theres a little wiggle room as you scroll side to side.
@@ -174,6 +173,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Make specs pass
+   CLOSED: [2018-04-24 Tue 14:17]
 ** DONE Fix hot-reload problem on mac os
    CLOSED: [2018-04-24 Tue 13:34]
 ** DONE Handle tags in forms client side as well

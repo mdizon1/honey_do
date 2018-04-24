@@ -548,13 +548,26 @@ describe Completable::Todo do
           completed_todo.uncomplete!
           completed_todo.completor.should be_blank
         end
+
+        it "creates an event" do
+          expect {
+            completed_todo.uncomplete!
+          }.to change(Event::TodoUncompleted, :count).by(1)
+        end
+
+        context "with a valid uncompletor" do
+          let(:uncompletor) { completed_todo.completor }
+
+          it "sets the actor of the created event" do
+            completed_todo.uncomplete! :uncompleted_by => uncompletor
+            expect(Event::TodoUncompleted.order(:created_at).last.actor).to eq(uncompletor)
+          end
+        end
       end
 
       context "with a non completed todo item" do
         let(:todo) { FactoryGirl.create(:todo) }
         it "should raise an invalid transition error" do
-          before_timestamp = todo.completed_at
-          before_completor = todo.completor
           expect {
             todo.uncomplete!
           }.to raise_error(AASM::InvalidTransition)

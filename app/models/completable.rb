@@ -144,6 +144,7 @@ class Completable < ApplicationRecord
   end
 
   def rec_uncomplete_event(transition_options = {})
+    transition_options = {} if(!transition_options)
     self.completor = nil
     clear_completed_timestamps
     Event::TodoUncompleted.create(
