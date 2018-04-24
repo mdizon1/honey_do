@@ -1,14 +1,8 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** DONE Fix hot-reload problem on mac os
-   CLOSED: [2018-04-24 Tue 13:34]
-* Backlog
-** TODO Upgrade react dnd
-** TODO When removing a todo tag, all todo tags get removed from view :bug:
-   Click on (x) in tag while in edit todo modal
-   the todo shown in the list will lose all tags
 ** TODO Make specs pass
+* Backlog
 ** TODO app doesn't fix perfectly on phone
    Theres a little wiggle room as you scroll side to side.
 ** TODO Redo navbar
@@ -145,6 +139,9 @@
    It takes a long time to build
 *** DONE Remove bundler image
     CLOSED: [2018-04-19 Thu 19:05]
+** TODO When removing a todo tag, all todo tags get removed from view :bug:
+   Click on (x) in tag while in edit todo modal
+   the todo shown in the list will lose all tags
 * Icebox
 ** TODO In edit todo, when deleting tags, if you hit cancel, don't commit the delete
 ** TODO Make search/filter field display with error style if no results found
@@ -177,6 +174,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Fix hot-reload problem on mac os
+   CLOSED: [2018-04-24 Tue 13:34]
 ** DONE Handle tags in forms client side as well
    CLOSED: [2018-04-24 Tue 11:52]
 *** DONE ON create
