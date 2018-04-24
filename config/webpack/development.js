@@ -25,8 +25,13 @@ module.exports = merge(sharedConfig, {
     compress: true,
     headers: { 'Access-Control-Allow-Origin': '*' },
     historyApiFallback: true,
+    lazy: false,
+    inline: true,
+    hot: true,
     watchOptions: {
-      ignored: /node_modules/
+      ignored: /node_modules/,
+      aggregateTimeout: 300, 
+      poll: 1000
     }
   }
 })

@@ -1,7 +1,10 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
+** DONE Fix hot-reload problem on mac os
+   CLOSED: [2018-04-24 Tue 13:34]
 * Backlog
+** TODO Upgrade react dnd
 ** TODO When removing a todo tag, all todo tags get removed from view :bug:
    Click on (x) in tag while in edit todo modal
    the todo shown in the list will lose all tags
