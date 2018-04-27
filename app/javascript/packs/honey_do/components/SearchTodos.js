@@ -12,15 +12,23 @@ const renderSearchLabel = () => {
 
 const SearchTodos = (props) => {
   return (
-    <TextField
-      className="todo-search"
-      label={renderSearchLabel()}
-      multiline
-      fullWidth={true}
-      onChange={props.onChange('searchValue')}
-      value={props.value}
-    >
-    </TextField>
+    <div className="todo-search-wrap">
+      <TextField
+        className="todo-search"
+        label={renderSearchLabel()}
+        type="search"
+        multiline
+        fullWidth={true}
+        onChange={props.onChange('searchValue')}
+        value={props.value}
+      >
+      </TextField>
+      <i
+        className="todo-search-clear-btn fa fa-times"
+        onClick={props.onClear}
+      ></i>
+
+    </div>
   )
 }
 export default SearchTodos

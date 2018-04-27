@@ -1,8 +1,9 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
+** DONE Add a clear search button
+   CLOSED: [2018-04-27 Fri 01:20]
 * Backlog
-** TODO Add a clear search button
 ** TODO Redo site navbar
 ** TODO Create a local only version of the app
 *** Refactor reducer

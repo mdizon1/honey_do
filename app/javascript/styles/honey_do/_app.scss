@@ -86,16 +86,20 @@
     }
   }
 
+  .todo-search-wrap {
+    position: relative;
+  }
   .todo-search {
     .search-icon {
       margin-right: 10px;
     }
-
-    .clear-button {
-      i.fa {
-        font-size: 1.2em;
-      }
-    }
+  }
+  .todo-search-clear-btn {
+    position: absolute;
+    top: 21px;
+    right: -14px;
+    height: 40px; width: 40px;
+    font-size: 1.2em;
   }
 
   .todo-item-controls-icon { font-size: 1.5em; }
