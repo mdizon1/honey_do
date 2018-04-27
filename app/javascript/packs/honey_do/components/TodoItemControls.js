@@ -55,6 +55,12 @@ export default class TodoItemControls extends Component {
   }
 }
 
+const _renderThumbUpIcon = () => {
+  return (
+    <i className="todo-item-controls-icon fa fa-thumbs-up"></i>
+  )
+}
+
 const _renderEditIcon = () => {
   return (
     <i className="todo-item-controls-icon fa fa-pencil-square-o"></i>
@@ -79,7 +85,7 @@ const _renderMenuItemAccept = (todo, onTodoAccepted, afterCallback) => {
     <MenuItem onClick={(evt) => {onTodoAccepted(evt); afterCallback()}}>
       <ListItemIcon>
         <Icon>
-          thumb_up
+          { _renderThumbUpIcon() }
         </Icon>
       </ListItemIcon>
       <ListItemText
@@ -96,7 +102,7 @@ const _renderMenuItemDestroy = (todo, onTodoDestroyed, afterCallback) => {
     <MenuItem onClick={(evt) => {onTodoDestroyed(evt); afterCallback()}}>
       <ListItemIcon>
         <Icon>
-          delete
+          { _renderTrashIcon() }
         </Icon>
       </ListItemIcon>
       <ListItemText
@@ -113,7 +119,7 @@ const _renderMenuItemEdit = (todo, onTodoEdit, afterCallback) => {
     <MenuItem onClick={(evt) => {onTodoEdit(evt); afterCallback()}}>
       <ListItemIcon>
         <Icon>
-          edit
+          { _renderEditIcon() }
         </Icon>
       </ListItemIcon>
       <ListItemText
