@@ -175,11 +175,12 @@ class TodoListWrap extends Component {
   }
 
   render() {
-    return (
-      <div>
-        { this.props.isTouch ? this.renderTodoListTouch(this.props.todoIds) : this.renderTodoListMouse(this.props.todoIds) }
-      </div>
-    )
+
+    if(this.props.isTouch){
+      return this.renderTodoListTouch(this.props.todoIds);
+    }else{
+      return this.renderTodoListMouse(this.props.todoIds);
+    }
   }
 }
 

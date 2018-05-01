@@ -11,7 +11,6 @@ import flow from 'lodash/flow'
 import TodoItemDragPlaceholder from '../components/TodoItemDragPlaceholder'
 import TodoItemWrap from './TodoItemWrap'
 
-import List, { ListItem, ListItemText } from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
 import IconButton from 'material-ui/IconButton/IconButton'
 import Icon from 'material-ui/Icon/Icon'

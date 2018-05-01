@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react'
-import List from 'material-ui/List/List'
 import TodoItem from '../containers/TodoItem'
 const TodoList = (props) => {
   const {
@@ -16,14 +15,14 @@ const TodoList = (props) => {
   // TODO: I think we can do todos == null means loading and todos == [] means no items
   if(!todoIds || (todoIds.length < 1)) {
     return (
-      <List className='honey-do-todo-list'>
+      <div className='honey-do-todo-list'>
         No items...
-      </List>
+      </div>
     )
   }
 
   return (
-    <List className='honey-do-todo-list'>
+    <div className='honey-do-todo-list'>
       {_.map(todoIds, (curr_todo_id, index) => {
         return (
           <TodoItem
@@ -40,7 +39,7 @@ const TodoList = (props) => {
           />
         )
       })}
-    </List>
+    </div>
   );
 }
 
