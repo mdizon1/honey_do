@@ -7,7 +7,6 @@ export const SHOPPING_ITEM = 'SHOPPING_ITEM'
 export const UiTabs = {
   TODOS: TODOS,
   SHOPPING_LIST: SHOPPING_LIST,
-  CONFIG: CONFIG
 }
 
 export const UiTabToType = {

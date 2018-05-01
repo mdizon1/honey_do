@@ -17,6 +17,8 @@ export const DELETE_TODO_TAG_FAILURE = 'DELETE_TODO_TAG_FAILURE'
 export const EDIT_TODO_CANCELED = 'EDIT_TODO_CANCELED'
 export const EDIT_TODO_REQUEST  = 'EDIT_TODO_REQUEST'
 export const FILTER_TODOS = 'FILTER_TODOS'
+export const OPEN_CONFIG = 'OPEN_CONFIG'
+export const CLOSE_CONFIG = 'CLOSE_CONFIG'
 export const OPEN_CREATE_FORM = 'OPEN_CREATE_FORM'
 export const SWITCH_TAB = 'SWITCH_TAB'
 export const SYNC_TODOS_REQUEST = 'SYNC_TODOS_REQUEST'
@@ -189,6 +191,19 @@ export function editTodoRequest(todo) {
 }
 export function editTodoSuccess(todo) { }
 export function editTodoFailure(todo) { }
+
+export function openConfig() {
+  return {
+    type: OPEN_CONFIG,
+    description: 'Open the configuration menu'
+  }
+}
+export function closeConfig() {
+  return {
+    type: CLOSE_CONFIG,
+    description: 'Close the configuration menu'
+  }
+}
 
 export function openCreateForm() {
   return {

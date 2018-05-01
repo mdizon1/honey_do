@@ -23,6 +23,8 @@ import {
   EDIT_TODO_CANCELED,
   EDIT_TODO_REQUEST,
   FILTER_TODOS,
+  OPEN_CONFIG,
+  CLOSE_CONFIG,
   OPEN_CREATE_FORM,
   SWITCH_TAB,
   SYNC_TODOS_REQUEST,
@@ -132,6 +134,11 @@ function honeyDoReducer(state, action) {
 
     case FILTER_TODOS:
       return updateFilterState(state, action.filterValue);
+
+    case OPEN_CONFIG:
+      return state.setIn(['uiState', 'isConfigOpen'], true);
+    case CLOSE_CONFIG:
+      return state.setIn(['uiState', 'isConfigOpen'], false);
 
     case OPEN_CREATE_FORM:
       return openNewTodoForm(state);

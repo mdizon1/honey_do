@@ -1,9 +1,8 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Redo navbar
-* Backlog
 ** TODO Change config tab into a drawer
+* Backlog
 ** TODO Ditch calls to bind(this)
 ** TODO app doesn't fix perfectly on phone
    Theres a little wiggle room as you scroll side to side.
@@ -12,7 +11,6 @@
 ** TODO Remove bootstrap-loader
    Apparently bootstrap doesn't need it anymore with v4.0.0
 ** TODO Redo navbar
-   For newer bootstrap
 ** TODO Add a clear search button
 ** TODO Move TodoItem.js (component) to containers folder
    It's actually a container component

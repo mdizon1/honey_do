@@ -1,109 +1,127 @@
-// Clearly this isn't a great organization of the stylesheets, 
-// however I'm not sure what a good organization would be at this point
-// I'm planning to just start building and some patterns shoudl emerge later
-// that will let me reorganize this.
+// Clearly this isn't a great organization of the stylesheets, however I'm not
+// sure what a good organization would be at this point I'm planning to just
+// start building and some patterns shoudl emerge later that will let me
+// reorganize this.
 
 // One possibility would be to create a stylesheet for each component and have
 // the tree mirror the component tree
 
-.honey-do-todo-list {
-  ul {
-    padding: 0;
-    li { list-style-type:none; }
-  }
-}
+// Apparently, the community consensus for styling react components is to put
+// the style in each component.  I'm not a fan because that means that
+// javascript and styles are living together.  On the other hand, components
+// are meant to be very self-contained, so maybe that's a good trade off?
 
-.todo-list-wrap {
-  margin-bottom: 4rem;
-}
-
-button.new-todo-button {
-  position: fixed;
-  bottom: 1rem;
-  left: 50%;
-  margin-left: -31px;
-}
-
-.todo-item {
-  margin-bottom: 5px;
-
-  &.todo-item-drag-placeholder {
-    opacity: 0.2;
-    border: 1px dashed black;
-  }
-  .todo-item-checkbox {
-    position: relative;
-    width: 60%;
-    display: inline-block;
-  }
-  .todo-item-drag-handle {
-    display: inline-block;
-    position: absolute;
-    width: 2em;
-    cursor: move;
-    font-size: 1.25em;
-    text-align: center;
-  }
-  .todo-item-content {
-    display: inline-block;
-    width: 100%;
-    &.todo-item-content-expanded {
-      .todo-item-tags { display: flex; }
+.honey-do-app-wrap {
+  .honey-do-todo-list {
+    ul {
+      padding: 0;
+      li { list-style-type:none; }
     }
   }
-  .todo-item-notes {
-    &.todo-item-notes-truncated {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-  .todo-item-controls { 
-    position: absolute;
-    left: 0;
-    line-height: 1em; 
-  }
-  .todo-item-tags {
-    display: none;
-    flex-wrap: wrap;
+
+  .honey-do-settings-btn {
+    color: white;
+    font-size: 1.5rem;
   }
 
-  &.todo-item-drag-placeholder {
+  .todo-list-wrap {
+    margin-bottom: 4rem;
+  }
+
+  button.new-todo-button {
+    position: fixed;
+    bottom: 1rem;
+    left: 50%;
+    margin-left: -31px;
+  }
+
+  .todo-item {
+    margin-bottom: 5px;
+
+    &.todo-item-drag-placeholder {
+      opacity: 0.2;
+      border: 1px dashed black;
+    }
     .todo-item-checkbox {
+      position: relative;
+      width: 60%;
+      display: inline-block;
+    }
+    .todo-item-drag-handle {
+      display: inline-block;
+      position: absolute;
+      width: 2em;
+      cursor: move;
+      font-size: 1.25em;
+      text-align: center;
+    }
+    .todo-item-content {
+      display: inline-block;
+      width: 100%;
+      &.todo-item-content-expanded {
+        .todo-item-tags { display: flex; }
+      }
+    }
+    .todo-item-notes {
+      &.todo-item-notes-truncated {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+    .todo-item-controls {
+      position: absolute;
+      left: 0;
+      line-height: 1em;
+    }
+    .todo-item-tags {
       display: none;
+      flex-wrap: wrap;
+    }
+
+    &.todo-item-drag-placeholder {
+      .todo-item-checkbox {
+        display: none;
+      }
     }
   }
-}
 
-.todo-search {
-  .search-icon {
-    margin-right: 10px;
-  }
+  .todo-search {
+    .search-icon {
+      margin-right: 10px;
+    }
 
-  .clear-button { 
-    i.fa {
-      font-size: 1.2em;
+    .clear-button {
+      i.fa {
+        font-size: 1.2em;
+      }
     }
   }
-}
 
-.todo-item-controls-icon { font-size: 1.5em; }
-.todo-tag {
-  margin: 0 1rem 0 0;
-}
-
-.edit-todo-tag-list {
+  .todo-item-controls-icon { font-size: 1.5em; }
   .todo-tag {
-    margin: 0 0 0 1rem;
+    margin: 0 1rem 0 0;
+  }
+
+  .edit-todo-tag-list {
+    .todo-tag {
+      margin: 0 0 0 1rem;
+    }
+  }
+
+  .honey-do-spinner {
+    position: fixed;
+    top: 46%;
+    left: 43%;
+    z-index: 10;
   }
 }
 
-.honey-do-spinner {
-  position: fixed;
-  top: 46%;
-  left: 43%;
-  z-index: 10;
+// Drawer lies outside of the app
+.honeydo-drawer-content {
+  padding: 1rem;
 }
+
 
 @include media-breakpoint-down(xs){
   .todo-item {
@@ -113,4 +131,8 @@ button.new-todo-button {
   }
 }
 @include media-breakpoint-down(sm){ }
-@include media-breakpoint-up(md){ }
+@include media-breakpoint-up(md){
+  .honeydo-drawer-content {
+    padding: 2rem 3rem;
+  }
+}

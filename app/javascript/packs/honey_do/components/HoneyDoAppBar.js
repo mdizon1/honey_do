@@ -1,56 +1,55 @@
 import React, { PropTypes } from 'react'
+import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import TodoListWrap from './TodoListWrap'
 import HoneyDoConfigWrap from "../containers/HoneyDoConfigWrap"
 import { UiTabs, UiTabToType } from '../constants/TodoTypes'
+import Toolbar from 'material-ui/Toolbar'
+import Button from 'material-ui/Button'
 
-const renderTabContent = (currTab, props) => {
-  switch(currTab){
-    case UiTabs.CONFIG:
-      return (
-        <HoneyDoConfigWrap store={props.store}/>
-      );
-    case UiTabs.TODOS:
-    case UiTabs.SHOPPING_LIST:
-      return (
-        <TodoListWrap
-          store={props.store}
-          todoType={UiTabToType[currTab]}
-          isTouch={props.isTouch}
-          apiEndpoint={props.appConfig.apiEndpoint}
-          authToken={props.appConfig.identity.authToken}
-        />
-      );
-  };
-}
+const styles = {
+  tabs: {
+    flexGrow: 1
+  },
+  settingsBtn: {
+    color: "white",
+    fontSize: "1.5rem",
+    flex: 0
+  }
+};
 
-const TodoTabs = function (props) {
+const HoneyDoAppBar = function (props) {
+  const { classes } = props;
   return (
-    <div className="">
-      <AppBar>
+    <AppBar>
+      <Toolbar>
         <Tabs
+          className={classes.tabs}
           value={props.currentTab}
           onChange={props.onChangeTab}
+          centered
         >
-          <Tab label="Configuration" value={UiTabs.CONFIG} />
           <Tab label="Todo list" value={UiTabs.TODOS}/ >
           <Tab label="Shopping list" value={UiTabs.SHOPPING_LIST} />
         </Tabs>
-      </AppBar>
-      { renderTabContent(props.currentTab, props) }
-    </div>
+        <Button
+          className={classes.settingsBtn}
+          onClick={props.onOpenConfig}
+        >
+          <i className="fa fa-cog" />
+        </Button>
+      </Toolbar>
+    </AppBar>
   )
-}
+};
 
-export default TodoTabs
+export default withStyles(styles)(HoneyDoAppBar)
+
 
 //TodoTabs.propTypes = {
 //  onChangeTab: PropTypes.func,
 //  currentTab: PropTypes.string
 //}
-
-
 
 // OLD CODE/NOTES BELOW
 

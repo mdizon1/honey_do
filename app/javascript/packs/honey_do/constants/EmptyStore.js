@@ -13,6 +13,7 @@ export const EmptyStore = {
     isSpinning: false,
     isSyncing: false,
     isCompletedHidden: false,
+    isConfigOpen: false,
     dragState: {
       isDragActive: false,
       currentDragTodoId: null,

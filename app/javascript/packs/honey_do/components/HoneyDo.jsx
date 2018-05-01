@@ -1,14 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
-import TodoTabs from './TodoTabs'
+import HoneyDoAppBar from './HoneyDoAppBar'
+import TodoListWrap from './TodoListWrap'
+import HoneyDoConfigWrap from '../containers/HoneyDoConfigWrap'
 import NewTodoWrap from '../containers/NewTodoWrap'
 import EditTodoDialogWrap from '../containers/EditTodoDialogWrap'
 import HoneyDoSpinner from '../containers/HoneyDoSpinner'
 import { hot } from "react-hot-loader";
-import { init, syncTodosRequest, switchTab } from './../actions/HoneyDoActions';
+import { init, syncTodosRequest, switchTab, openConfig } from './../actions/HoneyDoActions';
 import { apiLoadTags } from '../util/Api'
-import { UiTabToType } from '../constants/TodoTypes'
+import { UiTabs, UiTabToType } from '../constants/TodoTypes'
 import CircularProgress from 'material-ui/Progress/CircularProgress'
 
 const configSelector = (state, props) => state.get('configState')
@@ -32,6 +34,10 @@ class HoneyDo extends React.Component {
 
   handleChangeTab(evt, tabVal){
     this.props.store.dispatch(switchTab(tabVal));
+  }
+
+  handleOpenConfig(evt) {
+    this.props.store.dispatch(openConfig());
   }
 
   interfaceIsTouch() {
@@ -61,17 +67,37 @@ class HoneyDo extends React.Component {
     )
   }
 
+  renderTabContent() {
+    switch(this.props.currentTab){
+      case UiTabs.TODOS:
+      case UiTabs.SHOPPING_LIST:
+        return (
+          <TodoListWrap
+            store={this.props.store}
+            todoType={UiTabToType[this.props.currentTab]}
+            isTouch={this.props.isTouch}
+            apiEndpoint={this.props.configState.apiEndpoint}
+            authToken={this.props.configState.identity.authToken}
+          />
+        );
+      default:
+        throw new Error("Unknown tab selected --> ", this.props.currentTab);
+    };
+  }
+
   render() {
     return (
       <div className="honey-do-app-wrap">
         { this.renderSpinner() }
-        <TodoTabs
+        <HoneyDoAppBar
           store={this.props.store}
           currentTab={this.props.currentTab}
-          appConfig={this.props.configState}
           onChangeTab={this.handleChangeTab.bind(this)}
+          onOpenConfig={this.handleOpenConfig.bind(this)}
           isTouch={this.interfaceIsTouch()}
         />
+        <HoneyDoConfigWrap />
+        { this.renderTabContent() }
         { this.renderEditTodo() }
         { this.renderNewTodo() }
       </div>
