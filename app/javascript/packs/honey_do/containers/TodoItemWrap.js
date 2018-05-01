@@ -17,7 +17,7 @@ class TodoItemWrap extends Component {
     this.state = { isExpanded: false }
   }
 
-  handleToggleExpand(evt){
+  handleToggleExpand = (evt)=> {
     this.setState({isExpanded: !this.state.isExpanded});
   }
 
@@ -39,7 +39,7 @@ class TodoItemWrap extends Component {
         connectDragSource={connectDragSource}
         isExpanded={this.state.isExpanded}
         onTodoClicked={onTodoClicked}
-        onToggleExpand={this.handleToggleExpand.bind(this)}
+        onToggleExpand={this.handleToggleExpand}
         onTodoEdit={(evt) => onTodoEdit(todo)}
         onTodoDestroyed={onTodoDestroyed}
         onTodoAccepted={onTodoAccepted}

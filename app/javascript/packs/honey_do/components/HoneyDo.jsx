@@ -32,11 +32,11 @@ class HoneyDo extends React.Component {
     this.props.store.dispatch(syncTodosRequest());
   }
 
-  handleChangeTab(evt, tabVal){
+  handleChangeTab = (evt, tabVal) => {
     this.props.store.dispatch(switchTab(tabVal));
   }
 
-  handleOpenConfig(evt) {
+  handleOpenConfig = (evt) => {
     this.props.store.dispatch(openConfig());
   }
 
@@ -92,8 +92,8 @@ class HoneyDo extends React.Component {
         <HoneyDoAppBar
           store={this.props.store}
           currentTab={this.props.currentTab}
-          onChangeTab={this.handleChangeTab.bind(this)}
-          onOpenConfig={this.handleOpenConfig.bind(this)}
+          onChangeTab={this.handleChangeTab}
+          onOpenConfig={this.handleOpenConfig}
           isTouch={this.interfaceIsTouch()}
         />
         <HoneyDoConfigWrap />
@@ -104,7 +104,6 @@ class HoneyDo extends React.Component {
     )
   }
 }
-
 
 // TODO: try this:
 // hot(module)(connect(mapStateToProps)(HoneyDo))

@@ -31,7 +31,7 @@ class EditTodoWrap extends Component {
     }
   }
 
-  handleDestroyTag(todo, tag){
+  handleDestroyTag = (todo, tag) => {
     let own_todo = this.state.todo;
     let new_tags = _.without(todo.tags, tag);
     own_todo.tags = new_tags;
@@ -40,7 +40,7 @@ class EditTodoWrap extends Component {
     this.props.onDestroyTag(todo, tag);
   }
 
-  handleChange(evt) {
+  handleChange = (evt) => {
     var curr_val, field_name, field_value, todo;
 
     todo = this.state.todo;
@@ -52,7 +52,7 @@ class EditTodoWrap extends Component {
     this.setState({todo: todo})
   }
 
-  handleSubmit(evt) {
+  handleSubmit = (evt) => {
     this.props.onSubmit(this.state.todo);
     this.props.onClose();
   }
@@ -64,10 +64,10 @@ class EditTodoWrap extends Component {
     return (
       <EditTodo
         todo={todo}
-        onChange={this.handleChange.bind(this)}
+        onChange={this.handleChange}
         onClose={onClose}
-        onSubmit={this.handleSubmit.bind(this)}
-        onDestroyTag={this.handleDestroyTag.bind(this)}
+        onSubmit={this.handleSubmit}
+        onDestroyTag={this.handleDestroyTag}
       />
     )
   }

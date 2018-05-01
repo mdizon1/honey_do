@@ -92,25 +92,25 @@ class TodoListWrap extends Component {
     return should_update;
   }
 
-  acceptTodo(todo) {
+  acceptTodo = (todo) => {
     this.props.store.dispatch(acceptTodoRequest(todo));
   }
 
-  handleSearchChanged(name){
+  handleSearchChanged = (name) => {
     return (evt) => {
       let newVal = evt.target.value;
       this.props.store.dispatch(filterTodos(newVal));
   }}
 
-  handleSearchCleared(evt) {
+  handleSearchCleared = (evt) => {
     this.props.store.dispatch(filterTodos(''));
   }
 
-  handleTodoCancelDrag(evt) {
+  handleTodoCancelDrag = (evt) => {
     this.props.store.dispatch(cancelDragTodo());
   }
 
-  handleTodoClicked(todo) {
+  handleTodoClicked = (todo) => {
     if(todo.isCompleted) {
       this.props.store.dispatch(uncompleteTodoRequest(todo));
     }else{
@@ -118,15 +118,15 @@ class TodoListWrap extends Component {
     }
   }
 
-  handleTodoDestroyed(todo) {
+  handleTodoDestroyed = (todo) => {
     this.props.store.dispatch(deleteTodoRequest(todo));
   }
 
-  handleTodoDropped(args) {
+  handleTodoDropped = (args) => {
     this.props.store.dispatch(todoReorderRequest());
   }
 
-  handleTodoDragged(draggedId, neighborId, isNeighborNorth) {
+  handleTodoDragged = (draggedId, neighborId, isNeighborNorth) => {
     this.props.store.dispatch(updateTodoDrag(draggedId, neighborId, isNeighborNorth));
   }
 
@@ -134,19 +134,19 @@ class TodoListWrap extends Component {
     return (
       <div className="todo-list-wrap">
         <SearchTodos
-          onChange={this.handleSearchChanged.bind(this)}
-          onClear={this.handleSearchCleared.bind(this)}
+          onChange={this.handleSearchChanged}
+          onClear={this.handleSearchCleared}
           value={this.props.searchValue}
         />
         <TodoListMouse
           todoIds={todo_ids}
           dispatch={this.props.store.dispatch}
-          onTodoAccepted={this.acceptTodo.bind(this)}
-          onTodoClicked={this.handleTodoClicked.bind(this)}
-          onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
-          onTodoReorder={this.handleTodoDragged.bind(this)}
-          onTodoDropped={this.handleTodoDropped.bind(this)}
-          onTodoCancelDrag={this.handleTodoCancelDrag.bind(this)}
+          onTodoAccepted={this.acceptTodo}
+          onTodoClicked={this.handleTodoClicked}
+          onTodoDestroyed={this.handleTodoDestroyed}
+          onTodoReorder={this.handleTodoDragged}
+          onTodoDropped={this.handleTodoDropped}
+          onTodoCancelDrag={this.handleTodoCancelDrag}
         />
       </div>
     )
@@ -156,19 +156,19 @@ class TodoListWrap extends Component {
     return (
       <div className="todo-list-wrap">
         <SearchTodos
-          onChange={this.handleSearchChanged.bind(this)}
-          onClear={this.handleSearchCleared.bind(this)}
+          onChange={this.handleSearchChanged}
+          onClear={this.handleSearchCleared}
           value={this.props.searchValue}
         />
         <TodoListTouch
           todoIds={todo_ids}
           dispatch={this.props.store.dispatch}
-          onTodoAccepted={this.acceptTodo.bind(this)}
-          onTodoClicked={this.handleTodoClicked.bind(this)}
-          onTodoDestroyed={this.handleTodoDestroyed.bind(this)}
-          onTodoReorder={this.handleTodoDragged.bind(this)}
-          onTodoDropped={this.handleTodoDropped.bind(this)}
-          onTodoCancelDrag={this.handleTodoCancelDrag.bind(this)}
+          onTodoAccepted={this.acceptTodo}
+          onTodoClicked={this.handleTodoClicked}
+          onTodoDestroyed={this.handleTodoDestroyed}
+          onTodoReorder={this.handleTodoDragged}
+          onTodoDropped={this.handleTodoDropped}
+          onTodoCancelDrag={this.handleTodoCancelDrag}
         />
       </div>
     )

@@ -19,7 +19,7 @@ class NewTodoWrap extends Component {
     }
   }
 
-  handleChange(evt) {
+  handleChange = (evt) => {
     var curr_val, field_name, field_value;
 
     field_name = evt.target.name;
@@ -29,15 +29,15 @@ class NewTodoWrap extends Component {
     this.setState({form_values: curr_val})
   }
 
-  handleClose() {
+  handleClose = (evt) => {
     this.props.store.dispatch(closeCreateForm());
   }
 
-  handleOpen() {
+  handleOpen = (evt) => {
     this.props.store.dispatch(openCreateForm());
   }
 
-  handleSubmit() {
+  handleSubmit = (evt) => {
     var self, params;
 
     self = this;
@@ -50,10 +50,10 @@ class NewTodoWrap extends Component {
   render() {
     return (
       <NewTodo
-        onOpen={this.handleOpen.bind(this)}
-        onClose={this.handleClose.bind(this)}
-        onSubmit={this.handleSubmit.bind(this)}
-        onValueChange={this.handleChange.bind(this)}
+        onOpen={this.handleOpen}
+        onClose={this.handleClose}
+        onSubmit={this.handleSubmit}
+        onValueChange={this.handleChange}
         isFormOpen={this.props.isFormOpen}
         todoType={this.props.todoType}
       />

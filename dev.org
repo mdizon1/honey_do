@@ -1,19 +1,27 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Change config tab into a drawer
+** DONE Ditch calls to bind(this)
+   CLOSED: [2018-05-01 Tue 15:03]
 * Backlog
-** TODO Ditch calls to bind(this)
-** TODO app doesn't fix perfectly on phone
+** TODO Add some margin below app bar
+** TODO Move TodoItem.js (component) to containers folder
+   It's actually a container component
+** TODO Refactor Todo Item to use material ui
+   Rather than using bootstrap to render a row with columns
+** TODO app doesn't fit perfectly on phone
    Theres a little wiggle room as you scroll side to side.
 ** TODO Fix configuration panel
 ** TODO Change config tab into a drawer
 ** TODO Remove bootstrap-loader
    Apparently bootstrap doesn't need it anymore with v4.0.0
-** TODO Redo navbar
+** TODO Redo site navbar
+** TODO Try to improve performance of todo tab switch
+   So the whole tree apparently rerenders, but this is the expected behavior.
+   It's rendering an entirely different list, yet it still feels unacceptably
+   slow. Problem might lie with it simply taking too long to render each
+   individual todo...
 ** TODO Add a clear search button
-** TODO Move TodoItem.js (component) to containers folder
-   It's actually a container component
 ** TODO Create a workflow for signup -> using the app
 ** TODO Build landing page
 ** TODO Refactor use of dispatch in components using connect
@@ -169,6 +177,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Change config tab into a drawer
+   CLOSED: [2018-05-01 Tue 14:36]
 ** DONE Upgrade immutable js
    CLOSED: [2018-04-24 Tue 14:45]
 ** DONE Make specs pass
