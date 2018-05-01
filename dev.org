@@ -1,11 +1,10 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** DONE Add some margin below app bar
-   CLOSED: [2018-05-01 Tue 15:06]
-* Backlog
-** TODO Move TodoItem.js (component) to containers folder
+** DONE Move TodoItem.js (component) to containers folder
+   CLOSED: [2018-05-01 Tue 15:09]
    It's actually a container component
+* Backlog
 ** TODO Refactor Todo Item to use material ui
    Rather than using bootstrap to render a row with columns
 ** TODO app doesn't fit perfectly on phone
@@ -176,6 +175,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Add some margin below app bar
+   CLOSED: [2018-05-01 Tue 15:06]
 ** DONE Ditch calls to bind(this)
    CLOSED: [2018-05-01 Tue 15:03]
 ** DONE Change config tab into a drawer

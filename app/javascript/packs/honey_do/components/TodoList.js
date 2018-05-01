@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react'
 import List from 'material-ui/List/List'
-import TodoItem from './TodoItem'
+import TodoItem from '../containers/TodoItem'
 const TodoList = (props) => {
   const {
     todoIds,

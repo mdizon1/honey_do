@@ -8,8 +8,9 @@ import { DragSource, DropTarget } from 'react-dnd'
 import { ItemTypes } from '../constants/ItemTypes'
 import flow from 'lodash/flow'
 
-import TodoItemDragPlaceholder from './TodoItemDragPlaceholder'
-import TodoItemWrap from '../containers/TodoItemWrap'
+import TodoItemDragPlaceholder from '../components/TodoItemDragPlaceholder'
+import TodoItemWrap from './TodoItemWrap'
+
 import List, { ListItem, ListItemText } from 'material-ui/List'
 import Checkbox from 'material-ui/Checkbox'
 import IconButton from 'material-ui/IconButton/IconButton'
