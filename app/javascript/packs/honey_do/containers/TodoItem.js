@@ -11,11 +11,6 @@ import flow from 'lodash/flow'
 import TodoItemDragPlaceholder from '../components/TodoItemDragPlaceholder'
 import TodoItemWrap from './TodoItemWrap'
 
-import Checkbox from 'material-ui/Checkbox'
-import IconButton from 'material-ui/IconButton/IconButton'
-import Icon from 'material-ui/Icon/Icon'
-
-
 // This whole mess up here is just to try and optimize data loading for this
 // component's props such that these things don't rerender unless they have
 // to.  Especially with respect to drag and drop, which is a huge performance

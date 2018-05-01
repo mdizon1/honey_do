@@ -36,7 +36,7 @@ export default class TodoItemControls extends Component {
           onClick={this.handleOpenMenu}
         >
           <Icon>
-            more_vert
+            <i className='fa fa-ellipsis-h'></i>
           </Icon>
         </IconButton>
 
@@ -125,17 +125,18 @@ const _renderMenuItemEdit = (todo, onTodoEdit, afterCallback) => {
 }
 
 
+// TODO: add some accessibility to these icons
 const _renderExpandIcon = (isExpanded) => {
   if(isExpanded){
     return (
       <Icon>
-        expand_less
+        <i className='fa fa-chevron-up'></i>
       </Icon>
     )
   }else{
     return (
       <Icon>
-        expand_more
+        <i className='fa fa-chevron-down'></i>
       </Icon>
     )
   }

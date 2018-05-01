@@ -1,36 +1,35 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** DONE Refactor Todo Item to use material ui
-   CLOSED: [2018-05-01 Tue 16:06]
-   Rather than using bootstrap to render a row with columns
-
-   Nope. Upon putting in some work on this story, using material ui would become
-   problematic. First, react dnd wants native DOM elements. Using material ui
-   would call for ListItems to be the things connected to drag/drop. Since Lists
-   are uls and ListItems are lis under the hood, this would make for a clunky
-   DOM tree.
-
-   Since our ListItems are fairly complex, this would make the styling of the
-   list items complex as well, requiring much refactoring for unknown gains.
-
-   Instead, did a bit of minor refactoring, removing the usage of List and
-   ListItem, this seemed to speed up performance a good amount.
+** TODO Determine whether to use font awesome or material icons
+   And go with one only I think i'd prefer font awesome since the icons are
+   already there in the project. Don't have to rely on google fonts which is
+   being annoying
 * Backlog
+** TODO Add a clear search button
+** TODO Redo site navbar
+** TODO Create a workflow for signup -> using the app
 ** TODO app doesn't fit perfectly on phone
    Theres a little wiggle room as you scroll side to side.
 ** TODO Remove bootstrap-loader
    Apparently bootstrap doesn't need it anymore with v4.0.0
-** TODO Redo site navbar
 ** TODO Try to improve performance of todo tab switch
    So the whole tree apparently rerenders, but this is the expected behavior.
    It's rendering an entirely different list, yet it still feels unacceptably
    slow. Problem might lie with it simply taking too long to render each
    individual todo...
-** TODO Add a clear search button
-** TODO Create a workflow for signup -> using the app
 ** TODO Build landing page
-** TODO See about improving performance of tab switching
+** TODO Get cukes working
+   At least some basic workflow like cucumber/selenium can run and look at the
+   starting page
+
+   Where I left off, I was attempting to get PhantomJS/poltergeist working
+   within the cucumber container. I got stuck yak shaving all day so screw that.
+   Even downloading phantom js was problematic. It worked fine the first 2 or 3
+   times now it just get's stuck in a 302 loop and bails out during the wget of
+   the zip file. WTF???
+** TODO Add accessibility attributes to icons
+   Like where I'm just doing <i class='fa fa-xxx'> i need to add aria blah blah
 ** TODO Refactor use of dispatch in components using connect
    I refactored some components to use connect rather than subscribe but i need
    to use mapdispatchtoprops as well as mapstatetoprops, then remove calls to
@@ -42,8 +41,6 @@
    token. Also would allow for turning the api off so the ap works fully locally
 ** TODO Update Drag n drop UI
    If you drag outside of legal area, it should warn user 
-** TODO Determine whether to use font awesome or material icons
-   And go with one only
 ** TODO When user clicks on notes that are truncated, expand them
    So you dont have to use the little ... menu
 ** TODO Do some more with responsiveness
@@ -106,15 +103,6 @@
 
 *** TODO When you drag, don't scroll unless hitting the bottom/top of the viewport
 ** TODO Tags can have icons or avatars (not sure which yet, probably both)
-** TODO Get cukes working
-   At least some basic workflow like cucumber/selenium can run and look at the
-   starting page
-
-   Where I left off, I was attempting to get PhantomJS/poltergeist working
-   within the cucumber container. I got stuck yak shaving all day so screw that.
-   Even downloading phantom js was problematic. It worked fine the first 2 or 3
-   times now it just get's stuck in a 302 loop and bails out during the wget of
-   the zip file. WTF???
 ** TODO :design: Make tags clearer/more visible
    Right now, they show above the title when you're editing a todo but it's not
    very clear what they are. Even I was confused after coming back to the app
@@ -184,6 +172,21 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Refactor Todo Item to use material ui
+   CLOSED: [2018-05-01 Tue 16:06]
+   Rather than using bootstrap to render a row with columns
+
+   Nope. Upon putting in some work on this story, using material ui would become
+   problematic. First, react dnd wants native DOM elements. Using material ui
+   would call for ListItems to be the things connected to drag/drop. Since Lists
+   are uls and ListItems are lis under the hood, this would make for a clunky
+   DOM tree.
+
+   Since our ListItems are fairly complex, this would make the styling of the
+   list items complex as well, requiring much refactoring for unknown gains.
+
+   Instead, did a bit of minor refactoring, removing the usage of List and
+   ListItem, this seemed to speed up performance a good amount.
 ** DONE Move TodoItem.js (component) to containers folder
    CLOSED: [2018-05-01 Tue 15:09]
    It's actually a container component
