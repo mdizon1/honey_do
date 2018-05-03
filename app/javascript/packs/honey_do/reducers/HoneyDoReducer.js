@@ -293,8 +293,10 @@ const removeTag = (state, todo, tag) => {
   var todo_from_state, tag_list;
 
   todo_from_state = retrieveTodo(state, todo);
-  tag_list = todo_from_state.tags;
-  tag_list = _.without(tag_list, tag);
+  tag_list = todo_from_state.get("tags");
+  tag_list = tag_list.filter((curr_tag, index) => {
+    return curr_tag !== tag;
+  });
 
   return state.setIn(
     ['dataState', 'todos', todo.id.toString(), 'tags'],

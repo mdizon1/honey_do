@@ -3,12 +3,15 @@
 * Current
 ** TODO Create a local only version of the app
 *** TODO Refactor api caller
-**** TODO Replace $.ajax with http.get etc
 **** DONE Create 1 instance of api caller at start
      CLOSED: [2018-05-03 Thu 10:16]
      So we don't have to keep passing in api keys and stuff
-**** TODO Allow api caller to be stubbed out
 **** TODO Ensure delete tags requires auth token on the server
+     Also there's a bug where removing a tag removes them all (on client)
+**** TODO Allow api caller to be stubbed out
+**** TODO Replace $.ajax with http.get etc
+     Not sure of the value of this. I think using the smaller library might be
+     good if jquery isn't already included.
 *** TODO Refactor reducer
     This might not be something I want to do. Looking into the documentation,
     trying to use combineReducers with immutableJS is not supported. Also,
