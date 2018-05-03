@@ -2,167 +2,187 @@
 // TODO: Create a class rather than export a bunch of functions
 //   then they don't have to all be named apiLameName
 
-export const apiAcceptTodo = (args) => {
-  const { endpoint, todo, authToken, onSuccess, onFailure, onComplete } = args;
 
-  let promise = $.ajax({
-    type: "PUT",
-    url: endpoint + '/todos/' +todo.id+ '/accept',
-    data: { authentication_token: authToken }
-  });
+export default class Api {
+  constructor(options) {
 
-  promise = handleSuccess(promise, onSuccess);
-  promise = handleFailure(promise, onFailure);
-  promise = handleComplete(promise, onComplete);
+    const { endpoint, authToken } = options;
 
-  return promise;
-}
-
-export const apiCompleteTodo = (args) => {
-  const { endpoint, todo, authToken, onSuccess, onFailure, onComplete } = args;
-
-  let promise = $.ajax({
-    type: "PUT",
-    url: endpoint + '/todos/' +todo.id+ '/complete',
-    data: { authentication_token: authToken }
-  })
-
-  promise = handleSuccess(promise, onSuccess);
-  promise = handleFailure(promise, onFailure);
-  promise = handleComplete(promise, onComplete);
-  return promise;
-}
-
-export const apiCreateTodo = (args) => {
-  const { endpoint, params, authToken, onSuccess, onFailure, onComplete } = args;
-
-  let promise = $.ajax({
-    type: "POST",
-    url: endpoint + '/todos',
-    data: {
-      authentication_token: authToken,
-      todo: params
+    if(!endpoint || !authToken) {
+      this._offlineMode = true;
+      return;
     }
-  });
 
-  promise = handleSuccess(promise, onSuccess);
-  promise = handleFailure(promise, onFailure);
-  promise = handleComplete(promise, onComplete);
-  return promise;
-}
+    this._offlineMode = false;
+    this.endpoint = endpoint;
+    this.authToken = authToken;
+  }
 
-export const apiDeleteTodo = (args) => {
-  const { endpoint, todo, authToken, onSuccess, onFailure, onComplete } = args;
+  get isOfflineMode(){
+    return this._offlineMode;
+  }
 
-  let promise = $.ajax({
-    type: "DELETE",
-    url: endpoint + '/todos/' +todo.id,
-    data: { authentication_token: authToken }
-  });
+  apiAcceptTodo = (args) => {
+    const { todo, onSuccess, onFailure, onComplete } = args;
 
-  promise = handleSuccess(promise, onSuccess);
-  promise = handleFailure(promise, onFailure);
-  promise = handleComplete(promise, onComplete);
-  return promise;
-}
+    let promise = $.ajax({
+      type: "PUT",
+      url: this.endpoint + '/todos/' +todo.id+ '/accept',
+      data: { authentication_token: this.authToken }
+    });
 
-export const apiRemoveTag = (args) => {
-  const { endpoint, authToken, todo, tag, onSuccess, onFailure, onComplete} = args;
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
 
-  let promise = $.ajax({
-    type: "DELETE",
-    url: endpoint + '/todos/' + todo.id + '/tags/' + tag
-  });
+    return promise;
+  }
 
-  promise = handleSuccess(promise, onSuccess);
-  promise = handleFailure(promise, onFailure);
-  promise = handleComplete(promise, onComplete);
-  return promise;
-}
+  apiCompleteTodo = (args) => {
+    const { todo, onSuccess, onFailure, onComplete } = args;
 
-export const apiLoadTags = (args) => {
-  const { endpoint, authToken, onSuccess, onFailure, onComplete } = args;
-  let promise = $.ajax({
-    type: "GET",
-    url: endpoint + '/tags',
-    data: { authentication_token: authToken }
-  });
+    let promise = $.ajax({
+      type: "PUT",
+      url: this.endpoint + '/todos/' +todo.id+ '/complete',
+      data: { authentication_token: this.authToken }
+    })
 
-  promise = handleSuccess(promise, onSuccess);
-  promise = handleFailure(promise, onFailure);
-  promise = handleComplete(promise, onComplete);
-}
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
+    return promise;
+  }
 
-export const apiSyncTodos = (args) => {
-  const { endpoint, authToken, onSuccess, onFailure, onComplete } = args;
-  let promise = $.ajax({
-    type: 'GET',
-    url: endpoint + '/todos',
-    data: {authentication_token: authToken}
-  })
+  apiCreateTodo = (args) => {
+    const { params, onSuccess, onFailure, onComplete } = args;
 
-  promise = handleSuccess(promise, onSuccess);
-  promise = handleFailure(promise, onFailure);
-  promise = handleComplete(promise, onComplete);
-  return promise;
-}
+    let promise = $.ajax({
+      type: "POST",
+      url: this.endpoint + '/todos',
+      data: {
+        authentication_token: this.authToken,
+        todo: params
+      }
+    });
 
-export const apiReorderTodo = (args) => {
-  const {
-    endpoint,
-    todo,
-    todoNeighborId,
-    isTodoNeighborNorth,
-    authToken,
-    onSuccess,
-    onFailure,
-    onComplete
-  } = args;
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
+    return promise;
+  }
 
-  let promise = $.ajax({
-    type: "PUT",
-    url: endpoint + '/todos/' + todo.id + '/reorder',
-    data: {
-      authentication_token: authToken,
-      todo: todo,
-      todo_neighbor_id: todoNeighborId,
-      is_todo_neighbor_north: isTodoNeighborNorth
-    }
-  });
-  promise = handleSuccess(promise, onSuccess);
-  promise = handleFailure(promise, onFailure);
-  promise = handleComplete(promise, onComplete);
-  return promise;
-}
+  apiDeleteTodo = (args) => {
+    const { todo, onSuccess, onFailure, onComplete } = args;
 
-export const apiUncompleteTodo = (args) => {
-  const { endpoint, todo, authToken, onSuccess, onFailure, onComplete } = args;
-  let promise = $.ajax({
-    type: "PUT",
-    url: endpoint + '/todos/' +todo.id+ '/uncomplete',
-    data: { authentication_token: authToken }
-  });
+    let promise = $.ajax({
+      type: "DELETE",
+      url: this.endpoint + '/todos/' +todo.id,
+      data: { authentication_token: this.authToken }
+    });
 
-  promise = handleSuccess(promise, onSuccess);
-  promise = handleFailure(promise, onFailure);
-  promise = handleComplete(promise, onComplete);
-  return promise;
-}
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
+    return promise;
+  }
 
-export const apiUpdateTodo = (args) => {
-  const { endpoint, todo, authToken, onSuccess, onFailure, onComplete } = args;
-  let promise = $.ajax({
-    type: "PUT", // TODO: make this PATCH i suppose
-    url: endpoint + '/todos/' + todo.id,
-    data: {
-      authentication_token: authToken,
-      todo: todo
-    }
-  });
-  promise = handleSuccess(promise, onSuccess);
-  promise = handleFailure(promise, onFailure);
-  promise = handleComplete(promise, onComplete);
-  return promise;
+  // TOOD: This wasn't secured on the server side??
+  apiRemoveTag = (args) => {
+    const { todo, tag, onSuccess, onFailure, onComplete} = args;
+
+    let promise = $.ajax({
+      type: "DELETE",
+      url: this.endpoint + '/todos/' + todo.id + '/tags/' + tag
+    });
+
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
+    return promise;
+  }
+
+  apiLoadTags = (args) => {
+    const { onSuccess, onFailure, onComplete } = args;
+    let promise = $.ajax({
+      type: "GET",
+      url: this.endpoint + '/tags',
+      data: { authentication_token: this.authToken }
+    });
+
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
+  }
+
+  apiSyncTodos = (args) => {
+    const { onSuccess, onFailure, onComplete } = args;
+    let promise = $.ajax({
+      type: 'GET',
+      url: this.endpoint + '/todos',
+      data: {authentication_token: this.authToken}
+    })
+
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
+    return promise;
+  }
+
+  apiReorderTodo = (args) => {
+    const {
+      todo,
+      todoNeighborId,
+      isTodoNeighborNorth,
+      onSuccess,
+      onFailure,
+      onComplete
+    } = args;
+
+    let promise = $.ajax({
+      type: "PUT",
+      url: this.endpoint + '/todos/' + todo.id + '/reorder',
+      data: {
+        authentication_token: this.authToken,
+        todo: todo,
+        todo_neighbor_id: todoNeighborId,
+        is_todo_neighbor_north: isTodoNeighborNorth
+      }
+    });
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
+    return promise;
+  }
+
+  apiUncompleteTodo = (args) => {
+    const { todo, onSuccess, onFailure, onComplete } = args;
+    let promise = $.ajax({
+      type: "PUT",
+      url: this.endpoint + '/todos/' +todo.id+ '/uncomplete',
+      data: { authentication_token: this.authToken }
+    });
+
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
+    return promise;
+  }
+
+  apiUpdateTodo = (args) => {
+    const { todo, onSuccess, onFailure, onComplete } = args;
+    let promise = $.ajax({
+      type: "PUT", // TODO: make this PATCH i suppose
+      url: this.endpoint + '/todos/' + todo.id,
+      data: {
+        authentication_token: this.authToken,
+        todo: todo
+      }
+    });
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
+    return promise;
+  }
 }
 
 function handleSuccess(promise, callback) {

@@ -17,6 +17,7 @@ import HoneyDo from "./components/HoneyDo.jsx"
 import { Provider } from "react-redux"
 import { createStore, applyMiddleware } from "redux"
 import honeyDoReducer from "./reducers/HoneyDoReducer"
+import Api from "./util/Api"
 import asyncDispatchMiddleware from "./util/AsyncDispatchMiddleware"
 import { EmptyStore } from "./constants/EmptyStore"
 
@@ -38,6 +39,13 @@ $(function (){
 
   if(honey_do_container.length == 1){
     let honey_do_options = honey_do_container.data();
+
+    let api = new Api({
+      endpoint: honey_do_options.config.apiEndpoint, 
+      authToken: honey_do_options.config.identity.authToken
+    });
+
+    window.api = api;
 
     let store = prepareStore(honey_do_options);
 

@@ -1,19 +1,29 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** DONE Add a clear search button
-   CLOSED: [2018-04-27 Fri 01:20]
-* Backlog
-** TODO Redo site navbar
 ** TODO Create a local only version of the app
-*** Refactor reducer
-*** Refactor api caller
-**** Replace $.ajax with http.get etc
-**** Create 1 instance of api caller at start
+*** TODO Refactor api caller
+**** TODO Replace $.ajax with http.get etc
+**** DONE Create 1 instance of api caller at start
+     CLOSED: [2018-05-03 Thu 10:16]
      So we don't have to keep passing in api keys and stuff
-**** Allow api caller to be stubbed out
+**** TODO Allow api caller to be stubbed out
+**** TODO Ensure delete tags requires auth token on the server
+*** TODO Refactor reducer
+    This might not be something I want to do. Looking into the documentation,
+    trying to use combineReducers with immutableJS is not supported. Also,
+    combineReducers is meant to separate slices of the state such that reducer A
+    only handles state.A and reducer B only handles state.B. However, some
+    actions would need to alter UI state as well for example, if making an API
+    call, it'd automatically engage the spinner. According to the redux
+    documentation, there is a way to do this but it's soo ugly.
+
+    If I do decide to do this, I'll have to plan things out a lot more clearly
+    before beginning.
+* Backlog
 ** TODO Remove bootstrap-loader
    Apparently bootstrap doesn't need it anymore with v4.0.0
+** TODO Redo site navbar
 ** TODO Build landing page
 *** TODO Find a suitable page design
     Just use one of those site designs for sale. Like where marty got the mockup
@@ -179,6 +189,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Add a clear search button
+   CLOSED: [2018-04-27 Fri 01:20]
 ** DONE Determine whether to use font awesome or material icons
    CLOSED: [2018-05-01 Tue 16:37]
    And go with one only I think i'd prefer font awesome since the icons are

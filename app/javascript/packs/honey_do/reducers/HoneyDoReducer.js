@@ -224,7 +224,8 @@ const openNewTodoForm = (state) => {
 
 const completeTodoOnServer = (state, action) => {
   let todo = action.todo
-  apiCompleteTodo({
+  if(window.api.isOfflineMode) { return; }
+  window.api.apiCompleteTodo({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
     todo: todo,
@@ -277,7 +278,8 @@ const dropTodo = (state, todo) => {
 }
 
 const obtainTodosFromServer = (state, action) => {
-  apiSyncTodos({
+  if(window.api.isOfflineMode) { return; }
+  window.api.apiSyncTodos({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
     onSuccess: (data, textStatus, jqXHR) => {
@@ -356,7 +358,8 @@ const reorderTodos = (state) => {
 }
 
 const requestAcceptTodoFromServer = (state, action) => {
-  apiAcceptTodo({
+  if(window.api.isOfflineMode) { return; }
+  window.api.apiAcceptTodo({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
     todo: action.todo,
@@ -373,7 +376,8 @@ const requestAcceptTodoFromServer = (state, action) => {
 }
 
 const requestCreateTodoOnServer = (state, action) => {
-  apiCreateTodo({
+  if(window.api.isOfflineMode) { return; }
+  window.api.apiCreateTodo({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
     params: action.params,
@@ -385,7 +389,8 @@ const requestCreateTodoOnServer = (state, action) => {
 }
 
 const requestDeleteTodoOnServer = (state, action) => {
-  apiDeleteTodo({
+  if(window.api.isOfflineMode) { return; }
+  window.api.apiDeleteTodo({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
     todo: action.todo,
@@ -402,7 +407,8 @@ const requestDeleteTodoOnServer = (state, action) => {
 }
 
 const requestRemoveTodoTagOnServer = (state, action) => {
-  apiRemoveTag({
+  if(window.api.isOfflineMode) { return; }
+  window.api.apiRemoveTag({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
     todo: action.todo,
@@ -411,13 +417,15 @@ const requestRemoveTodoTagOnServer = (state, action) => {
 }
 
 const requestReorderTodoOnServer = (state, action) => {
+  if(window.api.isOfflineMode) { return; }
+
   const drag_state = state.getIn(['uiState', 'dragState']);
   const todo_id = drag_state.get('currentDragTodoId');
   let todo = state.getIn(['dataState', 'todos', todo_id.toString()]).toJS();
   let neighbor_id = drag_state.get('currentNeighborId');
   let is_neighbor_north = drag_state.get('isNeighborNorth');
 
-  apiReorderTodo({
+  window.api.apiReorderTodo({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
     todo: todo,
@@ -436,7 +444,8 @@ const requestReorderTodoOnServer = (state, action) => {
 }
 
 const requestUpdateTodoFromServer = (state, action) => {
-  apiUpdateTodo({
+  if(window.api.isOfflineMode) { return; }
+  window.api.apiUpdateTodo({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
     todo: action.todo,
@@ -516,7 +525,8 @@ const updateTodo = (state, todo) => { // Look for given todo in state and replac
 const uncompleteTodoOnServer = (state, action) => {
   let todo = action.todo
 
-  apiUncompleteTodo({
+  if(window.api.isOfflineMode) { return; }
+  window.api.apiUncompleteTodo({
     endpoint: state.getIn(['configState', 'apiEndpoint']),
     authToken: state.getIn(['configState', 'identity', 'authToken']),
     todo: todo,
