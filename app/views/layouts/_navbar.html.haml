@@ -1,9 +1,11 @@
-%nav#primary-nav.navbar.navbar-toggleable-md.navbar-light.bg-faded.indigo{:role => 'navigation'}
-  %button.navbar-toggler{:type => 'button', :data => {:toggle => 'collapse', :target => '.navbar-responsive-collapse'}}
+- is_parked = (defined? parked ? parked : false)
+
+%nav.honeydo-nav.navbar.navbar-expand-md.navbar-dark{:class => (is_parked ? 'parked' : '')}
+  .navbar-brand Honey do
+  %button.navbar-toggler{:type => 'button', :data => {:toggle => 'collapse', :target => '#navbar_content'}}
     %span.navbar-toggler-icon
-  = link_to 'Honey Do', root_url, :class => 'navbar-brand'
-  .navbar-collapse.collapse.navbar-responsive-collapse
+  #navbar_content.collapse.navbar-collapse
     %ul.navbar-nav.mr-auto
-      - if signed_in? && current_user.household && current_user.is_household_admin?
-        %li.nav-item= link_to 'Household Settings', edit_household_settings_path, :class => 'nav-link'
+      %li.nav-item dummy link
+    %ul.navbar-nav.ml-auto
       = render 'layouts/session_controls'

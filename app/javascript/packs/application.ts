@@ -16,13 +16,11 @@ require("font-awesome-sass-loader");
 var _ = require("lodash");
 
 
-
 console.log('Hello World from Webpacker');
+
 if(process.env.NODE_ENV != 'production') {
   require("../styles/application.scss");
 }
-
-
 
 
 // BEGIN TYPESCRIPT CHECK
@@ -49,7 +47,6 @@ var user = new Student("Jane", "M.", "User");
 
 console.log("DEBUG: Typescript check ---> ", greeter(user));
 // END TYPESCRIPT CHECK
-//
-//
 
-require ("./honey_do/entry.js");
+
+require ("../honey_do/entry.js");

@@ -1,14 +1,13 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-* Backlog
-** TODO Remove bootstrap-loader
-   Apparently bootstrap doesn't need it anymore with v4.0.0
-** TODO Redo site navbar
 ** TODO Build landing page
-*** TODO Find a suitable page design
+*** DONE Find a suitable page design
+    CLOSED: [2018-05-03 Thu 13:03]
     Just use one of those site designs for sale. Like where marty got the mockup
     for jmcimstream
+*** TODO Redo site navbar
+* Backlog
 ** TODO Create a local only version of the app
 *** TODO Refactor api caller
 **** DONE Create 1 instance of api caller at start
@@ -43,6 +42,7 @@
    Even downloading phantom js was problematic. It worked fine the first 2 or 3
    times now it just get's stuck in a 302 loop and bails out during the wget of
    the zip file. WTF???
+** TODO Add sign out control to app
 ** TODO app doesn't fit perfectly on phone
    Theres a little wiggle room as you scroll side to side.
 ** TODO Add accessibility attributes to icons
@@ -93,6 +93,10 @@
 *** Vehicle
 *** Errand
 *** etc.
+** TODO Remove bootstrap-loader
+   Apparently bootstrap doesn't need it anymore with v4.0.0
+   I can't remember where I saw this info and now I can't seem to find how to do it
+   Pushing this off til later
 ** TODO Fix drag n drop for mobile
 *** DONE When dragging, ensure consistency of the placeholder
     CLOSED: [2017-09-27 Wed 18:09]

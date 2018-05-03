@@ -24,6 +24,9 @@
 /log/*.log
 /tmp
 
+#ignore developer scratch workspace
+/dev
+
 # Ignore javascript assets (for webpack)
 /app/assets/javascripts
 

@@ -1,7 +1,5 @@
-%h1 [PLACEHOLDER] WELCOME TO HONEY DO!!!!! [PLACEHOLDER]
-
-- if user_signed_in?
-  - if current_user.household
-    = link_to 'Go to your household', household_path(current_user.households.first)
-  - else
-    = link_to 'Create your household', new_household_path
+%header.honeydo-hero
+  %h1.display-1.honeydo-hero-title HONEY DO
+  .honeydo-hero-subtitle Organize your household
+  .hero-img-wrap
+    = image_tag 'landing/hero_img', :class => 'img-fluid'

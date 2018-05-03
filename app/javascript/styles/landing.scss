@@ -1,0 +1,52 @@
+@import "~compass-mixins/lib/compass";
+
+$font-family-base: 'Roboto Condensed', sans-serif;
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/mixins";
+
+@import "./colors";
+@import "./layout";
+@import "./honey_do/navbar";
+
+.honeydo-hero {
+  padding: 8em 3em 0;
+  text-align: center;
+  @include background-image(linear-gradient( 135deg, rgba(60, 8, 118, 0.8) 0%, rgba(250, 0, 118, 0.8) 100%));
+  color: $color-white;
+
+  .hero-img-wrap { 
+    height: 0;
+    overflow: hidden;
+    padding-bottom: 100%;
+  }
+}
+
+.honeydo-hero-title {
+  font-weight: bold;
+}
+
+.honeydo-hero-subtitle {
+  letter-spacing: 1px;
+  font-size: 1.5em;
+  opacity: 0.7;
+}
+
+@include media-breakpoint-up(lg) {
+  .honeydo-hero {
+    .hero-img-wrap { 
+      padding-bottom: 30%;
+    }
+  }
+}
+
+@include media-breakpoint-up(md) {
+  .honeydo-hero {
+    .hero-img-wrap { 
+      padding-bottom: 50%;
+    }
+  }
+}
+

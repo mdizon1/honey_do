@@ -1,4 +1,5 @@
 class WelcomeController < ApplicationController
+  layout 'landing'
   before_action :redirect_to_household, :only => :index
 
   def index
