@@ -2,6 +2,7 @@ module Households
   module Todos
     class TagsController < ApplicationController
       before_action :authenticate_user!
+      before_action :verify_auth_token
       before_action :load_current_user_household
       before_action :load_todo
 

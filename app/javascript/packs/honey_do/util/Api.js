@@ -92,7 +92,8 @@ export default class Api {
 
     let promise = $.ajax({
       type: "DELETE",
-      url: this.endpoint + '/todos/' + todo.id + '/tags/' + tag
+      url: this.endpoint + '/todos/' + todo.id + '/tags/' + tag,
+      data: { authentication_token: this.authToken }
     });
 
     promise = handleSuccess(promise, onSuccess);
