@@ -1,11 +1,11 @@
-@import "~compass-mixins/lib/compass";
-
 $font-family-base: 'Roboto Condensed', sans-serif;
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/reboot";
 @import "~bootstrap/scss/mixins";
+
+@import "~compass-mixins/lib/compass";
 
 @import "./colors";
 @import "./layout";
@@ -17,7 +17,7 @@ $font-family-base: 'Roboto Condensed', sans-serif;
   @include background-image(linear-gradient( 135deg, rgba(60, 8, 118, 0.8) 0%, rgba(250, 0, 118, 0.8) 100%));
   color: $color-white;
 
-  .hero-img-wrap { 
+  .hero-img-wrap {
     height: 0;
     overflow: hidden;
     padding-bottom: 100%;
@@ -34,9 +34,62 @@ $font-family-base: 'Roboto Condensed', sans-serif;
   opacity: 0.7;
 }
 
+.landing-section {
+  padding: 5.4em 0;
+
+  &.light-bg {
+    background-color: $landing-section-light-bg;
+  }
+}
+
+.landing-section-title {
+  margin-bottom: 3em;
+  text-align: center;
+  color: $landing-section-title-color;
+}
+
+.card.features {
+  margin-bottom: 2rem;
+
+  @include box-shadow(0px 5px 7px 0px rgba(0, 0, 0, 0.04));
+  @include transition-property(all);
+  @include transition-duration(0.3s);
+  @include transition-timing-function(ease);
+  &.hover, &:hover {
+    transform: translateY(-3px);
+    @include box-shadow(0px 5px 30px 0px rgba(0, 0, 0, 0.08));
+  }
+}
+
+.card.features:before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0;
+  width: 3px;
+  color: #fc73b4;
+  background: -moz-linear-gradient(top, #9477b4 0%, #fc73b4 100%);
+  background: -webkit-linear-gradient(top, #9477b4 0%, #fc73b4 100%);
+  background: linear-gradient(to bottom, #9477b4 0%, #fc73b4 100%);
+}
+
+.card-title { color: $landing-card-title-color; }
+
+.card-text { color: $landing-card-body-color; }
+
+.feature-icon {
+  font-size: 3em;
+  color: $landing-card-icon-color;
+  i:before {
+    @include background-image(linear-gradient(to bottom, #9477b4 0%, #fc73b4 100%));
+    @include background-clip(text);
+    -webkit-text-fill-color: transparent;
+  }
+}
+
 @include media-breakpoint-up(lg) {
   .honeydo-hero {
-    .hero-img-wrap { 
+    .hero-img-wrap {
       padding-bottom: 30%;
     }
   }
@@ -44,9 +97,8 @@ $font-family-base: 'Roboto Condensed', sans-serif;
 
 @include media-breakpoint-up(md) {
   .honeydo-hero {
-    .hero-img-wrap { 
+    .hero-img-wrap {
       padding-bottom: 50%;
     }
   }
 }
-

@@ -3,10 +3,15 @@
 * Current
 ** TODO Build landing page
 *** DONE Find a suitable page design
+    https://colorlib.com/demo?theme=MobApp
     CLOSED: [2018-05-03 Thu 13:03]
     Just use one of those site designs for sale. Like where marty got the mockup
     for jmcimstream
+
+    Looking at this one : https://colorlib.com/demo?theme=MobApp
 *** TODO Redo site navbar
+**** TODO Style according to mock
+**** TODO Create parkable nav
 * Backlog
 ** TODO Create a local only version of the app
 *** TODO Refactor api caller

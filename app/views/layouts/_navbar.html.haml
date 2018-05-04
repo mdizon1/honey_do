@@ -1,11 +1,12 @@
 - is_parked = (defined? parked ? parked : false)
 
-%nav.honeydo-nav.navbar.navbar-expand-md.navbar-dark{:class => (is_parked ? 'parked' : '')}
+%nav.honeydo-nav.navbar.navbar-expand-md.navbar-dark{:class => (is_parked ? 'parked' : ''), :data => {'parkable-nav' => true}}
   .navbar-brand Honey do
   %button.navbar-toggler{:type => 'button', :data => {:toggle => 'collapse', :target => '#navbar_content'}}
     %span.navbar-toggler-icon
   #navbar_content.collapse.navbar-collapse
-    %ul.navbar-nav.mr-auto
-      %li.nav-item dummy link
+    -#%ul.navbar-nav.mr-auto -# left side items
     %ul.navbar-nav.ml-auto
+      %li.nav-item.active= link_to 'Home', root_url, :class => 'nav-link'
+      %li.nav-item= link_to 'Try it', root_url, :class => 'nav-link'
       = render 'layouts/session_controls'

@@ -3,3 +3,41 @@
   .honeydo-hero-subtitle Organize your household
   .hero-img-wrap
     = image_tag 'landing/hero_img', :class => 'img-fluid'
+
+.landing-section.landing-section-features.light-bg
+  .container
+    .landing-section-title
+      %h3 Stop forgetting things
+    .row
+      .col-12.col-lg-4
+        .card.features
+          .card-body
+            .media
+              %span.feature-icon.mr-3
+                %i.fa.fa-smile-o
+              .media-body
+                %h4.card-title Simple
+                %p.card-text
+                  Don't get bogged down with data entry.  Organizing, coloring, tagging, sorting, all get in the way of actually doing.
+
+      .col-12.col-lg-4
+        .card.features{:data => {"touch-hover" => true }}
+          .card-body
+            .media
+              %span.feature-icon.mr-3
+                %i.fa.fa-search
+              .media-body
+                %h4.card-title Focused
+                %p.card-text
+                  Keep track of things that need to be done, and things that need to be bought. That's all!
+
+      .col-12.col-lg-4
+        .card.features
+          .card-body
+            .media
+              %span.feature-icon.mr-3
+                %i.fa.fa-users
+              .media-body
+                %h4.card-title Shareable
+                %p.card-text
+                  Add family members to your household so you can all see what needs to be done.
