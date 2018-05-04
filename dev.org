@@ -9,10 +9,23 @@
     for jmcimstream
 
     Looking at this one : https://colorlib.com/demo?theme=MobApp
-*** TODO Redo site navbar
-**** TODO Style according to mock
-**** TODO Create parkable nav
+*** DONE Redo site navbar
+    CLOSED: [2018-05-03 Thu 23:28]
+**** DONE Style according to mock
+     CLOSED: [2018-05-03 Thu 23:28]
+**** DONE Create parkable nav
+     CLOSED: [2018-05-03 Thu 23:28]
+*** TODO Determine layout and content
+    Based on the mock, which sections to include, in what order, and with what
+    text/images
+*** TODO Tweak style of app for mobile a bit
+    Things are a bit cramped and there is a bit of horizontal scroll
+*** TODO Create an animated hero image
+**** TODO Capture a recording of using honey.do in a somewhat realistic setting
+***** TODO Create a set of fixtures (and a rake task to build them) for realism
 * Backlog
+** TODO Tags should not be case sensitive
+   And when they're rendered, they have text-transform:capitalize
 ** TODO Create a local only version of the app
 *** TODO Refactor api caller
 **** DONE Create 1 instance of api caller at start
