@@ -22,7 +22,7 @@ class Completable < ApplicationRecord
     state :completed
     state :accepted
 
-    event :complete, :after => :move_to_bottom do
+    event :complete do
       transitions :from => :active, :to => :completed, :after => [:rec_complete_event, :rec_completor]
     end
     event :uncomplete do

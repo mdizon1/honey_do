@@ -506,6 +506,12 @@ describe Completable::Todo do
             todo.complete!(:completed_by => completor)
             todo.completor.should == completor
           end
+
+          it "should not change the item's position" do
+            expect {
+              todo.complete!(:completed_by => completor)
+            }.not_to change(todo, :position)
+          end
         end
 
         context "when the todo is already completed" do
