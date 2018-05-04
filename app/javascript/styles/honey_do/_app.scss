@@ -99,7 +99,7 @@
   .todo-search-clear-btn {
     position: absolute;
     top: 21px;
-    right: -14px;
+    right: 0;
     height: 40px; width: 40px;
     font-size: 1.2em;
   }
@@ -107,6 +107,7 @@
   .todo-item-controls-icon { font-size: 1.5em; }
   .todo-tag {
     margin: 0 1rem 0 0;
+    text-transform: capitalize;
   }
 
   .edit-todo-tag-list {
