@@ -112,7 +112,8 @@ const TodoItemCore = (props) => {
   return (
     <div className="todo-item">
       <div className="row">
-        <div className="col-2">
+        <div className="col-lg-1"></div>
+        <div className="col-3 col-sm-2 col-lg-1">
           <div className={"todo-item-checkbox" + (todo.isCompleted ? ' checkbox-checked' : '')}>
             <Checkbox
               checked={todo.isCompleted}
@@ -122,14 +123,14 @@ const TodoItemCore = (props) => {
           </div>
           { _renderDragHandle(connectDragSource) }
         </div>
-        <div className="col-9">
+        <div className="col-7 col-sm-8 col-lg-9">
           <div className={"todo-item-content" + (isExpanded ? " todo-item-content-expanded" : "")}>
             { _renderTitle(todo) }
             { _renderNotes(todo, isExpanded) }
             { _renderTags(todo, onTodoTagDestroyed) }
           </div>
         </div>
-        <div className="col-1">
+        <div className="col">
           { _renderControls(props) }
         </div>
       </div>

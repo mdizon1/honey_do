@@ -25,7 +25,7 @@
   }
 
   .todo-list-wrap {
-    margin: 1.25rem 0 4rem;
+    margin: 2.7rem 0 4rem;
   }
 
   button.new-todo-button {
@@ -50,8 +50,9 @@
     .todo-item-drag-handle {
       display: inline-block;
       position: absolute;
+      top: 8px; right: 0;
       width: 2em;
-      cursor: move;
+      cursor: ns-resize;
       font-size: 1.25em;
       text-align: center;
     }
@@ -88,6 +89,7 @@
 
   .todo-search-wrap {
     position: relative;
+    padding: 0 1em;
   }
   .todo-search {
     .search-icon {
@@ -134,7 +136,13 @@
     }
   }
 }
-@include media-breakpoint-down(sm){ }
+@include media-breakpoint-up(sm){
+  .honey-do-app-wrap {
+    .todo-list-wrap {
+      margin: 3.5rem 0 4rem;
+    }
+  }
+}
 @include media-breakpoint-up(md){
   .honeydo-drawer-content {
     padding: 2rem 3rem;

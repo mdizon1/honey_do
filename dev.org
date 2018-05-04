@@ -1,6 +1,18 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
+** DONE Tweak style of app for mobile a bit
+   CLOSED: [2018-05-04 Fri 16:00]
+   Things are a bit cramped and there is a bit of horizontal scroll
+*** DONE Tweak spacing of columns for todo items
+    CLOSED: [2018-05-04 Fri 15:53]
+*** DONE Search is not visible on mobile (covered by app bar)
+    CLOSED: [2018-05-04 Fri 16:00]
+* Backlog
+** TODO Tags should not be case sensitive
+   And when they're rendered, they have text-transform:capitalize
+** TODO Completed todos should not automatically change position
+** TODO Create a set of fixtures (and a rake task to build them) for realism
 ** TODO Build landing page
 *** DONE Find a suitable page design
     https://colorlib.com/demo?theme=MobApp
@@ -15,17 +27,27 @@
      CLOSED: [2018-05-03 Thu 23:28]
 **** DONE Create parkable nav
      CLOSED: [2018-05-03 Thu 23:28]
-*** TODO Determine layout and content
+*** DONE Determine layout and content
+    CLOSED: [2018-05-04 Fri 15:25]
     Based on the mock, which sections to include, in what order, and with what
     text/images
-*** TODO Tweak style of app for mobile a bit
-    Things are a bit cramped and there is a bit of horizontal scroll
+*** TODO Tweak nav on mobile
+**** TODO Decrease padding
+    It's a bit cramped
+**** TODO Expander is covered, increase it's z index
+**** TODO Shrink the expander icon in sticky mode
+*** TODO How to use section
+*** TODO Add mobile hover to "Stop forgetting things" section
+    So when touch enabled, the thingies hover when you scroll over them
+*** TODO Try it live demo
+    Also need a link in the nav
+*** TODO Cross platform marketing section
+    It's a picture with various devices with the app overlaid onto them
+*** TODO Testimonials (optional)
+*** TODO FAQ section
+*** TODO Footer
 *** TODO Create an animated hero image
 **** TODO Capture a recording of using honey.do in a somewhat realistic setting
-***** TODO Create a set of fixtures (and a rake task to build them) for realism
-* Backlog
-** TODO Tags should not be case sensitive
-   And when they're rendered, they have text-transform:capitalize
 ** TODO Create a local only version of the app
 *** TODO Refactor api caller
 **** DONE Create 1 instance of api caller at start
@@ -35,9 +57,6 @@
      CLOSED: [2018-05-03 Thu 10:48]
      Also there's a bug where removing a tag removes them all (on client)
 **** TODO Allow api caller to be stubbed out
-**** TODO Replace $.ajax with http.get etc
-     Not sure of the value of this. I think using the smaller library might be
-     good if jquery isn't already included.
 *** TODO Refactor reducer
     This might not be something I want to do. Looking into the documentation,
     trying to use combineReducers with immutableJS is not supported. Also,
@@ -66,9 +85,9 @@
 ** TODO Add accessibility attributes to icons
    Like where I'm just doing <i class='fa fa-xxx'> i need to add aria blah blah
 ** TODO Refactor use of dispatch in components using connect
-   I refactored some components to use connect rather than subscribe but i need
-   to use mapdispatchtoprops as well as mapstatetoprops, then remove calls to
-   this.props.store.dispatch
+   I refactored some components to use connect rather than subscribe. Basically
+   use mapdispatchtoprops and remove all calls to this.props.store.dispatch
+** TODO Expand notes on click of the title/notes text
 ** TODO Replace $.ajax with http.get and put etc
 ** TODO Try to improve performance of todo tab switch
    So the whole tree apparently rerenders, but this is the expected behavior.

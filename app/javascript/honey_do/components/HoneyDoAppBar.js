@@ -29,8 +29,8 @@ const HoneyDoAppBar = function (props) {
           onChange={props.onChangeTab}
           centered
         >
-          <Tab label="Todo list" value={UiTabs.TODOS}/ >
-          <Tab label="Shopping list" value={UiTabs.SHOPPING_LIST} />
+          <Tab label="Todo" value={UiTabs.TODOS}/ >
+          <Tab label="Shopping" value={UiTabs.SHOPPING_LIST} />
         </Tabs>
         <Button
           className={classes.settingsBtn}

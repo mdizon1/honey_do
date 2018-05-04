@@ -9,8 +9,7 @@
 
   %body
     = render 'layouts/flash'
-    .container
-      = yield
+    = yield
 
     = yield :modals
     -#= webpack_javascript_include_helper
