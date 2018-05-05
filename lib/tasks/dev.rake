@@ -124,7 +124,7 @@ namespace :dev do
 
 
   desc "Seed the db with dummy data that looks like some real world use case"
-  task :realisitc_seed => :environment do
+  task :realistic_seed => :environment do
     puts "\tLOG: SEED: building households"
     household = FactoryGirl.create :household
 
@@ -166,37 +166,69 @@ namespace :dev do
     FactoryGirl.create :todo, :household => household, :title => 'Schedule playdate for Emily', :notes => "Call Cally's parents at 555-5543"
 
     puts "\tLOG: SEED: building shopping items"
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Eggs', :tags => [costco]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Steak 3lbs', :tags => [costco]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Ground beef', :tags => [costco]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'String cheese', :tags => [costco]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Parmesean', :tags => [costco]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Ravioli', :tags => [safeway]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'kids multivitamin', :tags => [costco, walgreens]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Cough syrup', :tags => [walgreens]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Cough drops', :tags => [walgreens]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Milk', :tags => [costco, safeway]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Butter', :tags => [andronicos]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Flour', :tags => [safeway]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Celery', :tags => [farm, costco]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Baby formula', :notes => 'Babys only brand', :tags => [andronicos]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Sardines', :tags => [andronicos]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Bread', :tags => [andronicos]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Oatmeal', :tags => [luckys, costco]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Cereal', :tags => [costco, safeway]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Coffee', :tags => [safeway, andronicos]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Garbage bags', :tags => [costco]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Ziploc bags', :tags => [target, costco]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Balloons', :tags => [target]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'WD40', :tags => [target]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Onions', :tags => [costco]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Spinach', :tags => [farm]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Kale', :tags => [farm]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Bitter melon', :tags => [ranch]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'An Choy', :tags => [ranch]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Soft tofu', :tags => [ranch]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Miso', :tags => [ranch]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Rice', :tags => [ranch]
-    FactoryGirl.create :shopping_item, :household => household, :title => 'Ginger', :tags => [ranch]
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Eggs', :notes => ''
+    i.tag_titles = [costco]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Steak 3lbs', :notes => ''
+    i.tag_titles = [costco]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Ground beef', :notes => ''
+    i.tag_titles = [costco]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'String cheese', :notes => ''
+    i.tag_titles = [costco]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Parmesean', :notes => ''
+    i.tag_titles = [costco]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Ravioli', :notes => ''
+    i.tag_titles = [safeway]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'kids multivitamin', :notes => ''
+    i.tag_titles = [costco, walgreens]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Cough syrup', :notes => ''
+    i.tag_titles = [walgreens]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Cough drops', :notes => ''
+    i.tag_titles = [walgreens]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Milk', :notes => ''
+    i.tag_titles = [costco, safeway]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Butter', :notes => ''
+    i.tag_titles = [andronicos]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Flour', :notes => ''
+    i.tag_titles = [safeway]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Celery', :notes => ''
+    i.tag_titles = [farm, costco]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Baby formula', :notes => 'Babys only brand'
+    i.tag_titles = [andronicos]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Sardines', :notes => ''
+    i.tag_titles = [andronicos]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Bread', :notes => ''
+    i.tag_titles = [andronicos]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Oatmeal', :notes => ''
+    i.tag_titles = [luckys, costco]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Cereal', :notes => ''
+    i.tag_titles = [costco, safeway]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Coffee', :notes => ''
+    i.tag_titles = [safeway, andronicos]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Garbage bags', :notes => ''
+    i.tag_titles = [costco]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Ziploc bags', :notes => ''
+    i.tag_titles = [target, costco]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Balloons', :notes => ''
+    i.tag_titles = [target]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'WD40', :notes => ''
+    i.tag_titles = [target]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Onions', :notes => ''
+    i.tag_titles = [costco]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Spinach', :notes => ''
+    i.tag_titles = [farm]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Kale', :notes => ''
+    i.tag_titles = [farm]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Bitter melon', :notes => ''
+    i.tag_titles = [ranch]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'An Choy', :notes => ''
+    i.tag_titles = [ranch]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Soft tofu', :notes => ''
+    i.tag_titles = [ranch]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Miso', :notes => ''
+    i.tag_titles = [ranch]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Rice', :notes => ''
+    i.tag_titles = [ranch]; i.save
+    i = FactoryGirl.create :shopping_item, :household => household, :title => 'Ginger', :notes => ''
+    i.tag_titles = [ranch]; i.save
   end
 end

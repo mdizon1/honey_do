@@ -8,7 +8,7 @@ class Completable < ApplicationRecord
   has_many :completed_events, :as => :target, :class_name => 'Event::TodoCompleted'
   has_many :accepted_events, :as => :target, :class_name => 'Event::TodoAccepted'
 
-  validates :household_id, :creator_id, :title, :presence => true
+  validates :household_id, :creator_id, :title, :presence => true, :allow_blank => false
   validate :creator_is_member
 
   acts_as_list :scope => :household

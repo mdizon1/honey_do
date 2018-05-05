@@ -1,10 +1,7 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Create a set of fixtures for realistic use case
-*** TODO Create rake task with some "realistic" todo items and household
 * Backlog
-** TODO Todo cannot be blank
 ** TODO Build landing page
 *** DONE Find a suitable page design
     https://colorlib.com/demo?theme=MobApp
@@ -227,6 +224,10 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Create a set of fixtures for realistic use case
+   CLOSED: [2018-05-05 Sat 13:07]
+*** DONE Create rake task with some "realistic" todo items and household
+    CLOSED: [2018-05-05 Sat 13:07]
 ** DONE Completed todos should not automatically change position
    CLOSED: [2018-05-04 Fri 16:13]
 ** DONE Tags should not be case sensitive
