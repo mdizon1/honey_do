@@ -1,7 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-* Backlog
 ** TODO Build landing page
 *** DONE Find a suitable page design
     https://colorlib.com/demo?theme=MobApp
@@ -20,11 +19,15 @@
     CLOSED: [2018-05-04 Fri 15:25]
     Based on the mock, which sections to include, in what order, and with what
     text/images
-*** TODO Tweak nav on mobile
-**** TODO Decrease padding
+*** DONE Tweak nav on mobile
+    CLOSED: [2018-05-05 Sat 15:24]
+**** DONE Decrease padding
+     CLOSED: [2018-05-05 Sat 15:20]
     It's a bit cramped
-**** TODO Expander is covered, increase it's z index
-**** TODO Shrink the expander icon in sticky mode
+**** DONE Expander is covered, increase it's z index
+     CLOSED: [2018-05-05 Sat 15:24]
+**** DONE Shrink the expander icon in sticky mode
+     CLOSED: [2018-05-05 Sat 15:24]
 *** TODO How to use section
 *** TODO Add mobile hover to "Stop forgetting things" section
     So when touch enabled, the thingies hover when you scroll over them
@@ -37,6 +40,9 @@
 *** TODO Footer
 *** TODO Create an animated hero image
 **** TODO Capture a recording of using honey.do in a somewhat realistic setting
+* Backlog
+** TODO Flash alert needs a higher z index
+   Getting hidden by the app bar
 ** TODO Create a local only version of the app
 *** TODO Refactor api caller
 **** DONE Create 1 instance of api caller at start

@@ -1,9 +1,9 @@
 .honeydo-nav {
   position: fixed;
-  top: 0; left: 0;
+  top: 0; left: 0; z-index: 10;
   width: 100%;
-  padding-left: 5em;
-  padding-right: 5em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
 
   @include transition(all 0.3 ease);
   transition: all 0.3s ease;
@@ -19,5 +19,23 @@
     background-color: black;
     @include background(linear-gradient(135deg, rgb(74, 13, 143) 0%, rgb(250, 42, 143) 100%));
     @include box-shadow(0px 5px 23px 0px rgba(0, 0, 0, 0.1));
+
+    .navbar-toggler {
+      font-size: 0.9rem;
+    }
+  }
+}
+
+@include media-breakpoint-up(sm) {
+  .honeydo-nav {
+    padding-left: 2em;
+    padding-right: 2em;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .honeydo-nav {
+    padding-left: 5em;
+    padding-right: 5em;
   }
 }
