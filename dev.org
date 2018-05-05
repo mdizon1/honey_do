@@ -1,9 +1,10 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Completed todos should not automatically change position
+** TODO Create a set of fixtures for realistic use case
+*** TODO Create rake task with some "realistic" todo items and household
 * Backlog
-** TODO Create a set of fixtures (and a rake task to build them) for realism
+** TODO Todo cannot be blank
 ** TODO Build landing page
 *** DONE Find a suitable page design
     https://colorlib.com/demo?theme=MobApp
@@ -226,6 +227,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Completed todos should not automatically change position
+   CLOSED: [2018-05-04 Fri 16:13]
 ** DONE Tags should not be case sensitive
    CLOSED: [2018-05-04 Fri 16:03]
    And when they're rendered, they have text-transform:capitalize
