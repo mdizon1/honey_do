@@ -28,8 +28,8 @@
      CLOSED: [2018-05-05 Sat 15:24]
 **** DONE Shrink the expander icon in sticky mode
      CLOSED: [2018-05-05 Sat 15:24]
-*** TODO How to use section
-*** TODO Add mobile hover to "Stop forgetting things" section
+*** DONE Add mobile hover to "Stop forgetting things" section
+    CLOSED: [2018-05-05 Sat 18:50]
     So when touch enabled, the thingies hover when you scroll over them
 *** TODO Try it live demo
     Also need a link in the nav
@@ -38,9 +38,17 @@
 *** TODO Testimonials (optional)
 *** TODO FAQ section
 *** TODO Footer
-*** TODO Create an animated hero image
+*** TODO Create animated hero image
 **** TODO Capture a recording of using honey.do in a somewhat realistic setting
+*** TODO How to use section
+    I want multiple screenshots to fit on the phone here, one for each step
+**** TODO Grab screenshot for sign up
+**** TODO Grab screenshot for create household
+**** TODO Grab screenshot for create todo
 * Backlog
+** TODO Sign in/sign up modal
+   Replace the signin page with a modal that just appears when user attempts to
+   sign up Modal has both sign in and sign up forms
 ** TODO Flash alert needs a higher z index
    Getting hidden by the app bar
 ** TODO Create a local only version of the app
