@@ -87,18 +87,28 @@ $font-family-base: 'Roboto Condensed', sans-serif;
   }
 }
 
-@include media-breakpoint-up(lg) {
-  .honeydo-hero {
-    .hero-img-wrap {
-      padding-bottom: 30%;
-    }
-  }
+.landing-section-try-it iframe {
+  width: 100%;
+  height: 480px;
+  border: 1px solid $color-gray-whisper;
 }
 
 @include media-breakpoint-up(md) {
   .honeydo-hero {
     .hero-img-wrap {
       padding-bottom: 50%;
+    }
+  }
+
+  .landing-section-try-it iframe {
+    height: 680px;
+  }
+}
+
+@include media-breakpoint-up(lg) {
+  .honeydo-hero {
+    .hero-img-wrap {
+      padding-bottom: 30%;
     }
   }
 }
