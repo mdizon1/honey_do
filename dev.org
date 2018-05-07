@@ -45,7 +45,13 @@
 **** TODO Grab screenshot for sign up
 **** TODO Grab screenshot for create household
 **** TODO Grab screenshot for create todo
+*** TODO Increase hover pop out behavior for cards
 * Backlog
+** TODO After creating a todo, subsequent todos get same notes by default :bug:
+   Possibly the new todo form isn't being cleared/reset
+** TODO User should be able to edit a todo they create
+** TODO Fix rendering of placeholder dragged todo
+** TODO Don't show expand notes if there's nothing to expand
 ** TODO Sign in/sign up modal
    Replace the signin page with a modal that just appears when user attempts to
    sign up Modal has both sign in and sign up forms

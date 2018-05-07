@@ -12,16 +12,18 @@ module ReactComponents
 
     def config
       {
-        :identity => {
-          :userId => user.id,
-          :userFirstName => user.first_name,
-          :userLastName => user.last_name,
-          :authToken => user.authentication_token,
-          :householdId => household.id,
-          :householdName => household.name,
-        },
-        :apiEndpoint => household_path,
-        :interface => (browser.device.mobile? ? 'touch' : 'html5')
+        :configState => {
+          :identity => {
+            :userId => user.id,
+            :userFirstName => user.first_name,
+            :userLastName => user.last_name,
+            :authToken => user.authentication_token,
+            :householdId => household.id,
+            :householdName => household.name,
+          },
+          :apiEndpoint => household_path,
+          :interface => (browser.device.mobile? ? 'touch' : 'html5')
+        }
       }.to_json
     end
   end

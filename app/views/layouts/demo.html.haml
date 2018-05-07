@@ -1,0 +1,13 @@
+!!!
+%html
+  %head
+    %title Honey Do live demo
+
+    %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, user-scalable=no'}
+    = javascript_pack_tag 'application'
+    = stylesheet_pack_tag 'application' if Rails.env.production?
+  %body
+    = yield
+
+    - unless Rails.env.development?
+      <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>

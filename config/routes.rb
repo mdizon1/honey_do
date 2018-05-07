@@ -19,6 +19,8 @@ HoneyDo::Application.routes.draw do
     end
   end
 
+  get 'demo' => 'demos#index'
+
   # You can have the root of your site routed with "root"
   root 'welcome#index'
 

@@ -24,8 +24,7 @@ import { EmptyStore } from "./constants/EmptyStore"
 const prepareStore = (options) => {
   var store, initial_store_data, empty_state;
 
-  empty_state = Immutable.fromJS(EmptyStore);
-  initial_store_data = empty_state.set('configState', empty_state.get('configState').mergeDeep(options.config));
+  initial_store_data = Immutable.fromJS(_.merge(options.config, EmptyStore));
 
   return createStore(
     honeyDoReducer,
@@ -41,8 +40,8 @@ $(function (){
     let honey_do_options = honey_do_container.data();
 
     let api = new Api({
-      endpoint: honey_do_options.config.apiEndpoint, 
-      authToken: honey_do_options.config.identity.authToken
+      endpoint: honey_do_options.config.configState.apiEndpoint,
+      authToken: honey_do_options.config.configState.identity.authToken
     });
 
     window.api = api;
