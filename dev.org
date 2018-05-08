@@ -64,11 +64,15 @@
 ** TODO Sign in/sign up modal
    Replace the signin page with a modal that just appears when user attempts to
    sign up Modal has both sign in and sign up forms
+*** TODO Design modal
+*** TODO Add to navbar
+*** TODO remove old sign in sign up links
+** TODO Add sign out control to app
 ** TODO Flash alert needs a higher z index
    Getting hidden by the app bar
-** TODO Create blank todo raises error :bug:
 ** TODO Refactor reducer
 ** TODO Create a workflow for signup -> using the app
+** TODO Create blank todo raises error :bug:
 ** TODO Get cukes working
    At least some basic workflow like cucumber/selenium can run and look at the
    starting page
@@ -78,9 +82,6 @@
    Even downloading phantom js was problematic. It worked fine the first 2 or 3
    times now it just get's stuck in a 302 loop and bails out during the wget of
    the zip file. WTF???
-** TODO Add sign out control to app
-** TODO app doesn't fit perfectly on phone
-   Theres a little wiggle room as you scroll side to side.
 ** TODO Add accessibility attributes to icons
    Like where I'm just doing <i class='fa fa-xxx'> i need to add aria blah blah
 ** TODO Refactor use of dispatch in components using connect
@@ -234,6 +235,9 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE app doesn't fit perfectly on phone
+   CLOSED: [2018-05-07 Mon 18:45]
+   Theres a little wiggle room as you scroll side to side.
 ** DONE User should be able to edit a todo they create
    CLOSED: [2018-05-07 Mon 18:42]
 ** DONE After creating a todo, subsequent todos get same notes by default :bug:
