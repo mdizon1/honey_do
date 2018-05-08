@@ -59,7 +59,6 @@
 *** DONE Increase hover pop out behavior for cards
     CLOSED: [2018-05-07 Mon 18:33]
 *** TODO Testimonials (optional)
-** TODO User should be able to edit a todo they create
 ** TODO Fix rendering of placeholder dragged todo
 ** TODO Don't show expand notes if there's nothing to expand
 ** TODO Sign in/sign up modal
@@ -235,6 +234,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE User should be able to edit a todo they create
+   CLOSED: [2018-05-07 Mon 18:42]
 ** DONE After creating a todo, subsequent todos get same notes by default :bug:
    CLOSED: [2018-05-07 Mon 18:36]
    Possibly the new todo form isn't being cleared/reset

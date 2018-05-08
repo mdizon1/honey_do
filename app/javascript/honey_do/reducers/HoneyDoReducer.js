@@ -259,10 +259,10 @@ const createTodo = (state, params) => {
     isCompleted: false,
     permissions: {
       canAccept: false,
-      canComplete: false,
-      canDestroy: false,
-      canEdit: false,
-      canTag: false,
+      canComplete: true,
+      canDestroy: true,
+      canEdit: true,
+      canTag: true,
       canUncomplete: false
     }
   };
