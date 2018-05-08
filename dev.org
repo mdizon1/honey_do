@@ -31,21 +31,32 @@
 *** DONE Add mobile hover to "Stop forgetting things" section
     CLOSED: [2018-05-05 Sat 18:50]
     So when touch enabled, the thingies hover when you scroll over them
-*** TODO Try it live demo
+*** DONE Try it live demo
+    CLOSED: [2018-05-07 Mon 16:57]
     Also need a link in the nav
 *** TODO Cross platform marketing section
     It's a picture with various devices with the app overlaid onto them
-*** TODO Testimonials (optional)
+**** TODO Create the image
 *** TODO FAQ section
+    Come up with some questions
 *** TODO Footer
+    Needs design
 *** TODO Create animated hero image
 **** TODO Capture a recording of using honey.do in a somewhat realistic setting
+     Probably need to do this on linux, need to look up how to record a video
 *** TODO How to use section
     I want multiple screenshots to fit on the phone here, one for each step
 **** TODO Grab screenshot for sign up
+     Need to create the sign up flow first
 **** TODO Grab screenshot for create household
+     Part of the as yet unbuilt sign up flow
 **** TODO Grab screenshot for create todo
+*** TODO Download/install section
+    Button to bookmark. 
+    For ios/android how to create a button to create a shortcut on the home 
+    screen?
 *** TODO Increase hover pop out behavior for cards
+*** TODO Testimonials (optional)
 * Backlog
 ** TODO After creating a todo, subsequent todos get same notes by default :bug:
    Possibly the new todo form isn't being cleared/reset
