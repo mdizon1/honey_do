@@ -35,16 +35,26 @@
 *** DONE Try it live demo
     CLOSED: [2018-05-07 Mon 16:57]
     Also need a link in the nav
+*** DONE Increase hover pop out behavior for cards
+    CLOSED: [2018-05-07 Mon 18:33]
+*** DONE Create animated hero image
+    CLOSED: [2018-05-07 Mon 23:25]
+**** DONE Capture a recording of using honey.do in a somewhat realistic setting
+     CLOSED: [2018-05-07 Mon 23:25]
+     Probably need to do this on linux, need to look up how to record a video
+*** DONE Add a placeholder image to cover the animated image/vid
+    CLOSED: [2018-05-08 Tue 16:22]
+    The video takes a bit to load, the image should show first
+*** TODO Make navbar expanded have higher z-index
+    It's just overlapping stuff when docked at the top
 *** TODO Cross platform marketing section
     It's a picture with various devices with the app overlaid onto them
-**** TODO Create the image
+**** DONE Create the image
+     CLOSED: [2018-05-07 Mon 23:26]
 *** TODO FAQ section
     Come up with some questions
 *** TODO Footer
     Needs design
-*** TODO Create animated hero image
-**** TODO Capture a recording of using honey.do in a somewhat realistic setting
-     Probably need to do this on linux, need to look up how to record a video
 *** TODO How to use section
     I want multiple screenshots to fit on the phone here, one for each step
 **** TODO Grab screenshot for sign up
@@ -56,10 +66,9 @@
     Button to bookmark. 
     For ios/android how to create a button to create a shortcut on the home 
     screen?
-*** DONE Increase hover pop out behavior for cards
-    CLOSED: [2018-05-07 Mon 18:33]
 *** TODO Testimonials (optional)
 ** TODO Fix rendering of placeholder dragged todo
+** TODO Add sign out control to app
 ** TODO Don't show expand notes if there's nothing to expand
 ** TODO Sign in/sign up modal
    Replace the signin page with a modal that just appears when user attempts to
@@ -67,7 +76,10 @@
 *** TODO Design modal
 *** TODO Add to navbar
 *** TODO remove old sign in sign up links
-** TODO Add sign out control to app
+*** TODO Polish landing page
+**** TODO Cleanup Hero frame
+     Remove white pixles around outside
+**** TODO Add drop shadow to hero img/frame
 ** TODO Flash alert needs a higher z index
    Getting hidden by the app bar
 ** TODO Refactor reducer
@@ -208,7 +220,6 @@
 ** TODO Make search/filter field display with error style if no results found
    To give the user a hint that they have no todos because of whats been typed
    into that field, not that it's broken or something
-** TODO Fix navbar style
 ** TODO Add icons for each tab
    Ideally it'd show text + icon for med-up and only icon for mobile
 ** TODO Develop keyboard shortcuts

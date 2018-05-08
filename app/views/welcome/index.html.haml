@@ -2,7 +2,12 @@
   %h1.display-1.honeydo-hero-title HONEY DO
   .honeydo-hero-subtitle Organize your household
   .hero-img-wrap
-    = image_tag 'landing/hero_img', :class => 'img-fluid'
+    = image_tag 'landing/iphonex_body_empty', :class => 'hero-img-frame'
+    .hero-img-position
+      .hero-img-placeholder
+        = image_tag 'landing/hero_vid_placeholder'
+      .hero-vid
+        = video_tag 'test_record003-2018-05-07_21.24.40.mp4', {:autoplay => true, :loop => true}
 
 .landing-section.landing-section-features.light-bg
   .container

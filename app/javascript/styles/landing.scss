@@ -18,9 +18,41 @@ $font-family-base: 'Roboto Condensed', sans-serif;
   color: $color-white;
 
   .hero-img-wrap {
+    position: relative;
     height: 0;
     overflow: hidden;
+    margin-top: 3rem;
     padding-bottom: 100%;
+  }
+  .hero-img-frame {
+    max-width: 480px;
+    width: 70%;
+  }
+  .hero-img-position {
+    position: absolute;
+    top: 0;
+    left: 0; right: 0;
+    width: 60.3%;
+    max-width: 414px;
+    min-height: 100%;
+    overflow: hidden;
+    margin-left: auto; margin-right: auto;
+    padding-top: 14%
+  }
+  .hero-img-placeholder {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    width: 100%; height: 100%;
+    padding-top: 24%;
+    img { width: 100%; }
+  }
+  .hero-vid {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 0; right: 0;
+    padding-top: 24%;
+    video { width: 100%; }
   }
 }
 
@@ -107,8 +139,5 @@ $font-family-base: 'Roboto Condensed', sans-serif;
 
 @include media-breakpoint-up(lg) {
   .honeydo-hero {
-    .hero-img-wrap {
-      padding-bottom: 30%;
-    }
   }
 }
