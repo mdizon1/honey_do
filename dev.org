@@ -1,6 +1,7 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
+* Backlog
 ** TODO Build landing page
 *** DONE Find a suitable page design
     https://colorlib.com/demo?theme=MobApp
@@ -55,11 +56,9 @@
     Button to bookmark. 
     For ios/android how to create a button to create a shortcut on the home 
     screen?
-*** TODO Increase hover pop out behavior for cards
+*** DONE Increase hover pop out behavior for cards
+    CLOSED: [2018-05-07 Mon 18:33]
 *** TODO Testimonials (optional)
-* Backlog
-** TODO After creating a todo, subsequent todos get same notes by default :bug:
-   Possibly the new todo form isn't being cleared/reset
 ** TODO User should be able to edit a todo they create
 ** TODO Fix rendering of placeholder dragged todo
 ** TODO Don't show expand notes if there's nothing to expand
@@ -68,27 +67,8 @@
    sign up Modal has both sign in and sign up forms
 ** TODO Flash alert needs a higher z index
    Getting hidden by the app bar
-** TODO Create a local only version of the app
-*** TODO Refactor api caller
-**** DONE Create 1 instance of api caller at start
-     CLOSED: [2018-05-03 Thu 10:16]
-     So we don't have to keep passing in api keys and stuff
-**** DONE Ensure delete tags requires auth token on the server
-     CLOSED: [2018-05-03 Thu 10:48]
-     Also there's a bug where removing a tag removes them all (on client)
-**** TODO Allow api caller to be stubbed out
-*** TODO Refactor reducer
-    This might not be something I want to do. Looking into the documentation,
-    trying to use combineReducers with immutableJS is not supported. Also,
-    combineReducers is meant to separate slices of the state such that reducer A
-    only handles state.A and reducer B only handles state.B. However, some
-    actions would need to alter UI state as well for example, if making an API
-    call, it'd automatically engage the spinner. According to the redux
-    documentation, there is a way to do this but it's soo ugly.
-
-    If I do decide to do this, I'll have to plan things out a lot more clearly
-    before beginning.
-*** TODO Initialize app with offline mode flag(s)
+** TODO Create blank todo raises error :bug:
+** TODO Refactor reducer
 ** TODO Create a workflow for signup -> using the app
 ** TODO Get cukes working
    At least some basic workflow like cucumber/selenium can run and look at the
@@ -255,6 +235,33 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE After creating a todo, subsequent todos get same notes by default :bug:
+   CLOSED: [2018-05-07 Mon 18:36]
+   Possibly the new todo form isn't being cleared/reset
+** DONE Create a local only version of the app
+   CLOSED: [2018-05-07 Mon 18:39]
+*** DONE Refactor api caller
+    CLOSED: [2018-05-07 Mon 18:39]
+**** DONE Create 1 instance of api caller at start
+     CLOSED: [2018-05-03 Thu 10:16]
+     So we don't have to keep passing in api keys and stuff
+**** DONE Ensure delete tags requires auth token on the server
+     CLOSED: [2018-05-03 Thu 10:48]
+     Also there's a bug where removing a tag removes them all (on client)
+**** DONE Allow api caller to be stubbed out
+     CLOSED: [2018-05-07 Mon 18:39]
+    This might not be something I want to do. Looking into the documentation,
+    trying to use combineReducers with immutableJS is not supported. Also,
+    combineReducers is meant to separate slices of the state such that reducer A
+    only handles state.A and reducer B only handles state.B. However, some
+    actions would need to alter UI state as well for example, if making an API
+    call, it'd automatically engage the spinner. According to the redux
+    documentation, there is a way to do this but it's soo ugly.
+
+    If I do decide to do this, I'll have to plan things out a lot more clearly
+    before beginning.
+*** DONE Initialize app with offline mode flag(s)
+    CLOSED: [2018-05-07 Mon 18:39]
 ** DONE Create a set of fixtures for realistic use case
    CLOSED: [2018-05-05 Sat 13:07]
 *** DONE Create rake task with some "realistic" todo items and household

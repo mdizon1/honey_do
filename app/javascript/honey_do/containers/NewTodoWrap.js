@@ -31,6 +31,7 @@ class NewTodoWrap extends Component {
 
   handleClose = (evt) => {
     this.props.store.dispatch(closeCreateForm());
+    this.setState({form_values: {}});
   }
 
   handleOpen = (evt) => {
@@ -45,6 +46,7 @@ class NewTodoWrap extends Component {
     params.type = TodoTypeToKlass[this.props.todoType];
 
     this.props.store.dispatch(createTodoRequest(params));
+    this.setState({form_values: {}});
   }
 
   render() {
