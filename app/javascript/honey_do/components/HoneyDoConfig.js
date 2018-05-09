@@ -9,6 +9,12 @@ const HoneyDoConfig = (props) => {
 
   return (
     <div className="honeydo-drawer-content honeydo-config">
+      <p>
+        <a href="/users/sign_out" data-method="delete">
+          Sign out
+        </a>
+      </p>
+
       <h3>Configuration</h3>
 
       <FormGroup row>
@@ -22,6 +28,7 @@ const HoneyDoConfig = (props) => {
           }
         />
       </FormGroup>
+
     </div>
   );
 }

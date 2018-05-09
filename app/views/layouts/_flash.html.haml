@@ -1,15 +1,17 @@
 - unless flash.notice.blank?
-  .container
-    .alert.alert-success.alert-dismissible{:role => 'alert'}
-      %button.close{ :type => :button, :data => {:dismiss => 'alert'}}
-        %span{'aria-hidden'=>"true"} &times;
-        %span.sr-only Close
-      = flash.notice
+  .flash-wrap
+    .container
+      .alert.alert-success.alert-dismissible{:role => 'alert'}
+        %button.close{ :type => :button, :data => {:dismiss => 'alert'}}
+          %span{'aria-hidden'=>"true"} &times;
+          %span.sr-only Close
+        = flash.notice
 
 - unless flash.alert.blank?
-  .container
-    .alert.alert-danger.alert-dismissible{:role => 'alert' }
-      %button.close{ :type => :button, :data => {:dismiss => 'alert'}}
-        %span{'aria-hidden'=>"true"} &times;
-        %span.sr-only Close
-      = flash.alert
+  .flash-wrap
+    .container
+      .alert.alert-danger.alert-dismissible{:role => 'alert' }
+        %button.close{ :type => :button, :data => {:dismiss => 'alert'}}
+          %span{'aria-hidden'=>"true"} &times;
+          %span.sr-only Close
+        = flash.alert

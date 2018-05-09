@@ -1,18 +1,8 @@
-$header-height: 52px;
+body { }
 
-body {
-//  padding-top: $header-height+5px;
-}
-
-#primary-nav {
-  opacity: 0.85;
-}
-
-.flash {
-  &.flash-fixed {
-    position: fixed;
-    width: 90%;
-    margin: 0.2em 5% 0;
-    z-index: 9001;
-  }
+.flash-wrap {
+  position: fixed;
+  top: 7px;
+  z-index: 1200;
+  width: 100%;
 }

@@ -1,8 +1,7 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** DONE Fix rendering of placeholder dragged todo
-   CLOSED: [2018-05-08 Tue 20:07]
+** TODO Add sign out control to app
 * Backlog
 ** TODO Build landing page
 *** DONE Find a suitable page design
@@ -71,7 +70,6 @@
     For ios/android how to create a button to create a shortcut on the home 
     screen?
 *** TODO Testimonials (optional)
-** TODO Add sign out control to app
 ** TODO Don't show expand notes if there's nothing to expand
 ** TODO Sign in/sign up modal
    Replace the signin page with a modal that just appears when user attempts to
@@ -251,6 +249,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Fix rendering of placeholder dragged todo
+   CLOSED: [2018-05-08 Tue 20:07]
 ** DONE app doesn't fit perfectly on phone
    CLOSED: [2018-05-07 Mon 18:45]
    Theres a little wiggle room as you scroll side to side.
