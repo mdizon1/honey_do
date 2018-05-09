@@ -18,9 +18,9 @@ var _ = require("lodash");
 
 console.log('Hello World from Webpacker');
 
-if(process.env.NODE_ENV != 'production') {
+//if(process.env.NODE_ENV != 'production') {
   require("../styles/honeydo.scss");
-}
+  //}
 
 
 // BEGIN TYPESCRIPT CHECK
