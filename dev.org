@@ -1,64 +1,18 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
+** TODO Prevent user from going to new household page if they have one already
+   Also prevent creation of household on the model
 * Backlog
-** TODO Build landing page
-*** DONE Find a suitable page design
-    https://colorlib.com/demo?theme=MobApp
-    CLOSED: [2018-05-03 Thu 13:03]
-    Just use one of those site designs for sale. Like where marty got the mockup
-    for jmcimstream
-
-    Looking at this one : https://colorlib.com/demo?theme=MobApp
-*** DONE Redo site navbar
-    CLOSED: [2018-05-03 Thu 23:28]
-**** DONE Style according to mock
-     CLOSED: [2018-05-03 Thu 23:28]
-**** DONE Create parkable nav
-     CLOSED: [2018-05-03 Thu 23:28]
-*** DONE Determine layout and content
-    CLOSED: [2018-05-04 Fri 15:25]
-    Based on the mock, which sections to include, in what order, and with what
-    text/images
-*** DONE Tweak nav on mobile
-    CLOSED: [2018-05-05 Sat 15:24]
-**** DONE Decrease padding
-     CLOSED: [2018-05-05 Sat 15:20]
-    It's a bit cramped
-**** DONE Expander is covered, increase it's z index
-     CLOSED: [2018-05-05 Sat 15:24]
-**** DONE Shrink the expander icon in sticky mode
-     CLOSED: [2018-05-05 Sat 15:24]
-*** DONE Add mobile hover to "Stop forgetting things" section
-    CLOSED: [2018-05-05 Sat 18:50]
-    So when touch enabled, the thingies hover when you scroll over them
-*** DONE Try it live demo
-    CLOSED: [2018-05-07 Mon 16:57]
-    Also need a link in the nav
-*** DONE Increase hover pop out behavior for cards
-    CLOSED: [2018-05-07 Mon 18:33]
-*** DONE Create animated hero image
-    CLOSED: [2018-05-07 Mon 23:25]
-**** DONE Capture a recording of using honey.do in a somewhat realistic setting
-     CLOSED: [2018-05-07 Mon 23:25]
-     Probably need to do this on linux, need to look up how to record a video
-*** DONE Add a placeholder image to cover the animated image/vid
-    CLOSED: [2018-05-08 Tue 16:22]
-    The video takes a bit to load, the image should show first
-*** DONE Make navbar expanded have higher z-index
-    CLOSED: [2018-05-08 Tue 16:23]
-    It's just overlapping stuff when docked at the top
-*** DONE Cross platform marketing section
-    CLOSED: [2018-05-08 Tue 20:01]
-    It's a picture with various devices with the app overlaid onto them
-**** DONE Create the image
-     CLOSED: [2018-05-07 Mon 23:26]
-*** DONE FAQ section
-    CLOSED: [2018-05-08 Tue 21:10]
-    Come up with some questions
-*** DONE Footer
-    CLOSED: [2018-05-08 Tue 22:59]
-    Needs design
+** TODO Polish landing page
+*** TODO Pick a different font
+    Something a little wider and maybe with more letter spacing
+*** TODO Cleanup Hero frame
+    Remove white pixels around outside
+*** TODO Add drop shadow to hero img/frame
+*** TODO Expanded top nav should gain a background
+*** TODO Take another video with the drag n drop look fixed (optional)
+*** TODO Better styling for signin/signup modal
 *** TODO How to use section
     I want multiple screenshots to fit on the phone here, one for each step
 **** DONE Add the markup/style
@@ -69,25 +23,13 @@
 **** TODO Grab screenshot for create household
      Part of the as yet unbuilt sign up flow
 **** TODO Grab screenshot for create todo
-*** TODO Download/install section(optional)
-    Button to bookmark. 
-    For ios/android how to create a button to create a shortcut on the home 
-    screen?
-*** TODO Testimonials (optional)
+** TODO Deploy marker :deploy:
+** TODO Purchase domain
 ** TODO Create admin page for household admin
    Where they can invite users and manage permissions
 *** TODO Design
 *** TODO Build
-** TODO Implement sticky footer
-** TODO Polish landing page
-*** TODO Pick a different font
-    Something a little wider and maybe with more letter spacing
-*** TODO Cleanup Hero frame
-    Remove white pixles around outside
-*** TODO Add drop shadow to hero img/frame
-*** TODO Expanded top nav should gain a background
-*** TODO Take another video with the drag n drop look fixed (optional)
-*** TODO Better styling for signin/signup modal
+**** TODO Add link in (react) app to goto this page
 ** TODO Create a workflow for signup -> using the app
 ** TODO Create blank todo raises error :bug:
 ** TODO Get cukes working
@@ -99,21 +41,23 @@
    Even downloading phantom js was problematic. It worked fine the first 2 or 3
    times now it just get's stuck in a 302 loop and bails out during the wget of
    the zip file. WTF???
+** TODO Add HTTPS
 ** TODO Refactor use of dispatch in components using connect
    I refactored some components to use connect rather than subscribe. Basically
    use mapdispatchtoprops and remove all calls to this.props.store.dispatch
 ** TODO Refactor reducer
 ** TODO Add accessibility attributes to icons
    Like where I'm just doing <i class='fa fa-xxx'> i need to add aria blah blah
-** TODO Refactor those api calls in the reducer
-   Since the endpoint and auth token are always the same I'm sure we can DRY
-   that up. Probably want to create an api instance that stores the endpoint and
-   token. Also would allow for turning the api off so the ap works fully locally
+** TODO Take a crack at figuring out why drag n drop doesn't work on touch
 ** TODO Update Drag n drop UI
    If you drag outside of legal area, it should warn user 
-** TODO Take a crack at figuring out why drag n drop doesn't work on touch
 ** TODO Move the spinner somewhere more obvious
    Also make it more obvious
+** TODO Landing page Download/install section(optional)
+   Button to bookmark. 
+   For ios/android how to create a button to create a shortcut on the home 
+   screen?
+** TODO Landing page Testimonials (optional)
 ** TODO Hide old completed todos
    Older than x days, let this be configurable from the config tab as well
 ** TODO Switching tabs (from todo to shopping) should trigger a sweep in/out animation
@@ -212,7 +156,6 @@
 ** TODO When removing a todo tag, all todo tags get removed from view :bug:
    Click on (x) in tag while in edit todo modal
    the todo shown in the list will lose all tags
-** TODO Add HTTPS
 ** TODO Do some more with responsiveness
    On larger screens, we can fully expand notes and/or show tags
 * Icebox
@@ -251,6 +194,69 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Implement sticky footer
+   CLOSED: [2018-05-09 Wed 04:16]
+*** DONE Also tweak footer for mobile
+    CLOSED: [2018-05-09 Wed 04:16]
+    more padding for one
+** DONE Build landing page
+   CLOSED: [2018-05-09 Wed 03:23]
+*** DONE Find a suitable page design
+    https://colorlib.com/demo?theme=MobApp
+    CLOSED: [2018-05-03 Thu 13:03]
+    Just use one of those site designs for sale. Like where marty got the mockup
+    for jmcimstream
+
+    Looking at this one : https://colorlib.com/demo?theme=MobApp
+*** DONE Redo site navbar
+    CLOSED: [2018-05-03 Thu 23:28]
+**** DONE Style according to mock
+     CLOSED: [2018-05-03 Thu 23:28]
+**** DONE Create parkable nav
+     CLOSED: [2018-05-03 Thu 23:28]
+*** DONE Determine layout and content
+    CLOSED: [2018-05-04 Fri 15:25]
+    Based on the mock, which sections to include, in what order, and with what
+    text/images
+*** DONE Tweak nav on mobile
+    CLOSED: [2018-05-05 Sat 15:24]
+**** DONE Decrease padding
+     CLOSED: [2018-05-05 Sat 15:20]
+    It's a bit cramped
+**** DONE Expander is covered, increase it's z index
+     CLOSED: [2018-05-05 Sat 15:24]
+**** DONE Shrink the expander icon in sticky mode
+     CLOSED: [2018-05-05 Sat 15:24]
+*** DONE Add mobile hover to "Stop forgetting things" section
+    CLOSED: [2018-05-05 Sat 18:50]
+    So when touch enabled, the thingies hover when you scroll over them
+*** DONE Try it live demo
+    CLOSED: [2018-05-07 Mon 16:57]
+    Also need a link in the nav
+*** DONE Increase hover pop out behavior for cards
+    CLOSED: [2018-05-07 Mon 18:33]
+*** DONE Create animated hero image
+    CLOSED: [2018-05-07 Mon 23:25]
+**** DONE Capture a recording of using honey.do in a somewhat realistic setting
+     CLOSED: [2018-05-07 Mon 23:25]
+     Probably need to do this on linux, need to look up how to record a video
+*** DONE Add a placeholder image to cover the animated image/vid
+    CLOSED: [2018-05-08 Tue 16:22]
+    The video takes a bit to load, the image should show first
+*** DONE Make navbar expanded have higher z-index
+    CLOSED: [2018-05-08 Tue 16:23]
+    It's just overlapping stuff when docked at the top
+*** DONE Cross platform marketing section
+    CLOSED: [2018-05-08 Tue 20:01]
+    It's a picture with various devices with the app overlaid onto them
+**** DONE Create the image
+     CLOSED: [2018-05-07 Mon 23:26]
+*** DONE FAQ section
+    CLOSED: [2018-05-08 Tue 21:10]
+    Come up with some questions
+*** DONE Footer
+    CLOSED: [2018-05-08 Tue 22:59]
+    Needs design
 ** DONE Sign in/sign up modal
    CLOSED: [2018-05-09 Wed 01:29]
    Replace the signin page with a modal that just appears when user attempts to
