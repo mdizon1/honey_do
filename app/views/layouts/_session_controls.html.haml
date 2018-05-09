@@ -3,7 +3,26 @@
     = link_to "Log out #{current_user.email}", destroy_user_session_path, :method => :delete, :class => 'nav-link'
 - else
   %li.nav-item
-    = link_to 'Sign in', new_user_session_path, :class => 'nav-link'
-  %li.nav-item
-    = link_to 'Sign up', new_user_registration_path, :class => 'nav-link'
+    =link_to 'Sign in/Sign up', '#', :data => {:toggle => 'modal', 'target' => '#sign_in_modal'}, :class => 'nav-link'
 
+
+
+= content_for :modals do
+  #sign_in_modal.modal.fade.sign-in-modal{:tabindex => '-1', :role => 'dialog'}
+    .modal-dialog
+      .modal-content
+        .modal-body
+          .container
+            .row
+              .col.col-md-6
+                %h4.sign-in-title Sign in
+
+                = render 'devise/sessions/new'
+                = link_to "Forgot your password?", new_password_path(:user)
+
+
+
+              .col.col-md-6
+                %h4.sign-in-title Sign up
+
+                = render 'devise/registrations/new'

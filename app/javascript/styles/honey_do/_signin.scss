@@ -1,0 +1,8 @@
+.sign-in-modal {
+  .modal-body .col:not(:last-child) {
+    border-right: 1px dotted green;
+  }
+  .sign-in-title {
+    text-align: center;
+  }
+}

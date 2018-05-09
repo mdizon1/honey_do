@@ -69,19 +69,15 @@
 **** TODO Grab screenshot for create household
      Part of the as yet unbuilt sign up flow
 **** TODO Grab screenshot for create todo
-*** TODO Download/install section
+*** TODO Download/install section(optional)
     Button to bookmark. 
     For ios/android how to create a button to create a shortcut on the home 
     screen?
 *** TODO Testimonials (optional)
-** TODO Sign in/sign up modal
-   Replace the signin page with a modal that just appears when user attempts to
-   sign up Modal has both sign in and sign up forms
-*** TODO Design modal
-*** TODO Add to navbar
-*** TODO remove old sign in sign up links
 ** TODO Create admin page for household admin
    Where they can invite users and manage permissions
+*** TODO Design
+*** TODO Build
 ** TODO Polish landing page
 *** TODO Pick a different font
     Something a little wider and maybe with more letter spacing
@@ -90,6 +86,7 @@
 *** TODO Add drop shadow to hero img/frame
 *** TODO Expanded top nav should gain a background
 *** TODO Take another video with the drag n drop look fixed (optional)
+*** TODO Better styling for signin/signup modal
 ** TODO Create a workflow for signup -> using the app
 ** TODO Create blank todo raises error :bug:
 ** TODO Get cukes working
@@ -253,6 +250,16 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Sign in/sign up modal
+   CLOSED: [2018-05-09 Wed 01:29]
+   Replace the signin page with a modal that just appears when user attempts to
+   sign up Modal has both sign in and sign up forms
+*** DONE Design modal
+    CLOSED: [2018-05-09 Wed 01:29]
+*** DONE Add to navbar
+    CLOSED: [2018-05-09 Wed 01:29]
+*** DONE remove old sign in sign up links
+    CLOSED: [2018-05-09 Wed 01:29]
 ** DONE Expand notes on click of the title/notes text
    CLOSED: [2018-05-08 Tue 20:28]
 ** DONE Flash alert needs a higher z index
