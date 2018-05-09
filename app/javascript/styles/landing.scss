@@ -9,6 +9,7 @@ $font-family-base: 'Roboto Condensed', sans-serif;
 
 @import "./colors";
 @import "./layout";
+@import "./globals";
 @import "./honey_do/navbar";
 
 .honey-do-landing-wrap {
@@ -77,10 +78,6 @@ $font-family-base: 'Roboto Condensed', sans-serif;
 .landing-section {
   margin-bottom: 2em;
   padding: 3.4em 0;
-
-  &.light-bg {
-    background-color: $landing-section-light-bg;
-  }
 }
 
 .landing-section-title {

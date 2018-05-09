@@ -56,7 +56,8 @@
 *** DONE FAQ section
     CLOSED: [2018-05-08 Tue 21:10]
     Come up with some questions
-*** TODO Footer
+*** DONE Footer
+    CLOSED: [2018-05-08 Tue 22:59]
     Needs design
 *** TODO How to use section
     I want multiple screenshots to fit on the phone here, one for each step
@@ -82,6 +83,8 @@
 ** TODO Create admin page for household admin
    Where they can invite users and manage permissions
 ** TODO Polish landing page
+*** TODO Pick a different font
+    Something a little wider and maybe with more letter spacing
 *** TODO Cleanup Hero frame
     Remove white pixles around outside
 *** TODO Add drop shadow to hero img/frame
