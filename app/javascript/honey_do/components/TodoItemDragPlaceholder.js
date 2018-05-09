@@ -10,8 +10,6 @@ const  TodoItemDragPlaceholder = (props) => {
         disabled
       />
       {todo.title}
-      <br />
-      {todo.notes}
     </div>
   )
 }

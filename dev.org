@@ -1,6 +1,8 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
+** DONE Fix rendering of placeholder dragged todo
+   CLOSED: [2018-05-08 Tue 20:07]
 * Backlog
 ** TODO Build landing page
 *** DONE Find a suitable page design
@@ -48,7 +50,8 @@
 *** DONE Make navbar expanded have higher z-index
     CLOSED: [2018-05-08 Tue 16:23]
     It's just overlapping stuff when docked at the top
-*** TODO Cross platform marketing section
+*** DONE Cross platform marketing section
+    CLOSED: [2018-05-08 Tue 20:01]
     It's a picture with various devices with the app overlaid onto them
 **** DONE Create the image
      CLOSED: [2018-05-07 Mon 23:26]
@@ -68,7 +71,6 @@
     For ios/android how to create a button to create a shortcut on the home 
     screen?
 *** TODO Testimonials (optional)
-** TODO Fix rendering of placeholder dragged todo
 ** TODO Add sign out control to app
 ** TODO Don't show expand notes if there's nothing to expand
 ** TODO Sign in/sign up modal
@@ -82,6 +84,7 @@
     Remove white pixles around outside
 *** TODO Add drop shadow to hero img/frame
 *** TODO Expanded top nav should gain a background
+*** TODO Take another video with the drag n drop look fixed (optional)
 ** TODO Flash alert needs a higher z index
    Getting hidden by the app bar
 ** TODO Refactor reducer

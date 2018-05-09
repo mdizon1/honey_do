@@ -38,10 +38,6 @@
   .todo-item {
     margin-bottom: 5px;
 
-    &.todo-item-drag-placeholder {
-      opacity: 0.2;
-      border: 1px dashed black;
-    }
     .todo-item-checkbox {
       position: relative;
       width: 60%;
@@ -81,6 +77,8 @@
     }
 
     &.todo-item-drag-placeholder {
+      opacity: 0.2;
+      border: 1px dashed black;
       .todo-item-checkbox {
         display: none;
       }
