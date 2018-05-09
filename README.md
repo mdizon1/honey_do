@@ -46,7 +46,7 @@ would tag Eggs with grocery, safeway, and costco
 When running the development server on a remote machine (e.g. on ec2) then use
 the following line:
 ```
-REMOTE_DEVELOPMENT=<ip_address> rails s -b 0.0.0.0 
+REMOTE_DEVELOPMENT=<ip_address> rails s -b 0.0.0.0
 ```
 The webpack dev server must also be run with the appropriate arguments
 ```
@@ -70,7 +70,7 @@ heroku container:push web
 #### Material UI Nested list items
 I'm currently using nested list items to show the longer descriptions or notes
 under each todo or shopping item.  http://www.material-ui.com/#/components/list
-The default behavior adds a caret to the right side that expands the nested 
+The default behavior adds a caret to the right side that expands the nested
 list, however, I need a little expander menu there instead to handle more
 controls than just expand/contract.
 

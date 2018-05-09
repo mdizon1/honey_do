@@ -21,7 +21,6 @@
 **** TODO Grab screenshot for create household
      Part of the as yet unbuilt sign up flow
 **** TODO Grab screenshot for create todo
-** TODO Deploy marker :deploy:
 ** TODO Purchase domain
 ** TODO Create admin page for household admin
    Where they can invite users and manage permissions
@@ -193,6 +192,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Deploy marker                                                :deploy:
+   CLOSED: [2018-05-09 Wed 06:02]
 ** DONE Prevent user from going to new household page if they have one already
    CLOSED: [2018-05-09 Wed 04:28]
 ** DONE Implement sticky footer
