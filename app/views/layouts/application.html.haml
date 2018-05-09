@@ -9,11 +9,13 @@
 
   %body
     = render 'layouts/flash'
+    = render 'layouts/navbar', :is_parked => false
     = yield
+    = render 'layouts/footer'
 
     = yield :modals
     -#= webpack_javascript_include_helper
 
     = yield :javascripts
-    - unless Rails.env.development?
+    -#- unless Rails.env.development?
       <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>

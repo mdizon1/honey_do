@@ -8,7 +8,7 @@
     = stylesheet_pack_tag 'landing' if Rails.env.production?
 
   %body
-    = render 'layouts/navbar', :parked => true
+    = render 'layouts/navbar', :is_parked => true
     = render 'layouts/flash'
 
     .honey-do-landing-wrap

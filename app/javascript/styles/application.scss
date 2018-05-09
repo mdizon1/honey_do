@@ -1,8 +1,9 @@
-//@import "bootstrap_overrides";
-
-//@import "./fonts"
-
-// application styles
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/mixins";
+@import "~compass-mixins/lib/compass";
 @import "./colors";
 @import "./layout";
-@import "./honey_do/app";
+@import "./globals";
+@import "./honey_do/navbar";

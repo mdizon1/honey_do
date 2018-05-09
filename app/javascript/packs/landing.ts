@@ -2,6 +2,7 @@ require("expose-loader?$!expose-loader?jQuery!jquery"); // adds $ to window so w
 require("jquery-ujs");
 require("bootstrap-loader");
 require("font-awesome-sass-loader");
+var _ = require("lodash");
 
 import ScrollTrigger from "../landing/scroll_trigger"
 import TouchDeviceBinder from "../landing/touch_device_binder"
@@ -13,7 +14,7 @@ if(process.env.NODE_ENV != 'production') {
 }
 
 window.onload = () => {
-  let scrollTrigger = new ScrollTrigger()
+  let scrollTrigger = new ScrollTrigger();
 
   new TouchDeviceBinder(() => {
     new MobileHover(scrollTrigger);

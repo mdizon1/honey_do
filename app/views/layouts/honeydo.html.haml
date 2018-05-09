@@ -1,13 +1,19 @@
 !!!
 %html
   %head
-    %title Honey Do live demo
-
+    %title HoneyDo
+    = csrf_meta_tags
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, user-scalable=no'}
     = javascript_pack_tag 'honeydo'
     = stylesheet_pack_tag 'honeydo' if Rails.env.production?
+
   %body
+    = render 'layouts/flash'
     = yield
 
+    = yield :modals
+    -#= webpack_javascript_include_helper
+
+    = yield :javascripts
     - unless Rails.env.development?
       <link href='https://fonts.googleapis.com/css?family=Roboto:400,300,500' rel='stylesheet' type='text/css'>

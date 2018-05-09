@@ -5,6 +5,7 @@ class HouseholdsController < ApplicationController
   def show
     detect_browser
     prepare_honey_do_config
+    render :layout => 'honeydo'
   end
 
   def edit
@@ -14,10 +15,13 @@ class HouseholdsController < ApplicationController
     @household = Household.new
   end
 
+  #TODO: refactor me.  Build a HouseholdForm class
   def create
     @household = Household.create(household_params)
     @household.add_member!(current_user)
     @household.make_head_admin(current_user)
+    @household.todos << Completable::Todo.create(:title => 'Create some todo task items.', :creator => current_user)
+    @household.shopping_items << Completable::ShoppingItem.create(:title => 'Add some items to your shopping list.', :creator => current_user)
     redirect_to household_path
   end
 

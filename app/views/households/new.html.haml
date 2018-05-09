@@ -1,4 +1,8 @@
-%h2 Create your household
-= form_for @household, :url => household_path do |f|
-  = render 'form', :f => f
-  = f.submit "Create Household", :class => 'btn btn-success'
+.jumbotron
+  .container
+    %h1.display-3 Create your household
+    %p Here you will declare the name of your household
+    = form_for @household, :url => household_path do |f|
+      = render 'form', :f => f
+      %p.lead
+        = f.submit "Create Household", :class => 'btn btn-success'

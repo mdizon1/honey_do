@@ -1,5 +1,7 @@
 - if user_signed_in?
   %li.nav-item
+    = link_to "My list", household_path, :class => 'nav-link'
+  %li.nav-item
     = link_to "Log out #{current_user.email}", destroy_user_session_path, :method => :delete, :class => 'nav-link'
 - else
   %li.nav-item
@@ -8,7 +10,7 @@
 
 
 = content_for :modals do
-  #sign_in_modal.modal.fade.sign-in-modal{:tabindex => '-1', :role => 'dialog'}
+  #sign_in_modal.modal.fade.sign-in-modal{:role => 'dialog'}
     .modal-dialog
       .modal-content
         .modal-body

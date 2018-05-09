@@ -99,7 +99,7 @@ describe Household do
 
     describe "#invite_admin" do
       context "with an existing user" do
-        let(:existing_user) { 
+        let(:existing_user) {
           m = FactoryGirl.create(:membership, :household => household)
           m.user
         }

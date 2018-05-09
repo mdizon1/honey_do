@@ -1,6 +1,6 @@
-- is_parked = (defined? parked ? parked : false)
+- is_parked = ((defined? is_parked) ? is_parked : false)
 
-%nav.honeydo-nav.navbar.navbar-expand-md.navbar-dark{:class => (is_parked ? 'parked' : ''), :data => {'parkable-nav' => true}}
+%nav.honeydo-nav.navbar.navbar-expand-md.navbar-dark{:class => (is_parked ? 'parked' : 'fixed'), :data => {'parkable-nav' => true}}
   .navbar-brand Honey do
   %button.navbar-toggler{:type => 'button', :data => {:toggle => 'collapse', :target => '#navbar_content'}}
     %span.navbar-toggler-icon

@@ -78,6 +78,7 @@
    Where they can invite users and manage permissions
 *** TODO Design
 *** TODO Build
+** TODO Implement sticky footer
 ** TODO Polish landing page
 *** TODO Pick a different font
     Something a little wider and maybe with more letter spacing
