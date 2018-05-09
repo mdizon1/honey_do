@@ -60,6 +60,9 @@
     Needs design
 *** TODO How to use section
     I want multiple screenshots to fit on the phone here, one for each step
+**** DONE Add the markup/style
+     CLOSED: [2018-05-08 Tue 22:45]
+**** TODO Add behavior to change the image display on hover
 **** TODO Grab screenshot for sign up
      Need to create the sign up flow first
 **** TODO Grab screenshot for create household

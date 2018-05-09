@@ -47,12 +47,44 @@
                 %p.card-text
                   Add family members to your household so you can all see what needs to be done.
 
+
 #try_it.landing-section.landing-section-try-it
   .container
     .landing-section-title
       %h3 Try it live
 
     %iframe{:src => demo_path}
+
+
+.landing-section.landing-section-how-to-use.light-bg
+  .container
+    .row
+      .col-md-8.d-flex.align-items-center
+        %ul.list-unstyled.ui-steps
+          %li.media
+            .circle-icon.mr-4
+              1
+            .media-body
+              %h5 Create an Account
+              %p Follow the link at the top of the page and fill in the form.  Creating an account is absolutely free.
+
+          %li.media.my-4
+            .circle-icon.mr-4
+              2
+            .media-body
+              %h5 Create your Household
+              %p Once you've created an account you'll be prompted to create your household.  Give it a name and you're on your way.
+
+          %li.media
+            .circle-icon.mr-4
+              3
+            .media-body
+              %h5 Invite your family
+              %p Click or tap the gear icon and follow the link that says "Manage household." From here you can invite friends and family members to join.
+      .col-md-4
+        .how-to-section-carousel
+          = image_tag 'landing/hero_img.png', :class => 'img-fluid'
+
 
 .landing-section.landing-section-crossplatform
   .landing-section-crossplatform-mask
