@@ -60,12 +60,15 @@ const _renderDragHandle = (connectDragSource) => {
   );
 }
 
-const _renderNotes = (todo, isExpanded) => {
+const _renderNotes = (todo, isExpanded, onToggleExpand) => {
   let notes_class;
   notes_class = "todo-item-notes";
   notes_class += (isExpanded ? null : " todo-item-notes-truncated")
   return (
-    <div className={notes_class}>
+    <div 
+      className={notes_class}
+      onClick={onToggleExpand}
+    >
       { todo.notes }
     </div>
   )
@@ -90,9 +93,12 @@ const _renderTags = (todo, onTodoTagDestroyed) => {
   )
 }
 
-const _renderTitle = (todo) => {
+const _renderTitle = (todo, onToggleExpand) => {
   return (
-    <div className='todo-item-title'>
+    <div 
+      className='todo-item-title'
+      onClick={onToggleExpand}
+    >
       <h4> { todo.title } </h4>
     </div>
   )
@@ -125,8 +131,8 @@ const TodoItemCore = (props) => {
         </div>
         <div className="col-7 col-sm-8 col-lg-9">
           <div className={"todo-item-content" + (isExpanded ? " todo-item-content-expanded" : "")}>
-            { _renderTitle(todo) }
-            { _renderNotes(todo, isExpanded) }
+            { _renderTitle(todo, onToggleExpand) }
+            { _renderNotes(todo, isExpanded, onToggleExpand) }
             { _renderTags(todo, onTodoTagDestroyed) }
           </div>
         </div>
