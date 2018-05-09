@@ -53,7 +53,8 @@
     It's a picture with various devices with the app overlaid onto them
 **** DONE Create the image
      CLOSED: [2018-05-07 Mon 23:26]
-*** TODO FAQ section
+*** DONE FAQ section
+    CLOSED: [2018-05-08 Tue 21:10]
     Come up with some questions
 *** TODO Footer
     Needs design
@@ -75,6 +76,8 @@
 *** TODO Design modal
 *** TODO Add to navbar
 *** TODO remove old sign in sign up links
+** TODO Create admin page for household admin
+   Where they can invite users and manage permissions
 ** TODO Polish landing page
 *** TODO Cleanup Hero frame
     Remove white pixles around outside
