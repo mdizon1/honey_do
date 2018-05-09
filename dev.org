@@ -45,7 +45,8 @@
 *** DONE Add a placeholder image to cover the animated image/vid
     CLOSED: [2018-05-08 Tue 16:22]
     The video takes a bit to load, the image should show first
-*** TODO Make navbar expanded have higher z-index
+*** DONE Make navbar expanded have higher z-index
+    CLOSED: [2018-05-08 Tue 16:23]
     It's just overlapping stuff when docked at the top
 *** TODO Cross platform marketing section
     It's a picture with various devices with the app overlaid onto them
@@ -76,10 +77,11 @@
 *** TODO Design modal
 *** TODO Add to navbar
 *** TODO remove old sign in sign up links
-*** TODO Polish landing page
-**** TODO Cleanup Hero frame
-     Remove white pixles around outside
-**** TODO Add drop shadow to hero img/frame
+** TODO Polish landing page
+*** TODO Cleanup Hero frame
+    Remove white pixles around outside
+*** TODO Add drop shadow to hero img/frame
+*** TODO Expanded top nav should gain a background
 ** TODO Flash alert needs a higher z index
    Getting hidden by the app bar
 ** TODO Refactor reducer

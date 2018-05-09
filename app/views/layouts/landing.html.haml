@@ -10,7 +10,9 @@
   %body
     = render 'layouts/navbar', :parked => true
     = render 'layouts/flash'
-    = yield
+
+    .honey-do-landing-wrap
+      = yield
 
     = yield :modals
 

@@ -11,11 +11,19 @@ $font-family-base: 'Roboto Condensed', sans-serif;
 @import "./layout";
 @import "./honey_do/navbar";
 
+.honey-do-landing-wrap {
+  h1, h2, h3, h4, h5 {
+    color: $landing-section-title-color;
+  }
+}
 .honeydo-hero {
   padding: 8em 3em 0;
   text-align: center;
   @include background-image(linear-gradient( 135deg, rgba(60, 8, 118, 0.8) 0%, rgba(250, 0, 118, 0.8) 100%));
-  color: $color-white;
+
+  .honey-do-hero-title, .honey-do-hero-subtitle {
+    color: $color-white;
+  }
 
   .hero-img-wrap {
     position: relative;
@@ -67,7 +75,8 @@ $font-family-base: 'Roboto Condensed', sans-serif;
 }
 
 .landing-section {
-  padding: 5.4em 0;
+  margin-bottom: 2em;
+  padding: 3.4em 0;
 
   &.light-bg {
     background-color: $landing-section-light-bg;
@@ -75,9 +84,8 @@ $font-family-base: 'Roboto Condensed', sans-serif;
 }
 
 .landing-section-title {
-  margin-bottom: 3em;
+  margin-bottom: 3rem;
   text-align: center;
-  color: $landing-section-title-color;
 }
 
 .card.features {
@@ -117,6 +125,29 @@ $font-family-base: 'Roboto Condensed', sans-serif;
     @include background-clip(text);
     -webkit-text-fill-color: transparent;
   }
+}
+
+.landing-section-crossplatform {
+  position: relative;
+  height: 580px;
+  background-image: url("images/honey_do_multiplatform001.jpg");
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: right;
+  padding: 15em 2em 0;
+  @include box-shadow(inset 0 0 10px #000);
+  .landing-section-title { text-align: left; }
+}
+
+.landing-section-crossplatform-mask {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 0; right: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $color-gray-whisper;
+  opacity: 0.5;
 }
 
 .landing-section-try-it iframe {
