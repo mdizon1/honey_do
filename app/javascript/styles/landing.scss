@@ -159,7 +159,7 @@ $font-family-base: 'Roboto Condensed', sans-serif;
 @include media-breakpoint-up(md) {
   .honeydo-hero {
     .hero-img-wrap {
-      padding-bottom: 50%;
+      padding-bottom: 70%;
     }
   }
 
@@ -170,5 +170,16 @@ $font-family-base: 'Roboto Condensed', sans-serif;
 
 @include media-breakpoint-up(lg) {
   .honeydo-hero {
+    .hero-img-wrap {
+      padding-bottom: 50%;
+    }
+  }
+}
+
+@include media-breakpoint-up(xl) {
+  .honeydo-hero {
+    .hero-img-wrap {
+      padding-bottom: 40%;
+    }
   }
 }
