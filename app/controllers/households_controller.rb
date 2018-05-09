@@ -1,6 +1,7 @@
 class HouseholdsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_current_user_household, :only => [:show, :edit, :update, :destroy]
+  before_action :prevent_user_from_create_new_household, :only => :new
 
   def show
     detect_browser
@@ -46,5 +47,11 @@ class HouseholdsController < ApplicationController
 
   def prepare_honey_do_config
     @honey_do_config = ReactComponents::HoneyDo.new(current_user, @household, @browser).config
+  end
+
+  def prevent_user_from_create_new_household
+    if current_user.membership.present?
+      return redirect_to edit_household_settings_path(current_user.household)
+    end
   end
 end

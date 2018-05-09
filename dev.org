@@ -1,8 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Prevent user from going to new household page if they have one already
-   Also prevent creation of household on the model
 * Backlog
 ** TODO Polish landing page
 *** TODO Pick a different font
@@ -42,6 +40,7 @@
    times now it just get's stuck in a 302 loop and bails out during the wget of
    the zip file. WTF???
 ** TODO Add HTTPS
+** TODO Prevent creation of household on the model if creator has a household already
 ** TODO Refactor use of dispatch in components using connect
    I refactored some components to use connect rather than subscribe. Basically
    use mapdispatchtoprops and remove all calls to this.props.store.dispatch
@@ -194,6 +193,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Prevent user from going to new household page if they have one already
+   CLOSED: [2018-05-09 Wed 04:28]
 ** DONE Implement sticky footer
    CLOSED: [2018-05-09 Wed 04:16]
 *** DONE Also tweak footer for mobile
