@@ -5,9 +5,7 @@ require("font-awesome-sass-loader");
 
 import NavbarParker from "../nav/navbar_parker"
 
-//if(process.env.NODE_ENV != 'production') {
-  require("../styles/application.scss");
-  //}
+require("../styles/application.scss");
 
 window.onload = () => {
   new NavbarParker();

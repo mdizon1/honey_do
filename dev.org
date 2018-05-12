@@ -2,6 +2,8 @@
   Keep track of todo items for Honey Do development
 * Current
 * Backlog
+** TODO Fix CSS import for production
+** TODO Sticky footer not working
 ** TODO Polish landing page
 *** TODO Pick a different font
     Something a little wider and maybe with more letter spacing
@@ -22,6 +24,9 @@
      Part of the as yet unbuilt sign up flow
 **** TODO Grab screenshot for create todo
 ** TODO Purchase domain
+** TODO Make it clearer which list you're on
+** TODO Shortcut for create new todo
+** TODO Autofocus on todo title when opening new todo
 ** TODO Create admin page for household admin
    Where they can invite users and manage permissions
 *** TODO Design

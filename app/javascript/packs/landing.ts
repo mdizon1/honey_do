@@ -9,9 +9,7 @@ import TouchDeviceBinder from "../landing/touch_device_binder"
 import MobileHover from "../landing/mobile_hover"
 import NavbarParker from "../nav/navbar_parker"
 
-//if(process.env.NODE_ENV != 'production') {
-  require("../styles/landing.scss");
-  //}
+require("../styles/landing.scss");
 
 window.onload = () => {
   let scrollTrigger = new ScrollTrigger();
