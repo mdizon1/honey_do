@@ -1,9 +1,8 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-* Backlog
-** TODO Fix CSS import for production
 ** TODO Sticky footer not working
+* Backlog
 ** TODO Polish landing page
 *** TODO Pick a different font
     Something a little wider and maybe with more letter spacing
@@ -24,6 +23,7 @@
      Part of the as yet unbuilt sign up flow
 **** TODO Grab screenshot for create todo
 ** TODO Purchase domain
+** TODO Should show household name in app-bar
 ** TODO Make it clearer which list you're on
 ** TODO Shortcut for create new todo
 ** TODO Autofocus on todo title when opening new todo
@@ -197,6 +197,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Fix CSS import for production
+   CLOSED: [2018-05-12 Sat 16:53]
 ** DONE Deploy marker                                                :deploy:
    CLOSED: [2018-05-09 Wed 06:02]
 ** DONE Prevent user from going to new household page if they have one already
