@@ -4,5 +4,11 @@
 
 // application styles
 @import "./colors";
-@import "./layout";
 @import "./honey_do/app";
+
+.flash-wrap {
+  position: fixed;
+  top: 7px;
+  z-index: 1200;
+  width: 100%;
+}

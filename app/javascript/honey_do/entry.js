@@ -24,7 +24,7 @@ import { EmptyStore } from "./constants/EmptyStore"
 const prepareStore = (options) => {
   var store, initial_store_data, empty_state;
 
-  initial_store_data = Immutable.fromJS(_.merge(options.config, EmptyStore));
+  initial_store_data = Immutable.fromJS(_.merge(EmptyStore, options.config));
 
   return createStore(
     honeyDoReducer,

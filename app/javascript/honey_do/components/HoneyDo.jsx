@@ -23,7 +23,8 @@ const mapStateToProps = (state, ownProps) => {
   return {
     configState: configObjectSelector(state, ownProps),
     'interface': state.getIn(['configState', 'interface']),
-    currentTab: state.getIn(['uiState', 'currentTab'])
+    currentTab: state.getIn(['uiState', 'currentTab']),
+//    householdName: state.getIn(['configState', 'identity', 'householdName'])
   }
 }
 
@@ -91,6 +92,7 @@ class HoneyDo extends React.Component {
         { this.renderSpinner() }
         <HoneyDoAppBar
           store={this.props.store}
+//          householdName={this.props.householdName}
           currentTab={this.props.currentTab}
           onChangeTab={this.handleChangeTab}
           onOpenConfig={this.handleOpenConfig}

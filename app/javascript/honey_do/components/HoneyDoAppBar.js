@@ -6,6 +6,7 @@ import HoneyDoConfigWrap from "../containers/HoneyDoConfigWrap"
 import { UiTabs, UiTabToType } from '../constants/TodoTypes'
 import Toolbar from 'material-ui/Toolbar'
 import Button from 'material-ui/Button'
+import Typography from 'material-ui/Typography'
 
 const styles = {
   tabs: {
@@ -17,6 +18,7 @@ const styles = {
     flex: 0
   }
 };
+
 
 const HoneyDoAppBar = function (props) {
   const { classes } = props;
@@ -42,6 +44,19 @@ const HoneyDoAppBar = function (props) {
     </AppBar>
   )
 };
+
+const _renderTitle = (title, classes) => {
+  if(!title) { return null; }
+  return (
+    <Typography
+      variant="title"
+      color="inherit"
+      className={classes.title}
+    >
+      {title} Household
+    </Typography>
+  )
+}
 
 export default withStyles(styles)(HoneyDoAppBar)
 
