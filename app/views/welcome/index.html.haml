@@ -7,7 +7,7 @@
       .hero-img-placeholder
         = image_tag 'landing/hero_vid_placeholder.png'
       .hero-vid
-        = video_tag 'test_record003-2018-05-07_21.24.40.mp4', {:autoplay => true, :loop => true}
+        = video_tag 'test_record003-2018-05-07_21.24.40.mp4', {:autoplay => true, :loop => true, :muted => true, :preload => 'metadata'}
 
 .landing-section.landing-section-features.light-bg
   .container
@@ -119,4 +119,3 @@
         %h4.mb-3 How can I install this on my phone?
         %p.mb-5
           HoneyDo isn't an app, it's a website.  You don't need to install anything. You don't need to use up precious storage space on your phone.  If you like, you can bookmark HoneyDo on your home screen and it will behave just like an app!
-
