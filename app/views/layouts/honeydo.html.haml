@@ -1,7 +1,11 @@
 !!!
 %html
   %head
-    %title HoneyDo
+    %title
+      - if content_for? :title
+        = yield :title
+      - else
+        HoneyDo Lists
     = csrf_meta_tags
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, user-scalable=no'}
     = javascript_pack_tag 'honeydo'
