@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createSelector } from 'reselect'
+import { HotKeys } from 'react-hotkeys'
 import HoneyDoAppBar from './HoneyDoAppBar'
 import TodoListWrap from './TodoListWrap'
 import HoneyDoConfigWrap from '../containers/HoneyDoConfigWrap'
@@ -8,7 +9,7 @@ import NewTodoWrap from '../containers/NewTodoWrap'
 import EditTodoDialogWrap from '../containers/EditTodoDialogWrap'
 import HoneyDoSpinner from '../containers/HoneyDoSpinner'
 import { hot } from "react-hot-loader";
-import { init, syncTodosRequest, switchTab, openConfig } from './../actions/HoneyDoActions';
+import { init, syncTodosRequest, switchTab, openConfig, openCreateForm } from './../actions/HoneyDoActions';
 import { apiLoadTags } from '../util/Api'
 import { UiTabs, UiTabToType } from '../constants/TodoTypes'
 import CircularProgress from 'material-ui/Progress/CircularProgress'
@@ -28,6 +29,16 @@ const mapStateToProps = (state, ownProps) => {
   }
 }
 
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    onNewTodoShortcut: () => dispatch(openCreateForm())
+  }
+}
+
+const keyMap = {
+  newTodo: 'c'
+};
+
 class HoneyDo extends React.Component {
   componentDidMount() {
     this.props.store.dispatch(syncTodosRequest());
@@ -39,6 +50,10 @@ class HoneyDo extends React.Component {
 
   handleOpenConfig = (evt) => {
     this.props.store.dispatch(openConfig());
+  }
+
+  keyHandlers = { 
+    'newTodo': this.props.onNewTodoShortcut
   }
 
   interfaceIsTouch() {
@@ -88,25 +103,27 @@ class HoneyDo extends React.Component {
 
   render() {
     return (
-      <div className="honey-do-app-wrap">
-        { this.renderSpinner() }
-        <HoneyDoAppBar
-          store={this.props.store}
-//          householdName={this.props.householdName}
-          currentTab={this.props.currentTab}
-          onChangeTab={this.handleChangeTab}
-          onOpenConfig={this.handleOpenConfig}
-          isTouch={this.interfaceIsTouch()}
-        />
-        <HoneyDoConfigWrap />
-        { this.renderTabContent() }
-        { this.renderEditTodo() }
-        { this.renderNewTodo() }
-      </div>
+      <HotKeys keyMap={keyMap} handlers={this.keyHandlers}>
+        <div className="honey-do-app-wrap">
+          { this.renderSpinner() }
+          <HoneyDoAppBar
+            store={this.props.store}
+  //          householdName={this.props.householdName}
+            currentTab={this.props.currentTab}
+            onChangeTab={this.handleChangeTab}
+            onOpenConfig={this.handleOpenConfig}
+            isTouch={this.interfaceIsTouch()}
+          />
+          <HoneyDoConfigWrap />
+          { this.renderTabContent() }
+          { this.renderEditTodo() }
+          { this.renderNewTodo() }
+        </div>
+      </HotKeys>
     )
   }
 }
 
 // TODO: try this:
 // hot(module)(connect(mapStateToProps)(HoneyDo))
-export default connect(mapStateToProps)(hot(module)(HoneyDo))
+export default connect(mapStateToProps, mapDispatchToProps)(hot(module)(HoneyDo))
