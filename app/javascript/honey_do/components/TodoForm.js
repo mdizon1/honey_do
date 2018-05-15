@@ -64,6 +64,7 @@ const TodoForm = (props) => {
           </DialogContentText>
           <div className="form-group">
             <TextField
+              autoFocus
               label="Title"
               multiline
               fullWidth

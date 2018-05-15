@@ -2,7 +2,6 @@
   Keep track of todo items for Honey Do development
 * Current
 * Backlog
-** TODO Autofocus on todo title when opening new todo
 ** TODO Click try it link in nav should close the expandable nav
 ** TODO Don't need to pass store as a prop for HoneyDo component
 ** TODO Polish landing page
@@ -199,6 +198,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Autofocus on todo title when opening new todo
+   CLOSED: [2018-05-15 Tue 15:37]
 ** DONE Keyboard shortcut for create new todo
    CLOSED: [2018-05-15 Tue 15:33]
 ** DONE Make it clearer which list you're on
