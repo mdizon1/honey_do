@@ -1,13 +1,10 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-* Backlog
-** TODO Click try it link in nav should close the expandable nav
-** TODO Show household name in app-bar
-   Is this even valuable? Need to think about how to present this either way.
-   Title bar first
 ** TODO Keyboard shortcut for create new todo
+* Backlog
 ** TODO Autofocus on todo title when opening new todo
+** TODO Click try it link in nav should close the expandable nav
 ** TODO Polish landing page
 *** TODO Pick a different font
     Something a little wider and maybe with more letter spacing
@@ -163,6 +160,10 @@
 ** TODO Do some more with responsiveness
    On larger screens, we can fully expand notes and/or show tags
 * Icebox
+** TODO Show household name in app-bar
+   Is this even valuable? Need to think about how to present this either way.
+   Title bar first.
+   Maybe on large or greater only
 ** TODO Try to improve performance of todo tab switch
    So the whole tree apparently rerenders, but this is the expected behavior.
    It's rendering an entirely different list, yet it still feels unacceptably
