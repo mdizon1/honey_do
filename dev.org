@@ -1,12 +1,12 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Show household name in title
+** TODO Make it clearer which list you're on
 * Backlog
+** TODO Click try it link in nav should close the expandable nav
 ** TODO Show household name in app-bar
    Is this even valuable? Need to think about how to present this either way.
    Title bar first
-** TODO Make it clearer which list you're on
 ** TODO Keyboard shortcut for create new todo
 ** TODO Autofocus on todo title when opening new todo
 ** TODO Polish landing page
@@ -199,6 +199,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Show household name in title
+   CLOSED: [2018-05-13 Sun 08:17]
 ** DONE Sticky footer not working
    CLOSED: [2018-05-12 Sat 17:39]
 ** DONE Fix CSS import for production

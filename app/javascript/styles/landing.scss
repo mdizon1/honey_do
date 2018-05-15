@@ -15,6 +15,9 @@ $font-family-base: 'Roboto Condensed', sans-serif;
 .honey-do-landing-wrap {
   h1, h2, h3, h4, h5 {
     color: $landing-section-title-color;
+    .display-1 {
+
+    }
   }
 }
 .honeydo-hero {
@@ -207,5 +210,11 @@ $font-family-base: 'Roboto Condensed', sans-serif;
     .hero-img-wrap {
       padding-bottom: 40%;
     }
+  }
+}
+
+@include media-breakpoint-down(xs) {
+  h1.display-1 {
+    font-size: 3rem;
   }
 }
