@@ -16,6 +16,11 @@ const styles = {
     color: "white",
     fontSize: "1.5rem",
     flex: 0
+  },
+  tabIcon: {
+    position: "absolute",
+    fontSize: "3em",
+    opacity: 0.25
   }
 };
 
@@ -25,6 +30,13 @@ const HoneyDoAppBar = function (props) {
   return (
     <AppBar>
       <Toolbar>
+        <Typography
+          variant="subheading"
+          color="inherit"
+          className={classes.tabIcon}
+        >
+          { _renderCurrTabIcon(props.currentTab) }
+        </Typography>
         <Tabs
           className={classes.tabs}
           value={props.currentTab}
@@ -44,6 +56,21 @@ const HoneyDoAppBar = function (props) {
     </AppBar>
   )
 };
+
+const _renderCurrTabIcon = (currTab) => {
+  if(currTab === UiTabs.TODOS) {
+    return (
+      <i className="fa fa-list"></i>
+    );
+  }else if(currTab === UiTabs.SHOPPING_LIST) {
+    return (
+      <i className="fa fa-shopping-cart"></i>
+    )
+  }else{
+    // invalid tab somehow
+  }
+
+}
 
 const _renderTitle = (title, classes) => {
   if(!title) { return null; }

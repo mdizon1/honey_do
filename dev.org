@@ -1,7 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Make it clearer which list you're on
 * Backlog
 ** TODO Click try it link in nav should close the expandable nav
 ** TODO Show household name in app-bar
@@ -199,6 +198,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Make it clearer which list you're on
+   CLOSED: [2018-05-15 Tue 11:13]
 ** DONE Show household name in title
    CLOSED: [2018-05-13 Sun 08:17]
 ** DONE Sticky footer not working
