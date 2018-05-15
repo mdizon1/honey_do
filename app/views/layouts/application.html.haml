@@ -5,12 +5,13 @@
     = csrf_meta_tags
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, user-scalable=no'}
     = javascript_pack_tag 'application'
-    = stylesheet_pack_tag 'application'
+    = stylesheet_pack_tag 'application' unless Rails.env.development?
 
   %body
-    = render 'layouts/flash'
-    = render 'layouts/navbar', :is_parked => false
-    = yield
+    .content-wrap
+      = render 'layouts/flash'
+      = render 'layouts/navbar', :is_parked => false
+      = yield
     = render 'layouts/footer'
 
     = yield :modals

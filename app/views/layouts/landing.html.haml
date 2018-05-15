@@ -5,13 +5,13 @@
     = csrf_meta_tags
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, user-scalable=no'}
     = javascript_pack_tag 'landing'
-    = stylesheet_pack_tag 'landing'
+    = stylesheet_pack_tag 'landing' unless Rails.env.development?
 
   %body
     = render 'layouts/navbar', :is_parked => true
     = render 'layouts/flash'
 
-    .honey-do-landing-wrap
+    .content-wrap
       = yield
     = render 'layouts/footer'
 

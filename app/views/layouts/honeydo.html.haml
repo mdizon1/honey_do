@@ -9,7 +9,7 @@
     = csrf_meta_tags
     %meta{:name => 'viewport', :content => 'width=device-width, initial-scale=1, user-scalable=no'}
     = javascript_pack_tag 'honeydo'
-    = stylesheet_pack_tag 'honeydo' 
+    = stylesheet_pack_tag 'honeydo' unless Rails.env.development?
 
   %body
     = render 'layouts/flash'
