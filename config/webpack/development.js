@@ -4,7 +4,7 @@ const merge = require('webpack-merge')
 const sharedConfig = require('./shared.js')
 const { settings, output } = require('./configuration.js')
 
-//const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = merge(sharedConfig, {
   devtool: 'cheap-eval-source-map',
@@ -38,7 +38,7 @@ module.exports = merge(sharedConfig, {
   },
 
   // For testing prod like environment with css extracted
-//  plugins:[
-//    new ExtractTextPlugin('[name].css'),
-//  ]
+  plugins:[
+    new ExtractTextPlugin('[name].css'),
+  ]
 })
