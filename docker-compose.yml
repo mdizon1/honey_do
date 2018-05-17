@@ -41,7 +41,7 @@ services:
     #command: ./bin/webpack-dev-server --inline true --hot true --port 8080 --public localhost:8080
     command: ./bin/webpack-dev-server --inline true --hot true --port 8080 --public 0.0.0.0:8080
 
-# Whenever I want to use spring to run specs, I'll just do 
+# Whenever I want to use spring to run specs, I'll just do
 # docker-compose run web bash, then bin/rspec blahblah, I think that'll do it, if not, reenable this
 #  spring:
 #    build: .
