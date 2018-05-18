@@ -1,0 +1,16 @@
+#!/bin/bash
+
+timestamp() {
+  date +"%Y-%m-%d_%H-%M-%S"
+}
+
+SRC_FILES=(app bin babelrc .bootstraprc config config.ru db docker-compose.yml Dockerfile .dockerignore features Gemfile Gemfile.lock lib package.json postcss.config.js Procfile Rakefile .rspec spec tsconfig.json endor yarn.lock)
+
+mv Dockerfile Dockerfile.temp
+mv Dockerfile.eb Dockerfile
+
+echo "RUNNING CMD: zip -r honeydo_src_$(timestamp) ${SRC_FILES[*]}"
+zip -r honeydo_src_$(timestamp).zip ${SRC_FILES[*]}
+
+mv Dockerfile Dockerfile.eb
+mv Dockerfile.temp Dockerfile
