@@ -10,6 +10,15 @@ test:
   <<: *default
   database: myapp_test
 
+#production:
+#  <<: *default
+#  host: <%= ENV['DATABASE_URL'] %>
+
+# For production running on Amazon Elastic Beanstalk
 production:
   <<: *default
-  host: <%= ENV['DATABASE_URL'] %>
+  database: <%= ENV['RDS_DB_NAME'] %>
+  host: <%= ENV['RDS_HOSTNAME'] %>
+  port: <%= ENV['RDS_PORT'] %>
+  username: <%= ENV['RDS_USERNAME'] %>
+  password: <%= ENV['RDS_PASSWORD'] %>
