@@ -1,0 +1,49 @@
+FROM ruby:2.4.1-slim
+RUN apt-get update -qq && apt-get install -y build-essential patch ruby-dev apt-utils libpq-dev wget curl
+#RUN npm install webpack -g
+
+# Install node
+RUN apt-get install -y python python-dev python-pip python-virtualenv
+RUN rm -rf /var/lib/apt/lists/*
+
+# Maybe we can just download the binary
+RUN \
+  cd /tmp && \
+  wget http://nodejs.org/dist/v6.11.2/node-v6.11.2-linux-x64.tar.gz && \
+  tar xzf node-v6.11.2-linux-x64.tar.gz && \
+  rm -f node-v6.11.2-linux-x64.tar.gz && \
+  cd node-v* && \
+  cp bin/node /usr/bin && \
+  ./bin/npm install -g npm && \
+  cd /tmp && \
+  rm -rf /tmp/node-v*
+
+ENV APP_HOME /myapp
+RUN mkdir $APP_HOME
+WORKDIR $APP_HOME
+COPY . $APP_HOME
+
+# Bundle ruby gems
+COPY Gemfile $APP_HOME/Gemfile
+COPY Gemfile.lock $APP_HOME/Gemfile.lock
+
+RUN bundle install
+
+RUN apt-get update -qq && apt-get install -y apt-transport-https
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -qq && apt-get install -y yarn
+
+RUN $APP_HOME/bin/yarn install
+
+#For elastic beanstalk, precompile assets locally before zipping and uploading
+#ARG ASSET_HOST
+#RUN $APP_HOME/bin/rake ASSET_HOST=${ASSET_HOST} assets:precompile
+
+EXPOSE 80
+
+ENV RAILS_ENV production
+ENV RACK_ENV production
+ENV NODE_ENV production
+
+CMD $APP_HOME/bin/rails s -p '80' -b '0.0.0.0'
