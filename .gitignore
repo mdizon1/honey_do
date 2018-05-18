@@ -34,3 +34,9 @@
 /node_modules
 /public/packs
 /public/packs-test
+/public/assets
+
+# Ignore source bundle output
+honeydo_src*
+
+.elasticbeanstalk
