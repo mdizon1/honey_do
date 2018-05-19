@@ -50,5 +50,6 @@ group :test do
 end
 
 group :production do
-  gem 'rails_12factor' #required for heroku assets
+  #gem 'rails_12factor' #required for heroku assets
+  gem 'passenger', '>= 5.0.25', :require => 'phusion_passsenger/rack_handler'
 end

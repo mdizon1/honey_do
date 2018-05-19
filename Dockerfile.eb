@@ -42,4 +42,6 @@ RUN $APP_HOME/bin/yarn install
 
 EXPOSE 80
 
-CMD $APP_HOME/bin/rails s -p '80' -b '0.0.0.0'
+#CMD $APP_HOME/bin/rails s -p '80' -b '0.0.0.0'
+# Trying to use passenger
+CMD bundle exec rails server -p '80' -b '0.0.0.0'
