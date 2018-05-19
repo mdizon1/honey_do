@@ -10,17 +10,16 @@ const sharedConfig = require('./shared.js')
 
 module.exports = merge(sharedConfig, {
   output: { filename: '[name]-[chunkhash].js' },
-  devtool: 'source-map',
   stats: 'normal',
 
   plugins: [
     new ExtractTextPlugin('[name]-[hash].css'),
     new webpack.optimize.UglifyJsPlugin({
       minimize: true,
-      sourceMap: true,
+      sourceMap: false,
 
       compress: {
-        warnings: false
+        warnings: true
       },
 
       output: {
