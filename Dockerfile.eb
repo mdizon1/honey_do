@@ -42,8 +42,4 @@ RUN $APP_HOME/bin/yarn install
 
 EXPOSE 80
 
-ENV RAILS_ENV production
-ENV RACK_ENV production
-ENV NODE_ENV production
-
 CMD $APP_HOME/bin/rails s -p '80' -b '0.0.0.0'
