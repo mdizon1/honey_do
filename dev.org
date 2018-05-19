@@ -19,8 +19,16 @@
      CLOSED: [2018-05-18 Fri 18:15]
 **** DONE rake db:create migrate
      CLOSED: [2018-05-18 Fri 18:15]
-**** TODO Seed the DB
-**** TODO Setup a DB backup and restore workflow
+**** DONE Seed the DB
+     CLOSED: [2018-05-18 Fri 19:12]
+     Don't think I need to do this.
+**** DONE Setup a DB backup and restore workflow
+     CLOSED: [2018-05-18 Fri 19:15] 
+     For now, just snapshot it and you can set the db to startup with the
+     snapshot
+**** DONE Change web server
+     CLOSED: [2018-05-18 Fri 21:25]
+     Don't be using WEBrick
 **** TODO attach ip to beanstalk environment
 **** TODO attach to domain name
 * Backlog

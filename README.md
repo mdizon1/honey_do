@@ -63,7 +63,15 @@ docker-compose up
 docker-compose run --rm web bundle exec rake db:create db:migrate dev:seed
 
 ### Deploy process
-heroku container:push web
+Via elastic beanstalk
+steps:
+  + asset precompile
+    RAILS_ENV=production NODE_ENV=production bin/rake assets:precompile
+  * zip source
+    using the provided script/deploy
+  * upload source to beanstalk
+  * if the environment changed or is restarted, need to update the Environment
+    variable with the new db hostname
 
 ### Open issues:
 
