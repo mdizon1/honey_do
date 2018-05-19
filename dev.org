@@ -7,7 +7,32 @@
 
    I'm going to try to go with amazon elastic beanstalk rather than heroku.
 *** Elastic beanstalk deploy
+**** DONE Create a beanstalk application
+     CLOSED: [2018-05-18 Fri 16:39]
+**** DONE Launch environment
+     CLOSED: [2018-05-18 Fri 16:39]
+**** DONE get code into beanstalk
+     CLOSED: [2018-05-18 Fri 16:39]
+**** DONE Create db
+     CLOSED: [2018-05-18 Fri 16:39]
+**** DONE Connect DB
+     CLOSED: [2018-05-18 Fri 18:15]
+**** DONE rake db:create migrate
+     CLOSED: [2018-05-18 Fri 18:15]
+**** TODO Seed the DB
+**** TODO Setup a DB backup and restore workflow
+**** TODO attach ip to beanstalk environment
+**** TODO attach to domain name
 * Backlog
+** TODO Build a monitoring/console solution
+   So I want a tmux either quicklaunch or script that opens a connection to the
+   prod environment, splits the windows and runs the commands according to what
+   I want.
+
+   Might just use tmux-continuum
+** TODO Add SSL
+*** TODO Buy ssl from namecheap (might have paid already)
+*** TODO Follow namecheap instructions for installing and verifying certificate
 ** TODO Purchase domain
 ** TODO Link app to domain
 ** TODO Add HTTPS
@@ -35,6 +60,8 @@
 *** TODO Design
 *** TODO Build
 **** TODO Add link in (react) app to goto this page
+** TODO Replace sidemenu with only expander
+   Just include the buttons/controls for accept, delete, etc in the expanded note
 ** TODO Create a workflow for signup -> using the app
 ** TODO Click try it link in nav should close the expandable nav
 ** TODO Take a crack at figuring out why drag n drop doesn't work on touch
