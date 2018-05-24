@@ -70,6 +70,8 @@ steps:
   * zip source
     using the provided script/deploy
   * upload source to beanstalk
+  * if the environment changed or is restarted, need to up the instance to at
+    least m1.med because a t1.micro won't survive bundle install
   * if the environment changed or is restarted, need to update the Environment
     variable with the new db hostname
 

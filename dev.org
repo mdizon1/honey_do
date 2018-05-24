@@ -29,8 +29,15 @@
 **** DONE Change web server
      CLOSED: [2018-05-18 Fri 21:25]
      Don't be using WEBrick
-**** TODO attach ip to beanstalk environment
+**** DONE Try reducing to t1 micro and see if it still works
+     CLOSED: [2018-05-18 Fri 22:18]
+     Needs at least a t2.small, but it's still cheap enough
+**** DONE attach ip to beanstalk environment
+     CLOSED: [2018-05-22 Tue 17:17]
+     Need some research as to how to do this.
+     Apparently you can't do this
 **** TODO attach to domain name
+***** TODO Try turning on SSL first
 * Backlog
 ** TODO Build a monitoring/console solution
    So I want a tmux either quicklaunch or script that opens a connection to the
@@ -39,7 +46,9 @@
 
    Might just use tmux-continuum
 ** TODO Add SSL
-*** TODO Buy ssl from namecheap (might have paid already)
+*** DONE Buy ssl from namecheap (might have paid already)
+    CLOSED: [2018-05-22 Tue 13:10]
+*** TODO Turn ssl on in rails app (production.rb)
 *** TODO Follow namecheap instructions for installing and verifying certificate
 ** TODO Purchase domain
 ** TODO Link app to domain
