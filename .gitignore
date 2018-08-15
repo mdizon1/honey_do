@@ -12,6 +12,9 @@
 
 *.DS_Store
 
+# Ignore amazon elastic beanstalk config files. They are a security risk
+.ebextensions
+
 # Ignore bundler config.
 /.bundle
 
