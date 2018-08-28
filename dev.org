@@ -38,6 +38,16 @@
      Apparently you can't do this
 **** TODO attach to domain name
 ***** TODO Try turning on SSL first
+** TODO Add SSL
+*** DONE Buy ssl from namecheap (might have paid already)
+    CLOSED: [2018-05-22 Tue 13:10]
+*** DONE Turn ssl on in rails app (production.rb)
+    CLOSED: [2018-08-20 Mon 11:41]
+*** TODO Fix production
+**** TODO SSH into machine to tail logs
+***** TODO Create new aws key pair
+***** TODO Assign key pair to elastic beanstalk instance
+*** TODO Attach certificate to prod machine
 * Backlog
 ** TODO Build a monitoring/console solution
    So I want a tmux either quicklaunch or script that opens a connection to the
@@ -45,11 +55,6 @@
    I want.
 
    Might just use tmux-continuum
-** TODO Add SSL
-*** DONE Buy ssl from namecheap (might have paid already)
-    CLOSED: [2018-05-22 Tue 13:10]
-*** TODO Turn ssl on in rails app (production.rb)
-*** TODO Follow namecheap instructions for installing and verifying certificate
 ** TODO Purchase domain
 ** TODO Link app to domain
 ** TODO Add HTTPS
