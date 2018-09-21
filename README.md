@@ -60,6 +60,7 @@ Install Docker.
 Install docker-compose
 docker-compose build
 docker-compose up
+docker-compose run --rm webpack-dev ./bin/yarn install
 docker-compose run --rm web bundle exec rake db:create db:migrate dev:seed
 
 ### Deploy process
