@@ -18,7 +18,6 @@ gem 'haml'
 gem 'haml-rails'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'pg'
 gem 'rails-backbone'
 # gem 'sass-rails'
 gem 'therubyracer'
@@ -37,6 +36,7 @@ end
 group :development, :test do
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'pg'
   gem 'pry'
   gem 'pry-rails'
   gem 'rspec-rails'
@@ -51,5 +51,8 @@ end
 
 group :production do
   #gem 'rails_12factor' #required for heroku assets
-  gem 'passenger', '>= 5.0.25', :require => 'phusion_passsenger/rack_handler'
+  #gem 'passenger', '>= 5.0.25', :require => 'phusion_passsenger/rack_handler'
+  gem 'passenger'
+  gem 'pg', '~>0.18'
+  gem 'tzinfo-data'
 end

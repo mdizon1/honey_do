@@ -32,7 +32,7 @@ will create a todo item named Milk with the tag grocery.  Further:
 
 would tag Eggs with grocery, safeway, and costco
 
-### Premium features:
+### Premium Features:
   + Recurring tasks
   + Scheduled tasks (with a due date)
   + Meal plans
@@ -42,7 +42,7 @@ would tag Eggs with grocery, safeway, and costco
 
 ### NOTES:
 
-#### Remote development
+#### Remote Development
 When running the development server on a remote machine (e.g. on ec2) then use
 the following line:
 ```
@@ -55,7 +55,7 @@ webpack: ./node_modules/webpack-dev-server/bin/webpack-dev-server.js --content-b
 Lastly, a change must be made to the remote_development.js config file.  The
 file itself has the necessary instruction
 
-### Development setup
+### Development Setup
 Install Docker.
 Install docker-compose
 docker-compose build
@@ -64,8 +64,41 @@ docker-compose run --rm webpack-dev ./bin/yarn install
 docker-compose run --rm web bundle exec rake db:create db:migrate dev:seed
 
 ### Deploy process
-Via elastic beanstalk
-steps:
+#### Via Amazon ec2 machine
+First deploy steps:
+  + Provision machine
+  + Create and keep key for SSL
+  + Set proper security group for machine
+  + Install Tools
+    * tmux
+    * neovim
+    * git
+  + Install Docker
+  + Setup machine with Git key
+  + Pull application code
+  + Swap Dockerfile.prod with Dockerfile
+  + Swap docker-compose.prod.yml with docker-compose.yml
+  + Set HONEYDO_PROD_PW environment variable
+  + docker-compose build
+  + create/migrate db
+  + docker-compose up
+  + setup ssl config on machine
+  + setup elastic ip on machine
+  + setup route53 to point honey-do.app to point to that ip
+
+Subsequent deploy steps:
+  + git clean -df
+  + git pull
+  + Swap Dockerfile.prod with Dockerfile
+  + Swap docker-compose.prod.yml with docker-compose.yml
+  + docker-compose up --build
+  + (if new migrations) docker-compose run --rm web rake db:migrate
+
+----
+
+#### DEPRECATED
+##### Via Elastic Beanstalk
+Steps:
   + asset precompile
     RAILS_ENV=production NODE_ENV=production bin/rake assets:precompile
   * zip source
@@ -75,6 +108,13 @@ steps:
     least m1.med because a t1.micro won't survive bundle install
   * if the environment changed or is restarted, need to update the Environment
     variable with the new db hostname
+
+----
+
+### Production Maintenance
+Tasks:
+  + Backup DB
+  + Drain logs regularly
 
 ### Open issues:
 

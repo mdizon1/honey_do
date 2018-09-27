@@ -1,0 +1,50 @@
+# WIP
+FROM phusion/passenger-ruby24:0.9.22
+
+RUN apt-get update -qq && apt-get install -y build-essential apt-utils libpq-dev wget curl
+#RUN npm install webpack -g
+
+# Install node
+RUN apt-get install -y python python-dev python-pip python-virtualenv
+RUN rm -rf /var/lib/apt/lists/*
+
+# Download and install node binary
+RUN \
+  cd /tmp && \
+  wget http://nodejs.org/dist/v6.11.2/node-v6.11.2-linux-x64.tar.gz && \
+  tar xzf node-v6.11.2-linux-x64.tar.gz && \
+  rm -f node-v6.11.2-linux-x64.tar.gz && \
+  cd node-v* && \
+  cp bin/node /usr/bin && \
+  ./bin/npm install -g npm && \
+  cd /tmp && \
+  rm -rf /tmp/node-v*
+
+RUN apt-get update -qq && apt-get install -y apt-transport-https
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add -
+RUN echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+RUN apt-get update -qq && apt-get install -y yarn
+
+RUN rm -f /etc/service/nginx/down
+RUN rm /etc/nginx/sites-enabled/default
+ADD nginx.conf /etc/nginx/sites-enabled/webapp.conf
+#ADD rails-env.conf /etc/nginx/main.d/rails-env.conf
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+CMD ["/sbin/my_init"]
+
+USER app
+ENV APP_HOME /home/app
+RUN mkdir -p $APP_HOME/honeydo
+WORKDIR $APP_HOME
+#RUN /pd_build/ruby-2.4.1.sh
+COPY --chown=app:app . $APP_HOME
+
+# Bundle ruby gems
+#COPY Gemfile $APP_HOME/Gemfile
+#COPY Gemfile.lock $APP_HOME/Gemfile.lock
+RUN bundle install
+
+RUN ./bin/yarn install
+RUN ./bin/rake assets:precompile
+EXPOSE 80

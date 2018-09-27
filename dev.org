@@ -49,6 +49,9 @@
 ***** TODO Assign key pair to elastic beanstalk instance
 *** TODO Attach certificate to prod machine
 * Backlog
+** TODO Create todo shortcut (c) prevents typing c char in search field:bug:
+** TODO Household manager(s) have ability to invite other members
+** TODO Add ability to clear all completed todos (for manager)
 ** TODO Build a monitoring/console solution
    So I want a tmux either quicklaunch or script that opens a connection to the
    prod environment, splits the windows and runs the commands according to what
