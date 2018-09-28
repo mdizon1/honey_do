@@ -1,8 +1,6 @@
-# WIP
 FROM phusion/passenger-ruby24:0.9.22
 
 RUN apt-get update -qq && apt-get install -y build-essential apt-utils libpq-dev wget curl
-#RUN npm install webpack -g
 
 # Install node
 RUN apt-get install -y python python-dev python-pip python-virtualenv
@@ -40,9 +38,6 @@ WORKDIR $APP_HOME
 #RUN /pd_build/ruby-2.4.1.sh
 COPY --chown=app:app . $APP_HOME
 
-# Bundle ruby gems
-#COPY Gemfile $APP_HOME/Gemfile
-#COPY Gemfile.lock $APP_HOME/Gemfile.lock
 RUN bundle install
 
 RUN ./bin/yarn install

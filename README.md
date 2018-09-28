@@ -74,6 +74,8 @@ First deploy steps:
     * neovim
     * git
   + Install Docker
+  + Add docker group
+  + Add ec2-user to the docker group
   + Setup machine with Git key
   + Pull application code
   + Swap Dockerfile.prod with Dockerfile

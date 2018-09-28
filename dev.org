@@ -49,6 +49,8 @@
 ***** TODO Assign key pair to elastic beanstalk instance
 *** TODO Attach certificate to prod machine
 * Backlog
+** TODO Upgrade ffi and rubyzip
+   Those seem to have security breaches at the version they're at now
 ** TODO Create todo shortcut (c) prevents typing c char in search field:bug:
 ** TODO Household manager(s) have ability to invite other members
 ** TODO Add ability to clear all completed todos (for manager)
