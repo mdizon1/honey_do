@@ -1,54 +1,12 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Solve issue with deployment
-   Seems like the asset precompile (where webpack build happens) isn't
-   respecting the production environment?
-
-   I'm going to try to go with amazon elastic beanstalk rather than heroku.
-*** Elastic beanstalk deploy
-**** DONE Create a beanstalk application
-     CLOSED: [2018-05-18 Fri 16:39]
-**** DONE Launch environment
-     CLOSED: [2018-05-18 Fri 16:39]
-**** DONE get code into beanstalk
-     CLOSED: [2018-05-18 Fri 16:39]
-**** DONE Create db
-     CLOSED: [2018-05-18 Fri 16:39]
-**** DONE Connect DB
-     CLOSED: [2018-05-18 Fri 18:15]
-**** DONE rake db:create migrate
-     CLOSED: [2018-05-18 Fri 18:15]
-**** DONE Seed the DB
-     CLOSED: [2018-05-18 Fri 19:12]
-     Don't think I need to do this.
-**** DONE Setup a DB backup and restore workflow
-     CLOSED: [2018-05-18 Fri 19:15] 
-     For now, just snapshot it and you can set the db to startup with the
-     snapshot
-**** DONE Change web server
-     CLOSED: [2018-05-18 Fri 21:25]
-     Don't be using WEBrick
-**** DONE Try reducing to t1 micro and see if it still works
-     CLOSED: [2018-05-18 Fri 22:18]
-     Needs at least a t2.small, but it's still cheap enough
-**** DONE attach ip to beanstalk environment
-     CLOSED: [2018-05-22 Tue 17:17]
-     Need some research as to how to do this.
-     Apparently you can't do this
-**** TODO attach to domain name
-***** TODO Try turning on SSL first
-** TODO Add SSL
-*** DONE Buy ssl from namecheap (might have paid already)
-    CLOSED: [2018-05-22 Tue 13:10]
-*** DONE Turn ssl on in rails app (production.rb)
-    CLOSED: [2018-08-20 Mon 11:41]
-*** TODO Fix production
-**** TODO SSH into machine to tail logs
-***** TODO Create new aws key pair
-***** TODO Assign key pair to elastic beanstalk instance
-*** TODO Attach certificate to prod machine
 * Backlog
+** TODO Add some more space to signup/signin modal
+** TODO Add some padding on users/signup page
+** TODO More margin above the search bar
+   When you focus on search, the label disappears into the nav
+** TODO Maybe use flexbox for column spacing of items
 ** TODO Upgrade ffi and rubyzip
    Those seem to have security breaches at the version they're at now
 ** TODO Create todo shortcut (c) prevents typing c char in search field:bug:
@@ -258,6 +216,16 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Add SSL
+   CLOSED: [2018-10-18 Thu 13:18]
+*** DONE Buy ssl from namecheap (might have paid already)
+    CLOSED: [2018-05-22 Tue 13:10]
+*** DONE Turn ssl on in rails app (production.rb)
+    CLOSED: [2018-08-20 Mon 11:41]
+*** DONE Fix production
+    CLOSED: [2018-10-18 Thu 13:18]
+*** DONE Attach certificate to prod machine
+    CLOSED: [2018-10-18 Thu 13:18]
 ** DONE Prevent creation of household on the model if creator has a household already
    CLOSED: [2018-05-15 Tue 15:38]
 ** DONE Autofocus on todo title when opening new todo
