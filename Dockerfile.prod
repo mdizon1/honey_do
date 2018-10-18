@@ -29,10 +29,10 @@ RUN apt-get update -qq && apt-get install -y yarn
 
 RUN rm -f /etc/service/nginx/down
 RUN rm /etc/nginx/sites-enabled/default
-ADD nginx.conf /etc/nginx/sites-enabled/webapp.conf #This file seems to be ignored by nginx
+#ADD nginx.conf /etc/nginx/sites-enabled/webapp.conf #This file seems to be ignored by nginx
+#ADD rails-env.conf /etc/nginx/main.d/rails-env.conf
 ADD cert_chain.crt /etc/ssl/cert_chain.crt
 ADD honeydo.key /etc/ssl/honeydo.key
-#ADD rails-env.conf /etc/nginx/main.d/rails-env.conf
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 CMD ["/sbin/my_init"]
