@@ -1,5 +1,9 @@
 FROM phusion/passenger-ruby24:0.9.22
 
+ENV RAILS_ENV=production RACK_ENV=production NODE_ENV=production
+
+# Upgrade passenger
+RUN apt-get update && apt-get upgrade -y -o Dpkg::Options::="--force-confold"
 RUN apt-get update -qq && apt-get install -y build-essential apt-utils libpq-dev wget curl
 
 # Install node
@@ -25,15 +29,17 @@ RUN apt-get update -qq && apt-get install -y yarn
 
 RUN rm -f /etc/service/nginx/down
 RUN rm /etc/nginx/sites-enabled/default
-ADD nginx.conf /etc/nginx/sites-enabled/webapp.conf
+ADD nginx.conf /etc/nginx/sites-enabled/webapp.conf #This file seems to be ignored by nginx
+ADD cert_chain.crt /etc/ssl/cert_chain.crt
+ADD honeydo.key /etc/ssl/honeydo.key
 #ADD rails-env.conf /etc/nginx/main.d/rails-env.conf
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 CMD ["/sbin/my_init"]
 
 USER app
-ENV APP_HOME /home/app
-RUN mkdir -p $APP_HOME/honeydo
+ENV APP_HOME /home/app/honeydo
+RUN mkdir -p $APP_HOME
 WORKDIR $APP_HOME
 #RUN /pd_build/ruby-2.4.1.sh
 COPY --chown=app:app . $APP_HOME
@@ -42,4 +48,5 @@ RUN bundle install
 
 RUN ./bin/yarn install
 RUN ./bin/rake assets:precompile
-EXPOSE 80
+
+EXPOSE 3000
