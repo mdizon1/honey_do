@@ -1,0 +1,10 @@
+{
+  "environment": "production",
+  "user": "app",
+  "port": 3000,
+  "ssl": true,
+  "ssl_certificate": "/etc/ssl/cert_chain.crt",
+  "ssl_certificate_key": "/etc/ssl/honeydo.key",
+  "server_name": ["honey-do.app", "www.honey-do.app"],
+  "log_file": "/home/app/honeydo/log/passenger.3000.log"
+}
