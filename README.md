@@ -80,11 +80,12 @@ First deploy steps:
   + Pull application code
   + Swap Dockerfile.prod with Dockerfile
   + Swap docker-compose.prod.yml with docker-compose.yml
-  + Set HONEYDO_PROD_PW environment variable
+  + Set HONEYDO_PROD_PW environment variable (for database)
   + docker-compose build
   + create/migrate db
   + docker-compose up
-  + setup ssl config on machine
+  + Copy cert_chain file into app directory
+  + Copy certificate private key into app directory
   + setup elastic ip on machine
   + setup route53 to point honey-do.app to point to that ip
 
@@ -93,6 +94,8 @@ Subsequent deploy steps:
   + git pull
   + Swap Dockerfile.prod with Dockerfile
   + Swap docker-compose.prod.yml with docker-compose.yml
+  + Copy cert_chain file into app directory
+  + Copy certificate private key into app directory
   + docker-compose up --build
   + (if new migrations) docker-compose run --rm web rake db:migrate
 
@@ -116,7 +119,7 @@ Steps:
 ### Production Maintenance
 Tasks:
   + Backup DB
-  + Drain logs regularly
+  + Drain logs regularly or set up a logging service
 
 ### Open issues:
 
