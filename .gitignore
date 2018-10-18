@@ -12,6 +12,10 @@
 
 *.DS_Store
 
+# Ignore certificate files. Must be securely installed on production
+*.key
+*.crt
+
 # Ignore amazon elastic beanstalk config files. They are a security risk
 .ebextensions
 
