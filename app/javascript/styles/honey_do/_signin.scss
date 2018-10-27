@@ -1,8 +1,26 @@
 .sign-in-modal {
-  .modal-body .col:not(:last-child) {
-    border-right: 1px dotted green;
-  }
   .sign-in-title {
     text-align: center;
   }
+  .modal-body {
+    padding: 2rem 1rem;
+    .col:not(:last-child) {
+      margin-bottom: 3em;
+    }
+  }
 }
+
+@include media-breakpoint-up(md){
+  .sign-in-modal {
+    .modal-dialog {
+      max-width: 65%;
+    }
+    .modal-body {
+      padding: 2rem;
+      .col:not(:last-child) {
+        border-right: 1px dotted green;
+      }
+    }
+  }
+}
+

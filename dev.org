@@ -1,26 +1,30 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
+** DONE Add some more space to signup/signin modal
+   CLOSED: [2018-10-26 Fri 21:44]
 * Backlog
-** TODO Add some more space to signup/signin modal
 ** TODO Add some padding on users/signup page
 ** TODO More margin above the search bar
    When you focus on search, the label disappears into the nav
-** TODO Maybe use flexbox for column spacing of items
+** TODO Try flexbox for column spacing of todo items
 ** TODO Upgrade ffi and rubyzip
    Those seem to have security breaches at the version they're at now
-** TODO Create todo shortcut (c) prevents typing c char in search field:bug:
+** TODO Create todo shortcut (c) prevents typing c char in search field :bug:
+** TODO On mobile, when navbar expands, it can't be seen
+** TODO On sign in/signup, nav/logo can't be seen (white on white)
+** TODO On mobile, user gets signed out quickly.
+   Might be a safari issue, might be a rails setting.
 ** TODO Household manager(s) have ability to invite other members
 ** TODO Add ability to clear all completed todos (for manager)
+** TODO Setup a database backup solution.
+   Backup before each deploy
 ** TODO Build a monitoring/console solution
    So I want a tmux either quicklaunch or script that opens a connection to the
    prod environment, splits the windows and runs the commands according to what
    I want.
 
    Might just use tmux-continuum
-** TODO Purchase domain
-** TODO Link app to domain
-** TODO Add HTTPS
 ** TODO Polish landing page
 *** TODO Pick a different font
     Something a little wider and maybe with more letter spacing
@@ -216,6 +220,12 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Purchase domain
+   CLOSED: [2018-10-26 Fri 12:34]
+** DONE Link app to domain
+   CLOSED: [2018-10-26 Fri 12:34]
+** DONE Add HTTPS
+   CLOSED: [2018-10-26 Fri 12:34]
 ** DONE Add SSL
    CLOSED: [2018-10-18 Thu 13:18]
 *** DONE Buy ssl from namecheap (might have paid already)

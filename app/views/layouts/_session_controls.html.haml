@@ -16,15 +16,13 @@
         .modal-body
           .container
             .row
-              .col.col-md-6
+              .col.col-12.col-md-6
                 %h4.sign-in-title Sign in
 
                 = render 'devise/sessions/new'
                 = link_to "Forgot your password?", new_password_path(:user)
 
-
-
-              .col.col-md-6
+              .col.col-12.col-md-6
                 %h4.sign-in-title Sign up
 
                 = render 'devise/registrations/new'
