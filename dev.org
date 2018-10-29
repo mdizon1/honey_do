@@ -13,6 +13,8 @@
 ** TODO On mobile, user gets signed out quickly.
    Might be a safari issue, might be a rails setting.
 ** TODO User can drag down to refresh/sync
+** TODO Create REST API :epic:
+** TODO Create Rust command line interface :epic:
 ** TODO Upgrade ffi and rubyzip
    Those seem to have security breaches at the version they're at now
 ** TODO Household manager(s) have ability to invite other members
