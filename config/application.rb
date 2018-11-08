@@ -28,6 +28,5 @@ module HoneyDo
     config.development = {
       :remote => false
     }
-
   end
 end

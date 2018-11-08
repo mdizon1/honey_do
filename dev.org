@@ -1,24 +1,26 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-* Backlog
-** TODO Add some padding on users/signup page
-   Actually all devise pages
 ** TODO More margin above the search bar
    When you focus on search, the label disappears into the nav
+* Backlog
 ** TODO Try flexbox for column spacing of todo items
 ** TODO Create todo shortcut (c) prevents typing c char in search field :bug:
 ** TODO On mobile, when navbar expands, it can't be seen
 ** TODO On sign in/signup, nav/logo can't be seen (white on white)
+** TODO Add command for household admin to clear completed todos
 ** TODO On mobile, user gets signed out quickly.
    Might be a safari issue, might be a rails setting.
 ** TODO User can drag down to refresh/sync
+** TODO Create logo
+** TODO Ignore newlines in search field
+   On mobile it creates a line break
+** TODO Add ability to clear all completed todos (for manager)
 ** TODO Create REST API :epic:
 ** TODO Create Rust command line interface :epic:
 ** TODO Upgrade ffi and rubyzip
    Those seem to have security breaches at the version they're at now
 ** TODO Household manager(s) have ability to invite other members
-** TODO Add ability to clear all completed todos (for manager)
 ** TODO Setup a database backup solution.
    Backup before each deploy
 ** TODO Build a monitoring/console solution
@@ -222,6 +224,9 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Add some padding on users/signup page
+   CLOSED: [2018-11-07 Wed 17:13]
+   Actually all devise pages
 ** DONE Add some more space to signup/signin modal
    CLOSED: [2018-10-26 Fri 21:44]
 ** DONE Purchase domain
