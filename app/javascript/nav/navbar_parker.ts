@@ -4,12 +4,13 @@
  */
 
 import _ from "lodash"
-const PARKABLE_NAV_SELECTOR = "[data-parkable-nav]";
-const DEFAULT_SCROLL_THRESHOLD = 40;
-const PARKED_NAV_CLASS = "parked";
-const FIXED_NAV_CLASS = "fixed";
+import $ from "jquery"
+const PARKABLE_NAV_SELECTOR:string = "[data-parkable-nav]";
+const DEFAULT_SCROLL_THRESHOLD:number = 40;
+const PARKED_NAV_CLASS:string = "parked";
+const FIXED_NAV_CLASS:string = "fixed";
 
-     
+
 function setElementFixed($elt){
   $elt.removeClass(PARKED_NAV_CLASS);
   $elt.addClass(FIXED_NAV_CLASS);
@@ -21,12 +22,16 @@ function setElementParked($elt){
 }
 
 class NavbarParky {
-  constructor($element){
+  $elements;
+  scrollThreshold:number;
+  scrollListener;
+
+  constructor($element?){
 
     this.$elements = $(PARKABLE_NAV_SELECTOR);
     this.scrollThreshold = DEFAULT_SCROLL_THRESHOLD;
 
-    self.scrollListener = $(window).on("scroll", _.debounce(this.handleScroll, 12));
+    this.scrollListener = $(window).on("scroll", _.debounce(this.handleScroll, 12));
   }
 
   handleScroll = (evt) => {
@@ -36,10 +41,10 @@ class NavbarParky {
       let $curr_elt = $(curr_elt);
 
       if(
-        $curr_elt.hasClass(PARKED_NAV_CLASS) 
+        $curr_elt.hasClass(PARKED_NAV_CLASS)
         && scroll_pos < this.scrollThreshold
       ){
-        return; 
+        return;
       }else if(
         $curr_elt.hasClass(FIXED_NAV_CLASS)
         && scroll_pos >= this.scrollThreshold
@@ -70,7 +75,7 @@ function attachScrollListeners($nav){
 }
 
 export default class NavbarParker {
-  constructor(options) {
+  constructor(options?) {
     new NavbarParky();
   }
 }
