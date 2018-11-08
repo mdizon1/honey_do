@@ -1,8 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO More margin above the search bar
-   When you focus on search, the label disappears into the nav
 * Backlog
 ** TODO Try flexbox for column spacing of todo items
 ** TODO Create todo shortcut (c) prevents typing c char in search field :bug:
@@ -224,6 +222,9 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE More margin above the search bar
+   CLOSED: [2018-11-07 Wed 17:16]
+   When you focus on search, the label disappears into the nav
 ** DONE Add some padding on users/signup page
    CLOSED: [2018-11-07 Wed 17:13]
    Actually all devise pages
