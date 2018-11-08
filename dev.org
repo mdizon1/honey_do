@@ -1,17 +1,19 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** DONE Try flexbox for column spacing of todo items
-   CLOSED: [2018-11-08 Thu 10:48]
+** DONE Create todo shortcut (c) prevents typing c char in search field :bug:
+   CLOSED: [2018-11-08 Thu 11:25]
 * Backlog
-** TODO Create todo shortcut (c) prevents typing c char in search field :bug:
 ** TODO On mobile, when navbar expands, it can't be seen
 ** TODO On sign in/signup, nav/logo can't be seen (white on white)
 ** TODO Add command for household admin to clear completed todos
+** TODO Center new todo button via better method
+   Container width 100%, text-align center, button itself display inline
 ** TODO On mobile, user gets signed out quickly.
    Might be a safari issue, might be a rails setting.
 ** TODO User can drag down to refresh/sync
 ** TODO Create logo
+** TODO Hotkey c to create todo populates new todo with letter c :bug:
 ** TODO Ignore newlines in search field
    On mobile it creates a line break
 ** TODO Add ability to clear all completed todos (for manager)
@@ -223,6 +225,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Try flexbox for column spacing of todo items
+   CLOSED: [2018-11-08 Thu 10:48]
 ** DONE More margin above the search bar
    CLOSED: [2018-11-07 Wed 17:16]
    When you focus on search, the label disappears into the nav
