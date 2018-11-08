@@ -1,4 +1,5 @@
 //require("expose-loader?$!expose-loader?jQuery!jquery"); // adds $ to window so we can jquery in global scope
+import $ from "jquery"
 require("jquery-ujs");
 require("bootstrap-loader");
 require("font-awesome-sass-loader");
@@ -18,4 +19,12 @@ window.onload = () => {
     new MobileHover(scrollTrigger);
   })
   new NavbarParker();
+
+  $(".honeydo-nav").on('show.bs.collapse', (evt) => {
+    $(".honeydo-nav").addClass("navbar-expanded");
+  });
+
+  $(".honeydo-nav").on('hide.bs.collapse', (evt) => {
+    $(".honeydo-nav").removeClass("navbar-expanded");
+  });
 }

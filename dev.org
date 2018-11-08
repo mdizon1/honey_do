@@ -1,11 +1,7 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** DONE Create todo shortcut (c) prevents typing c char in search field :bug:
-   CLOSED: [2018-11-08 Thu 11:25]
 * Backlog
-** TODO On mobile, when navbar expands, it can't be seen
-** TODO On sign in/signup, nav/logo can't be seen (white on white)
 ** TODO Add command for household admin to clear completed todos
 ** TODO Center new todo button via better method
    Container width 100%, text-align center, button itself display inline
@@ -225,6 +221,12 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE On sign in/signup, nav/logo can't be seen (white on white)
+   CLOSED: [2018-11-08 Thu 15:20]
+** DONE On mobile, when navbar expands, it can't be seen
+   CLOSED: [2018-11-08 Thu 15:19]
+** DONE Create todo shortcut (c) prevents typing c char in search field :bug:
+   CLOSED: [2018-11-08 Thu 11:25]
 ** DONE Try flexbox for column spacing of todo items
    CLOSED: [2018-11-08 Thu 10:48]
 ** DONE More margin above the search bar
