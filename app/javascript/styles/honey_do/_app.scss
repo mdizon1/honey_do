@@ -37,6 +37,15 @@
 
   .todo-item {
     margin-bottom: 5px;
+    display: flex;
+
+    .todo-item-col{ position: relative; }
+    .todo-item-col1{ padding: 0 1em 0 2em; }
+    .todo-item-col2{ 
+      flex-grow: 1; 
+      flex-shrink: 2;
+      overflow: hidden;
+    }
 
     .todo-item-checkbox {
       position: relative;
@@ -45,16 +54,14 @@
     }
     .todo-item-drag-handle {
       display: inline-block;
-      position: absolute;
-      top: 8px; right: 0;
+      position: absolute; 
+      left: 7px; top: 9px;
       width: 2em;
       cursor: ns-resize;
       font-size: 1.25em;
       text-align: center;
     }
     .todo-item-content {
-      display: inline-block;
-      width: 100%;
       &.todo-item-content-expanded {
         .todo-item-tags { display: flex; }
       }
@@ -67,8 +74,6 @@
       }
     }
     .todo-item-controls {
-      position: absolute;
-      left: 0;
       line-height: 1em;
     }
     .todo-item-tags {

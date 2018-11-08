@@ -117,28 +117,25 @@ const TodoItemCore = (props) => {
 
   return (
     <div className="todo-item">
-      <div className="row">
-        <div className="col-lg-1"></div>
-        <div className="col-3 col-sm-2 col-lg-1">
-          <div className={"todo-item-checkbox" + (todo.isCompleted ? ' checkbox-checked' : '')}>
-            <Checkbox
-              checked={todo.isCompleted}
-              onChange={(evt) => onTodoClicked(todo)}
-              disabled={todo.isCompleted && !todo.permissions.canUncomplete}
-            />
-          </div>
-          { _renderDragHandle(connectDragSource) }
+      <div className="todo-item-col todo-item-col1">
+        <div className={"todo-item-checkbox" + (todo.isCompleted ? ' checkbox-checked' : '')}>
+          <Checkbox
+            checked={todo.isCompleted}
+            onChange={(evt) => onTodoClicked(todo)}
+            disabled={todo.isCompleted && !todo.permissions.canUncomplete}
+          />
         </div>
-        <div className="col-7 col-sm-8 col-lg-9">
-          <div className={"todo-item-content" + (isExpanded ? " todo-item-content-expanded" : "")}>
-            { _renderTitle(todo, onToggleExpand) }
-            { _renderNotes(todo, isExpanded, onToggleExpand) }
-            { _renderTags(todo, onTodoTagDestroyed) }
-          </div>
+        { _renderDragHandle(connectDragSource) }
+      </div>
+      <div className="todo-item-col todo-item-col2">
+        <div className={"todo-item-content" + (isExpanded ? " todo-item-content-expanded" : "")}>
+          { _renderTitle(todo, onToggleExpand) }
+          { _renderNotes(todo, isExpanded, onToggleExpand) }
+          { _renderTags(todo, onTodoTagDestroyed) }
         </div>
-        <div className="col">
-          { _renderControls(props) }
-        </div>
+      </div>
+      <div className="todo-item-col todo-item-col3">
+        { _renderControls(props) }
       </div>
     </div>
   )
