@@ -27,6 +27,9 @@ import {
   CLOSE_CONFIG,
   OPEN_CREATE_FORM,
   SWITCH_TAB,
+  SYNC_PERMISSIONS_REQUEST,
+  SYNC_PERMISSIONS_SUCCESS,
+  SYNC_PERMISSIONS_FAILURE,
   SYNC_TODOS_REQUEST,
   SYNC_TODOS_SUCCESS,
   SYNC_TODOS_FAILURE,
@@ -50,6 +53,7 @@ import {
   deleteTodoSuccess,
   deleteTodoFailure,
   editTodoCanceled,
+  syncPermissionsSuccess,
   syncTodosRequest,
   syncTodosSuccess,
   todoReorderSuccess,
@@ -148,6 +152,16 @@ function honeyDoReducer(state, action) {
     case SWITCH_TAB:
       if(!_.includes(UiTabs, action.tab)){ return state; } // ensure the tab given (action.tab) is one of UiTabs
       return state.setIn(["uiState", "currentTab"], action.tab);
+
+    case SYNC_PERMISSIONS_REQUEST:
+      requestSyncPermissions(state,action);
+      return uiSyncingOn(state);
+    case SYNC_PERMISSIONS_SUCCESS:
+      temp_state = setPermissions(state, action);
+      return uiSyncingOff(temp_state);
+
+    case SYNC_PERMISSIONS_FAILURE:
+      return uiSyncingOff(state);
 
     case SYNC_TODOS_REQUEST:
       obtainTodosFromServer(state, action);
@@ -445,6 +459,18 @@ const requestReorderTodoOnServer = (state, action) => {
   });
 }
 
+const requestSyncPermissions = (state, action) => {
+  if(window.api.isOfflineMode) { return; }
+  window.api.apiGetPermissions({
+    endpoint: state.getIn(['configState', 'apiEndpoint']),
+    authToken: state.getIn(['configState', 'identity', 'authToken']),
+    onSuccess: (data, textStatus, jqXHR) => {
+      action.asyncDispatch(syncPermissionsSuccess(Immutable.fromJS(data)));
+    },
+    onFailure: (jqXHR, textStatus, errorThrown) => { },
+  });
+}
+
 const requestUpdateTodoFromServer = (state, action) => {
   if(window.api.isOfflineMode) { return; }
   window.api.apiUpdateTodo({
@@ -468,6 +494,10 @@ const resetDragState = (state) => {
   temp_state = temp_state.setIn(["uiState", "dragState", "currentNeighborId"], null);
   temp_state = temp_state.setIn(["uiState", "dragState", "isNeighborNorth"], null);
   return temp_state.setIn(["uiState", "dragState", "currentDragTodoId"], null);
+}
+
+const setPermissions = (state, action) => {
+  return state.setIn(["configState", "identity", "permissions"], action.newPermissions);
 }
 
 const setTodoDragState = (state, options) => {

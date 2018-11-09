@@ -19,6 +19,8 @@ HoneyDo::Application.routes.draw do
       put :reorder
       resources :tags, :only => [:destroy], :controller => 'households/todos/tags'
     end
+
+    get :permissions
   end
 
   get 'demo' => 'demos#index'

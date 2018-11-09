@@ -7,7 +7,8 @@ import Drawer from 'material-ui/Drawer'
 const mapStateToProps = (state, ownProps) => {
   return {
     isConfigOpen: state.getIn(['uiState', 'isConfigOpen']),
-    uiState: state.get('uiState')
+    uiState: state.get('uiState'),
+    permissions: state.getIn(['configState', 'identity', 'permissions'])
   }
 }
 
@@ -19,7 +20,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 const HoneyDoConfigWrap = (props) => {
-  const { isConfigOpen, handleCloseConfig, uiState, handleToggleHideCompleted } = props;
+  const { isConfigOpen, handleCloseConfig, uiState, permissions, handleToggleHideCompleted } = props;
 
   return (
     <Drawer
@@ -29,6 +30,7 @@ const HoneyDoConfigWrap = (props) => {
     >
       <HoneyDoConfig
         uiProps={uiState}
+        permissions={permissions}
         onToggleIsCompletedHidden={handleToggleHideCompleted}
       />
     </Drawer>

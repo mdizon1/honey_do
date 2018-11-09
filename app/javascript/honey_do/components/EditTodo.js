@@ -1,7 +1,6 @@
 import React, { PropTypes } from 'react'
 import { TodoKlassToFriendlyString } from '../constants/TodoTypes'
 
-import Button from 'material-ui/Button'
 import TodoForm from './TodoForm'
 import TodoTag from './TodoTag'
 

@@ -1,6 +1,7 @@
 class HouseholdsController < ApplicationController
   before_action :authenticate_user!
-  before_action :load_current_user_household, :only => [:show, :edit, :update, :destroy]
+  before_action :verify_auth_token, :only => :permissions
+  before_action :load_current_user_household, :only => [:show, :edit, :update, :destroy, :permissions]
   before_action :prevent_user_from_create_new_household, :only => :new
 
   def show
@@ -37,6 +38,12 @@ class HouseholdsController < ApplicationController
   end
 
   def destroy
+  end
+
+  # TODO move this to household/permissions controller once we need more
+  # functionality there
+  def permissions
+    return render :json => current_user.decorate.permissions_json(@household), :status => :ok
   end
 
   private

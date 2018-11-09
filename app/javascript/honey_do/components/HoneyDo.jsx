@@ -9,7 +9,7 @@ import NewTodoWrap from '../containers/NewTodoWrap'
 import EditTodoDialogWrap from '../containers/EditTodoDialogWrap'
 import HoneyDoSpinner from '../containers/HoneyDoSpinner'
 import { hot } from "react-hot-loader";
-import { init, syncTodosRequest, switchTab, openConfig, openCreateForm } from './../actions/HoneyDoActions';
+import { init, syncTodosRequest, syncPermissionsRequest, switchTab, openConfig, openCreateForm } from './../actions/HoneyDoActions';
 import { apiLoadTags } from '../util/Api'
 import { UiTabs, UiTabToType } from '../constants/TodoTypes'
 import CircularProgress from 'material-ui/Progress/CircularProgress'
@@ -42,6 +42,7 @@ const keyMap = {
 class HoneyDo extends React.Component {
   componentDidMount() {
     this.props.store.dispatch(syncTodosRequest());
+    this.props.store.dispatch(syncPermissionsRequest());
   }
 
   handleChangeTab = (evt, tabVal) => {

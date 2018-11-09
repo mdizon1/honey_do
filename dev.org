@@ -1,14 +1,16 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-* Backlog
 ** TODO Add command for household admin to clear completed todos
+* Backlog
 ** TODO Center new todo button via better method
    Container width 100%, text-align center, button itself display inline
 ** TODO On mobile, user gets signed out quickly.
    Might be a safari issue, might be a rails setting.
 ** TODO User can drag down to refresh/sync
 ** TODO Create logo
+** TODO Upgrade material ui
+   This library moves fast
 ** TODO Hotkey c to create todo populates new todo with letter c :bug:
 ** TODO Ignore newlines in search field
    On mobile it creates a line break

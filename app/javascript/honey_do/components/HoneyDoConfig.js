@@ -1,11 +1,27 @@
 import React, { PropTypes } from 'react'
 import { FormGroup, FormControlLabel } from 'material-ui/Form';
 import Switch from "material-ui/Switch/Switch"
+import Button from "material-ui/Button"
+
+
+const renderClearCompletedTodosButton = (permissions) => {
+  if(!permissions.get("isAdmin")){return;}
+  return (
+    <FormGroup row>
+      <Button
+        variant="raised"
+        color="secondary"
+      >
+        Clear Completed Todos
+      </Button>
+    </FormGroup>
+  )
+}
 
 const HoneyDoConfig = (props) => {
-  const { uiProps, onToggleIsCompletedHidden } = props;
-  let button_state = uiProps.get('isCompletedHidden');
-  let label = button_state ? "Completed todos are visible" : "Completed todos are hidden";
+  const { uiProps, permissions, onToggleIsCompletedHidden } = props;
+  let hide_completed_switch_state = uiProps.get('isCompletedHidden');
+  let label = hide_completed_switch_state ? "Completed todos are visible" : "Completed todos are hidden";
 
   return (
     <div className="honeydo-drawer-content honeydo-config">
@@ -22,13 +38,13 @@ const HoneyDoConfig = (props) => {
           label="Hide completed todos"
           control={
             <Switch
-              checked={button_state}
+              checked={hide_completed_switch_state}
               onChange={onToggleIsCompletedHidden}
             />
           }
         />
       </FormGroup>
-
+      {renderClearCompletedTodosButton(permissions)}
     </div>
   );
 }

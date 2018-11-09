@@ -86,6 +86,20 @@ export default class Api {
     return promise;
   }
 
+  apiGetPermissions = (args) => {
+    const { onSuccess, onFailure, onComplete } = args;
+
+    let promise = $.ajax({
+      type: "GET",
+      url: this.endpoint + '/permissions/',
+      data: { authentication_token: this.authToken }
+    });
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
+    return promise;
+  }
+
   // TOOD: This wasn't secured on the server side??
   apiRemoveTag = (args) => {
     const { todo, tag, onSuccess, onFailure, onComplete} = args;

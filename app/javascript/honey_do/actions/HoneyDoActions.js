@@ -21,6 +21,9 @@ export const OPEN_CONFIG = 'OPEN_CONFIG'
 export const CLOSE_CONFIG = 'CLOSE_CONFIG'
 export const OPEN_CREATE_FORM = 'OPEN_CREATE_FORM'
 export const SWITCH_TAB = 'SWITCH_TAB'
+export const SYNC_PERMISSIONS_REQUEST = 'SYNC_PERMISSIONS_REQUEST'
+export const SYNC_PERMISSIONS_SUCCESS = 'SYNC_PERMISSIONS_SUCCESS'
+export const SYNC_PERMISSIONS_FAILURE = 'SYNC_PERMISSIONS_FAILURE'
 export const SYNC_TODOS_REQUEST = 'SYNC_TODOS_REQUEST'
 export const SYNC_TODOS_SUCCESS = 'SYNC_TODOS_SUCCESS'
 export const SYNC_TODOS_FAILURE = 'SYNC_TODOS_FAILURE'
@@ -148,6 +151,26 @@ export function switchTab(tab) {
     description: 'Change the current tab view',
     tab
   }
+}
+export function syncPermissionsRequest() {
+  return {
+    type: SYNC_PERMISSIONS_REQUEST,
+    description: "Make a request to the server to get user permissions"
+  }
+}
+
+export function syncPermissionsSuccess(permissionData) {
+  return {
+    type: SYNC_PERMISSIONS_SUCCESS,
+    newPermissions: permissionData,
+    description: "Got a successful response from the server with user permissions for this household"
+  }
+
+
+}
+
+export function syncPermissinosFailure() {
+  // TODO: Implement me
 }
 
 export function syncTodosRequest() {

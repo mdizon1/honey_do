@@ -2,7 +2,6 @@ import React, { PropTypes } from 'react'
 import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
-import HoneyDoConfigWrap from "../containers/HoneyDoConfigWrap"
 import { UiTabs, UiTabToType } from '../constants/TodoTypes'
 import Toolbar from 'material-ui/Toolbar'
 import Button from 'material-ui/Button'

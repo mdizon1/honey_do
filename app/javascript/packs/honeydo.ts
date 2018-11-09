@@ -15,12 +15,7 @@ require("font-awesome-sass-loader");
 //var process = require("process");
 var _ = require("lodash");
 
-
-console.log('Hello World from Webpacker');
-
-
 require("../styles/honeydo.scss");
-
 
 // BEGIN TYPESCRIPT CHECK
 class Student {
