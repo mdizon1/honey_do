@@ -12,6 +12,9 @@ HoneyDo::Application.routes.draw do
 
     resources :tags, :only => [:index], :controller => 'households/tags'
 
+    resource :todos, :only => [] do
+      delete :clear_completed
+    end
     resources :todos do
       put :complete
       put :accept

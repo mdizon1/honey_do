@@ -1,7 +1,7 @@
 class TodosController < ApplicationController
   before_action :authenticate_user!
   before_action :verify_auth_token
-  before_action :load_current_user_household, :only => [:index, :create]
+  before_action :load_current_user_household, :only => [:index, :create, :clear_completed]
   before_action :load_todo, :only => [:accept, :complete, :destroy, :update, :uncomplete, :reorder]
   before_action :prepare_completable_form, :only => [:create, :update]
 
@@ -58,6 +58,17 @@ class TodosController < ApplicationController
       status = 500
     end
     render_todo_to_json(status)
+  end
+
+  def clear_completed
+    return unauthorized_response unless can?(:administrate, @household)
+    status = :ok
+    begin
+      @household.clear_completed_completables
+    rescue => e
+        status = 500
+    end
+    render :json => {}, :status => status
   end
 
   def complete

@@ -25,6 +25,12 @@ class Household < ApplicationRecord
     memberships.includes(:user).where('memberships.is_admin IS TRUE OR memberships.is_head_admin IS TRUE').map(&:user)
   end
 
+  def clear_completed_completables
+    transaction do
+      completables.completed.destroy_all
+    end
+  end
+
   def completed_shopping_items
     shopping_items.where(:aasm_state => 'completed')
   end
