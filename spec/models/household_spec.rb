@@ -1,4 +1,4 @@
-require 'spec_helper'
+require 'rails_helper'
 
 describe Household do
   describe "relationships" do
@@ -72,6 +72,93 @@ describe Household do
           let!(:other_admin) { m = FactoryGirl.create(:membership, :household => household, :is_admin => true); m.user }
           it "should return the admin and head admin" do
             household.admins.should =~ [head_admin, other_admin]
+          end
+        end
+      end
+    end
+
+    describe "#clear_completed_completables" do
+      context "with no completables" do
+        it "should leave no completables" do
+          household.clear_completed_completables
+          expect(household.completables).to be_empty
+        end
+
+        it "should raise no errors" do
+          expect {
+            household.clear_completed_completables
+          }.not_to raise_error
+        end
+      end
+
+      context "with a single incomplete completable" do
+        let!(:todo) { FactoryGirl.create(:todo, :household => household) }
+
+        it "should not change the number of completables" do
+          expect {
+            household.clear_completed_completables
+          }.not_to change(household.completables, :count)
+        end
+
+        it "should leave a single completable" do
+          household.clear_completed_completables
+          expect(household.completables.count).to eq(1)
+        end
+      end
+
+      context "with a single complete completable" do
+        let!(:completed_todo) { FactoryGirl.create(:completed_todo, :household => household) }
+
+        it "should delete a completable" do
+          expect {
+            household.clear_completed_completables
+          }.to change(household.completables, :count).by(-1)
+        end
+
+        it "should leave no completables" do
+          household.clear_completed_completables
+          expect(household.completables.count).to eq(0)
+        end
+      end
+
+      context "with two completables" do
+        let(:todo1) { FactoryGirl.create(:todo, :household => household) }
+        let!(:todo2) { FactoryGirl.create(:todo, :household => household) }
+        let!(:household_user) { m = FactoryGirl.create(:membership, :household => household); m.user; }
+
+        context "and one of them is completed" do
+          before do
+            todo1.complete!(:completed_by => household_user)
+          end
+
+          it "should delete a completable" do
+            expect {
+              household.clear_completed_completables
+            }.to change(household.completables, :count).by(-1)
+          end
+
+          it "should leave the incomplete completable" do
+            household.clear_completed_completables
+            expect(household.completables.count).to eq(1)
+            expect(household.completables).to eq([todo2])
+          end
+        end
+
+        context "and both of them are completed" do
+          before do
+            todo1.complete!(:completed_by => household_user)
+            todo2.complete!(:completed_by => household_user)
+          end
+
+          it "should delete 2 completables" do
+            expect {
+              household.clear_completed_completables
+            }.to change(household.completables, :count).by(-2)
+          end
+
+          it "should leave the household with no completables" do
+            household.clear_completed_completables
+            expect(household.completables.count).to eq(0)
           end
         end
       end
