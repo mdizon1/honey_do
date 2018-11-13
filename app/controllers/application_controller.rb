@@ -25,7 +25,6 @@ class ApplicationController < ActionController::Base
   end
 
   def verify_auth_token
-    return true if Rails.env.test? # TODO: Stub this in spec somehow rather than skip if test
     begin
       u = User.find_by(:authentication_token => params[:authentication_token])
       raise unless u && u == current_user

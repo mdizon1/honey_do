@@ -1,6 +1,11 @@
 require 'rails_helper'
+require 'rspec/mocks'
+require 'rspec/mocks/standalone'
 
 describe "todos", :type => :request do
+  before do
+    allow_any_instance_of(ApplicationController).to receive(:verify_auth_token).and_return(true)
+  end
   context "with a household" do
     let(:household) { FactoryGirl.create(:household) }
     context "and a logged in member of the household" do
