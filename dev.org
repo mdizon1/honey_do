@@ -1,7 +1,8 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Add command for household admin to clear completed todos
+** DONE Add command for household admin to clear completed todos
+   CLOSED: [2018-11-13 Tue 14:49]
 * Backlog
 ** TODO Center new todo button via better method
    Container width 100%, text-align center, button itself display inline
@@ -15,6 +16,7 @@
 ** TODO Ignore newlines in search field
    On mobile it creates a line break
 ** TODO Add ability to clear all completed todos (for manager)
+** TODO Refactor todos_controller to be households/todos_controller :refactor:
 ** TODO Create REST API :epic:
 ** TODO Create Rust command line interface :epic:
 ** TODO Upgrade ffi and rubyzip

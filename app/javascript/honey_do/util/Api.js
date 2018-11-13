@@ -38,6 +38,22 @@ export default class Api {
     return promise;
   }
 
+  apiClearCompleted = (args) => {
+    const { onSuccess, onFailure, onComplete } = args;
+
+    let promise = $.ajax({
+      type: "DELETE",
+      url: this.endpoint + '/todos/clear_completed',
+      data: { authentication_token: this.authToken }
+    })
+
+    promise = handleSuccess(promise, onSuccess);
+    promise = handleFailure(promise, onFailure);
+    promise = handleComplete(promise, onComplete);
+
+    return promise;
+  }
+
   apiCompleteTodo = (args) => {
     const { todo, onSuccess, onFailure, onComplete } = args;
 

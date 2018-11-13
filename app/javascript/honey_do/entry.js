@@ -35,6 +35,7 @@ const prepareStore = (options) => {
 
 $(function (){
   var honey_do_container = $("#honey-do");
+  window.logLevel=2;
 
   if(honey_do_container.length == 1){
     let honey_do_options = honey_do_container.data();

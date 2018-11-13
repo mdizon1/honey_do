@@ -1,6 +1,9 @@
 export const ACCEPT_TODO_REQUEST = 'ACCEPT_TODO_REQUEST'
 export const ACCEPT_TODO_SUCCESS = 'ACCEPT_TODO_SUCCESS'
 export const ACCEPT_TODO_FAILURE = 'ACCEPT_TODO_FAILURE'
+export const CLEAR_COMPLETED_REQUEST = 'CLEAR_COMPLETED_REQUEST'
+export const CLEAR_COMPLETED_SUCCESS = 'CLEAR_COMPLETED_SUCCESS'
+export const CLEAR_COMPLETED_FAILURE = 'CLEAR_COMPLETED_FAILURE'
 export const CLOSE_CREATE_FORM = 'CLOSE_CREATE_FORM'
 export const COMPLETE_TODO_REQUEST = 'COMPLETE_TODO_REQUEST'
 export const COMPLETE_TODO_SUCCESS = 'COMPLETE_TODO_SUCCESS'
@@ -64,6 +67,25 @@ export function cancelDragTodo() {
   return {
     type: CANCEL_TODO_DRAG,
     description: "Canceled a drag and drop action"
+  }
+}
+
+export function clearCompletedRequest() {
+  return {
+    type: CLEAR_COMPLETED_REQUEST,
+    description: "Clear completed todos and shopping items"
+  }
+}
+
+export function clearCompletedSuccess() {
+  return {
+    type: CLEAR_COMPLETED_SUCCESS
+  }
+}
+
+export function clearCompletedFailure() {
+  return {
+    type: CLEAR_COMPLETED_FAILURE
   }
 }
 

@@ -4,13 +4,14 @@ import Switch from "material-ui/Switch/Switch"
 import Button from "material-ui/Button"
 
 
-const renderClearCompletedTodosButton = (permissions) => {
+const renderClearCompletedTodosButton = (permissions, onClick) => {
   if(!permissions.get("isAdmin")){return;}
   return (
     <FormGroup row>
       <Button
         variant="raised"
         color="secondary"
+        onClick={onClick}
       >
         Clear Completed Todos
       </Button>
@@ -19,7 +20,7 @@ const renderClearCompletedTodosButton = (permissions) => {
 }
 
 const HoneyDoConfig = (props) => {
-  const { uiProps, permissions, onToggleIsCompletedHidden } = props;
+  const { uiProps, permissions, onToggleIsCompletedHidden, onClearCompleted } = props;
   let hide_completed_switch_state = uiProps.get('isCompletedHidden');
   let label = hide_completed_switch_state ? "Completed todos are visible" : "Completed todos are hidden";
 
@@ -44,7 +45,7 @@ const HoneyDoConfig = (props) => {
           }
         />
       </FormGroup>
-      {renderClearCompletedTodosButton(permissions)}
+      {renderClearCompletedTodosButton(permissions, onClearCompleted)}
     </div>
   );
 }

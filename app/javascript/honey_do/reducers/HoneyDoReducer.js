@@ -8,6 +8,9 @@ import {
   ACCEPT_TODO_SUCCESS,
   ACCEPT_TODO_FAILURE,
   CLOSE_CREATE_FORM,
+  CLEAR_COMPLETED_REQUEST,
+  CLEAR_COMPLETED_SUCCESS,
+  CLEAR_COMPLETED_FAILURE,
   COMPLETE_TODO_REQUEST,
   COMPLETE_TODO_SUCCESS,
   COMPLETE_TODO_FAILURE,
@@ -47,6 +50,8 @@ import {
   UNCOMPLETE_TODO_FAILURE,
   acceptTodoSuccess,
   acceptTodoFailure,
+  clearCompletedSuccess,
+  clearCompletedFailure,
   closeCreateForm,
   completeTodoSuccess,
   completeTodoFailure,
@@ -64,6 +69,7 @@ import {
 
 import {
   apiAcceptTodo,
+  apiClearCompleted,
   apiCompleteTodo,
   apiCreateTodo,
   apiDeleteTodo,
@@ -98,6 +104,15 @@ function honeyDoReducer(state, action) {
 
     case ACCEPT_TODO_SUCCESS:
     case ACCEPT_TODO_FAILURE:
+      return deactivateSpinner(state);
+
+    case CLEAR_COMPLETED_REQUEST:
+      requestClearCompletedFromServer(state, action);
+      return activateSpinner(state)
+    case CLEAR_COMPLETED_SUCCESS:
+      return deactivateSpinner(clearCompleted(state));
+    case CLEAR_COMPLETED_FAILURE:
+      // TODO: HANDLE THIS
       return deactivateSpinner(state);
 
     case COMPLETE_TODO_REQUEST: //make the api call
@@ -234,6 +249,14 @@ const closeNewTodoForm = (state) => {
 }
 const openNewTodoForm = (state) => {
   return state.setIn(['uiState', 'isCreating'], true);
+}
+
+const clearCompleted = (state) => {
+  return state.setIn(['dataState', 'todos'],
+    state.getIn(['dataState', 'todos']).filter((curr, key, iter) => {
+      return !curr.get('isCompleted')
+    })
+  )
 }
 
 const completeTodoOnServer = (state, action) => {
@@ -387,6 +410,23 @@ const requestAcceptTodoFromServer = (state, action) => {
     },
     onComplete: (data_jqXHR, textStatus, jqXHR_errorThrown) => {
       action.asyncDispatch(syncTodosRequest());
+    }
+  });
+}
+
+const requestClearCompletedFromServer = (state, action) => {
+  if(window.api.isOfflineMode) { return; }
+  console.log("DEBUG: in requestClearCompletedFromServer!!!!");
+  window.api.apiClearCompleted({
+    endpoint: state.getIn(['configState', 'apiEndpoint']),
+    authToken: state.getIn(['configState', 'identity', 'authToken']),
+    onSuccess: (data, textStatus, jqXHR) => {
+      console.log("DEBUG: GOT SUCCESSS!!!!");
+      action.asyncDispatch(clearCompletedSuccess());
+    },
+    onFailure: (jqXHR, textStatus, errorThrown) => {
+      console.log("DEBUG: GOT FAILURE!!!!");
+      action.asyncDispatch(clearCompletedFailure());
     }
   });
 }
