@@ -94,9 +94,8 @@ Subsequent deploy steps:
   + git pull
   + Swap Dockerfile.prod with Dockerfile
   + Swap docker-compose.prod.yml with docker-compose.yml
-  + Copy cert_chain file into app directory
-  + Copy certificate private key into app directory
-  + docker-compose up --build
+  + docker-compose down
+  + docker-compose up --build # if rebuild is necessary else just docker-compose up
   + (if new migrations) docker-compose run --rm web rake db:migrate
 
 ----

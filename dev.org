@@ -1,24 +1,29 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** DONE Add command for household admin to clear completed todos
-   CLOSED: [2018-11-13 Tue 14:49]
 * Backlog
+** TODO Upgrade material ui
+   This library moves fast
+** TODO Ignore newlines in search field
+   On mobile it creates a line break
+   Instead it should run the search
 ** TODO Center new todo button via better method
    Container width 100%, text-align center, button itself display inline
+** TODO Upon refresh, user should stay on same tab
+*** TODO Tab switch sets a cookie
+*** TODO App load reads cookies and merges with app config
+    Which comes from data attribute
+** TODO Upon refresh, user should keep config settings
+** TODO Create logo
+** TODO Create REST API :epic:
+   I think this is mostly done I just need to rearrange some of the routes and finalize them
+   Also consider versioning
+** TODO Create Rust command line interface :epic:
 ** TODO On mobile, user gets signed out quickly.
    Might be a safari issue, might be a rails setting.
 ** TODO User can drag down to refresh/sync
-** TODO Create logo
-** TODO Upgrade material ui
-   This library moves fast
 ** TODO Hotkey c to create todo populates new todo with letter c :bug:
-** TODO Ignore newlines in search field
-   On mobile it creates a line break
-** TODO Add ability to clear all completed todos (for manager)
 ** TODO Refactor todos_controller to be households/todos_controller :refactor:
-** TODO Create REST API :epic:
-** TODO Create Rust command line interface :epic:
 ** TODO Upgrade ffi and rubyzip
    Those seem to have security breaches at the version they're at now
 ** TODO Household manager(s) have ability to invite other members
@@ -225,6 +230,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Add command for household admin to clear completed todos
+   CLOSED: [2018-11-13 Tue 14:49]
 ** DONE On sign in/signup, nav/logo can't be seen (white on white)
    CLOSED: [2018-11-08 Thu 15:20]
 ** DONE On mobile, when navbar expands, it can't be seen
