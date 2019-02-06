@@ -2,6 +2,7 @@
   Keep track of todo items for Honey Do development
 * Current
 * Backlog
+** TODO Add a confirm to the "delete all completed todos"
 ** TODO Upgrade material ui
    This library moves fast
 ** TODO Ignore newlines in search field
