@@ -5,6 +5,7 @@
 ** TODO Add a confirm to the "delete all completed todos"
 ** TODO Upgrade material ui
    This library moves fast
+** TODO Look into react dnd see if that's improved any
 ** TODO Ignore newlines in search field
    On mobile it creates a line break
    Instead it should run the search
