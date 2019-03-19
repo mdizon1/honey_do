@@ -2,7 +2,13 @@
   Keep track of todo items for Honey Do development
 * Current
 * Backlog
-** TODO Add a confirm to the "delete all completed todos"
+** TODO Refactor confirm dialog to be local to HoneyDoConfigWrap
+   Right now it triggers a dispatch to the reducer etc.
+
+   Actually this is worthy of an architecture review because it might make sense
+   that this goes through the reducer. Initial look at managing state of the
+   dialog inside HoneyDoConfig looked smelly right away.
+** TODO Don't display remove completed todos button if there are no completed todos
 ** TODO Upgrade material ui
    This library moves fast
 ** TODO Look into react dnd see if that's improved any
@@ -232,6 +238,10 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Add a confirm to the "delete all completed todos"
+   CLOSED: [2019-03-19 Tue 16:50]
+   Button triggers a modal which asks "are you sure" and that one fires the
+   action that is currently bound to the existing button
 ** DONE Add command for household admin to clear completed todos
    CLOSED: [2018-11-13 Tue 14:49]
 ** DONE On sign in/signup, nav/logo can't be seen (white on white)

@@ -14,6 +14,9 @@ export const EmptyStore = {
     isSyncing: false,
     isCompletedHidden: false,
     isConfigOpen: false,
+    dialogs: {
+      isConfirmClearCompletedOpen: false
+    },
     dragState: {
       isDragActive: false,
       currentDragTodoId: null,

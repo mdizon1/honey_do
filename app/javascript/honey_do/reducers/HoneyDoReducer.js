@@ -8,6 +8,8 @@ import {
   ACCEPT_TODO_SUCCESS,
   ACCEPT_TODO_FAILURE,
   CLOSE_CREATE_FORM,
+  CLOSE_CLEAR_COMPLETED_CONFIRM,
+  CLEAR_COMPLETED_CONFIRM,
   CLEAR_COMPLETED_REQUEST,
   CLEAR_COMPLETED_SUCCESS,
   CLEAR_COMPLETED_FAILURE,
@@ -105,6 +107,11 @@ function honeyDoReducer(state, action) {
     case ACCEPT_TODO_SUCCESS:
     case ACCEPT_TODO_FAILURE:
       return deactivateSpinner(state);
+
+    case CLOSE_CLEAR_COMPLETED_CONFIRM:
+      return clearCompletedConfirmCanceled(state); // TODO
+    case CLEAR_COMPLETED_CONFIRM:
+      return clearCompletedConfirm(state);
 
     case CLEAR_COMPLETED_REQUEST:
       requestClearCompletedFromServer(state, action);
@@ -251,12 +258,21 @@ const openNewTodoForm = (state) => {
   return state.setIn(['uiState', 'isCreating'], true);
 }
 
+const clearCompletedConfirm = (state) => {
+  return state.setIn(['uiState', 'dialogs', 'isConfirmClearCompletedOpen'], true);
+}
+
+const clearCompletedConfirmCanceled = (state) => {
+  return state.setIn(['uiState', 'dialogs', 'isConfirmClearCompletedOpen'], false);
+};
+
 const clearCompleted = (state) => {
   return state.setIn(['dataState', 'todos'],
     state.getIn(['dataState', 'todos']).filter((curr, key, iter) => {
       return !curr.get('isCompleted')
     })
-  )
+  ).
+    setIn(['uiState', 'dialogs', 'isConfirmClearCompletedOpen'], false)
 }
 
 const completeTodoOnServer = (state, action) => {

@@ -2,7 +2,34 @@ import React, { PropTypes } from 'react'
 import { FormGroup, FormControlLabel } from 'material-ui/Form';
 import Switch from "material-ui/Switch/Switch"
 import Button from "material-ui/Button"
+import Dialog, { DialogTitle, DialogActions } from 'material-ui/Dialog'
 
+
+const renderConfirmClearCompletedDialog = (isOpen, onClose, onAccept) => {
+  return (
+    <Dialog
+      title="Confirm clear completed todos"
+      open={isOpen}
+      onClose={onClose}
+    >
+      <DialogTitle>
+        Are you sure you want to remove completed items?
+      </DialogTitle>
+      <DialogActions>
+        <Button
+          onClick={onClose}
+        >
+          Cancel
+        </Button>
+        <Button
+          onClick={onAccept}
+        >
+          Confirm
+        </Button>
+      </DialogActions>
+    </Dialog>
+  )
+}
 
 const renderClearCompletedTodosButton = (permissions, onClick) => {
   if(!permissions.get("isAdmin")){return;}
@@ -20,8 +47,15 @@ const renderClearCompletedTodosButton = (permissions, onClick) => {
 }
 
 const HoneyDoConfig = (props) => {
-  const { uiProps, permissions, onToggleIsCompletedHidden, onClearCompleted } = props;
+  const {
+    uiProps,
+    permissions,
+    onToggleIsCompletedHidden,
+    onClearCompleted,
+    onRequestClearCompleted,
+    onRequestClearCompletedCancelled } = props;
   let hide_completed_switch_state = uiProps.get('isCompletedHidden');
+  let is_confirm_dialog_visible = uiProps.getIn(['dialogs', 'isConfirmClearCompletedOpen']);
   let label = hide_completed_switch_state ? "Completed todos are visible" : "Completed todos are hidden";
 
   return (
@@ -45,7 +79,8 @@ const HoneyDoConfig = (props) => {
           }
         />
       </FormGroup>
-      {renderClearCompletedTodosButton(permissions, onClearCompleted)}
+      {renderClearCompletedTodosButton(permissions, onRequestClearCompleted)}
+      {renderConfirmClearCompletedDialog(is_confirm_dialog_visible, onRequestClearCompletedCancelled, onClearCompleted)}
     </div>
   );
 }

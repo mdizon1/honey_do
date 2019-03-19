@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import HoneyDoConfig from "../components/HoneyDoConfig"
-import { closeConfig, toggleHideCompleted, clearCompletedRequest } from "../actions/HoneyDoActions"
+import { closeConfig, toggleHideCompleted, clearCompletedRequest, clearCompletedConfirm, clearCompletedConfirmCanceled } from "../actions/HoneyDoActions"
 import Drawer from 'material-ui/Drawer'
 
 const mapStateToProps = (state, ownProps) => {
@@ -16,12 +16,14 @@ const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     handleToggleHideCompleted: (evt) => dispatch(toggleHideCompleted()),
     handleCloseConfig: (evt) => dispatch(closeConfig()),
-    handleClearCompleted: (evt) => dispatch(clearCompletedRequest())
+    handleClearCompleted: (evt) => dispatch(clearCompletedRequest()),
+    handleClearCompletedRequest: (evt) => dispatch(clearCompletedConfirm()),
+    handleClearCompletedRequestCanceled: (evt) => dispatch(clearCompletedConfirmCanceled())
   };
 }
 
 const HoneyDoConfigWrap = (props) => {
-  const { isConfigOpen, handleCloseConfig, uiState, permissions, handleToggleHideCompleted, handleClearCompleted} = props;
+  const { isConfigOpen, handleCloseConfig, uiState, permissions, handleToggleHideCompleted, handleClearCompleted, handleClearCompletedRequest, handleClearCompletedRequestCanceled} = props;
 
   return (
     <Drawer
@@ -34,6 +36,8 @@ const HoneyDoConfigWrap = (props) => {
         permissions={permissions}
         onToggleIsCompletedHidden={handleToggleHideCompleted}
         onClearCompleted={handleClearCompleted}
+        onRequestClearCompleted={handleClearCompletedRequest}
+        onRequestClearCompletedCancelled={handleClearCompletedRequestCanceled}
       />
     </Drawer>
   )

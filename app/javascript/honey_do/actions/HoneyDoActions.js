@@ -1,6 +1,8 @@
 export const ACCEPT_TODO_REQUEST = 'ACCEPT_TODO_REQUEST'
 export const ACCEPT_TODO_SUCCESS = 'ACCEPT_TODO_SUCCESS'
 export const ACCEPT_TODO_FAILURE = 'ACCEPT_TODO_FAILURE'
+export const CLEAR_COMPLETED_CONFIRM = 'CLEAR_COMPLETED_CONFIRM'
+export const CLOSE_CLEAR_COMPLETED_CONFIRM = 'CLOSE_CLEAR_COMPLETED_CONFIRM'
 export const CLEAR_COMPLETED_REQUEST = 'CLEAR_COMPLETED_REQUEST'
 export const CLEAR_COMPLETED_SUCCESS = 'CLEAR_COMPLETED_SUCCESS'
 export const CLEAR_COMPLETED_FAILURE = 'CLEAR_COMPLETED_FAILURE'
@@ -67,6 +69,19 @@ export function cancelDragTodo() {
   return {
     type: CANCEL_TODO_DRAG,
     description: "Canceled a drag and drop action"
+  }
+}
+
+export function clearCompletedConfirmCanceled() {
+  return {
+    type: CLOSE_CLEAR_COMPLETED_CONFIRM,
+    description: "User canceled dialog that confirms clearing of completed items"
+  }
+}
+export function clearCompletedConfirm() {
+  return {
+    type: CLEAR_COMPLETED_CONFIRM,
+    description: "User requests dialog to confirm clearing of completed items"
   }
 }
 
