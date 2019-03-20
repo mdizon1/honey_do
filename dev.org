@@ -2,15 +2,15 @@
   Keep track of todo items for Honey Do development
 * Current
 * Backlog
-** TODO Refactor confirm dialog to be local to HoneyDoConfigWrap
-   Right now it triggers a dispatch to the reducer etc.
-
-   Actually this is worthy of an architecture review because it might make sense
-   that this goes through the reducer. Initial look at managing state of the
-   dialog inside HoneyDoConfig looked smelly right away.
 ** TODO Don't display remove completed todos button if there are no completed todos
+** TODO Deploy
+   Don't forget to cut a deploy tag
 ** TODO Upgrade material ui
    This library moves fast
+** TODO Institute typescript for the whole app                     :refactor:
+** TODO Add tests
+   Ok to just start small, choose a test framework and add some reducer tests to
+   start
 ** TODO Look into react dnd see if that's improved any
 ** TODO Ignore newlines in search field
    On mobile it creates a line break
@@ -238,6 +238,28 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Refactor confirm dialog to be local to HoneyDoConfigWrap
+   CLOSED: [2019-03-20 Wed 16:58]
+   Right now it triggers a dispatch to the reducer etc.
+
+   Actually this is worthy of an architecture review because it might make sense
+   that this goes through the reducer. Initial look at managing state of the
+   dialog inside HoneyDoConfig looked smelly right away.
+
+   Currently, HoneyDoConfigWrap is a purely functional wrapper component In
+   order to manage state within it, I'd have to convert it to a JS class
+   inheriting from React.Component.
+
+   Making the dialog controllable via uiState means it could appear anywhere,
+   which seems like the right choice. However, the dialog is local to
+   HoneyDoConfig, and it doesn't make sense that it would be controllable from
+   anywhere else, so there appear to be pros and cons to each implementation.
+   Which one is less smelly?
+
+   I'm leaning towards keeping it the way it is. Having a component be purely
+   functional seems to be a big plus. If I were to move the dialog anywhere
+   else, I woudln't have to change anything on the action or reducer side, that
+   also seems like a win.
 ** DONE Add a confirm to the "delete all completed todos"
    CLOSED: [2019-03-19 Tue 16:50]
    Button triggers a modal which asks "are you sure" and that one fires the
