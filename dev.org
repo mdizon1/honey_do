@@ -2,9 +2,9 @@
   Keep track of todo items for Honey Do development
 * Current
 * Backlog
-** TODO Don't display remove completed todos button if there are no completed todos
 ** TODO Deploy
    Don't forget to cut a deploy tag
+   Perhaps it's time to get in there, dirty my hands and really create that 1 button deploy
 ** TODO Upgrade material ui
    This library moves fast
 ** TODO Institute typescript for the whole app                     :refactor:
@@ -238,6 +238,8 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Don't display remove completed todos button if there are no completed todos
+   CLOSED: [2019-03-20 Wed 17:30]
 ** DONE Refactor confirm dialog to be local to HoneyDoConfigWrap
    CLOSED: [2019-03-20 Wed 16:58]
    Right now it triggers a dispatch to the reducer etc.

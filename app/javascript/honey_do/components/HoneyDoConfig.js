@@ -31,8 +31,7 @@ const renderConfirmClearCompletedDialog = (isOpen, onClose, onAccept) => {
   )
 }
 
-const renderClearCompletedTodosButton = (permissions, onClick) => {
-  if(!permissions.get("isAdmin")){return;}
+const renderClearCompletedTodosButton = (onClick) => {
   return (
     <FormGroup row>
       <Button
@@ -49,7 +48,7 @@ const renderClearCompletedTodosButton = (permissions, onClick) => {
 const HoneyDoConfig = (props) => {
   const {
     uiProps,
-    permissions,
+    shouldDisplayClearCompletedTodosButton,
     onToggleIsCompletedHidden,
     onClearCompleted,
     onRequestClearCompleted,
@@ -57,6 +56,8 @@ const HoneyDoConfig = (props) => {
   let hide_completed_switch_state = uiProps.get('isCompletedHidden');
   let is_confirm_dialog_visible = uiProps.getIn(['dialogs', 'isConfirmClearCompletedOpen']);
   let label = hide_completed_switch_state ? "Completed todos are visible" : "Completed todos are hidden";
+
+  console.log("DEBUG: rendering HoneyDoConfig, shoudl display ?? -> ", shouldDisplayClearCompletedTodosButton);
 
   return (
     <div className="honeydo-drawer-content honeydo-config">
@@ -79,7 +80,7 @@ const HoneyDoConfig = (props) => {
           }
         />
       </FormGroup>
-      {renderClearCompletedTodosButton(permissions, onRequestClearCompleted)}
+      { shouldDisplayClearCompletedTodosButton ? renderClearCompletedTodosButton(onRequestClearCompleted) : null }
       {renderConfirmClearCompletedDialog(is_confirm_dialog_visible, onRequestClearCompletedCancelled, onClearCompleted)}
     </div>
   );

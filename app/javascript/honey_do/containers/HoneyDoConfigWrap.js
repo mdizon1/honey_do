@@ -4,11 +4,21 @@ import HoneyDoConfig from "../components/HoneyDoConfig"
 import { closeConfig, toggleHideCompleted, clearCompletedRequest, clearCompletedConfirm, clearCompletedConfirmCanceled } from "../actions/HoneyDoActions"
 import Drawer from 'material-ui/Drawer'
 
+const shouldDisplayClearCompletedTodosButton = (state) => {
+  let isAdmin = state.getIn(['configState', 'identity', 'permissions', 'isAdmin']);
+  if(!isAdmin) { return false; }
+  let items = state.getIn(['dataState', 'todos']);
+
+  let completed_items = items.filter((curr_val) => {
+    return curr_val.get("isCompleted")
+  });
+  return !completed_items.isEmpty();
+}
 const mapStateToProps = (state, ownProps) => {
   return {
     isConfigOpen: state.getIn(['uiState', 'isConfigOpen']),
     uiState: state.get('uiState'),
-    permissions: state.getIn(['configState', 'identity', 'permissions'])
+    shouldDisplayClearCompletedTodosButton: shouldDisplayClearCompletedTodosButton(state)
   }
 }
 
@@ -23,7 +33,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 const HoneyDoConfigWrap = (props) => {
-  const { isConfigOpen, handleCloseConfig, uiState, permissions, handleToggleHideCompleted, handleClearCompleted, handleClearCompletedRequest, handleClearCompletedRequestCanceled} = props;
+  const { isConfigOpen, handleCloseConfig, uiState, shouldDisplayClearCompletedTodosButton, handleToggleHideCompleted, handleClearCompleted, handleClearCompletedRequest, handleClearCompletedRequestCanceled} = props;
 
   return (
     <Drawer
@@ -33,7 +43,7 @@ const HoneyDoConfigWrap = (props) => {
     >
       <HoneyDoConfig
         uiProps={uiState}
-        permissions={permissions}
+        shouldDisplayClearCompletedTodosButton={shouldDisplayClearCompletedTodosButton}
         onToggleIsCompletedHidden={handleToggleHideCompleted}
         onClearCompleted={handleClearCompleted}
         onRequestClearCompleted={handleClearCompletedRequest}
