@@ -1,10 +1,21 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-* Backlog
 ** TODO Deploy
-   Don't forget to cut a deploy tag
-   Perhaps it's time to get in there, dirty my hands and really create that 1 button deploy
+   Don't forget to cut a deploy tag Perhaps it's time to get in there, dirty my
+   hands and really create that 1 button deploy
+
+   Process:
+   Ssh into prod machine
+   Goto the project directory
+   git clean -df
+   git pull
+   swap Dockerfile.prod with Dockerfile
+   swap Docker-compose.prod.yml with docker-compose.yml
+   docker-compose down #beware of database emptying
+   docker-compose up --build
+---
+* Backlog
 ** TODO Upgrade material ui
    This library moves fast
 ** TODO Institute typescript for the whole app                     :refactor:

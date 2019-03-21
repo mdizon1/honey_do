@@ -90,6 +90,7 @@ First deploy steps:
   + setup route53 to point honey-do.app to point to that ip
 
 Subsequent deploy steps:
+  + ssh into production machine
   + git clean -df
   + git pull
   + Swap Dockerfile.prod with Dockerfile
