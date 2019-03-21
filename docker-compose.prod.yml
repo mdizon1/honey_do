@@ -12,7 +12,5 @@ services:
     depends_on:
       - db
     command: passenger start
-    tty: true
-    stdin_open: true
 volumes:
   db_datavolume:
