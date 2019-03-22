@@ -1,6 +1,7 @@
 #!/bin/bash
 # Deploy script to be run on production machine
 
+git checkout .
 git clean -df
 git pull
 mv Dockerfile Dockerfile.dev

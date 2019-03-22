@@ -1,20 +1,6 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
-** TODO Deploy
-   Don't forget to cut a deploy tag Perhaps it's time to get in there, dirty my
-   hands and really create that 1 button deploy
-
-   Process:
-   Ssh into prod machine
-   Goto the project directory
-   git clean -df
-   git pull
-   swap Dockerfile.prod with Dockerfile
-   swap Docker-compose.prod.yml with docker-compose.yml
-   docker-compose down #beware of database emptying
-   docker-compose up --build
----
 * Backlog
 ** TODO Upgrade material ui
    This library moves fast
@@ -249,6 +235,20 @@
 ** TODO Switch to Thin server
 ** TODO Admin can assign tasks to members
 * Done
+** DONE Deploy
+   CLOSED: [2019-03-21 Thu 18:21]
+   Don't forget to cut a deploy tag Perhaps it's time to get in there, dirty my
+   hands and really create that 1 button deploy
+
+   Process:
+   Ssh into prod machine
+   Goto the project directory
+   git clean -df
+   git pull
+   swap Dockerfile.prod with Dockerfile
+   swap Docker-compose.prod.yml with docker-compose.yml
+   docker-compose down #beware of database emptying
+   docker-compose up --build
 ** DONE Don't display remove completed todos button if there are no completed todos
    CLOSED: [2019-03-20 Wed 17:30]
 ** DONE Refactor confirm dialog to be local to HoneyDoConfigWrap
