@@ -1,7 +1,12 @@
 * Purpose of this document
   Keep track of todo items for Honey Do development
 * Current
+** TODO Upgrade babel
 * Backlog
+** TODO Setup some kind of testing framework
+*** TODO Let's try Jest
+*** TODO Get some test coverage
+*** TODO Get zeroed in on the testing workflow
 ** TODO Upgrade material ui
    This library moves fast
 ** TODO Institute typescript for the whole app                     :refactor:
